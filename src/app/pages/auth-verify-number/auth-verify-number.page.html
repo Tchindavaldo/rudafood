@@ -17,14 +17,14 @@
       </ion-col>
     </ion-row>
 
-    
-    
-    <ion-row   >
+
+
+    <ion-row>
       <ion-col size="12">
 
         <ion-icon class="ico1" name="lock-closed" aria-hidden="true"></ion-icon>
         <ion-input class="ion-input" label="code" label-placement="floating" fill="outline"
-          placeholder="Entrer le code envoyer au numero entrer"  [(ngModel)]="verificationCode">
+          placeholder="Entrer le code envoyer au numero entrer" [(ngModel)]="verificationCode">
 
         </ion-input>
         <ion-icon class="ico2" name="eye" aria-hidden="true"></ion-icon>
@@ -32,25 +32,25 @@
 
       </ion-col>
     </ion-row>
-    <ion-row >
+    <ion-row>
       <ion-col size="12">
 
-        <div  id="recaptcha-container"></div>
+        <div id="recaptcha-container"></div>
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-end">
       <ion-col size="auto">
-        
+
         <!-- <ion-button (click)="show2()">
           <ion-label>email verification</ion-label>
         </ion-button>
          -->
-         
+
         <!-- <ion-button (click)="googleSignIn()"> -->
-          <ion-button (click)="connectUser()">
+        <ion-button (click)="connectUser()">
           <ion-icon color="light" name="arrow-forward-outline"></ion-icon>
         </ion-button>
-<!--
+        <!--
         <ion-button color="success" (click)="signOut()">
           <ion-icon color="light" name="arrow-forward-outline"></ion-icon>
         </ion-button> -->
@@ -63,7 +63,7 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-end">
-      <ion-col (click)="direct('auth')"   size="auto">
+      <ion-col (click)="direct('auth')" size="auto">
         <ion-label>connexion avec email</ion-label>
 
       </ion-col>
@@ -81,7 +81,7 @@
     color: white;
     font-size: 35px;
 " class="ion-justify-content-start">
-      <ion-col (click)="googleSignIn()" size="1">
+      <ion-col size="1">
         <ion-icon name="logo-google"></ion-icon>
 
       </ion-col><ion-col size="5">

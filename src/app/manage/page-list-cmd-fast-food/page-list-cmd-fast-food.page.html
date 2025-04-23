@@ -1,37 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-grid fixed>
-      <ion-row class="col-porteFeuille">
-        <ion-col size="auto">
-          <ion-chip (click)=" redirect('/tabs/tab3/historique')" color="danger">
-            <ion-icon name="options"> </ion-icon>
 
-            <ion-label> Mon porte feuille </ion-label>
-          </ion-chip>
-        </ion-col>
-        <ion-col size="auto" class="col-fastfood">
-          <ion-chip
-            (click)="getFastFoodCorespond()"
-            class="chip focusedChip"
-            color="danger"
-          >
-            <ion-icon name="options"> </ion-icon>
-
-            <ion-label> Commande </ion-label>
-          </ion-chip>
-        </ion-col>
-        <ion-col size="auto" class="col-fastfood">
-          <ion-chip
-            (click)=" redirect('/tabs/tab3/menu')"
-            class="chip"
-            color="danger"
-          >
-            <ion-icon name="options"> </ion-icon>
-
-            <ion-label> menu </ion-label>
-          </ion-chip>
-        </ion-col>
-      </ion-row>
 
       <ion-row class="firstRow">
         <ion-col size="12">
@@ -48,31 +18,24 @@
           <app-component1></app-component1>
         </ion-col>
         <ion-col size="6">
-          <app-component1
-            text1="18000"
-            text2="fcfa"
-            text3="Montant Total"
-          ></app-component1>
+          <app-component1 text1="18000" text2="fcfa" text3="Montant Total"></app-component1>
         </ion-col>
       </ion-row>
 
       <ion-row class="rowNavGestionChipNav">
         <ion-row class="rowNavGestionCmd" id="rowActionGestionCmd">
           <ion-col size="auto">
-            <ion-chip
-              color="danger"
-              (click)="value3('pendingCmd'); changeMenu()"
-            >
+            <ion-chip color="danger" (click)="value3('pendingCmd');navigate('tabs/tab3/commande/pending')">
               <ion-label>Cmds en Attente</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col size="auto">
-            <ion-chip color="danger" (click)="value3('proccessCmd')">
+            <ion-chip color="danger" (click)="value3('proccessCmd');navigate('tabs/tab3/commande/proccess')">
               <ion-label>Cmds en cours</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col size="auto">
-            <ion-chip color="danger" (click)="value3('finishCmd')">
+            <ion-chip color="danger" (click)="value3('finishCmd');navigate('tabs/tab3/commande/finish')">
               <ion-label>Cmds en Terminer</ion-label>
             </ion-chip>
           </ion-col>
@@ -102,61 +65,10 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="show1" class="ionContent1">
-  <ion-content
-    class="ionContent pendingCmd"
-    [ngStyle]="{ 'transform': focus3=='pendingCmd' ? 'translateX(0%)' : 'translateX(100%)'}"
-  >
-    <!-- <ion-content class="ionContent pendingCmd" *ngIf=" focus3=='pendingCmd'" > -->
 
-    <ion-infinite-scroll class="infinitScroll2">
-      <ion-list>
-        <app-cmd-action
-          [uid]="tempPendingCmd[idx].uidUser"
-          [idx]="tempPendingCmd[idx].idCmd"
-          action="isProccess"
-          *ngFor="let item2 of tempPendingCmd; let idx = index"
-          [titre]="item2.menu.titre"
-        ></app-cmd-action>
-      </ion-list>
-    </ion-infinite-scroll>
-  </ion-content>
 
-  <ion-content
-    class="ionContent proccessCmd"
-    [ngStyle]="{ 'transform': focus3=='proccessCmd' ? 'translateX(0%)' : 'translateX(-100%)'}"
-  >
-    <!-- <ion-content class="ionContent proccessCmd" *ngIf="focus3=='proccessCmd'" > -->
+<ion-content>
 
-    <ion-infinite-scroll class="infinitScroll2">
-      <ion-list>
-        <app-cmd-action
-          [uid]="tempProccessCmd[idx].uidUser"
-          [idx]="tempProccessCmd[idx].idCmd"
-          action="isFinish"
-          *ngFor="let item2 of tempProccessCmd; let idx = index"
-          [titre]="item2.menu.titre"
-        ></app-cmd-action>
-      </ion-list>
-    </ion-infinite-scroll>
-  </ion-content>
+  <router-outlet />
 
-  <ion-content
-    class="ionContent finishCmd"
-    [ngStyle]="{ 'transform': focus3=='finishCmd' ? 'translateX(0%)' : 'translateX(100%)'}"
-  >
-    <!-- <ion-content class="ionContent finishCmd" *ngIf="focus3=='finishCmd'" > -->
-
-    <ion-infinite-scroll class="infinitScroll2">
-      <ion-list>
-        <app-cmd-action
-          [uid]="tempFinishCmd[idx].uidUser"
-          [idx]="tempFinishCmd[idx].idCmd"
-          action="isFinish"
-          *ngFor="let item2 of tempFinishCmd; let idx = index"
-          [titre]="item2.menu.titre"
-        ></app-cmd-action>
-      </ion-list>
-    </ion-infinite-scroll>
-  </ion-content>
 </ion-content>

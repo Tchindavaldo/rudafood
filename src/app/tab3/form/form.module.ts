@@ -16,6 +16,6 @@ import { FormPage } from './form.page';
     FormPageRoutingModule
   ],
   declarations: [FormPage],
-  exports:[FormPage]
+  exports: [FormPage]
 })
-export class FormPageModule {}
+export class FormPageModule { }

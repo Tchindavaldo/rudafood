@@ -1,12 +1,12 @@
 
-import { Component, OnInit } from '@angular/core'; 
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
+// import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { requeToAuth } from 'src/app/services/requeToAuth';
 import { ToastController } from '@ionic/angular';
 @Component({
@@ -24,15 +24,15 @@ export class AuthVerifyNumberPage implements OnInit {
   numero: string = '';
   code: string = '';
   verificationCode: string = '';
-  smsIsSend =false
+  smsIsSend = false
   constructor
-  
-  ( private afAuth: AngularFireAuth,
-    private requeteToAuth:requeToAuth,
-    private googlePlus: GooglePlus,
-    private router: Router,
-    private toastController: ToastController
-  ) {
+
+    (private afAuth: AngularFireAuth,
+      private requeteToAuth: requeToAuth,
+      // private googlePlus: GooglePlus,
+      private router: Router,
+      private toastController: ToastController
+    ) {
     // Initialize Firebase in the constructor
     firebase.initializeApp({
       // Your Firebase config here
@@ -42,7 +42,7 @@ export class AuthVerifyNumberPage implements OnInit {
       storageBucket: "infinity-fastfood.appspot.com",
       messagingSenderId: "496693477037",
       appId: "1:496693477037:web:d1819debb382b12c611024"
-    
+
     });
   }
 
@@ -71,8 +71,8 @@ export class AuthVerifyNumberPage implements OnInit {
         console.log('Code envoyé avec succès.');
         console.log('ID de vérification:', this.verificationId);
         console.log('Détails de résultat:', result);
-        
-        this.smsIsSend=true
+
+        this.smsIsSend = true
       })
       .catch((error) => {
         console.error('Error during signInWithPhoneNumber', error);
@@ -85,7 +85,7 @@ export class AuthVerifyNumberPage implements OnInit {
 
   verifyCode() {
     this.verifyCode1(this.verificationId, this.verificationCode)
-      .then((result:any) => {
+      .then((result: any) => {
         // Utilisateur connecté
         console.log('uid auth number', result.uid);
         console.log('User signed in successfully', result);
@@ -101,45 +101,44 @@ export class AuthVerifyNumberPage implements OnInit {
       verificationCode
     );
 
-    
+
     return this.afAuth.signInWithCredential(credential);
   }
-  googleSignIn() {
-    this.googlePlus
-      .login({
-        webClientId:
-          '496693477037-dac1deftue3qgnnb7aa8337irj62dffe.apps.googleusercontent.com',
-        offline: true,
-      })
-      .then((res) => {
-        console.log(res);
-        // Afficher l'email de l'utilisateur connecté
-        console.log("Email de l'utilisateur :", res.email);
-        this.m = res.email;
-        // Vous pouvez également faire d'autres traitements avec les données de l'utilisateur
-      })
-      .catch((err) => {
-        console.error('Error during Google login', err);
-        this.m = err;
-      });
-  }
+  // googleSignIn() {
+  //   this.googlePlus
+  //     .login({
+  //       webClientId:
+  //         '496693477037-dac1deftue3qgnnb7aa8337irj62dffe.apps.googleusercontent.com',
+  //       offline: true,
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //       // Afficher l'email de l'utilisateur connecté
+  //       console.log("Email de l'utilisateur :", res.email);
+  //       this.m = res.email;
+  //       // Vous pouvez également faire d'autres traitements avec les données de l'utilisateur
+  //     })
+  //     .catch((err) => {
+  //       console.error('Error during Google login', err);
+  //       this.m = err;
+  //     });
+  // }
 
 
-  
-  connectUser()
-  {
-  
-      if (this.verificationCode!='') {
-this.verifyCode()
-    
-      }else{
-        this.presentToast('bottom', 'veuiller entrer le code envoyer')
 
-      }
-    
+  connectUser() {
 
-    
-    
+    if (this.verificationCode != '') {
+      this.verifyCode()
+
+    } else {
+      this.presentToast('bottom', 'veuiller entrer le code envoyer')
+
+    }
+
+
+
+
   }
 
   async showErrorToast(error: any) {
@@ -148,18 +147,18 @@ this.verifyCode()
       case 'auth/invalid-email':
         message = 'L\'e-mail doit avoir une syntaxe valide.';
         break;
-        case 'email-not-verified':
-          message = 'Email non vérifié. Cliquez sur le lien envoyé à votre compte pour vérifier et valider votre email';
-          break;
+      case 'email-not-verified':
+        message = 'Email non vérifié. Cliquez sur le lien envoyé à votre compte pour vérifier et valider votre email';
+        break;
       case 'auth/email-already-in-use':
         message = 'L\'adresse e-mail est déjà utilisée par un autre compte.';
         break;
       case 'auth/weak-password':
         message = 'Le mot de passe est trop faible.';
         break;
-        case 'auth/wrong-password':
-          message = 'Le mot de passe est incorrect.';
-          break;
+      case 'auth/wrong-password':
+        message = 'Le mot de passe est incorrect.';
+        break;
       case 'auth/missing-password':
         message = 'Le mot de passe ne doit pas etre vide.';
         break;
@@ -196,13 +195,13 @@ this.verifyCode()
       default:
         message = 'Une erreur est survenue.';
     }
-  
+
     // Afficher le message d'erreur sous forme de toast
     console.log(message);
-    this.presentToast('bottom',message)
+    this.presentToast('bottom', message)
   }
 
-  async presentToast(position: 'top' | 'middle' | 'bottom',message:string) {
+  async presentToast(position: 'top' | 'middle' | 'bottom', message: string) {
     const toast = await this.toastController.create({
       message: message,
       duration: 10000,

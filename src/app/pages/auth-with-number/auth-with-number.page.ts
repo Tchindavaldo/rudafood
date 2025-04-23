@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core'; 
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
+// import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { requeToAuth } from 'src/app/services/requeToAuth';
 import { ToastButton, ToastController } from '@ionic/angular';
 import { requeToUser } from 'src/app/services/requeToUser';
@@ -24,24 +24,24 @@ export class AuthWithNumberPage implements OnInit {
   verificationId: string = '';
   m: string | null = null;
 
-  connect=false
+  connect = false
   numero: string = '';
   code: string = '';
   verificationCode: string = '';
-  smsIsSend =false
-  showLoaderCaptcha =false
+  smsIsSend = false
+  showLoaderCaptcha = false
   constructor
-  
-  ( private afAuth: AngularFireAuth,
-    private requeteToAuth:requeToAuth,
-    private googlePlus: GooglePlus,
-    private router: Router,
-    private toastController: ToastController,
-    private requeteToUser:requeToUser,
-    private requeteToGeneralDataUser:requeToGeneralDataUsers,
-    private data:DataService
 
-  ) {
+    (private afAuth: AngularFireAuth,
+      private requeteToAuth: requeToAuth,
+      // private googlePlus: GooglePlus,
+      private router: Router,
+      private toastController: ToastController,
+      private requeteToUser: requeToUser,
+      private requeteToGeneralDataUser: requeToGeneralDataUsers,
+      private data: DataService
+
+    ) {
     // Initialize Firebase in the constructor
     firebase.initializeApp({
       // Your Firebase config here
@@ -51,7 +51,7 @@ export class AuthWithNumberPage implements OnInit {
       storageBucket: "infinity-fastfood.appspot.com",
       messagingSenderId: "496693477037",
       appId: "1:496693477037:web:d1819debb382b12c611024"
-    
+
     });
   }
 
@@ -70,24 +70,24 @@ export class AuthWithNumberPage implements OnInit {
   }
 
   sendCode() {
-    
+
     this.showLoaderCaptcha = true
     this.sendVerificationCode(this.numero, this.recaptchaVerifier)
       .then((result) => {
-        
+
         this.verificationId = result.verificationId;
         // Code envoyé, demandez à l'utilisateur de saisir le code de vérification
 
         console.log('Code envoyé avec succès.');
         console.log('ID de vérification:', this.verificationId);
         console.log('Détails de résultat:', result);
-        this.presentToast(1000,'bottom','code envoyer')
-        
+        this.presentToast(1000, 'bottom', 'code envoyer')
+
         this.showLoaderCaptcha = false
-        this.smsIsSend=true
+        this.smsIsSend = true
       })
       .catch((error) => {
-        this.connect=false
+        this.connect = false
         // this.showLoaderCaptcha = false
         console.error('Error during signInWithPhoneNumber', error);
         this.showErrorToast(error.code)
@@ -96,71 +96,72 @@ export class AuthWithNumberPage implements OnInit {
   }
 
   sendVerificationCode(phoneNumber: string, appVerifier: firebase.auth.RecaptchaVerifier) {
-    return this.afAuth.signInWithPhoneNumber('+237'+phoneNumber, appVerifier);
+    return this.afAuth.signInWithPhoneNumber('+237' + phoneNumber, appVerifier);
   }
 
-  verifyCode( ) {
+  verifyCode() {
     this.verifyCode1(this.verificationId, this.verificationCode)
-      .then((result:any) => {
+      .then((result: any) => {
         // Utilisateur connecté
         console.log('uid number', result.user.uid);
         console.log('user', result);
-        this.presentToast(1200,'bottom', 'connexion reussi')
-      
-      
+        this.presentToast(1200, 'bottom', 'connexion reussi')
 
-    this.requeteToGeneralDataUser.getUserGeneralDataFromFirestore().then(
-      data =>{
-       if (data?.nbrTotalUser!=undefined) { 
-        this.requeteToUser.connectUserWithNumAndUid(data.nbrTotalUser,+this.numero,result.user.uid).then(
 
-          resul =>{
-            if (typeof resul !== 'string' ) {
-            
-              this.data.user = resul 
-              
-            }
 
-             
-            
-            if (resul == 'num pas trouver' ) {
-            
+        this.requeteToGeneralDataUser.getUserGeneralDataFromFirestore().then(
+          data => {
+            if (data?.nbrTotalUser != undefined) {
+              this.requeteToUser.connectUserWithNumAndUid(data.nbrTotalUser, +this.numero, result.user.uid).then(
 
-              const newUser =  new Users(new UsersInfos('','',0,+this.numero,result.user.uid,'','') ,false,100,
-              [])
-              this.requeteToGeneralDataUser.getUserGeneralDataFromFirestore().then(
-                data =>{
-                 if (data?.nbrTotalUser!=undefined) {
-                  const idxConvert = data.nbrTotalUser.toString()
-                  this.requeteToUser.addUserToFirestore(newUser,idxConvert)
-                  this.data.user = newUser
-                  const dataUpdate =  data
-                  data.nbrTotalUser = data.nbrTotalUser+1
-                  this.requeteToGeneralDataUser.addUserGeneralDataToFirestore(dataUpdate)
-                 }
+                resul => {
+                  if (typeof resul !== 'string') {
+
+                    this.data.user = resul
+
+                  }
+
+
+
+                  if (resul == 'num pas trouver') {
+
+
+                    const newUser = new Users(new UsersInfos('', '', 0, +this.numero, result.user.uid, '', ''), false, 100,
+                      [])
+                    this.requeteToGeneralDataUser.getUserGeneralDataFromFirestore().then(
+                      data => {
+                        if (data?.nbrTotalUser != undefined) {
+                          const idxConvert = data.nbrTotalUser.toString()
+                          this.requeteToUser.addUserToFirestore(newUser, idxConvert)
+                          this.data.user = newUser
+                          const dataUpdate = data
+                          data.nbrTotalUser = data.nbrTotalUser + 1
+                          this.requeteToGeneralDataUser.addUserGeneralDataToFirestore(dataUpdate)
+                        }
+                      }
+
+
+
+                    )
+                  }
+
                 }
-            
-            
-            
-              )            }
-                  
-          }
-        )
-    
-      }
-      })
-    
-     
-          
-         
-        
-  
-        
+              )
+
+            }
+          })
+
+
+
+
+
+
+
         this.router.navigate(['/tabs'])
 
       })
       .catch((error) => {
-        this.connect=false
+        this.connect = false
 
         console.error('Error during verification', error);
         this.showErrorToast(error.code)
@@ -174,58 +175,57 @@ export class AuthWithNumberPage implements OnInit {
     );
     return this.afAuth.signInWithCredential(credential);
   }
-  googleSignIn() {
-    this.googlePlus
-      .login({
-        webClientId:
-          '496693477037-dac1deftue3qgnnb7aa8337irj62dffe.apps.googleusercontent.com',
-        offline: true,
-      })
-      .then((res) => {
-        console.log(res);
-
-        
-        // Afficher l'email de l'utilisateur connecté
-        console.log(" l'utilisateur :", res.email);
-        this.m = res.email;
-        // Vous pouvez également faire d'autres traitements avec les données de l'utilisateur
-      })
-      .catch((err) => {
-        console.error('Error during Google login', err);
-        this.m = err;
-      });
-  }
+  // googleSignIn() {
+  //   this.googlePlus
+  //     .login({
+  //       webClientId:
+  //         '496693477037-dac1deftue3qgnnb7aa8337irj62dffe.apps.googleusercontent.com',
+  //       offline: true,
+  //     })
+  //     .then((res:any) => {
+  //       console.log(res);
 
 
-  
-  connectUser()
-  {
+  //       // Afficher l'email de l'utilisateur connecté
+  //       console.log(" l'utilisateur :", res.email);
+  //       this.m = res.email;
+  //       // Vous pouvez également faire d'autres traitements avec les données de l'utilisateur
+  //     })
+  //     .catch((err:any) => {
+  //       console.error('Error during Google login', err);
+  //       this.m = err;
+  //     });
+  // }
 
-    if (this.smsIsSend ==  false) {
- 
-      if (this.numero!='') {
+
+
+  connectUser() {
+
+    if (this.smsIsSend == false) {
+
+      if (this.numero != '') {
         this.sendCode()
-        this.presentToast(2500,'bottom', 'veuiller valider le captcha pour que le code soit envoyer ')
-       
-      }else{
-         this.presentToast(1200,'bottom', 'veuiller entrer le numero de telephone ')
+        this.presentToast(2500, 'bottom', 'veuiller valider le captcha pour que le code soit envoyer ')
+
+      } else {
+        this.presentToast(1200, 'bottom', 'veuiller entrer le numero de telephone ')
 
       }
-         
-    } else {
-      if (this.verificationCode !='') {
-        this.connect=true
 
-    this.verifyCode()
-      }else{
-        this.connect=false
-        this.presentToast(1200,'bottom', 'veuiller entrer le code envoyer')
+    } else {
+      if (this.verificationCode != '') {
+        this.connect = true
+
+        this.verifyCode()
+      } else {
+        this.connect = false
+        this.presentToast(1200, 'bottom', 'veuiller entrer le code envoyer')
 
       }
     }
 
-    
-    
+
+
   }
 
   async showErrorToast(error: any) {
@@ -234,18 +234,18 @@ export class AuthWithNumberPage implements OnInit {
       case 'auth/invalid-email':
         message = 'L\'e-mail doit avoir une syntaxe valide.';
         break;
-        case 'email-not-verified':
-          message = 'Email non vérifié. Cliquez sur le lien envoyé à votre compte pour vérifier et valider votre email';
-          break;
+      case 'email-not-verified':
+        message = 'Email non vérifié. Cliquez sur le lien envoyé à votre compte pour vérifier et valider votre email';
+        break;
       case 'auth/email-already-in-use':
         message = 'L\'adresse e-mail est déjà utilisée par un autre compte.';
         break;
       case 'auth/weak-password':
         message = 'Le mot de passe est trop faible.';
         break;
-        case 'auth/wrong-password':
-          message = 'Le mot de passe est incorrect.';
-          break;
+      case 'auth/wrong-password':
+        message = 'Le mot de passe est incorrect.';
+        break;
       case 'auth/missing-password':
         message = 'Le mot de passe ne doit pas etre vide.';
         break;
@@ -267,22 +267,22 @@ export class AuthWithNumberPage implements OnInit {
       case 'auth/requires-recent-login':
         message = 'L\'opération nécessite une connexion récente de l\'utilisateur.';
         break;
-        case 'auth/invalid-verification-code':
-          message = 'Le code de vérification est incorrect.';
-          break;
-          case 'auth/invalid-phone-number':
-            this.showLoaderCaptcha = false
-            message = 'numero de telephone incorrect.';
-            break;
-          case 'auth/code-expired':
-            message = 'Le code de vérification a expirer Renvoyer a nouveau le code';
-            break;
+      case 'auth/invalid-verification-code':
+        message = 'Le code de vérification est incorrect.';
+        break;
+      case 'auth/invalid-phone-number':
+        this.showLoaderCaptcha = false
+        message = 'numero de telephone incorrect.';
+        break;
+      case 'auth/code-expired':
+        message = 'Le code de vérification a expirer Renvoyer a nouveau le code';
+        break;
       case 'auth/invalid-verification-id':
         message = 'L\'ID de vérification est incorrect.';
         break;
       case 'auth/network-request-failed':
-        
-      this.showLoaderCaptcha = false
+
+        this.showLoaderCaptcha = false
         message = 'connexion internet indisponible';
         break;
       case 'auth/internal-error':
@@ -292,13 +292,13 @@ export class AuthWithNumberPage implements OnInit {
       default:
         message = 'Une erreur est survenue.';
     }
-  
+
     // Afficher le message d'erreur sous forme de toast
     console.log(message);
-    this.presentToast(2500,'bottom',message)
+    this.presentToast(2500, 'bottom', message)
   }
 
-  async presentToast(dure:number, position: 'top' | 'middle' | 'bottom',message:string) {
+  async presentToast(dure: number, position: 'top' | 'middle' | 'bottom', message: string) {
     const toast = await this.toastController.create({
       message: message,
       duration: dure,
@@ -320,12 +320,12 @@ export class AuthWithNumberPage implements OnInit {
       },
     },
   ];
-  
 
-  setRoleMessage(ev:any) {
+
+  setRoleMessage(ev: any) {
     const { role } = ev.detail;
     console.log(`Dismissed with role: ${role}`);
-  } 
+  }
   direct(rout: String) {
     this.router.navigate(['/', rout]);
   }

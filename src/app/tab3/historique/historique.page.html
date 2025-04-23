@@ -1,146 +1,109 @@
-
 <ion-header>
 
- 
 
-            <ion-toolbar>
-            <ion-card>
-              <ion-grid>
-                <ion-row class="col-porteFeuille">
-                  <ion-col size="auto"  >
-                    <ion-chip     class="chip focusedChip" color="danger">
-                      <ion-icon name="options">
-              
-                      </ion-icon>
-              
-                      <ion-label >
-                        Mon porte feuille
-                      </ion-label>
-                    </ion-chip>
+
+  <ion-toolbar>
+    <ion-card>
+      <ion-grid>
+
+        <ion-row class="row-montant">
+          <ion-col>
+            <ion-label>
+              Montant
+            </ion-label>
+          </ion-col>
+        </ion-row>
+
+
+        <ion-row>
+          <ion-col class="val-montant">
+
+            <ion-label>
+              5,000.00f
+            </ion-label>
+          </ion-col>
+        </ion-row>
+
+
+        <ion-row class="row-sgement">
+          <ion-col>
+            <ion-grid>
+              <ion-row>
+                <ion-col class="col-segment" size="3">
+                  <ion-col size="auto" color="light">
+                    <ion-icon size="5" name="options">
+
+                    </ion-icon>
+
                   </ion-col>
-                  <ion-col size="auto" class="col-fastfood">
-                    <ion-chip (click)=" redirect('/tabs/tab3/commande')" class="chip" color="danger">
-                      <ion-icon name="options">
-              
-                      </ion-icon>
-              
-                      <ion-label>
-                        Commande
-                      </ion-label>
-                    </ion-chip>
-                  </ion-col>
-                  <ion-col   size="auto" class="col-fastfood">
-                    <ion-chip (click)="  redirect('/tabs/tab3/menu')" class="chip" color="danger">
-                      <ion-icon name="options">
-              
-                      </ion-icon>
-              
-                      <ion-label>
-                        Menu
-                      </ion-label>
-                    </ion-chip>
-                  </ion-col>
-                </ion-row>
-                <ion-row   class="row-montant">
-                  <ion-col >
+                  <ion-col class="label-sgement" size="12" color="light">
+
                     <ion-label>
-                      Montant
+                      DEPOT
                     </ion-label>
                   </ion-col>
-                </ion-row>
-          
-                
-                <ion-row  >
-                  <ion-col class="val-montant">
-                    
+
+
+                </ion-col>
+                <ion-col class="col-segment" size="3">
+                  <ion-col size="12" color="light">
+                    <ion-icon name="options">
+
+                    </ion-icon>
+
+                  </ion-col>
+                  <ion-col class="label-sgement" size="12" color="light">
+
                     <ion-label>
-                      5,000.00f
+                      RETRAIT
                     </ion-label>
                   </ion-col>
-                </ion-row>
-          
-                
-                <ion-row   class="row-sgement">
-                  <ion-col>
-                    <ion-grid>
-                      <ion-row>
-                        <ion-col class="col-segment" size="3">  
-                        <ion-col size="auto" color="light">
-                      <ion-icon size="5" name="options">
-          
-                      </ion-icon>
-          
-                    </ion-col>
-                    <ion-col class="label-sgement" size="12" color="light">
-          
-                      <ion-label>
-                        DEPOT
-                      </ion-label>
-                    </ion-col>
-          
-                
+                </ion-col>
+                <ion-col class="col-segment" size="3"> <ion-col size="12" color="light">
+                    <ion-icon name="options">
+
+                    </ion-icon>
+
                   </ion-col>
-                        <ion-col class="col-segment" size="3"> 
-                       <ion-col size="12" color="light">
-                      <ion-icon name="options">
-          
-                      </ion-icon>
-          
-                    </ion-col>
-                    <ion-col class="label-sgement" size="12" color="light">
-          
-                      <ion-label>
-                        RETRAIT
-                      </ion-label>
-                    </ion-col>
+                  <ion-col class="label-sgement" size="12" color="light">
+
+                    <ion-label>
+                      TRANSFERT
+                    </ion-label>
                   </ion-col>
-                        <ion-col class="col-segment" size="3">    <ion-col size="12" color="light">
-                      <ion-icon name="options">
-          
-                      </ion-icon>
-          
-                    </ion-col>
-                    <ion-col class="label-sgement" size="12" color="light">
-          
-                      <ion-label>
-                        TRANSFERT
-                      </ion-label>
-                    </ion-col>
+                </ion-col>
+                <ion-col class="col-segment" size="3"> <ion-col size="12" color="light">
+                    <ion-icon name="options">
+
+                    </ion-icon>
+
                   </ion-col>
-                        <ion-col class="col-segment" size="3">    <ion-col size="12" color="light">
-                      <ion-icon name="options">
-          
-                      </ion-icon>
-          
-                    </ion-col>
-                    <ion-col class="label-sgement" size="12" color="light">
-          
-                      <ion-label>
-                        HISTORIQUE
-                      </ion-label>
-                    </ion-col>
+                  <ion-col class="label-sgement" size="12" color="light">
+
+                    <ion-label>
+                      HISTORIQUE
+                    </ion-label>
                   </ion-col>
-                      </ion-row>
-                    </ion-grid>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-card>
-            </ion-toolbar>
-          </ion-header>
-          
-          <ion-content   [scrollX]="true" [fullscreen]="true">
-        
-            <ion-infinite-scroll  >
-             <ion-list >
-           <app-porte-feuil-historique></app-porte-feuil-historique>
-           <app-porte-feuil-historique></app-porte-feuil-historique>
-             </ion-list>
-             </ion-infinite-scroll>
-           
-        
-   
-  
-  </ion-content>
-   
- 
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollX]="true" [fullscreen]="true">
+
+  <ion-infinite-scroll>
+    <ion-list>
+      <app-porte-feuil-historique></app-porte-feuil-historique>
+      <app-porte-feuil-historique></app-porte-feuil-historique>
+    </ion-list>
+  </ion-infinite-scroll>
+
+
+
+
+</ion-content>

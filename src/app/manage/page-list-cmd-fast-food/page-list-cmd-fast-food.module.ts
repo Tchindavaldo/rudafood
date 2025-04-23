@@ -13,6 +13,9 @@ import { Component0PageModule } from 'src/app/statComponents/component0/componen
 import { Component3PageModule } from 'src/app/statComponents/component3/component3.module';
 import { CmdActionPageModule } from '../cmd-action/cmd-action.module';
 import { FormPageModule } from 'src/app/tab3/form/form.module';
+import { PendingCmdComponent } from './pending-cmd/pending-cmd.component';
+import { ProccessCmdComponent } from './proccess-cmd/proccess-cmd.component';
+import { FinishCmdComponent } from './finish-cmd/finish-cmd.component';
 
 @NgModule({
   imports: [
@@ -25,9 +28,13 @@ import { FormPageModule } from 'src/app/tab3/form/form.module';
     Component0PageModule,
     Component3PageModule,
     CmdActionPageModule,
-    FormPageModule
+    FormPageModule,
+
   ],
-  declarations: [PageListCmdFastFoodPage],
-  exports:[PageListCmdFastFoodPage]
+  declarations: [PageListCmdFastFoodPage,
+    PendingCmdComponent,
+    ProccessCmdComponent,
+    FinishCmdComponent],
+  exports: [PageListCmdFastFoodPage]
 })
-export class PageListCmdFastFoodPageModule {}
+export class PageListCmdFastFoodPageModule { }

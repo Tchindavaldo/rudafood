@@ -1,0 +1,13 @@
+<!-- [ngStyle]="{ 'transform': focus3=='finishCmd' ? 'translateX(0%)' : 'translateX(100%)'}" -->
+
+<ion-content class="ionContent finishCmd">
+  <!-- <ion-content class="ionContent finishCmd" *ngIf="focus3=='finishCmd'" > -->
+
+  <ion-infinite-scroll class="infinitScroll2">
+    <ion-list>
+      finished
+      <!-- <app-cmd-action [uid]="tempFinishCmd[idx].uidUser" [idx]="tempFinishCmd[idx].idCmd" action="isFinish"
+        *ngFor="let item2 of tempFinishCmd; let idx = index" [titre]="item2.menu.titre"></app-cmd-action> -->
+    </ion-list>
+  </ion-infinite-scroll>
+</ion-content>

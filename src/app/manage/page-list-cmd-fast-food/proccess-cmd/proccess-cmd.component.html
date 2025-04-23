@@ -1,0 +1,19 @@
+<!-- [ngStyle]="{ 'transform': focus3=='proccessCmd' ? 'translateX(0%)' : 'translateX(-100%)'}" -->
+<ion-content class="ionContent proccessCmd">
+  <!-- <ion-content class="ionContent proccessCmd" *ngIf="focus3=='proccessCmd'" > -->
+
+  <ion-infinite-scroll class="infinitScroll2">
+    <ion-list>
+      <app-cmd-action
+        [idx]="proccessOrderItem.id"
+        action="isFinish"
+        *ngFor="let proccessOrderItem of proccessOrder; let idx = index"
+        [NomCmdUser]="proccessOrderItem.clientName"
+      ></app-cmd-action>
+
+      <ion-item>
+        <ion-button expand="block" (click)="addTestOrder()"> Ajouter commande test </ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-infinite-scroll>
+</ion-content>

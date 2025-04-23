@@ -12,14 +12,14 @@
             <ion-col size="auto">
               <ion-grid>
                 <ion-row class="row-titre">
-                  <ion-col size="auto"><ion-label [ngStyle]="{'color': colorText1Ligne1,}"> {{text1Ligne1}}
+                  <ion-col size="auto"><ion-label [ngStyle]="{'color': colorText1Ligne1}"> {{text1Ligne1}}
                     </ion-label></ion-col>
 
 
                 </ion-row>
                 <ion-row class="row-prix">
                   <ion-col size="auto">
-                    <ion-label [ngStyle]="{'color': colorText1Ligne3,}"> {{text1Ligne3}} f</ion-label>
+                    <ion-label [ngStyle]="{'color': colorText1Ligne3}"> {{text1Ligne3}} f</ion-label>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -28,22 +28,27 @@
         </ion-grid>
       </ion-col>
       <ion-col size="7">
-        
-        <ion-chip *ngIf="showIBtnBuy" (click)="actionToCmd('buy')" [ngStyle]="{'box-shadow':boxShadow,'right':righttChip2,  'color': colorIonChip2,'background-color':backgoundColorIonChip2}" color={{colorIonChip}}>
 
-          
+        <ion-chip *ngIf="showIBtnBuy" (click)="actionToCmd('buy')"
+          [ngStyle]="{'box-shadow':boxShadow,'right':righttChip2,  'color': colorIonChip2,'background-color':backgoundColorIonChip2}"
+          color={{colorIonChip}}>
+
+
           <ion-label style="font-size: 14px;color: white;"> buy</ion-label>
         </ion-chip>
-        <ion-chip (click)="actionToCmd('pannier')" [ngStyle]="{'right':leftChip,  'color': colorIonChip2,'background-color':backgoundColorIonChip2}" color={{colorIonChip}}>
+        <ion-chip (click)="actionToCmd('pannier')"
+          [ngStyle]="{'right':leftChip,  'color': colorIonChip2,'background-color':backgoundColorIonChip2}"
+          color={{colorIonChip}}>
 
           <ion-icon *ngIf="showIcon" name="close-circle"></ion-icon>
           <ion-label> {{textIonChip}} </ion-label>
           <ion-icon *ngIf="showIcon" name="close-circle"></ion-icon>
           <ion-icon *ngIf="showIconCart" name="cart-outline"></ion-icon>
         </ion-chip>
-        <ion-chip style="padding: 5px;" *ngIf="showIconCancel" (click)="actionToCmd('')" [ngStyle]="{'color': colorIonChip2,'background-color':backgoundColorIonChip2}" color={{colorIonChip}}>
+        <ion-chip style="padding: 5px;" *ngIf="showIconCancel" (click)="actionToCmd('')"
+          [ngStyle]="{'color': colorIonChip2,'background-color':backgoundColorIonChip2}" color={{colorIonChip}}>
 
-          <ion-icon style="margin: 0;"   name="close-outline"></ion-icon>
+          <ion-icon style="margin: 0;" name="close-outline"></ion-icon>
         </ion-chip>
       </ion-col>
     </ion-row>

@@ -18,7 +18,7 @@ import {
   collection,
   Firestore,
 } from 'firebase/firestore';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+// import { AngularFirestore } from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat/app';
 import { catchError } from 'rxjs/operators';
 import { of, Subscription } from 'rxjs';
@@ -33,7 +33,6 @@ import { FastFood } from 'src/app/data/fastFood';
 import { requeToUser } from 'src/app/services/requeToUser';
 import { Platform } from '@ionic/angular';
 
-import { Network } from '@awesome-cordova-plugins/network/ngx';
 
 @Component({
   selector: 'app-form',
@@ -103,14 +102,14 @@ export class FormPage implements OnInit, AfterContentChecked {
     private service: DataService,
     private toast: showLoaderToast,
 
-    private afs: AngularFirestore,
+    // private afs: AngularFirestore,
     private requeToMenu: requeToMenu,
 
     private cardControle: CardService,
     private requeteToUser: requeToUser,
 
     private requeteToFasFood: requeToFastFood
-  ) {}
+  ) { }
 
   ngAfterContentChecked(): void {
     // this.testConnection()
@@ -284,7 +283,7 @@ export class FormPage implements OnInit, AfterContentChecked {
     }
   }
   stopSub() {
-    setInterval(() => {}, 1);
+    setInterval(() => { }, 1);
   }
   menuAction(fileGet: File, actions: string, menuGet: Menu | null) {
     setTimeout(() => {

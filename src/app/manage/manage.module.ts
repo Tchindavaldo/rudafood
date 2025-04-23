@@ -26,6 +26,6 @@ import { PageListMenuFastFoodPageModule } from './page-list-menu-fast-food/page-
     PageListMenuFastFoodPageModule,
   ],
   declarations: [ManagePage],
-  exports:[ManagePage]
+  exports: [ManagePage],
 })
 export class ManagePageModule {}

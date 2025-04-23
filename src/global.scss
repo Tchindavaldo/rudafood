@@ -10,155 +10,213 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
+@import '@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+@import '@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
+@import '@ionic/angular/css/padding.css';
+@import '@ionic/angular/css/float-elements.css';
+@import '@ionic/angular/css/text-alignment.css';
+@import '@ionic/angular/css/text-transformation.css';
+@import '@ionic/angular/css/flex-utils.css';
 
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
+ * Pour forcer le thème light par défaut, nous commentons toutes les options du dark mode
+ * et nous ajoutons une classe .light-theme à l'élément body dans le index.html
  */
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+/* @import "@ionic/angular/css/palettes/dark.system.css"; */
 
+/* Forcer le mode clair */
+:root {
+  --ion-color-primary: #3880ff;
+  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #3171e0;
+  --ion-color-primary-tint: #4c8dff;
 
+  --ion-color-secondary: #3dc2ff;
+  --ion-color-secondary-rgb: 61, 194, 255;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #36abe0;
+  --ion-color-secondary-tint: #50c8ff;
+
+  --ion-color-tertiary: #5260ff;
+  --ion-color-tertiary-rgb: 82, 96, 255;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #4854e0;
+  --ion-color-tertiary-tint: #6370ff;
+
+  --ion-color-success: #2dd36f;
+  --ion-color-success-rgb: 45, 211, 111;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #28ba62;
+  --ion-color-success-tint: #42d77d;
+
+  --ion-color-warning: #ffc409;
+  --ion-color-warning-rgb: 255, 196, 9;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
+
+  --ion-color-danger: #eb445a;
+  --ion-color-danger-rgb: 235, 68, 90;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #cf3c4f;
+  --ion-color-danger-tint: #ed576b;
+
+  --ion-color-dark: #222428;
+  --ion-color-dark-rgb: 34, 36, 40;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #1e2023;
+  --ion-color-dark-tint: #383a3e;
+
+  --ion-color-medium: #92949c;
+  --ion-color-medium-rgb: 146, 148, 156;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #808289;
+  --ion-color-medium-tint: #9d9fa6;
+
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 245, 248;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+
+  --ion-background-color: #ffffff;
+  --ion-background-color-rgb: 255, 255, 255;
+  --ion-text-color: #000000;
+  --ion-text-color-rgb: 0, 0, 0;
+  --ion-border-color: #c7c7c7;
+}
 
 ion-grid {
-    --background: none;
+  --background: none;
 }
 
- 
 @media (min-height: 20px) {
-    .input-fill-outline.input-label-placement-floating.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
+  .input-fill-outline.input-label-placement-floating.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
+    color: #313131;
+    margin-top: 3px;
+    font-size: 10px;
+    font-weight: bolder;
+  }
 
-        color: #313131;
-        margin-top: 3px;
-        font-size: 10px;
-        font-weight: bolder;
-    }
+  body {
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow-x: scroll;
+  }
 
-    body{
-        position: fixed;
-        bottom: 0;
-        top: 0;
-        left: 0;
-        right: 0;
-        overflow-x: scroll;
-    }
-    
-    html{
-    
-        position: fixed;
-        bottom: 0;
-        top: 0;
-        left: 0;
-        right: 0;
-        overflow-x: scroll;}
+  html {
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow-x: scroll;
+  }
 }
- 
- 
 
- 
 @media (min-height: 576px) {
-    .input-fill-outline.input-label-placement-floating.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
-
-        margin-top: 17px;
-    }
+  .input-fill-outline.input-label-placement-floating.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
+    margin-top: 17px;
+  }
 }
 
 .label-floating.input-fill-outline.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
-    color: white;
-    background: rgba(255, 255, 255, 0);
-    margin-top: 0;
-    padding: 2px 14px;
-    border-radius: 15px;
+  color: white;
+  background: rgba(255, 255, 255, 0);
+  margin-top: 0;
+  padding: 2px 14px;
+  border-radius: 15px;
 }
 
 .input-fill-outline.input-label-placement-floating.sc-ion-input-md-h input.sc-ion-input-md {
-    margin-left: 9px;
-    /* font-weight: 500; */
+  margin-left: 9px;
+  /* font-weight: 500; */
 }
 
 .ion-valid.sc-ion-input-md-h {
-    --highlight-color: rgb(255, 255, 255);
+  --highlight-color: rgb(255, 255, 255);
 }
 
-
-ion-content{
-    
-    --offset-bottom: 0;
+ion-content {
+  --offset-bottom: 0;
 }
-body{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0; 
-     height: 100%; 
+body {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
 }
 
-html{
+html {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-   }
-
-ion-toolbar{
+ion-toolbar {
   --background: white;
   --border-style: none;
 }
 
-      
 video::-webkit-media-controls {
-    display: none !important;
-  }
-  
-  video::-webkit-media-controls-enclosure {
-    display: none !important;
-  }
-  
-  video::-webkit-media-controls-cast-button {
-    display: none !important;
-  }
-  
-  video::-webkit-media-controls-overlay-play-button {
-    display: none !important;
-  }
+  display: none !important;
+}
 
-  
-  .video::-webkit-media-controls-panel {
-    display: none !important;
-  }
-  
-  .video::state(webkit-media-controls-play-button) {
-    display: none !important;
-  }
-  
-  .video::-webkit-media-controls-start-playback-button {
-    display: none !important;
-  }
-  
-  .video::-webkit-media-controls-cast-button {
-    display: none !important;
-  }
-  
-  .video::-webkit-media-controls-enclosure {
-    display: none !important;
-  }
-  
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+video::-webkit-media-controls-cast-button {
+  display: none !important;
+}
+
+video::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+}
+
+.video::-webkit-media-controls-panel {
+  display: none !important;
+}
+
+.video::state(webkit-media-controls-play-button) {
+  display: none !important;
+}
+
+.video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+}
+
+.video::-webkit-media-controls-cast-button {
+  display: none !important;
+}
+
+.video::-webkit-media-controls-enclosure {
+  display: none !important;
+}

@@ -1,34 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-grid fixed>
-      <ion-row class="col-porteFeuille">
-        <ion-col size="auto">
-          <ion-chip (click)=" redirect('/tabs/tab3/historique')" color="danger">
-            <ion-icon name="options"> </ion-icon>
 
-            <ion-label> Mon porte feuille </ion-label>
-          </ion-chip>
-        </ion-col>
-        <ion-col size="auto" class="col-fastfood">
-          <ion-chip
-            (click)=" redirect('/tabs/tab3/commande')"
-            class="chip focusedChip"
-            color="danger"
-          >
-            <ion-icon name="options"> </ion-icon>
-
-            <ion-label> Commande </ion-label>
-          </ion-chip>
-        </ion-col>
-
-        <ion-col size="auto" class="col-fastfood">
-          <ion-chip (click)="getMEnu()" class="chip" color="danger">
-            <ion-icon name="options"> </ion-icon>
-
-            <ion-label> Menu </ion-label>
-          </ion-chip>
-        </ion-col>
-      </ion-row>
 
       <ion-row class="firstRow">
         <ion-col size="12">
@@ -45,11 +18,7 @@
           <app-component1></app-component1>
         </ion-col>
         <ion-col size="6">
-          <app-component1
-            text1="18000"
-            text2="fcfa"
-            text3="Montant Total"
-          ></app-component1>
+          <app-component1 text1="18000" text2="fcfa" text3="Montant Total"></app-component1>
         </ion-col>
       </ion-row>
 
@@ -79,89 +48,31 @@
 <ion-content class="ionContent1">
   <ion-infinite-scroll>
     <ion-list *ngIf="focus2=='GM'">
-      <app-component0
-        *ngFor="let i of this.menuTab;let idx =index "
-        (click)="showBottomCard('update',idx)"
-        nbr="{{idx+1}}"
-        text1="{{i.titre}}"
-        text4="{{i.prix1}}"
-        text5="{{i.prix2}}"
-        text6="{{i.prix3}}"
-        text8="{{i.disponibilite}}"
-        bottom="5px"
-        marginGrid="{{marginGrid}}"
-        iconName="options"
-        [showText2]="false"
-        [showText3]="true"
-        [showText4]="true"
-        [showText5]="true"
-        [showText6]="true"
-        [showText7]="true"
-        [showText8]="true"
-        [showColNbr]="true"
-        [showIcon]="true"
-        [showAvatar]="false"
-        colSize="10"
-      ></app-component0>
+      <app-component0 *ngFor="let i of this.menuTab;let idx =index " (click)="showBottomCard('update',idx)"
+        nbr="{{idx+1}}" text1="{{i.titre}}" text4="{{i.prix1}}" text5="{{i.prix2}}" text6="{{i.prix3}}"
+        text8="{{i.disponibilite}}" bottom="5px" marginGrid="{{marginGrid}}" iconName="options" [showText2]="false"
+        [showText3]="true" [showText4]="true" [showText5]="true" [showText6]="true" [showText7]="true"
+        [showText8]="true" [showColNbr]="true" [showIcon]="true" [showAvatar]="false" colSize="10"></app-component0>
     </ion-list>
 
     <ion-list *ngIf="focus2=='MM'">
-      <app-component0
-        *ngFor="let i of menuTab; let idx=index"
-        nbr="{{idx+1}}"
-        text1="poulet roti plantain frit"
-        bottom="5px"
-        marginGrid="{{marginGrid}}"
-        paddingText7="0"
-        [showText2]="false"
-        [showText3]="false"
-        [showText4]="false"
-        [showText5]="false"
-        [showText6]="false"
-        [showText7]="true"
-        [showText8]="true"
-        [showText9]="true"
-        [showCheck1]="true"
-        [showCheck2]="true"
-        [showColNbr]="true"
-        [showIcon]="false"
-        [showAvatar]="false"
-        colSize="10"
-      ></app-component0>
+      <app-component0 *ngFor="let i of menuTab; let idx=index" nbr="{{idx+1}}" text1="poulet roti plantain frit"
+        bottom="5px" marginGrid="{{marginGrid}}" paddingText7="0" [showText2]="false" [showText3]="false"
+        [showText4]="false" [showText5]="false" [showText6]="false" [showText7]="true" [showText8]="true"
+        [showText9]="true" [showCheck1]="true" [showCheck2]="true" [showColNbr]="true" [showIcon]="false"
+        [showAvatar]="false" colSize="10"></app-component0>
     </ion-list>
 
     <ion-list *ngIf="focus2=='SP'">
-      <app-component0
-        *ngFor="let i of this.menuTab;let idx =index "
-        (click)="deleteMenu(idx)"
-        nbr="{{idx+1}}"
-        text1="{{i.titre}}"
-        text4="{{i.prix1}}"
-        text5="{{i.prix2}}"
-        text6="{{i.prix3}}"
-        text8="{{i.disponibilite}}"
-        bottom="5px"
-        marginGrid="{{marginGrid}}"
-        iconName="trash-outline"
-        [showText2]="false"
-        [showText3]="true"
-        [showText4]="true"
-        [showText5]="true"
-        [showText6]="true"
-        [showText7]="true"
-        [showText8]="true"
-        [showColNbr]="true"
-        [showIcon]="true"
-        [showAvatar]="false"
-        colSize="10"
-      ></app-component0>
+      <app-component0 *ngFor="let i of this.menuTab;let idx =index " (click)="deleteMenu(idx)" nbr="{{idx+1}}"
+        text1="{{i.titre}}" text4="{{i.prix1}}" text5="{{i.prix2}}" text6="{{i.prix3}}" text8="{{i.disponibilite}}"
+        bottom="5px" marginGrid="{{marginGrid}}" iconName="trash-outline" [showText2]="false" [showText3]="true"
+        [showText4]="true" [showText5]="true" [showText6]="true" [showText7]="true" [showText8]="true"
+        [showColNbr]="true" [showIcon]="true" [showAvatar]="false" colSize="10"></app-component0>
     </ion-list>
   </ion-infinite-scroll>
 
-  <ion-grid
-    *ngIf="!MenuIsGet"
-    fixed
-    style="
+  <ion-grid *ngIf="!MenuIsGet" fixed style="
       height: 70%;
       width: 100%;
       position: fixed;
@@ -169,48 +80,27 @@
       justify-content: center;
       flex-direction: column;
       align-items: center;
-    "
-  >
-    <ion-row
-      class="ion-justify-content-between"
-      style="
+    ">
+    <ion-row class="ion-justify-content-between" style="
         text-align: center;
         font-size: 18px;
         /* color: hsl(0 45% 50% / 1); */
         font-weight: 300;
         margin-bottom: 25px;
-      "
-    >
+      ">
       <ion-col *ngIf=" !MenuIsGet && !erroDataGeting" size="auto">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="xMidYMid"
-          width="200"
-          height="200"
-          style="
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="200"
+          height="200" style="
             shape-rendering: auto;
             display: block;
             background: rgba(255, 255, 255, 0);
             transform: scale(0.2);
-          "
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
+          " xmlns:xlink="http://www.w3.org/1999/xlink">
           <g>
-            <path
-              stroke="none"
-              fill="#e15b64"
-              d="M9 50A41 41 0 0 0 91 50A41 43 0 0 1 9 50"
-              style="fill: rgb(255, 0, 0)"
-            >
-              <animateTransform
-                values="0 50 51;360 50 51"
-                keyTimes="0;1"
-                repeatCount="indefinite"
-                dur="1s"
-                type="rotate"
-                attributeName="transform"
-              ></animateTransform>
+            <path stroke="none" fill="#e15b64" d="M9 50A41 41 0 0 0 91 50A41 43 0 0 1 9 50"
+              style="fill: rgb(255, 0, 0)">
+              <animateTransform values="0 50 51;360 50 51" keyTimes="0;1" repeatCount="indefinite" dur="1s"
+                type="rotate" attributeName="transform"></animateTransform>
             </path>
             <g></g>
           </g>
@@ -218,10 +108,8 @@
         </svg>
       </ion-col>
       <ion-col color="danger" *ngIf="erroDataGeting" size="auto">
-        <ion-label
-          >Connexion internet indisponible <br />
-          verifier votre reseau</ion-label
-        >
+        <ion-label>Connexion internet indisponible <br />
+          verifier votre reseau</ion-label>
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-between">
@@ -233,26 +121,15 @@
     </ion-row>
   </ion-grid>
   <ion-card id="bottom-card">
-    <app-form
-      imageUrl="{{menuTabToPass[idMenuClick].image}}"
-      text1="{{menuTabToPass[idMenuClick].titre}}"
-      [text4]="menuTabToPass[idMenuClick].prix1"
-      [text5]="menuTabToPass[idMenuClick].prix2"
-      [text6]="menuTabToPass[idMenuClick].prix3"
-      text8="{{menuTabToPass[idMenuClick].disponibilite}}"
-    ></app-form>
+    <app-form imageUrl="{{menuTabToPass[idMenuClick].image}}" text1="{{menuTabToPass[idMenuClick].titre}}"
+      [text4]="menuTabToPass[idMenuClick].prix1" [text5]="menuTabToPass[idMenuClick].prix2"
+      [text6]="menuTabToPass[idMenuClick].prix3" text8="{{menuTabToPass[idMenuClick].disponibilite}}"></app-form>
   </ion-card>
-  <ion-button
-    *ngIf="!this.cardControle.bottomCardIsShow"
-    (click)="showBottomCard('add',0)"
-  >
+  <ion-button *ngIf="!this.cardControle.bottomCardIsShow" (click)="showBottomCard('add',0)">
     <ion-icon name="add"></ion-icon>
   </ion-button>
 </ion-content>
-<ion-grid
-  id="lodaerTab3MenuDelete"
-  fixed
-  style="
+<ion-grid id="lodaerTab3MenuDelete" fixed style="
     height: 115%;
     width: 100%;
     position: fixed;
@@ -264,48 +141,27 @@
     z-index: 10000000000;
     visibility: hidden;
     top: 0;
-  "
->
-  <ion-row
-    class="ion-justify-content-between"
-    style="
+  ">
+  <ion-row class="ion-justify-content-between" style="
       text-align: center;
       font-size: 18px;
       /* color: hsl(0 45% 50% / 1); */
       font-weight: 300;
       margin-bottom: 25px;
-    "
-  >
+    ">
     <ion-col size="auto">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="xMidYMid"
-        width="200"
-        height="200"
-        style="
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="200"
+        height="200" style="
           shape-rendering: auto;
           display: block;
           background: rgba(255, 255, 255, 0);
           transform: scale(0.2);
-        "
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-      >
+        " xmlns:xlink="http://www.w3.org/1999/xlink">
         <g>
-          <path
-            stroke="none"
-            fill="#e15b64"
-            d="M9 50A41 41 0 0 0 91 50A41 43 0 0 1 9 50"
-            style="fill: rgb(255, 255, 255)"
-          >
-            <animateTransform
-              values="0 50 51;360 50 51"
-              keyTimes="0;1"
-              repeatCount="indefinite"
-              dur="1s"
-              type="rotate"
-              attributeName="transform"
-            ></animateTransform>
+          <path stroke="none" fill="#e15b64" d="M9 50A41 41 0 0 0 91 50A41 43 0 0 1 9 50"
+            style="fill: rgb(255, 255, 255)">
+            <animateTransform values="0 50 51;360 50 51" keyTimes="0;1" repeatCount="indefinite" dur="1s" type="rotate"
+              attributeName="transform"></animateTransform>
           </path>
           <g></g>
         </g>

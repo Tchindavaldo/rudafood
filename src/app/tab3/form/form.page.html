@@ -1,115 +1,59 @@
 <form>
-  <ion-grid [ngStyle]="{'margin': marginGrid,}" fixed class="grid">
+  <ion-grid [ngStyle]="{'margin': marginGrid}" fixed class="grid">
     <ion-row class="row-text">
       <ion-col class="col-Name" size="12">
-        <ion-input
-          [(ngModel)]="text1"
-          name="text1"
-          class="ion-input"
-          value="{{text1}}"
-          label="Nom du menu"
-          label-placement="floating"
-          fill="outline"
-        >
+        <ion-input [(ngModel)]="text1" name="text1" class="ion-input" value="{{text1}}" label="Nom du menu"
+          label-placement="floating" fill="outline">
         </ion-input>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col size="4" class="val-prix">
-        <ion-input
-          [(ngModel)]="text4"
-          name="text4"
-          class="ion-input"
-          value="{{text4}}"
-          label="{{labeLext4}}"
-          label-placement="floating"
-          fill="outline"
-        >
+        <ion-input [(ngModel)]="text4" name="text4" class="ion-input" value="{{text4}}" label="{{labeLext4}}"
+          label-placement="floating" fill="outline">
         </ion-input>
       </ion-col>
 
       <ion-col size="8" class="val-prix">
-        <ion-input
-          [(ngModel)]="optionPrix1"
-          name="optionPrix1"
-          class="ion-input"
-          value="{{optionPrix1}}"
-          label="{{labelOptionPrix1}}"
-          label-placement="floating"
-          fill="outline"
-        >
+        <ion-input [(ngModel)]="optionPrix1" name="optionPrix1" class="ion-input" value="{{optionPrix1}}"
+          label="{{labelOptionPrix1}}" label-placement="floating" fill="outline">
         </ion-input>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col size="4" class="val-prix">
-        <ion-input
-          [(ngModel)]="text5"
-          name="text5"
-          class="ion-input"
-          value="{{text5}}"
-          label="{{labeLext5}}"
-          label-placement="floating"
-          fill="outline"
-        >
+        <ion-input [(ngModel)]="text5" name="text5" class="ion-input" value="{{text5}}" label="{{labeLext5}}"
+          label-placement="floating" fill="outline">
         </ion-input>
       </ion-col>
 
       <ion-col size="8" class="val-prix">
-        <ion-input
-          [(ngModel)]="optionPrix2"
-          name="optionPrix2"
-          class="ion-input"
-          value="{{optionPrix2}}"
-          label="{{labelOptionPrix2}}"
-          label-placement="floating"
-          fill="outline"
-        >
+        <ion-input [(ngModel)]="optionPrix2" name="optionPrix2" class="ion-input" value="{{optionPrix2}}"
+          label="{{labelOptionPrix2}}" label-placement="floating" fill="outline">
         </ion-input>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col *ngIf="shadowText6" size="4" class="val-prix">
-        <ion-input
-          [(ngModel)]="text6"
-          name="text6"
-          class="ion-input"
-          value="{{text6}}"
-          label="{{labeLext6}}"
-          label-placement="floating"
-          fill="outline"
-        >
+        <ion-input [(ngModel)]="text6" name="text6" class="ion-input" value="{{text6}}" label="{{labeLext6}}"
+          label-placement="floating" fill="outline">
         </ion-input>
       </ion-col>
 
       <ion-col size="8" class="val-prix">
-        <ion-input
-          [(ngModel)]="optionPrix1"
-          name="optionPrix1"
-          class="ion-input"
-          value="{{optionPrix1}}"
-          label="{{labelOptionPrix1}}"
-          label-placement="floating"
-          fill="outline"
-        >
+        <ion-input [(ngModel)]="optionPrix1" name="optionPrix1" class="ion-input" value="{{optionPrix1}}"
+          label="{{labelOptionPrix1}}" label-placement="floating" fill="outline">
         </ion-input>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col size="4" class="val-statut">
-        <ion-input
-          [(ngModel)]="text8"
-          name="text8"
-          class="ion-input"
-          value="{{text8}}"
-          label="{{labeLext8}}"
-          label-placement="floating"
-          fill="outline"
-        >
+        <ion-input [(ngModel)]="text8" name="text8" class="ion-input" value="{{text8}}" label="{{labeLext8}}"
+          label-placement="floating" fill="outline">
         </ion-input>
       </ion-col>
     </ion-row>
@@ -119,46 +63,30 @@
         <div class="custom-file-upload">
           <!-- Icône par défaut avant la sélection de l'image -->
           <div *ngIf="!imageUrl" id="iconPhotoAdd">
-            <img
-              (click)="triggerFileInput()"
-              src="assets/icon/camera-outline.svg"
-              alt="Default Icon"
-              class="default-icon"
-            />
+            <img (click)="triggerFileInput()" src="assets/icon/camera-outline.svg" alt="Default Icon"
+              class="default-icon" />
             <ion-label>ajouter une photo</ion-label>
           </div>
 
           <div *ngIf="isErrorLoadingImage && !isLoadingImage">
-            <ion-chip
-              (click)="reloadImage()"
-              style="margin-left: -3px"
-              color="danger"
-            >
+            <ion-chip (click)="reloadImage()" style="margin-left: -3px" color="danger">
               <ion-icon name="refresh-outline"></ion-icon>
               <ion-label>Ressayer</ion-label>
             </ion-chip>
-            <ion-label style="width: 210px; display: flex" color="danger"
-              >internet indisponible impossible de charger la photo du
-              menu</ion-label
-            >
+            <ion-label style="width: 210px; display: flex" color="danger">internet indisponible impossible de charger la
+              photo du
+              menu</ion-label>
           </div>
           <!-- Aperçu de l'image après la sélection -->
 
           <div *ngIf="imageUrl" id="iconPhotoAdd">
-            <img
-              style="
+            <img style="
                 background-repeat: no-repeat;
                 background-position: center;
                 background-image: url(../../../assets/svg/loader2.svg);
-              "
-              (click)="triggerFileInput()"
-              (load)="onImageLoad()"
-              (error)="onImageError()"
-              [hidden]="isErrorLoadingImage || imageUrl =='' "
-              [src]="imageUrl"
-              alt="Selected Image"
-              class="preview-image"
-            />
+              " (click)="triggerFileInput()" (load)="onImageLoad()" (error)="onImageError()"
+              [hidden]="isErrorLoadingImage || imageUrl =='' " [src]="imageUrl" alt="Selected Image"
+              class="preview-image" />
             <!-- <svg
               [ngStyle]="{
     visibility: isLoadingImage || isErrorLoadingImage ? 'visible' :
@@ -201,12 +129,7 @@
           </div>
 
           <!-- Input de fichier caché -->
-          <input
-            type="file"
-            #fileInput
-            (change)="onFileSelected($event)"
-            hidden
-          />
+          <input type="file" #fileInput (change)="onFileSelected($event)" hidden />
         </div>
       </ion-col>
     </ion-row>
@@ -224,10 +147,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-grid
-    id="lodaerTab3Menu"
-    fixed
-    style="
+  <ion-grid id="lodaerTab3Menu" fixed style="
       height: 115%;
       width: 100%;
       position: fixed;
@@ -239,48 +159,27 @@
       z-index: 100;
       visibility: hidden;
       top: 0;
-    "
-  >
-    <ion-row
-      class="ion-justify-content-between"
-      style="
+    ">
+    <ion-row class="ion-justify-content-between" style="
         text-align: center;
         font-size: 18px;
         /* color: hsl(0 45% 50% / 1); */
         font-weight: 300;
         margin-bottom: 25px;
-      "
-    >
+      ">
       <ion-col size="auto">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="xMidYMid"
-          width="200"
-          height="200"
-          style="
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="200"
+          height="200" style="
             shape-rendering: auto;
             display: block;
             background: rgba(255, 255, 255, 0);
             transform: scale(0.2);
-          "
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
+          " xmlns:xlink="http://www.w3.org/1999/xlink">
           <g>
-            <path
-              stroke="none"
-              fill="#e15b64"
-              d="M9 50A41 41 0 0 0 91 50A41 43 0 0 1 9 50"
-              style="fill: rgb(255, 255, 255)"
-            >
-              <animateTransform
-                values="0 50 51;360 50 51"
-                keyTimes="0;1"
-                repeatCount="indefinite"
-                dur="1s"
-                type="rotate"
-                attributeName="transform"
-              ></animateTransform>
+            <path stroke="none" fill="#e15b64" d="M9 50A41 41 0 0 0 91 50A41 43 0 0 1 9 50"
+              style="fill: rgb(255, 255, 255)">
+              <animateTransform values="0 50 51;360 50 51" keyTimes="0;1" repeatCount="indefinite" dur="1s"
+                type="rotate" attributeName="transform"></animateTransform>
             </path>
             <g></g>
           </g>
