@@ -10,7 +10,9 @@ import { PannierBonnusPageModule } from '../homeComponents/pannier-bonnus/pannie
 import { PannierAchatOrPageModule } from '../homeComponents/pannier-achat-or/pannier-achat-or.module';
 import { CmdBottomCardPageModule } from '../componentTab2/cmd-bottom-card/cmd-bottom-card.module';
 import { CmdStatutPageModule } from './cmd-statut/cmd-statut.module';
-
+import { PendingOrderToBuyComponent } from './pending-order-to-buy/pending-order-to-buy.component';
+import { StatusOrderBuyedComponent } from './status-order-buyed/status-order-buyed.component';
+import { BonusOrderBuyedComponent } from './bonus-order-buyed/bonus-order-buyed.component';
 
 @NgModule({
   imports: [
@@ -22,10 +24,10 @@ import { CmdStatutPageModule } from './cmd-statut/cmd-statut.module';
     PannierAchatOrPageModule,
     PannierBonnusPageModule,
     CmdBottomCardPageModule,
-    CmdStatutPageModule
+    CmdStatutPageModule,
   ],
-  declarations: [Tab2Page],
-  
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [Tab2Page, PendingOrderToBuyComponent, StatusOrderBuyedComponent, BonusOrderBuyedComponent],
+
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class Tab2PageModule {}

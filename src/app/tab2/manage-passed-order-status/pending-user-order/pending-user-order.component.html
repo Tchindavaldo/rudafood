@@ -1,0 +1,14 @@
+<div [style.height.px]="screenHeight" style="position: relative"></div>
+<ion-content style="position: absolute; height: 100%; top: 0" class="ionContent pendingCmd">
+  <ion-infinite-scroll class="infinitScroll2">
+    <ion-list>
+      <!-- pending -->
+      <app-user-order-item
+        procededAction="processing"
+        showedAction="En attente"
+        *ngFor="let pendingOrderItem of pendingCmd; let idx = index"
+        [order]="pendingCmd?.[idx]"
+      ></app-user-order-item>
+    </ion-list>
+  </ion-infinite-scroll>
+</ion-content>

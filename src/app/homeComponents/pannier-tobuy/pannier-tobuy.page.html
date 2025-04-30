@@ -1,35 +1,27 @@
-<ion-card id="bottom-card-home" class=" bottom-card-home">
+<ion-card id="bottom-card-home" class="bottom-card-home">
   <ion-grid fixed>
     <ion-row>
-
       <ion-col size="12">
-        <app-pannier-achat [menuu]="menu" [text1Ligne3]="menu.prix1" [text1Ligne1]="menu.titre" paddingTopItem="0px" backgroundItem="none" widthCard="45px" heightCard="45px"
-          marginLeftCard="0px" text1Ligne2="10-15min" colorText1Ligne1="white" [showText1Ligne2]="false"
-          [showText2Ligne2]="false"  colorText1Ligne3="white" textIonChip="Add To"
-          colorIonChip2="white" backgoundColorIonChip2="darkred" [showIcon]="false"
-          [showIconCancel]="true"
-          [showIconCart]="true"
-          leftChip="40px"
-          righttChip2="150px"
-          [showIBtnBuy]="true"
-          boxShadow=" 0px 0px 9px #ff9d9d"
-          [idxFastFood]="idxFastFood"
-          colorIonChip="success"></app-pannier-achat>
-
-
+        <app-header [postOrder]="postOrder.bind(this)" />
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-between ion-align-items-center">
       <ion-col size="7">
-
         <ion-grid fixed>
           <ion-row>
-            <app-pannier-cmd-detail   shadow="0px 0px 9px rgb(255, 157, 157)"  backgroundChip="darkred" [iconIshow]="false" [labelIshow]="true" textLigne1="Total" [textLigne2]="this.cardControl.cmd.prixTotal+''"></app-pannier-cmd-detail>
-            <app-pannier-cmd-detail [textLigne1]="this.cardControl.cmd.embalage[0].type" [textLigne2]="this.cardControl.cmd.embalage[0].prix+'f'"></app-pannier-cmd-detail>
-            <app-pannier-cmd-detail textLigne1="Quantite" [textLigne2]="this.cardControl.cmd.quantite"></app-pannier-cmd-detail>
-            <app-pannier-cmd-detail textLigne1="boisson" [textLigne2]="this.cardControl.cmd.boisson.prix+'f'"></app-pannier-cmd-detail>
-            <app-pannier-cmd-detail [textLigne1]="this.cardControl.cmd.embalage[1].type" [textLigne2]="this.cardControl.cmd.embalage[1].prix+'f'"></app-pannier-cmd-detail>
-            <app-pannier-cmd-detail textLigne1="Livraison" [textLigne2]="this.cardControl.cmd.livraison.prix+'f'"></app-pannier-cmd-detail>
+            <app-pannier-cmd-detail
+              shadow="0px 0px 9px rgb(255, 157, 157)"
+              backgroundChip="darkred"
+              [iconIshow]="false"
+              [labelIshow]="true"
+              textLigne1="Total"
+              [textLigne2]="1000"
+            ></app-pannier-cmd-detail>
+            <app-pannier-cmd-detail textLigne1="plastic" [textLigne2]="44+'f'"></app-pannier-cmd-detail>
+            <app-pannier-cmd-detail textLigne1="Quantite" [textLigne2]="2"></app-pannier-cmd-detail>
+            <app-pannier-cmd-detail textLigne1="boisson" [textLigne2]="1000+'f'"></app-pannier-cmd-detail>
+            <app-pannier-cmd-detail textLigne1="gamelle" [textLigne2]="222+'f'"></app-pannier-cmd-detail>
+            <app-pannier-cmd-detail textLigne1="Livraison" [textLigne2]="333+'f'"></app-pannier-cmd-detail>
           </ion-row>
         </ion-grid>
       </ion-col>
@@ -42,56 +34,32 @@
           </ion-row>
         </ion-grid>
       </ion-col>
-      <ion-col size="3">
-        <ion-grid fixed>
-          <ion-row>
-            <ion-col size="auto">
-              <ion-chip color="light">
-                <ion-label>Buy</ion-label>
-              </ion-chip>
-            </ion-col>
-          </ion-row><ion-row>
-            <ion-col size="auto">
-              <ion-chip color="danger">
-                <ion-label>Add to card</ion-label>
-              </ion-chip>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <ion-grid *ngIf="!fastfoodAllTabIsGet" fixed style=" -->
+  <ion-grid id="ctnLoaderBottomCard" fixed style="height: 100%; width: 100%; position: fixed; justify-content: center; flex-direction: column; align-items: center; background: #000000b8">
+    <ion-row class="ion-justify-content-between" style="text-align: center; font-size: 18px; /* color: hsl(0 45% 50% / 1); */ font-weight: 300; margin-bottom: 25px">
+      <!-- <ion-col  *ngIf=" !fastfoodAllTabIsGet && !erroDataGeting" size="auto"> -->
+      <ion-col size="auto">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid"
+          width="200"
+          height="200"
+          style="shape-rendering: auto; display: block; background: rgba(255, 255, 255, 0); transform: scale(0.2)"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <g>
+            <path stroke="none" fill="#e15b64" d="M9 50A41 41 0 0 0 91 50A41 43 0 0 1 9 50" style="fill: rgb(255, 255, 255)">
+              <animateTransform values="0 50 51;360 50 51" keyTimes="0;1" repeatCount="indefinite" dur="1s" type="rotate" attributeName="transform"></animateTransform>
+            </path>
+            <g></g>
+          </g>
+          <!-- [ldio] generated by https://loading.io -->
+        </svg>
       </ion-col>
     </ion-row>
   </ion-grid>
-  
-  <!-- <ion-grid *ngIf="!fastfoodAllTabIsGet" fixed style=" -->
-  <ion-grid id="ctnLoaderBottomCard"   fixed style="
- height: 100%;
-    width: 100%;
-    position: fixed;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    background: #000000b8;
-">
-  <ion-row class="ion-justify-content-between" style="
-  text-align: center;
-  font-size: 18px;
-  /* color: hsl(0 45% 50% / 1); */
-  font-weight: 300;
-  margin-bottom: 25px;
-">
-    <!-- <ion-col  *ngIf=" !fastfoodAllTabIsGet && !erroDataGeting" size="auto"> -->
-      <ion-col   size="auto">
-      <svg     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="200" height="200" style="shape-rendering: auto; display: block; background: rgba(255, 255, 255, 0);   
-      transform: scale(0.2);
-      " xmlns:xlink="http://www.w3.org/1999/xlink"><g><path stroke="none" fill="#e15b64" d="M9 50A41 41 0 0 0 91 50A41 43 0 0 1 9 50" style="
-       fill: rgb(255, 255, 255);
-     ">
-       <animateTransform values="0 50 51;360 50 51" keyTimes="0;1" repeatCount="indefinite" dur="1s" type="rotate" attributeName="transform"></animateTransform>
-     </path><g></g></g><!-- [ldio] generated by https://loading.io -->
-     </svg>
-    </ion-col> 
-   
-  </ion-row>
- 
- </ion-grid>
 </ion-card>

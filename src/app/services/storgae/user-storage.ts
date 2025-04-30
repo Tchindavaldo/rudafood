@@ -26,8 +26,7 @@ export class UserStorageService {
       localStorage.setItem(key, JSON.stringify(value));
     }
 
-    console.log('donne set', value, 'key', key);
-
+    // console.log('donne set', value, 'key', key);
   }
 
   async listAll(): Promise<void> {
@@ -65,7 +64,6 @@ export class UserStorageService {
       }
     }
   }
-
 
   async get(key: string): Promise<any> {
     if (this.isPlatformReady && this.isNative) {

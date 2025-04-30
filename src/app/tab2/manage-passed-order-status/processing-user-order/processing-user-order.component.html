@@ -1,0 +1,14 @@
+<div [style.height.px]="screenHeight" style="position: relative"></div>
+<ion-content style="position: absolute; height: 100%; top: 0" class="ionContent proccessCmd">
+  <ion-infinite-scroll class="infinitScroll2">
+    <ion-list>
+      <!-- process -->
+      <app-user-order-item
+        showedAction="En cour "
+        procededAction="finished"
+        *ngFor="let proccessOrderItem of proccessOrder; let idx = index"
+        [order]="proccessOrder?.[idx]"
+      ></app-user-order-item>
+    </ion-list>
+  </ion-infinite-scroll>
+</ion-content>

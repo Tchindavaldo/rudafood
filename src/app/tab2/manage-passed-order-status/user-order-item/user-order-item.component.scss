@@ -1,0 +1,55 @@
+ion-grid,
+ion-col {
+  padding: 0;
+}
+
+ion-grid {
+  width: 100%;
+  font-size: 12px;
+}
+ion-col {
+  display: flex;
+}
+ion-item {
+  --min-height: auto;
+  height: auto;
+  --padding-start: 8px;
+  --inner-padding-end: 0;
+  --inner-border-width: 0px 0px 0 0px;
+}
+.ctn-add {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.ctn-modif-supp {
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 102px;
+  font-weight: bold;
+  margin-bottom: 7px;
+  margin-top: 2px;
+}
+
+.row-cmd {
+  margin-bottom: 35px;
+}
+
+.NomCmdUser {
+  font-size: 12px;
+  font-weight: 400;
+}
+.statutAccompagnement {
+  margin-left: 5px;
+  margin-right: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 350px) {
+  ion-grid {
+    font-size: 10px;
+  }
+}

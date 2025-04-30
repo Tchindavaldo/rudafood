@@ -1,0 +1,53 @@
+<ion-item [ngStyle]="{ '--background': 'none', 'padding-top': '0px' }">
+  <ion-grid class="ion_grid1" [ngStyle]="{ 'background-color': 'none' }">
+    <ion-row>
+      <ion-col size="5">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="auto">
+              <ion-card [ngStyle]="{ 'margin-left': '0px', width: '45px', height: '45px' }">
+                <img src="../../assets/gmy7.jpeg" alt="" srcset="" />
+              </ion-card>
+            </ion-col>
+            <ion-col size="auto">
+              <ion-grid>
+                <ion-row class="row-titre">
+                  <ion-col size="auto">
+                    <ion-label [ngStyle]="{ color: 'white' }">Nom</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row class="row-prix">
+                  <ion-col size="auto">
+                    <ion-label [ngStyle]="{ color: 'white' }"> 2000 f</ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+
+      <ion-col class="col_action" size="7">
+        <ion-chip
+          (click)="postOrder('pending')"
+          class="chip1"
+          [ngStyle]="{ 'box-shadow': '0px 0px 9px #ff9d9d', right: '150px', color: 'white', 'background-color': 'darkred' }"
+          color="success"
+        >
+          <ion-label style="font-size: 14px; color: white">buy</ion-label>
+        </ion-chip>
+
+        <ion-chip class="chip2" [ngStyle]="{ right: '40px', color: 'white', 'background-color': 'darkred' }" color="success">
+          <!-- showIcon = false -->
+          <ion-label>Add To</ion-label>
+          <ion-icon name="cart-outline"></ion-icon>
+        </ion-chip>
+
+        <ion-chip class="chip3" style="padding: 5px" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }" color="success">
+          <ion-icon style="margin: 0" name="close-outline"></ion-icon>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>

@@ -1,0 +1,16 @@
+<ion-row class="ion-align-items-center">
+  <ion-col>
+    <ion-chip class="chip_marchand_fastfood chip_marchand_focused" color="danger">
+      <ion-avatar class="avatar-marchand">
+        <img src="../../assets/vlor.jpg" alt="" srcset="" />
+      </ion-avatar>
+      <ion-label class="label-marchand"> {{ name }} </ion-label>
+    </ion-chip>
+  </ion-col>
+  <ion-col style="display: flex; justify-content: flex-end">
+    <ion-chip class="ion-chip-marchand" color="light">
+      <!-- <ion-icon *ngFor="let item of collection"  name="star" color="danger"></ion-icon> -->
+      <ion-icon *ngFor="let item of collection" name="star" color="danger"></ion-icon>
+    </ion-chip>
+  </ion-col>
+</ion-row>

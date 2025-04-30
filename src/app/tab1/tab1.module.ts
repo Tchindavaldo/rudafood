@@ -7,34 +7,18 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 
-
 import { PannierTobuyPageModule } from '../homeComponents/pannier-tobuy/pannier-tobuy.module';
 import { PannierAchatPageModule } from '../homeComponents/pannier-achat/pannier-achat.module';
-import { LoginPageModule } from '../homeComponents/login/login.module';
-import { MarchandHeaderPageModule } from '../homeComponents/marchand-header/marchand-header.module';
-import { Item3Component } from '../homeComponents/item3/item3.component';
-import { Item2Component } from '../homeComponents/item2/item2.component';
+import { SharedModule } from '../shared/shared.module';
+import { FastFoodDesign1Component } from './fastFood/fast-food-design1/fast-food-design1.component';
+import { FastFoodDesign2Component } from './fastFood/fast-food-design2/fast-food-design2.component';
+import { FastFoodDesign3Component } from './fastFood/fast-food-design3/fast-food-design3.component';
+import { FastFoodDesign4Component } from './fastFood/fast-food-design4/fast-food-design4.component';
 
 @NgModule({
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    ExploreContainerComponentModule,
-    Tab1PageRoutingModule,
-
-
-    
-    Item2Component,
-    Item3Component,
-
-    MarchandHeaderPageModule,
-    LoginPageModule,
-    PannierAchatPageModule,
-    PannierTobuyPageModule,
-  ],
+  imports: [IonicModule, CommonModule, ExploreContainerComponentModule, Tab1PageRoutingModule, SharedModule, PannierAchatPageModule, PannierTobuyPageModule],
   declarations: [Tab1Page],
-  
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class Tab1PageModule {}

@@ -1,0 +1,39 @@
+<ion-item>
+  <ion-infinite-scroll>
+    <ion-grid>
+      <app-marchand-header [name]="fastFood.fastfoodName"></app-marchand-header>
+
+      <ion-row *ngIf="fastFood.menus?.length > 0" style="margin-top: -10px">
+        <ion-col
+          (click)="handleMenuClick(menu); showBottomCard('bottom-card-home')"
+          *ngFor="let menu of fastFood.menus?.slice(0, 2); let idxMenu = index"
+          style="flex: 0 0 auto; width: min-content; padding-right: 0"
+        >
+          <ion-grid style="padding: 0">
+            <ion-row>
+              <ion-col size="auto">
+                <ion-card class="imageFood">
+                  <img src="../../assets/gm4.webp" alt="" srcset="" />
+                </ion-card>
+              </ion-col>
+              <ion-col size="12" class="ligne-titre">
+                <ion-label class="titre"> {{ menu.titre }} </ion-label>
+              </ion-col>
+              <ion-col size="12" class="ligne-statut">
+                <ion-label class="statut"> {{ menu.disponibilite }} </ion-label>
+              </ion-col>
+              <ion-row class="ion-justify-content-between">
+                <ion-col size="auto">
+                  <ion-label class="prix"> {{ menu.prix1 }} </ion-label>
+                </ion-col>
+                <ion-col size="auto">
+                  <ion-icon name="options" style="background-color: darkred; color: white; padding: 6px; font-size: 12px; border-radius: 20px"></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-infinite-scroll>
+</ion-item>

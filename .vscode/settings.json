@@ -4,22 +4,32 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  },
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" },
   "eslint.validate": ["javascript", "typescript"],
-  "[javascript]": {
+
+  "prettier.requireConfig": true,
+
+  "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
-    }
+    "editor.formatOnPaste": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
   },
+
+  "html.format.wrapLineLength": 250,
+  "html.format.indentInnerHtml": true,
+  "html.format.maxPreserveNewlines": 2,
+  "html.format.extraLiners": ["head", "body", "/html"],
+  "html.format.indentHandlebars": true,
+  "html.format.keepClosingSlash": true,
+  "html.format.sortAttributes": "alphabetical",
+
+  "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+  "javascript.format.placeOpenBraceOnNewLineForFunctions": true,
+  "typescript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+  "typescript.format.placeOpenBraceOnNewLineForFunctions": true,
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "prettier.requireConfig": true
+  }
 }

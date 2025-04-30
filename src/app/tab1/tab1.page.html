@@ -1,61 +1,36 @@
-<ion-header style="
-    box-shadow: none;
-" [translucent]="false">
-  <ion-toolbar style="    --background: white;">
-
+<ion-header style="box-shadow: none" [translucent]="false">
+  <ion-toolbar style="--background: white">
     <ion-grid>
       <ion-row class="ion-justify-content-between">
-        <ion-col style="    display: flex;
-        align-items: center;
-        padding: 0px 5px 0px 8px; ">
-          <ion-avatar style="    height: 33px;
-    width: 33px;" class="img-profile">
-            <img [src]="photo" srcset="" />
-          </ion-avatar></ion-col>
-        <ion-col style="
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    ">
+        <ion-col style="display: flex; align-items: center; padding: 0px 5px 0px 8px">
+          <ion-avatar style="height: 33px; width: 33px" class="img-profile"> <img [src]="photo" srcset="" /> </ion-avatar
+        ></ion-col>
+        <ion-col style="display: flex; justify-content: center; align-items: center">
           <ion-chip class="chip_localisation">
-            <ion-icon name="location-sharp" style="color: white;"></ion-icon>
-            <ion-label>Banganté,Cameroun</ion-label> </ion-chip>
-
+            <ion-icon name="location-sharp" style="color: white"></ion-icon>
+            <ion-label>Banganté,Cameroun</ion-label>
+          </ion-chip>
         </ion-col>
-        <ion-col style="
-        display: flex;
-        justify-content: flex-end;
-        align-items: center; 
-    padding: 0px 8px 0px 5px;
-    ">
-
-
-
+        <ion-col style="display: flex; justify-content: flex-end; align-items: center; padding: 0px 8px 0px 5px">
           <ion-icon color="danger" name="notifications-outline"></ion-icon>
-
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
-  <ion-toolbar style="    --background: white;">
+  <ion-toolbar style="--background: white">
     <ion-grid>
       <ion-row class="row_great">
         <ion-col>
-          <ion-label>
-            Good morning, {{ userData?.infos.prenom }}
-          </ion-label>
-
-
+          <ion-label> Good morning, {{ userData?.providerData[0].displayName }} </ion-label>
         </ion-col>
       </ion-row>
       <ion-row class="row_search_bar" *ngIf="searchIconIsClicked">
-        <ion-searchbar showCancelButton="focus" placeholder="Custom Placeholder" show-clear-button="focus"
-          value="Show on Focus"></ion-searchbar>
+        <ion-searchbar showCancelButton="focus" placeholder="Custom Placeholder" show-clear-button="focus" value="Show on Focus"></ion-searchbar>
       </ion-row>
       <ion-row class="rowMarchandTab">
         <ion-col class="col_marchand_tab_bar" size="auto">
-          <ion-chip (click)="addData(0)" class="chip_marchand_tab_bar  chip_marchand_focused">
-            <ion-icon style="color: white;" name="fast-food"></ion-icon>
+          <ion-chip (click)="addData(0)" class="chip_marchand_tab_bar chip_marchand_focused">
+            <ion-icon style="color: white" name="fast-food"></ion-icon>
             <ion-label> Marchand 1 </ion-label>
           </ion-chip>
         </ion-col>
@@ -91,178 +66,51 @@
 </ion-header>
 
 <ion-content [scrollX]="true" [fullscreen]="true">
-
   <ion-infinite-scroll>
+    <ion-list *ngFor="let i of fastFoodData.getFastfoods();let idx =index; ">
+      <app-fast-food-design1 [handleMenuClick]="setClickedMenu.bind(this)" *ngIf="idx % 4 === 0 && i.menus?.length>0" [fastFood]="i"></app-fast-food-design1>
+      <app-fast-food-design2 [handleMenuClick]="setClickedMenu.bind(this)" *ngIf="idx % 4 === 1 && i.menus?.length>0" [fastFood]="i"></app-fast-food-design2>
+      <app-fast-food-design3 [handleMenuClick]="setClickedMenu.bind(this)" *ngIf="idx % 4 === 2 && i.menus?.length>0" [fastFood]="i"></app-fast-food-design3>
+      <app-fast-food-design4 [handleMenuClick]="setClickedMenu.bind(this)" *ngIf="idx % 4 === 3 && i.menus?.length>0" [fastFood]="i"></app-fast-food-design4>
+      <!-- <app-fast-food-design1 [fastFood]="i" />  -->
+    </ion-list></ion-infinite-scroll
+  >
 
-    <ion-list *ngFor="let i of [].constructor(definirTailleTab(this.FastFoodTab.length));let idx =index; ">
-
-
-      <ion-item *ngIf="this.FastFoodTab.length >(4*idx)+0">
-        <ion-infinite-scroll>
-
-          <ion-grid>
-            <app-marchand-header></app-marchand-header>
-
-            <ion-row class="row-item">
-
-              <app-item3 (click)="showBottomCard('newCmd',(4*idx)+0,idxMenu)"
-                *ngFor="let menu of this.FastFoodTab[(4*idx)+0].menu;let idxMenu =index "></app-item3>
-
-
-            </ion-row>
-          </ion-grid></ion-infinite-scroll>
-      </ion-item>
-
-
-      <ion-item *ngIf="this.FastFoodTab.length >=(4*idx)+1 && this.FastFoodTab[(4*idx)+1]">
-        <ion-infinite-scroll>
-
-          <ion-grid>
-            <ion-row class="ion-align-items-center">
-              <ion-col>
-                <ion-chip class="chip_marchand_fastfood chip_marchand_focused" color="danger">
-                  <ion-avatar class="avatar-marchand">
-                    <img src="../../assets/vlor.jpg" alt="" srcset="" />
-                  </ion-avatar>
-                  <ion-label class="label-marchand"> Marchand 1 </ion-label>
-                </ion-chip>
-              </ion-col>
-              <ion-col style="display: flex;justify-content: flex-end;">
-                <ion-chip class="ion-chip-marchand" color="light">
-                  <ion-icon name="star" color="danger"></ion-icon>
-                  <ion-icon name="star" color="danger"></ion-icon>
-
-                  <ion-icon name="star" color="danger"></ion-icon>
-                </ion-chip>
-              </ion-col>
-            </ion-row>
-
-            <ion-row style="margin-top: -10px;">
-              <ion-col (click)="showBottomCard('newCmd',(4*idx)+1,idxMenu)"
-                *ngFor="let menu of this.FastFoodTab[(4*idx)+1].menu;let idxMenu =index; "
-                style="flex: 0 0 auto; width: min-content;padding-right: 0">
-                <ion-grid style="padding: 0">
-                  <ion-row>
-                    <ion-col size="auto">
-                      <ion-card class="imageFood">
-
-                        <img src="../../assets/gm4.webp" alt="" srcset="" />
-
-                      </ion-card>
-
-
-                    </ion-col>
-                    <ion-col size="12" class="ligne-titre">
-                      <ion-label class="titre"> {{menu.titre}} </ion-label>
-                    </ion-col>
-                    <ion-col size="12" class="ligne-statut">
-                      <ion-label class="statut"> {{menu.disponibilite}} </ion-label>
-                    </ion-col>
-                    <ion-row class="ion-justify-content-between">
-                      <ion-col size="auto">
-                        <ion-label class="prix"> {{menu.prix1}} </ion-label>
-                      </ion-col>
-                      <ion-col size="auto">
-                        <ion-icon name="options" style="
-                      background-color: darkred;
-                      color: white;
-                      padding: 6px;
-                      font-size: 12px;
-                      border-radius: 20px;
-                    "></ion-icon>
-                      </ion-col>
-                    </ion-row>
-                  </ion-row>
-                </ion-grid>
-              </ion-col>
-
-            </ion-row>
-          </ion-grid>
-
-        </ion-infinite-scroll>
-
-      </ion-item>
-
-
-      <ion-item *ngIf="this.FastFoodTab.length >(4*idx)+2 && this.FastFoodTab[(4*idx)+2]">
-        <ion-infinite-scroll>
-
-          <ion-grid>
-            <app-marchand-header></app-marchand-header>
-
-            <ion-row class="row-item">
-
-              <app-item2 (click)="showBottomCard('newCmd',(4*idx)+2,idxMenu)"
-                *ngFor="let menu of this.FastFoodTab[(4*idx)+2].menu;let idxMenu =index "></app-item2>
-
-
-            </ion-row>
-          </ion-grid>
-        </ion-infinite-scroll>
-      </ion-item>
-
-
-
-      <ion-item *ngIf="this.FastFoodTab.length >(4*idx)+3 && this.FastFoodTab[(4*idx)+3]">
-        <ion-grid>
-          <app-marchand-header></app-marchand-header>
-          <ion-row>
-
-            <app-login></app-login>
-          </ion-row>
-        </ion-grid>
-
-      </ion-item>
-    </ion-list></ion-infinite-scroll>
-
-  <ion-grid *ngIf="!fastfoodAllTabIsGet" fixed style="
-    height: 70%;
-    width: 100%;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
- ">
-    <ion-row class="ion-justify-content-between" style="
-    text-align: center;
-    font-size: 18px;
-    /* color: hsl(0 45% 50% / 1); */
-    font-weight: 300;
-    margin-bottom: 25px;
-">
-      <ion-col *ngIf=" !fastfoodAllTabIsGet && !erroDataGeting" size="auto">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="200"
-          height="200" style="shape-rendering: auto; display: block; background: rgba(255, 255, 255, 0);   
-        transform: scale(0.2);
-        " xmlns:xlink="http://www.w3.org/1999/xlink">
+  <ion-grid *ngIf="isloading" fixed style="height: 70%; width: 100%; position: fixed; display: flex; justify-content: center; flex-direction: column; align-items: center">
+    <ion-row class="ion-justify-content-between" style="text-align: center; font-size: 18px; /* color: hsl(0 45% 50% / 1); */ font-weight: 300; margin-bottom: 25px">
+      <ion-col *ngIf=" isloading" size="auto">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid"
+          width="200"
+          height="200"
+          style="shape-rendering: auto; display: block; background: rgba(255, 255, 255, 0); transform: scale(0.2)"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
           <g>
-            <path stroke="none" fill="#e15b64" d="M9 50A41 41 0 0 0 91 50A41 43 0 0 1 9 50" style="
-         fill: rgb(255, 0, 0);
-       ">
-              <animateTransform values="0 50 51;360 50 51" keyTimes="0;1" repeatCount="indefinite" dur="1s"
-                type="rotate" attributeName="transform"></animateTransform>
+            <path stroke="none" fill="#e15b64" d="M9 50A41 41 0 0 0 91 50A41 43 0 0 1 9 50" style="fill: rgb(255, 0, 0)">
+              <animateTransform values="0 50 51;360 50 51" keyTimes="0;1" repeatCount="indefinite" dur="1s" type="rotate" attributeName="transform"></animateTransform>
             </path>
             <g></g>
-          </g><!-- [ldio] generated by https://loading.io -->
+          </g>
+          <!-- [ldio] generated by https://loading.io -->
         </svg>
       </ion-col>
       <ion-col color="danger" *ngIf="erroDataGeting" size="auto">
-
-        <ion-label>Connexion internet indisponible <br> verifier votre reseau</ion-label>
+        <ion-label
+          >Connexion internet indisponible <br />
+          verifier votre reseau</ion-label
+        >
       </ion-col>
-
     </ion-row>
     <ion-row class="ion-justify-content-between">
-
-
-      <ion-col (click)="getGeneralData()" *ngIf="erroDataGeting" size="auto">
-
+      <ion-col (click)="fetchFastFood()" *ngIf="erroDataGeting" size="auto">
         <ion-chip color="danger" mode="ios">
           <ion-label>ressayez</ion-label>
         </ion-chip>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <app-pannier-tobuy [idxFastFood]="idxFastFood" [menu]="menuTabToPass"></app-pannier-tobuy>
+  <app-pannier-tobuy [menu]="menuTabToPass"></app-pannier-tobuy>
 </ion-content>

@@ -11,17 +11,10 @@ import { PannierStatutPageModule } from '../pannier-statut/pannier-statut.module
 import { PannierAchatPageModule } from '../pannier-achat/pannier-achat.module';
 import { PannierCmdDetailPageModule } from '../pannier-cmd-detail/pannier-cmd-detail.module';
 import { PannierCmdDetail2PageModule } from '../pannier-cmd-detail2/pannier-cmd-detail2.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    PannierTobuyPageRoutingModule,
-    PannierAchatPageModule,
-    PannierCmdDetailPageModule,
-    PannierCmdDetail2PageModule,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, PannierTobuyPageRoutingModule, PannierAchatPageModule, PannierCmdDetailPageModule, PannierCmdDetail2PageModule, SharedModule],
   declarations: [PannierTobuyPage],
   exports: [PannierTobuyPage],
 })

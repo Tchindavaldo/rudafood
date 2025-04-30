@@ -8,8 +8,6 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-item2',
   templateUrl: './item2.component.html',
   styleUrls: ['./item2.component.scss'],
-  standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
 })
 export class Item2Component implements OnInit {
   constructor() {}

@@ -1,0 +1,55 @@
+<ion-content>
+
+  <ion-infinite-scroll class="infinitScroll1" >
+
+    pending order to buy
+    <ion-list   >
+
+  <!-- <app-pannier-achat-or *ngFor="let item of pendingCmd; let idx = index"  [idxCmd]="item.idCmd" [cmdGet]="pendingCmd[idx]"        >
+
+  </app-pannier-achat-or> -->
+  <!-- <app-pannier-achat-or (click)="showLoad()" *ngFor="let item of []; let idx = index"  [idxCmd]="idx"         ></app-pannier-achat-or> -->
+  <!-- [ngStyle]="{'display' : item.ispending ? 'flex' : 'none'}"   -->
+     </ion-list>
+
+
+    <ion-card class="card-parent">
+      <ion-card>
+
+          <ion-grid>
+
+
+
+    <ion-row class="row-article">
+
+      <ion-col class="col-article" size="7"><ion-label>Frais de Transaction</ion-label></ion-col>
+      <ion-col class="col-prix" size="5"><ion-label>0f</ion-label></ion-col>
+      </ion-row>
+
+
+    <ion-row class="row-article">
+
+      <ion-col class="col-article" size="7"><ion-label>Frais de retrait</ion-label></ion-col>
+      <ion-col class="col-prix" size="5"><ion-label>50f</ion-label></ion-col>
+      </ion-row>
+
+
+    <ion-row class="row-article">
+
+    <ion-col class="col-article" size="7"><ion-label>Total</ion-label></ion-col>
+    <ion-col class="col-prix" size="5"><ion-label>2360f</ion-label></ion-col>
+    </ion-row>
+    <ion-row class="row-article row-buy ion-justify-content-center">
+    <!-- <ion-col (click)="buy()" class="col-article" size="auto">
+      <ion-chip>
+        <ion-label>PAYER</ion-label>
+      </ion-chip>
+    </ion-col> -->
+    </ion-row>
+    </ion-grid>
+    </ion-card>
+    </ion-card>
+  </ion-infinite-scroll>
+
+
+</ion-content>

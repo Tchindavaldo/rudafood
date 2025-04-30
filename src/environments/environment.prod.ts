@@ -1,5 +1,6 @@
 export const environment = {
   apiUrl: 'http://localhost:5000',
+  // apiUrl: 'https://yaammoo-backend-production.up.railway.app',
   production: true,
   firebase: {
     apiKey: 'AIzaSyAxFemQ3WoHgrgpvvjeQLhk2ZJOaQZ0QQQ',

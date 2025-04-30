@@ -85,7 +85,7 @@
                 background-position: center;
                 background-image: url(../../../assets/svg/loader2.svg);
               " (click)="triggerFileInput()" (load)="onImageLoad()" (error)="onImageError()"
-              [hidden]="isErrorLoadingImage || imageUrl =='' " [src]="imageUrl" alt="Selected Image"
+              [hidden]="isErrorLoadingImage || imageUrl ==='' " [src]="imageUrl" alt="Selected Image"
               class="preview-image" />
             <!-- <svg
               [ngStyle]="{
