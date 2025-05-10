@@ -1,5 +1,5 @@
 <ion-tabs>
-  <ion-tab-bar slot="bottom">
+  <ion-tab-bar *ngIf="!shouldHideElement()" slot="bottom">
     <ion-tab-button tab="tab1" href="/tabs/tab1">
       <ion-icon aria-hidden="true" name="grid-outline"></ion-icon>
       <ion-label class="label">Acceuil</ion-label>

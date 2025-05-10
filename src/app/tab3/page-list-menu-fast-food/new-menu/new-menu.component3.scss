@@ -1,0 +1,25 @@
+.ctn-img {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  width: 60px;
+  padding: 15px;
+  background-color: hsl(0deg 0% 100% / 41%);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type='file'] {
+  display: none; /* Masquer l'input de fichier */
+}
+
+.preview-image-ctn,
+.preview-image-ctn img {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-right: 10px;
+}

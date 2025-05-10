@@ -1,0 +1,22 @@
+<div class="ctn">
+  <!-- Image en haut -->
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" class="ion-text-center">
+        <img [src]="imageSrc" alt="Image" [style.transform]="'scale(' + scale + ')'" [style.width]="imageWidth" />
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Titre et Description -->
+  <div class="ion-margin-top ion-text-center">
+    <h1>{{ titre }}</h1>
+    <p class="description">{{ description }}</p>
+  </div>
+  <div style="margin-bottom: 13%" class="ion-margin-top ion-text-center">
+    <!-- Bouton -->
+    <ion-button expand="block" slot="fixed" class="ion-margin">
+      {{ boutonLabel }}
+    </ion-button>
+  </div>
+</div>

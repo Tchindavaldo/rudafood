@@ -1,4 +1,4 @@
-import { showCard } from 'src/app/utils/DOM/showCard';
+import { showCard } from 'src/app/utils/showCard';
 
 export function showBottomCard(id: string) {
   showCard(id);

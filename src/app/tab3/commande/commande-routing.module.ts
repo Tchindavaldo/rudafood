@@ -20,18 +20,22 @@ const routes: Routes = [
       {
         path: 'pending-noAnim',
         component: PendingCmdComponent,
+        data: { animation: 'fastFood-pending-order-NoAnim' },
       },
       {
         path: 'pending',
         component: PendingCmdComponent,
+        data: { animation: 'fastFood-pending-order' },
       },
       {
         path: 'proccess',
         component: ProccessCmdComponent,
+        data: { animation: 'fastFood-proccessing-order' },
       },
       {
         path: 'finish',
         component: FinishCmdComponent,
+        data: { animation: 'fastFood-finished-order' },
       },
     ],
   },

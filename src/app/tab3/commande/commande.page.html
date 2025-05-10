@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="userData.fastFoodId!==undefined">
   <ion-toolbar>
     <ion-grid fixed>
       <ion-row class="firstRow">
@@ -45,14 +45,20 @@
 </ion-header>
 
 <ion-content>
-  <app-loader [load]="this.orderData.getFastfoodOrders() === null" height="65%"></app-loader>
+  <app-loader [load]="this.orderData.getFastfoodOrders() === null && userData.fastFoodId!==undefined" height="65%"></app-loader>
 
   <!-- Affichage du contenu lorsque fastFoodOrder est différent de null -->
   <main
     *ngIf="this.orderData.getFastfoodOrders() !== null"
     style="height: 500px"
-    [@fastFoodOrderRouteAnimation]="getAnimationData(outlet) !== 'pending-noAnim' ? getAnimationData(outlet) : undefined"
+    [@fastFoodOrderRouteAnimation]="getAnimationData(outlet) !== 'fastFood-pending-order-NoAnim' ? getAnimationData(outlet) : undefined"
   >
     <router-outlet #outlet="outlet" [@.disabled]="false"></router-outlet>
   </main>
+
+  <app-no-fast-food
+    titre="Creer votre boutique et recever vos cammande"
+    description="Gerer facillement vos comades vos livraisons vos transactions avec votre Boutique"
+    *ngIf="userData.fastFoodId===undefined"
+  ></app-no-fast-food>
 </ion-content>

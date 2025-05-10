@@ -14,7 +14,7 @@ import { DataService } from 'src/app/services/data.service';
 import { Users } from 'src/app/data/Users';
 import { UsersInfos } from 'src/app/data/UsersInfos';
 import { UserStorageService } from 'src/app/services/storgae/user-storage';
-import { getUserByIdServices } from 'src/app/services/user/data/requet/get-user-byId.services';
+import { getUserByIdServices } from 'src/app/services/user/requet/get-user-byId.services';
 
 @Component({
   selector: 'app-auth',

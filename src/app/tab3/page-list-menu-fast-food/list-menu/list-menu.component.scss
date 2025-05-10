@@ -1,0 +1,185 @@
+ion-grid > :nth-child(5) ion-col {
+  display: flex;
+}
+ion-content {
+  transition-duration: 00ms;
+}
+ion-col {
+  padding-left: 0;
+}
+ion-chip {
+  margin: 15px 0 5px 0;
+}
+
+ion-grid > :nth-child(3) ion-col > :nth-child(1) {
+  font-size: 13px;
+  /* font-weight: bold; */
+  color: #0000009c;
+}
+ion-grid > :nth-child(3) ion-col > :nth-child(2) {
+  padding-left: 8px;
+  font-size: 13px;
+  font-weight: 300;
+  color: darkred;
+}
+
+ion-grid > :nth-child(3) {
+  margin: 10px 0 5px 0;
+}
+
+ion-card {
+  margin: 0;
+  box-shadow: none;
+  position: fixed;
+  bottom: 0;
+  // padding-top: 20px;
+  // box-shadow: 0 -1px 3px darkred;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+}
+ion-header {
+  box-shadow: none;
+}
+
+#bottom-card,
+#menu-card {
+  z-index: 1000;
+  transition-duration: 500ms;
+  transform: translateY(105%);
+}
+ion-button {
+  --border-radius: 15px;
+  width: 55px;
+  --background: darkred;
+  height: 55px;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+}
+
+ion-icon {
+  color: white;
+  font-size: 32px;
+  font-weight: 900;
+}
+ion-grid:nth-of-type(2) {
+  padding: 0;
+}
+ion-grid:nth-of-type(2) ion-col {
+  padding: 0;
+}
+ion-chip ion-label {
+  font-size: 8px;
+}
+ion-col ion-icon {
+  font-size: 12px;
+}
+.focusedChip {
+  background-color: darkred;
+  transition-duration: 1s;
+  color: rgb(255, 255, 255);
+}
+.ionContent {
+  position: absolute;
+  top: 0;
+}
+.ionContent1 {
+  position: relative;
+  z-index: 10000000000;
+}
+.RowNavGestion {
+  position: relative;
+  align-items: center;
+}
+.colNavGestion {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+.chipGestionMenu {
+  background: #cbffd1;
+  color: white;
+  background: darkgreen;
+}
+
+.rowNavGestionChipNav {
+  position: relative;
+  height: 20px;
+}
+.rowNavGestionMenu,
+.rowNavGestionCmd {
+  justify-content: space-evenly;
+  position: absolute;
+  width: 100%;
+  transition-duration: 0s;
+}
+
+.rowNavGestionMenu ion-col ion-chip,
+.rowNavGestionCmd ion-col ion-chip {
+  margin: 0px 0 1px 0;
+  padding: 0;
+  height: max-content;
+  min-height: max-content;
+  background: none;
+}
+
+.rowNavGestionMenu ion-col ion-chip,
+.rowNavGestionCmd ion-col ion-chip {
+  margin: 0px 0 1px 0;
+  padding: 0;
+  height: max-content;
+  min-height: max-content;
+  background: none;
+}
+
+.ctnGeneral {
+  position: relative;
+  z-index: 100;
+}
+.ctnGeneral ion-content {
+  position: absolute;
+  // height: 70%;
+}
+.ctnGeneral > ion-content:nth-child(1) {
+  --offset-bottom: 0px;
+}
+
+ion-item {
+  --min-height: auto;
+  height: auto;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --inner-border-width: 0px 0px 0 0px;
+}
+
+@media (max-height: 850px) {
+  ion-chip {
+    font-size: 10px;
+  }
+
+  ion-grid > :nth-child(3) {
+    margin: -10px 0 0 0;
+  }
+  ion-chip {
+    margin: -10px 0 5px 0;
+  }
+  ion-grid > :nth-child(3) ion-col > :nth-child(1) {
+    font-size: 10px;
+  }
+
+  .rowPrixCmd {
+    margin-top: -10px;
+  }
+}
+ion-grid :nth-child(3) ion-col > :nth-child(2) {
+  font-size: 10px;
+  font-weight: 300;
+}
+
+@media (max-height: 700px) {
+  .firstRow {
+    display: none;
+  }
+}

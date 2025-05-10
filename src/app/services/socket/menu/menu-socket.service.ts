@@ -4,7 +4,7 @@ import { OrderDataService } from '../../orders/data/order-data.service';
 import { environment } from 'src/environments/environment.prod';
 import { Store } from '@ngrx/store';
 import { addFastFoodOrder, setFastFoodOrder } from 'src/app/store/order/order-fastfood-reducer';
-import { setObjectOnTabByArg } from '../../functions/table/setObjectOnTabByArg';
+import { setObjectOnTabByArg } from '../../../utils/setObjectOnTabByArg';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/indx';
 import { setUserOrderReducer } from 'src/app/store/order/order-user-reducer';
@@ -21,13 +21,11 @@ export class MenuSocketService {
   public initializeSocket(socket: Socket) {
     socket.on('newMenu', (data: any) => {
       console.log('🍔 Nouveau menu reçue :', data);
-      const localUpdateFastFoods = setObjectOnTabByArg(this.fastFoodData.getFastfoods(), data.fastFood, 'id', data.fastFood.id, true);
-      this.store.dispatch(setFastFoods({ fastFoodsTab: localUpdateFastFoods }));
-    });
 
-    socket.on('updateFastFoods', (data: any) => {
-      console.log('🍔 Nouveau menu  modifier :', data);
-      const localUpdateFastFoods = setObjectOnTabByArg(this.fastFoodData.getFastfoods(), data.fastFood, 'id', data.fastFood.id);
+      const designIndex = this.fastFoodData.getFastfoods().length % 4;
+      const fastFood = { ...data.fastFood, designIndex };
+
+      const localUpdateFastFoods = setObjectOnTabByArg(this.fastFoodData.getFastfoods(), fastFood, 'id', data.fastFood.id, true);
       this.store.dispatch(setFastFoods({ fastFoodsTab: localUpdateFastFoods }));
     });
   }

@@ -29,33 +29,33 @@
       </ion-row>
       <ion-row class="rowMarchandTab">
         <ion-col class="col_marchand_tab_bar" size="auto">
-          <ion-chip (click)="addData(0)" class="chip_marchand_tab_bar chip_marchand_focused">
+          <ion-chip class="chip_marchand_tab_bar chip_marchand_focused">
             <ion-icon style="color: white" name="fast-food"></ion-icon>
             <ion-label> Marchand 1 </ion-label>
           </ion-chip>
         </ion-col>
 
         <ion-col class="col_marchand_tab_bar" size="auto">
-          <ion-chip (click)="addData(1)" color="danger" class="chip_marchand_tab_bar">
+          <ion-chip color="danger" class="chip_marchand_tab_bar">
             <ion-icon name="pizza" color="danger"></ion-icon>
             <ion-label> Marchand 1 </ion-label>
           </ion-chip>
         </ion-col>
         <ion-col class="col_marchand_tab_bar" size="auto">
-          <ion-chip (click)="addData(2)" color="danger" class="chip_marchand_tab_bar">
+          <ion-chip color="danger" class="chip_marchand_tab_bar">
             <ion-icon name="pizza" color="danger"></ion-icon>
             <ion-label> Marchand 1 </ion-label>
           </ion-chip>
         </ion-col>
 
         <ion-col class="col_marchand_tab_bar" size="auto">
-          <ion-chip (click)="addData(3)" color="danger" class="chip_marchand_tab_bar">
+          <ion-chip color="danger" class="chip_marchand_tab_bar">
             <ion-icon name="pizza" color="danger"></ion-icon>
             <ion-label> Marchand 1 </ion-label>
           </ion-chip>
         </ion-col>
         <ion-col class="col_marchand_tab_bar" size="auto">
-          <ion-chip (click)="addData(4)" color="danger" class="chip_marchand_tab_bar">
+          <ion-chip color="danger" class="chip_marchand_tab_bar">
             <ion-icon name="beer" color="danger"></ion-icon>
             <ion-label> Marchand 1 </ion-label>
           </ion-chip>
@@ -64,17 +64,24 @@
     </ion-grid>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [scrollX]="true" [fullscreen]="true">
   <ion-infinite-scroll>
-    <ion-list *ngFor="let i of fastFoodData.getFastfoods();let idx =index; ">
-      <app-fast-food-design1 [handleMenuClick]="setClickedMenu.bind(this)" *ngIf="idx % 4 === 0 && i.menus?.length>0" [fastFood]="i"></app-fast-food-design1>
-      <app-fast-food-design2 [handleMenuClick]="setClickedMenu.bind(this)" *ngIf="idx % 4 === 1 && i.menus?.length>0" [fastFood]="i"></app-fast-food-design2>
-      <app-fast-food-design3 [handleMenuClick]="setClickedMenu.bind(this)" *ngIf="idx % 4 === 2 && i.menus?.length>0" [fastFood]="i"></app-fast-food-design3>
-      <app-fast-food-design4 [handleMenuClick]="setClickedMenu.bind(this)" *ngIf="idx % 4 === 3 && i.menus?.length>0" [fastFood]="i"></app-fast-food-design4>
-      <!-- <app-fast-food-design1 [fastFood]="i" />  -->
-    </ion-list></ion-infinite-scroll
-  >
+    <ion-list>
+      <!-- <ng-container *ngFor="let i of fastFoodData.getFastfoods(); let idx = index">
+        <app-fast-food-design1 *ngIf="idx % 4 === 0 && i.menus?.length > 0" [fastFood]="i" [handleMenuClick]="setClickedMenu.bind(this)"></app-fast-food-design1>
+        <app-fast-food-design2 *ngIf="idx % 4 === 1 && i.menus?.length > 0" [fastFood]="i" [handleMenuClick]="setClickedMenu.bind(this)"></app-fast-food-design2>
+        <app-fast-food-design3 *ngIf="idx % 4 === 2 && i.menus?.length > 0" [fastFood]="i" [handleMenuClick]="setClickedMenu.bind(this)"></app-fast-food-design3>
+        <app-fast-food-design4 *ngIf="idx % 4 === 3 && i.menus?.length > 0" [fastFood]="i" [handleMenuClick]="setClickedMenu.bind(this)"></app-fast-food-design4>
+      </ng-container> -->
+
+      <ng-container *ngFor="let i of fastFoodData.getFastfoods()">
+        <app-fast-food-design1 *ngIf="i.designIndex === 0 && i.menus?.length > 0" [fastFood]="i" [handleMenuClick]="setClickedMenu.bind(this)"></app-fast-food-design1>
+        <app-fast-food-design2 *ngIf="i.designIndex === 1 && i.menus?.length > 0" [fastFood]="i" [handleMenuClick]="setClickedMenu.bind(this)"></app-fast-food-design2>
+        <app-fast-food-design3 *ngIf="i.designIndex === 2 && i.menus?.length > 0" [fastFood]="i" [handleMenuClick]="setClickedMenu.bind(this)"></app-fast-food-design3>
+        <app-fast-food-design4 *ngIf="i.designIndex === 3 && i.menus?.length > 0" [fastFood]="i" [handleMenuClick]="setClickedMenu.bind(this)"></app-fast-food-design4>
+      </ng-container>
+    </ion-list>
+  </ion-infinite-scroll>
 
   <ion-grid *ngIf="isloading" fixed style="height: 70%; width: 100%; position: fixed; display: flex; justify-content: center; flex-direction: column; align-items: center">
     <ion-row class="ion-justify-content-between" style="text-align: center; font-size: 18px; /* color: hsl(0 45% 50% / 1); */ font-weight: 300; margin-bottom: 25px">

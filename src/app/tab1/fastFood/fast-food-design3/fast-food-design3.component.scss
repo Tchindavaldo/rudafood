@@ -7,6 +7,13 @@ ion-item {
 ion-infinite-scroll ion-grid {
   padding: 0;
 }
+
+ion-roe {
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
 ion-col {
   display: flex;
   align-items: center;

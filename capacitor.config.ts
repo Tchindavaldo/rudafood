@@ -6,9 +6,12 @@ const config: CapacitorConfig = {
   webDir: 'www',
   plugins: {
     Keyboard: {
-      resize: "none" // Vous pouvez aussi essayer "body" ou "ionic" selon vos besoins
-    }
-  }
+      resize: 'none', // Vous pouvez aussi essayer "body" ou "ionic" selon vos besoins
+    },
+  },
+  server: {
+    cleartext: true, // ⚠️ Permet les requêtes HTTP sur Android
+  },
 };
 
 export default config;

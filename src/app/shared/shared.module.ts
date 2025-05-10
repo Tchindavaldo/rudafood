@@ -25,16 +25,29 @@ import { Component3Component } from '../statComponents/component3/component3.com
 import { Component2Component } from '../statComponents/component2/component2.component';
 import { Component1Component } from '../statComponents/component1/component1.component';
 import { MarchandHeaderComponent } from '../homeComponents/marchand-header/marchand-header.component';
+import { MenuDesign2Component } from '../tab1/fastFood/fast-food-design2/menu-design2/menu-design2.component';
+import { NoDataComponent } from '../components/no-data/no-data.component';
+import { NoFastFoodComponent } from '../components/no-fast-food/no-fast-food.component';
+import { CardNewFastFoodComponent } from '../components/no-fast-food/card-new-fast-food/card-new-fast-food.component2';
+import { FormsModule } from '@angular/forms';
+import { PendingOrderToBuyComponent } from '../tab2/pending-order-to-buy/pending-order-to-buy.component';
+import { PannierAchatOrComponent } from '../homeComponents/pannier-achat-or/pannier-achat-or.component';
 
 @NgModule({
   declarations: [
+    NoDataComponent,
+    NoFastFoodComponent,
+    CardNewFastFoodComponent,
+
     PendingUserOrderComponent,
     ProcessingUserOrderComponent,
     FinishedUserOrderComponent,
     UserOrderItemComponent,
+    PannierAchatOrComponent,
 
     HeaderComponent,
     MarchandHeaderComponent,
+    PendingOrderToBuyComponent,
 
     Component0Component,
     Component1Component,
@@ -47,6 +60,8 @@ import { MarchandHeaderComponent } from '../homeComponents/marchand-header/march
     ProccessCmdComponent,
     FinishCmdComponent,
 
+    MenuDesign2Component,
+
     FastFoodDesign1Component,
     FastFoodDesign2Component,
     FastFoodDesign3Component,
@@ -57,9 +72,18 @@ import { MarchandHeaderComponent } from '../homeComponents/marchand-header/march
     LoaderComponent,
     NetworkErrorComponent,
   ],
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule, FormsModule],
   exports: [
+    NoFastFoodComponent,
+    CardNewFastFoodComponent,
+
+    NoDataComponent,
     HeaderComponent,
+
+    PendingOrderToBuyComponent,
+    PannierAchatOrComponent,
+    MenuDesign2Component,
+
     MarchandHeaderComponent,
     FastFoodDesign1Component,
     FastFoodDesign2Component,

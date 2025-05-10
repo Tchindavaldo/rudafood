@@ -15,6 +15,6 @@ export class FastFoodDesign1Component implements OnInit {
 
   ngOnInit() {
     this.showBottomCard = showBottomCard;
-    // console.log('fastFood', this.fastFood);
+    console.log('fastFood on design component', this.fastFood);
   }
 }

@@ -40,7 +40,7 @@
 
         <ion-chip class="chip2" [ngStyle]="{ right: '40px', color: 'white', 'background-color': 'darkred' }" color="success">
           <!-- showIcon = false -->
-          <ion-label>Add To</ion-label>
+          <ion-label (click)="postOrder('')">Add To</ion-label>
           <ion-icon name="cart-outline"></ion-icon>
         </ion-chip>
 

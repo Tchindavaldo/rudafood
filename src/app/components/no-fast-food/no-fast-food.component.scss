@@ -1,0 +1,33 @@
+.description {
+  font-family: 'InterLight', sans-serif; /* Police légère */
+  font-weight: 100; /* Poids léger */
+  color: #000000a6;
+}
+
+.ctn {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.ctn-img {
+  margin-bottom: 20%;
+}
+
+.ctn-btn {
+  margin-bottom: 13%;
+}
+ion-button {
+  --background: hsl(0 70% 27% / 1);
+  --background-activated: #8b0000;
+}
+
+@media (max-height: 700px) {
+  .ctn-img {
+    margin-bottom: 9%;
+  }
+
+  .ctn-btn {
+    margin-bottom: 1%;
+  }
+}

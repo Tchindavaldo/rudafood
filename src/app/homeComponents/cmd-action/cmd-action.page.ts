@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
-import { setObjectOnTabByArg } from 'src/app/services/functions/table/setObjectOnTabByArg';
+import { setObjectOnTabByArg } from 'src/app/utils/setObjectOnTabByArg';
 import { OrderDataService } from 'src/app/services/orders/data/order-data.service';
 import { updateOrdersRequetService } from 'src/app/services/orders/update-orders-requet.service';
 import { requeToFastFood } from 'src/app/services/requeToFastFood';

@@ -70,12 +70,18 @@ export class UserStorageService {
       try {
         const result = await SecureStoragePlugin.get({ key });
         return JSON.parse(result.value);
-      } catch {
+      } catch (error) {
+        console.warn(`[Storage] Utilisateur non connecté ou clé absente (${key})`, error);
         return null;
       }
     } else {
       const value = localStorage.getItem(key);
-      return value ? JSON.parse(value) : null;
+      if (!value) {
+        console.warn(`[LocalStorage] Utilisateur non connecté ou clé absente (${key})`);
+        return null;
+      }
+
+      return JSON.parse(value);
     }
   }
 

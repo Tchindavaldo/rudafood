@@ -1,0 +1,226 @@
+{
+  "project_info": {
+    "project_number": "496693477037",
+    "project_id": "infinity-fastfood",
+    "storage_bucket": "infinity-fastfood.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496693477037:android:b6ab2e96e8556d62611024",
+        "android_client_info": {
+          "package_name": "com.example.mobiledev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "496693477037-dac1deftue3qgnnb7aa8337irj62dffe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnK5vtCAffsHt3JMk2DL2cSwISpPB3DJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "496693477037-dac1deftue3qgnnb7aa8337irj62dffe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "496693477037-ep9u1f44ki3qhcerb2bkgfheu234stf7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.infinityfastfood"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496693477037:android:f4d45b35c6ecf206611024",
+        "android_client_info": {
+          "package_name": "com.example.rudavofastfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "496693477037-1ts6tjabirrut1m9p3cu3kicos33mpkm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rudavofastfood",
+            "certificate_hash": "8657e46b974a6ea731ccedf515944b3c309e519d"
+          }
+        },
+        {
+          "client_id": "496693477037-73tna2uhjsd93od7jhqifujcokealueq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rudavofastfood",
+            "certificate_hash": "07dfc748a2935cff10d1c5e538642c2aa93e6af2"
+          }
+        },
+        {
+          "client_id": "496693477037-7ifdv7rhcqul2juudtfrvbvbtcqfi7ng.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rudavofastfood",
+            "certificate_hash": "4c82ea513d077884155850890e6fc8638c81cc69"
+          }
+        },
+        {
+          "client_id": "496693477037-7mgbu1q6rmh3ldf9b3a7av4jm9okoskf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rudavofastfood",
+            "certificate_hash": "5602be730bd3978e042b9f6c8e001404a726e8e0"
+          }
+        },
+        {
+          "client_id": "496693477037-g7vnnb5bc3u91kg4l72ktf75ln1tbr3t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rudavofastfood",
+            "certificate_hash": "fc91ffa4b1ec2bc03617d29f8fd9d994ff0fb5b1"
+          }
+        },
+        {
+          "client_id": "496693477037-ljo1hevk71b1agk9mk4htdumjv58341p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rudavofastfood",
+            "certificate_hash": "b48bf09ee79908b8124c3e95c2f92a63d649a98c"
+          }
+        },
+        {
+          "client_id": "496693477037-v6fkv3u1f5k0ffs9mqjldaicbf72093r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rudavofastfood",
+            "certificate_hash": "0a2c16a170603e28530b1994a2833aef8f0a223b"
+          }
+        },
+        {
+          "client_id": "496693477037-dac1deftue3qgnnb7aa8337irj62dffe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnK5vtCAffsHt3JMk2DL2cSwISpPB3DJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "496693477037-dac1deftue3qgnnb7aa8337irj62dffe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "496693477037-ep9u1f44ki3qhcerb2bkgfheu234stf7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.infinityfastfood"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496693477037:android:46afa6be91ab4ea3611024",
+        "android_client_info": {
+          "package_name": "com.mycompany.infinityfastfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "496693477037-2f98qlip8804k8obmkmgktns412qr34g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.infinityfastfood",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "496693477037-dac1deftue3qgnnb7aa8337irj62dffe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnK5vtCAffsHt3JMk2DL2cSwISpPB3DJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "496693477037-dac1deftue3qgnnb7aa8337irj62dffe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "496693477037-ep9u1f44ki3qhcerb2bkgfheu234stf7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.infinityfastfood"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496693477037:android:628639b7db0e20e4611024",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "496693477037-e65i86fns2v8sa6eu5c18p0msphakl3k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.ionic.starter",
+            "certificate_hash": "fc91ffa4b1ec2bc03617d29f8fd9d994ff0fb5b1"
+          }
+        },
+        {
+          "client_id": "496693477037-dac1deftue3qgnnb7aa8337irj62dffe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnK5vtCAffsHt3JMk2DL2cSwISpPB3DJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "496693477037-dac1deftue3qgnnb7aa8337irj62dffe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "496693477037-ep9u1f44ki3qhcerb2bkgfheu234stf7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.infinityfastfood"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,12 +7,12 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { PannierBonnusPageModule } from '../homeComponents/pannier-bonnus/pannier-bonnus.module';
-import { PannierAchatOrPageModule } from '../homeComponents/pannier-achat-or/pannier-achat-or.module';
 import { CmdBottomCardPageModule } from '../componentTab2/cmd-bottom-card/cmd-bottom-card.module';
 import { CmdStatutPageModule } from './cmd-statut/cmd-statut.module';
 import { PendingOrderToBuyComponent } from './pending-order-to-buy/pending-order-to-buy.component';
 import { StatusOrderBuyedComponent } from './status-order-buyed/status-order-buyed.component';
 import { BonusOrderBuyedComponent } from './bonus-order-buyed/bonus-order-buyed.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -21,12 +21,12 @@ import { BonusOrderBuyedComponent } from './bonus-order-buyed/bonus-order-buyed.
     FormsModule,
     ExploreContainerComponentModule,
     Tab2PageRoutingModule,
-    PannierAchatOrPageModule,
     PannierBonnusPageModule,
     CmdBottomCardPageModule,
     CmdStatutPageModule,
+    SharedModule,
   ],
-  declarations: [Tab2Page, PendingOrderToBuyComponent, StatusOrderBuyedComponent, BonusOrderBuyedComponent],
+  declarations: [Tab2Page, StatusOrderBuyedComponent, BonusOrderBuyedComponent],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

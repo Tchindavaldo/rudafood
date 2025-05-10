@@ -1,0 +1,20 @@
+<div class="ctn">
+  <!-- Image en haut -->
+  <div class="ctn-img ion-justify-content-center ion-text-center">
+    <img [src]="imageSrc" alt="Image" [style.transform]="'scale(' + scale + ')'" [style.width]="imageWidth" />
+  </div>
+
+  <!-- Titre et Description -->
+  <div class="ion-margin-top ion-text-center">
+    <h1>{{ titre }}</h1>
+    <p class="description">{{ description }}</p>
+  </div>
+  <div class="ion-margin-top ion-text-center ctn-btn">
+    <!-- Bouton -->
+    <ion-button (click)="showCard()" expand="block" slot="fixed" class="ion-margin">
+      {{ boutonLabel }}
+    </ion-button>
+  </div>
+</div>
+
+<app-card-new-fast-food></app-card-new-fast-food>

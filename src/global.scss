@@ -1,3 +1,35 @@
+@import 'swiper/css'; // ✅ OK avec les versions récentes
+
+/* Définir la police Inter en poids normal (Regular) */
+@font-face {
+  font-family: 'Inter';
+  src: url('../src/assets/fonts/Inter/static/Inter_18pt-Regular.ttf ') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Définir la police Inter en poids gras (Bold) */
+@font-face {
+  font-family: 'Inter';
+  src: url('../src/assets/fonts/Inter/static/Inter_18pt-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Définir la police Inter en poids léger (Light) */
+@font-face {
+  font-family: 'InterLight';
+  src: url('../src/assets/fonts/Inter/static/Inter_18pt-Light.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'InterThin';
+  src: url('../src/assets/fonts/Inter/static/Inter_18pt-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -111,40 +143,6 @@
 ion-grid {
   --background: none;
 }
-
-@media (min-height: 20px) {
-  .input-fill-outline.input-label-placement-floating.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
-    color: #313131;
-    margin-top: 3px;
-    font-size: 10px;
-    font-weight: bolder;
-  }
-
-  body {
-    position: fixed;
-    bottom: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    overflow-x: scroll;
-  }
-
-  html {
-    position: fixed;
-    bottom: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    overflow-x: scroll;
-  }
-}
-
-@media (min-height: 576px) {
-  .input-fill-outline.input-label-placement-floating.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
-    margin-top: 17px;
-  }
-}
-
 .label-floating.input-fill-outline.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
   color: white;
   background: rgba(255, 255, 255, 0);
@@ -171,7 +169,23 @@ body {
   left: 0;
   right: 0;
   height: 100%;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 400; /* Poids normal pour le texte principal */
 }
+
+/* Titre avec poids bold */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700; /* Poids gras pour les titres */
+}
+
+/* Description avec poids plus léger */
 
 html {
   position: fixed;
@@ -219,4 +233,37 @@ video::-webkit-media-controls-overlay-play-button {
 
 .video::-webkit-media-controls-enclosure {
   display: none !important;
+}
+
+@media (min-height: 20px) {
+  .input-fill-outline.input-label-placement-floating.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
+    color: #313131;
+    margin-top: 3px;
+    font-size: 10px;
+    font-weight: bolder;
+  }
+
+  body {
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow-x: scroll;
+  }
+
+  html {
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow-x: scroll;
+  }
+}
+
+@media (min-height: 576px) {
+  .input-fill-outline.input-label-placement-floating.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
+    margin-top: 17px;
+  }
 }

@@ -21,13 +21,10 @@ export class getUserOrdersService {
     try {
       // console.log('appeeeeeeeeeeeeeeeeeeeeler de la fonction');
       const user = await this.userStorage.get('user');
-      if (!user || !user.uid) {
-        console.error('Aucun utilisateur connecté');
-        return;
-      }
+      if (!user || !user.uid) return;
 
       // const response = await axios.get(`${this.apiUrl}/order/all/${fastFoodId}`);
-      const response = await axios.get(`${this.apiUrl}/order/user/all/${user.uid}`);
+      const response = await axios.get(`${this.apiUrl}/order/user/all/${user.uid}`, { headers: { 'ngrok-skip-browser-warning': 'true' } });
       this.store.dispatch(setUserOrderReducer({ orderTab: response.data.data }));
     } catch (error) {
       console.error('Erreur lors de la récupération des commandes:', error);

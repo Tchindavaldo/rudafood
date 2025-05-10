@@ -1,31 +1,30 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-  <ion-grid>
-
-    <ion-row class="row-segment">
-      <ion-col class="col-segment" size="4">
-        <ion-chip [routerLink]="['pending-order-toBuy']" routerLinkActive="router-link-active"  class="firstCchip" color="danger" mode="ios" >
-          <ion-label>ACHAT</ion-label>
-          <ion-label>4</ion-label>
-        </ion-chip>
-      </ion-col>
-      <ion-col class="col-segment" size="4">
-       <ion-chip [routerLink]="['status-order']"  color="danger" mode="ios" >
-        <ion-label>STATUT</ion-label>
-        <ion-label>2</ion-label>
-       </ion-chip>
-      </ion-col>
-      <ion-col class="col-segment" size="4">
-        <ion-chip [routerLink]="['bonus']" color="danger" mode="ios" >
-          <ion-label>BONUS</ion-label>
-          <ion-label>5</ion-label>
-        </ion-chip>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-header [translucent]="true" style="background-color: darkred">
+  <ion-toolbar style="--background: #000000">
+    <ion-grid>
+      <ion-row class="row-segment">
+        <ion-col class="col-segment" size="4">
+          <ion-chip [routerLink]="['pending-order-toBuy']" routerLinkActive="router-link-active" class="firstCchip" color="danger" mode="ios">
+            <ion-label>ACHAT</ion-label>
+            <ion-label>4</ion-label>
+          </ion-chip>
+        </ion-col>
+        <ion-col class="col-segment" size="4">
+          <ion-chip [routerLink]="['status-order']" color="danger" mode="ios">
+            <ion-label>STATUT</ion-label>
+            <ion-label>2</ion-label>
+          </ion-chip>
+        </ion-col>
+        <ion-col class="col-segment" size="4">
+          <ion-chip [routerLink]="['bonus']" color="danger" mode="ios">
+            <ion-label>BONUS</ion-label>
+            <ion-label>5</ion-label>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [@userOrderRouteAnimation]="false">
-<router-outlet/>
+  <router-outlet />
 </ion-content>

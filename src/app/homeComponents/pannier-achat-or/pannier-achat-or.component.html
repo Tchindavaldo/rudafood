@@ -1,0 +1,51 @@
+<ion-item [ngStyle]="{ '--background': backgroundItem, 'padding-top': paddingTopItem }">
+  <ion-grid [ngStyle]="{ 'background-color': backgroundItem }">
+    <ion-row>
+      <ion-col size="9">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="auto">
+              <ion-card [ngStyle]="{ 'margin-left': marginLeftCard, width: widthCard, height: heightCard }">
+                <img src="../../assets/gmy7.jpeg" alt="" srcset="" />
+              </ion-card>
+            </ion-col>
+            <ion-col size="auto">
+              <ion-grid>
+                <ion-row class="row-titre">
+                  <ion-col size="auto"
+                    ><ion-label [ngStyle]="{ color: colorText1Ligne1 }"> {{ cmdGet?.menu?.titre }} </ion-label></ion-col
+                  >
+                </ion-row>
+                <ion-row>
+                  <ion-grid>
+                    <ion-row class="row-action">
+                      <!-- <ion-col (click)="showBottomCard()" class="col-modifier" size="6"> -->
+                      <ion-col class="col-modifier" size="6">
+                        <ion-label *ngIf="showText1Ligne2"> {{ text1Ligne2 }} </ion-label>
+                      </ion-col>
+                      <ion-col (click)="deleteCmd()" class="col-annuler" size="6">
+                        <ion-label color="danger" *ngIf="showText2Ligne2">Annuler</ion-label>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-row>
+                <ion-row class="row-prix">
+                  <ion-col size="auto">
+                    <ion-label [ngStyle]="{ color: colorText1Ligne3 }"> {{ cmdGet?.prixTotal }} </ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+      <ion-col size="3">
+        <ion-chip [ngStyle]="{ color: colorIonChip2, 'background-color': backgoundColorIonChip2 }" color="{{ colorIonChip }}">
+          <ion-icon *ngIf="showIcon" name="remove-circle"></ion-icon>
+          <ion-label> {{ cmdGet?.quantite }} </ion-label>
+          <ion-icon *ngIf="showIcon" name="add-circle"></ion-icon>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>

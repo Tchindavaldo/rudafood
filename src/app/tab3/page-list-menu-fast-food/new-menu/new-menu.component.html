@@ -1,0 +1,224 @@
+<ion-content class="el" fixed [fullscreen]="true">
+  <ion-card class="card-grid">
+    <ion-chip style="position: absolute; top: 25px; left: 15px" (click)="goBack()" class="chip" color="danger">
+      <ion-icon name="options"> </ion-icon>
+
+      <ion-label> Anuuler </ion-label>
+    </ion-chip>
+    <ion-grid fixed class="el">
+      <ion-row class="">
+        <ion-col size="auto">
+          <ion-label class="text-sm-4 text-md-3 text-lg-2 text-xl-1" style=""
+            ><span>Creation du</span><br />Nouveau<br />
+            Menu</ion-label
+          >
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="auto">
+          <ion-label *ngIf="showImageInput">Image du menu</ion-label>
+          <ion-label *ngIf="showNameInput">Nom du menu</ion-label>
+          <ion-label *ngIf="showPriceInput">Prix du menu</ion-label>
+          <ion-label *ngIf="showPrice1DescriptionInput || showPrice2DescriptionInput || showPrice3DescriptionInput"> Description du menu </ion-label>
+          <ion-label *ngIf="showStatusInput">Statut du menu</ion-label>
+        </ion-col>
+
+        <!-- <ion-col class="col-other-connect col-other-connect1" style="align-items: center; justify-content: flex-end" size="5"> <ion-icon name="logo-google"></ion-icon> </ion-col
+        ><ion-col class="col-other-connect col-other-connect2" style="align-items: center" (click)="direct('auth-with-number')" size="2">
+          <ion-icon style="" name="logo-whatsapp"></ion-icon>
+        </ion-col> -->
+      </ion-row>
+      <ion-row *ngIf="showImageInput">
+        <ion-col size="3" class="val-statut">
+          <!-- Conteneur pour l'icône personnalisée et l'input de fichier caché -->
+          <div class="custom-file-upload">
+            <!-- Icône par défaut avant la sélection de l'image -->
+            <div *ngIf="image1Url === ''" (click)="triggerFileInput()" class="ctn-img">
+              <img src="assets/icon/camera-outline.svg" alt="Default Icon" class="default-icon" />
+            </div>
+
+            <!-- Aperçu de l'image après la sélection -->
+
+            <div (click)="triggerFileInput()" *ngIf="image1Url !== ''" class="preview-image-ctn" id="iconPhotoAdd" style="background-color: hsl(0deg 0% 100% / 41%)">
+              <img (error)="onImageError()" [src]="image1Url" alt="Selected Image" />
+            </div>
+
+            <!-- Input de fichier caché -->
+            <input type="file" #fileInput (change)="onFileSelected($event)" hidden />
+          </div>
+        </ion-col>
+        <ion-col size="3" class="val-statut">
+          <!-- Conteneur pour l'icône personnalisée et l'input de fichier caché -->
+          <div class="custom-file-upload">
+            <!-- Icône par défaut avant la sélection de l'image -->
+            <div *ngIf="image2Url === ''" class="ctn-img">
+              <img src="assets/icon/camera-outline.svg" alt="Default Icon" class="default-icon" />
+            </div>
+
+            <!-- Aperçu de l'image après la sélection -->
+
+            <!-- <div *ngIf="image2Url !=='' " id="iconPhotoAdd">
+              <img
+                style="background-repeat: no-repeat; background-position: center; background-image: url(../../../assets/svg/loader2.svg)"
+                (click)="triggerFileInput()"
+                (load)="onImageLoad()"
+                (error)="onImageError()"
+                class="preview-image"
+              />
+
+             </div> -->
+
+            <!-- Input de fichier caché -->
+            <!-- <input type="file" #fileInput2 (change)="onFileSelected($event)" hidden /> -->
+          </div>
+        </ion-col>
+        <ion-col size="3" class="val-statut">
+          <!-- Conteneur pour l'icône personnalisée et l'input de fichier caché -->
+          <div class="custom-file-upload">
+            <!-- Icône par défaut avant la sélection de l'image -->
+            <div *ngIf="image3Url === ''" class="ctn-img">
+              <img src="assets/icon/camera-outline.svg" alt="Default Icon" class="default-icon" />
+            </div>
+
+            <!-- Aperçu de l'image après la sélection -->
+
+            <!-- <div *ngIf="image3Url !=='' " id="iconPhotoAdd">
+              <img
+                style="background-repeat: no-repeat; background-position: center; background-image: url(../../../assets/svg/loader2.svg)"
+                (click)="triggerFileInput()"
+                (load)="onImageLoad()"
+                (error)="onImageError()"
+                class="preview-image"
+              />
+
+             </div> -->
+
+            <!-- Input de fichier caché -->
+            <!-- <input type="file" #fileInput3 (change)="onFileSelected($event)" hidden /> -->
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="showNameInput">
+        <ion-col size="12">
+          <ion-input class="ion-input" label="Entrer le nom de votre menu" type="text" label-placement="floating" fill="outline" placeholder="Entrer votre nom" [(ngModel)]="nom">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="showPriceInput">
+        <ion-col size="4">
+          <ion-input class="ion-input" label="prix1" type="number" label-placement="floating" fill="outline" [(ngModel)]="price1"> </ion-input>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-input class="ion-input" label="prix2" type="number" label-placement="floating" fill="outline" [(ngModel)]="price2"> </ion-input>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-input class="ion-input" label="prix3" type="number" label-placement="floating" fill="outline" [(ngModel)]="price3"> </ion-input>
+          <ion-icon class="ico2" name="eye" aria-hidden="true"></ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="showPrice1DescriptionInput">
+        <ion-col size="12">
+          <ion-textarea class="ion-input" placeholder="Entrez la description pour le prix 1" [(ngModel)]="descriptionPrice1" autoGrow="true"></ion-textarea>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="showPrice2DescriptionInput">
+        <ion-col size="12">
+          <ion-textarea class="ion-input" placeholder="Entrez la description pour le prix 2" [(ngModel)]="descriptionPrice2" autoGrow="true"></ion-textarea>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="showPrice3DescriptionInput">
+        <ion-col size="4">
+          <ion-textarea class="ion-input" placeholder="Entrez la description pour le prix 3" [(ngModel)]="descriptionPrice3" autoGrow="true"></ion-textarea>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin: 50px 0px" class="row-cmpt-marchant" *ngIf="showStatusInput">
+        <ion-col size="4">
+          <ion-checkbox [checked]="availability === 'avaible'" (ionChange)="setAvailability('avaible')"> Disponible </ion-checkbox>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-checkbox [checked]="availability === 'unAvaible'" (ionChange)="setAvailability('unAvaible')" style="margin-left: 25px"> Indisponible </ion-checkbox>
+        </ion-col>
+      </ion-row>
+      <ion-row style="margin-bottom: 25px" *ngIf="showStatusInput" class="row-cmpt-marchant-descript">
+        <ion-col class="col-fogotPsswrd" size="auto">
+          <ion-label>votre menu est finaliser et pret a etre publier pour. Vous recevrez des commande de vos client dans la page boutique dedier aux commande </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row> </ion-row>
+      <ion-row class="row-btn-nav">
+        <ion-col size="auto">
+          <!-- <ion-button (click)="show2()">
+            <ion-label>email verification</ion-label>
+          </ion-button>
+           -->
+
+          <!-- <ion-button (click)="googleSignIn()"> -->
+          <ion-button (click)="back()">
+            <ion-icon color="light" name="arrow-back-outline"></ion-icon>
+          </ion-button>
+          <!--
+          <ion-button color="success" (click)="signOut()">
+            <ion-icon color="light" name="arrow-forward-outline"></ion-icon>
+          </ion-button> -->
+        </ion-col>
+        <ion-col class="col-btn-connect" size="auto">
+          <!-- <ion-button (click)="show2()">
+            <ion-label>email verification</ion-label>
+          </ion-button>
+           -->
+
+          <!-- <ion-button (click)="googleSignIn()"> -->
+          <ion-button (click)="next()">
+            <ion-icon *ngIf="!postingMenu" color="light" name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+          <svg
+            *ngIf="postingMenu"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="xMidYMid"
+            width="200"
+            height="200"
+            style="shape-rendering: auto; display: block; background: rgba(255, 255, 255, 0); position: absolute; transform: scale(0.15)"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <g>
+              <path stroke="none" fill="#e15b64" d="M9 50A41 41 0 0 0 91 50A41 43 0 0 1 9 50" style="fill: white">
+                <animateTransform values="0 50 51;360 50 51" keyTimes="0;1" repeatCount="indefinite" dur="1s" type="rotate" attributeName="transform"></animateTransform>
+              </path>
+              <g></g>
+            </g>
+            <!-- [ldio] generated by https://loading.io -->
+          </svg>
+          <!--
+          <ion-button color="success" (click)="signOut()">
+            <ion-icon color="light" name="arrow-forward-outline"></ion-icon>
+          </ion-button> -->
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div *ngIf="isLoadingImg1">
+            <p>Téléchargement : {{ uploadProgress }}%</p>
+            <ion-progress-bar [value]="uploadProgress / 100"></ion-progress-bar>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  <ion-card class="card-black"> </ion-card>
+  <ion-card class="el card-back"> </ion-card>
+  <ion-card class="el card-back2"> </ion-card>
+</ion-content>
+
+<style>
+  .label-text-wrapper.sc-ion-input-md {
+    color: red;
+  }
+</style>

@@ -1,0 +1,12 @@
+- [] la validaiton d'un order doit renvoeyr le nouveau order du utiliser la date et heure de validation oiur claserles proccesing et finisder
+- [ ] date et heure de passege de l'annocne pour le pending
+
+
+- [ ] dans les reducer empemcher la fonction d'ajout d'ajouter si un elememt identique existe deja
+
+- [ ] permetre la gestion des binus par fastfood (creer literalement une collection pour les bonus une collection pour les ddemande de bonus(quand il est eligible et
+et fait une demande pour recevoir son bonus)  interface marchand pour creer modiifer supprimer ses bonus visualiser lsdemande de bonus
+           )
+
+
+- [ ] interface pour envoyer des notifiaction a tous les fastfood

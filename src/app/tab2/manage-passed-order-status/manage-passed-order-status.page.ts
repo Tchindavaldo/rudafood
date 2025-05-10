@@ -13,7 +13,7 @@ import { OrderDataService } from 'src/app/services/orders/data/order-data.servic
   selector: 'app-manage-passed-order-status',
   templateUrl: './manage-passed-order-status.page.html',
   styleUrls: ['./manage-passed-order-status.page.scss'],
-  animations: [userOrderRouteAnimation, userOrderRouteNoAnimation],
+  animations: [userOrderRouteAnimation],
 })
 export class ManagePassedOrderStatusPage implements OnInit {
   showAnim = false;

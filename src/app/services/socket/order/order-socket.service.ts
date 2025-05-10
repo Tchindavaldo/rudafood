@@ -4,7 +4,7 @@ import { OrderDataService } from '../../orders/data/order-data.service';
 import { environment } from 'src/environments/environment.prod';
 import { Store } from '@ngrx/store';
 import { addFastFoodOrder, setFastFoodOrder } from 'src/app/store/order/order-fastfood-reducer';
-import { setObjectOnTabByArg } from '../../functions/table/setObjectOnTabByArg';
+import { setObjectOnTabByArg } from '../../../utils/setObjectOnTabByArg';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/indx';
 import { addUserOrderReducer, setUserOrderReducer } from 'src/app/store/order/order-user-reducer';
@@ -17,10 +17,22 @@ export class OrderSocketService {
   constructor(private orderData: OrderDataService, private store: Store<AppState>) {}
 
   public initializeOrderSocket(socket: Socket) {
-    socket.on('newOrder', (data: any) => {
+    socket.on('newUserOrder', (data: any) => {
+      console.log('🍔 Nouvelle commande reçue :', data);
+      if (this.orderData.getUserOrders() !== null) this.store.dispatch(addUserOrderReducer({ order: data.data }));
+    });
+
+    socket.on('newFastFoodOrder', (data: any) => {
       console.log('🍔 Nouvelle commande reçue :', data);
       if (this.orderData.getFastfoodOrders() !== null) this.store.dispatch(addFastFoodOrder({ order: data.data }));
-      if (this.orderData.getUserOrders() !== null) this.store.dispatch(addUserOrderReducer({ order: data.data }));
+    });
+
+    socket.on('newFastFoodOrders', (data: any) => {
+      console.log('🍔 Nouvelle commande reçue :', data);
+      if (this.orderData.getFastfoodOrders() !== null)
+        data.data.forEach((order: any) => {
+          this.store.dispatch(addFastFoodOrder({ order }));
+        });
     });
 
     socket.on('updateOrder', (data: any) => {

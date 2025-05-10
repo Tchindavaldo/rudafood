@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { fastFoodOrderRouteAnimation } from 'src/app/animations/fastfood-order-route-animations';
 import { OrderDataService } from 'src/app/services/orders/data/order-data.service';
 import { getOrdersService } from 'src/app/services/orders/get/get-orders.service';
+import { UserStorageService } from 'src/app/services/storgae/user-storage';
 import { AppState } from 'src/app/store/indx';
 
 @Component({
@@ -18,16 +19,13 @@ export class CommandePage implements OnInit {
   fastFoodOrder!: Observable<any[]>; // Utilisation d'un Observable
   private ffOrder!: any[];
 
-  constructor(private router: Router, private getOrdersService: getOrdersService, public orderData: OrderDataService, private store: Store<AppState>) {}
+  constructor(private user: UserStorageService, private router: Router, private getOrdersService: getOrdersService, public orderData: OrderDataService, private store: Store<AppState>) {}
 
-  ngOnInit() {
-    const height = window.innerHeight;
-    // if (height < 650) {
-    //   this.marginGrid = '0 0 25px 0';
-    // }
+  async ngOnInit() {
+    this.userData = await this.user.get('user');
+    console.log('user get ala commande page  recupe des commande du fastfood', JSON.stringify(this.userData, null, 2));
 
-    console.log('etat', this.orderData.getFastfoodOrders());
-
+    // console.log('etat', this.orderData.getFastfoodOrders());
     if (this.orderData.getFastfoodOrders() !== null) {
       this.router.navigate(['tabs/tab3/commande/pending-noAnim']);
     } else {

@@ -4,6 +4,7 @@ import { Menu } from 'src/app/data/menu';
 import { CardService } from 'src/app/services/card.service';
 import { DataService } from 'src/app/services/data.service';
 import { PostOrdersService } from 'src/app/services/orders/get/post-orders.service';
+import { showCard } from 'src/app/utils/showCard';
 
 @Component({
   selector: 'app-pannier-tobuy',
@@ -25,20 +26,23 @@ export class PannierTobuyPage implements OnInit {
   constructor(private postOrderSerice: PostOrdersService) {}
 
   ngOnInit() {
-    // console.log('menu get', this.menu);
+    console.log('menu get', this.menu);
   }
 
-  postOrder = (status: any) => {
+  postOrder = async (status: any) => {
     const data = {
-      fastfoodId: this.menu.fastfoodId,
-      clientName: 'front 6x  cmd',
-      items: [{ name: 'Burger', quantity: 2 }],
+      fastFoodId: this.menu.fastFoodId,
+      menu: this.menu,
+      items: [{ name: 'Burger', quantity: 2, Pu: 2000 }],
       total: 20,
     };
     if (status !== 'pending') {
-      this.postOrderSerice.postOrder(data);
+      const { isPosting, isError } = await this.postOrderSerice.postOrder(data);
+      if (!isError) showCard('bottom-card-home', 'y', '230px');
       return;
     }
-    this.postOrderSerice.postOrder({ ...data, status });
+
+    const { isPosting, isError } = await this.postOrderSerice.postOrder({ ...data, status });
+    if (!isError) showCard('bottom-card-home', 'y', '230px');
   };
 }

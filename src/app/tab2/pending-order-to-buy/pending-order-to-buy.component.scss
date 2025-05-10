@@ -23,7 +23,7 @@ ion-grid {
   padding: 0;
 }
 .card-parent {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   right: 0px;
   left: 0px;
@@ -35,7 +35,9 @@ ion-grid {
   width: 100%;
 }
 .card-parent ion-card {
-  border-radius: 30px;
+  // border-radius: 30px;
+
+  padding-top: 10px;
   margin: 0px;
   // border-top-left-radius: 45px;
   // border-top-right-radius: 45px;

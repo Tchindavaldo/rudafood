@@ -1,14 +1,49 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { OrderDataService } from 'src/app/services/orders/data/order-data.service';
+import { getUserOrdersService } from 'src/app/services/orders/get/get-user-orders.service';
+import { updatePendingToBuyOrdersService } from 'src/app/services/orders/get/update-pending-tobuy-orders.service copy';
+import { AppState } from 'src/app/store/indx';
+import { filterByArg } from 'src/app/utils/filterByArg';
 
 @Component({
   selector: 'app-pending-order-to-buy',
   templateUrl: './pending-order-to-buy.component.html',
   styleUrls: ['./pending-order-to-buy.component.scss'],
 })
-export class PendingOrderToBuyComponent  implements OnInit {
+export class PendingOrderToBuyComponent implements OnInit {
+  pendingToBuyOrder!: any;
+  userOrder!: Observable<any[]>;
 
-  constructor() { }
+  constructor(
+    private store: Store<AppState>,
+    private updatePendingOrderService: updatePendingToBuyOrdersService,
+    public orderData: OrderDataService,
+    private getUserOrdersService: getUserOrdersService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetchData();
+  }
 
+  async fetchData() {
+    try {
+      console.log('order  data', this.orderData.getUserOrders());
+      if (this.orderData.getUserOrders() === null) await this.getUserOrdersService.getFastUserOrders();
+
+      this.userOrder = this.store.select(state => state.userOrder.orders);
+      this.userOrder.subscribe(order => (this.pendingToBuyOrder = filterByArg(order, 'status', 'pendingToBuy')));
+
+      // this.pendingToBuyOrder = filterByArg(this.orderData.getUserOrders(), 'status', 'pendingToBuy');
+      // console.log('order  data', this.orderData.getUserOrders());
+    } catch (error) {
+      console.error('Erreur', error);
+    }
+  }
+
+  updatePendingOrder() {
+    console.log('click updaye appeler');
+    this.updatePendingOrderService.updateOrders(this.pendingToBuyOrder);
+  }
 }
