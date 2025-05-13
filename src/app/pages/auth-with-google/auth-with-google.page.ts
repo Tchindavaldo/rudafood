@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -7,12 +6,12 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 // import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { requeToAuth } from 'src/app/services/requeToAuth';
+import { requeToAuth } from 'src/services/requeToAuth';
 import { ToastButton, ToastController } from '@ionic/angular';
 import { Users } from 'src/app/data/Users';
 import { UsersInfos } from 'src/app/data/UsersInfos';
-import { requeToUser } from 'src/app/services/requeToUser';
-import { requeToGeneralDataUsers } from 'src/app/services/requeToGeneralDataUsers';
+import { requeToUser } from 'src/services/requeToUser';
+import { requeToGeneralDataUsers } from 'src/services/requeToGeneralDataUsers';
 
 @Component({
   selector: 'app-auth-with-google',
@@ -20,44 +19,40 @@ import { requeToGeneralDataUsers } from 'src/app/services/requeToGeneralDataUser
   styleUrls: ['./auth-with-google.page.scss', './auth-with-google.page2.scss'],
 })
 export class AuthWithGooglePage implements OnInit {
-
   recaptchaVerifier!: firebase.auth.RecaptchaVerifier;
   verificationId: string = '';
   m: string | null = null;
-  passwordIsShow = false
-  infos1ISCheck = false
-  infos2ISCheck = false
-  infos3ISCheck = false
-  connect = false
+  passwordIsShow = false;
+  infos1ISCheck = false;
+  infos2ISCheck = false;
+  infos3ISCheck = false;
+  connect = false;
 
-
-  nom = ''
-  birth = ''
-  prenom = ''
+  nom = '';
+  birth = '';
+  prenom = '';
   email: string = '';
   tel: string = '';
   password: string = '';
   verificationCode: string = '';
-  constructor
-
-    (private afAuth: AngularFireAuth,
-      private requeteToAuth: requeToAuth,
-      // private googlePlus: GooglePlus,
-      private router: Router,
-      private toastController: ToastController,
-      private requeteToUser: requeToUser,
-      private requeteToGeneralDataUser: requeToGeneralDataUsers
-    ) {
+  constructor(
+    private afAuth: AngularFireAuth,
+    private requeteToAuth: requeToAuth,
+    // private googlePlus: GooglePlus,
+    private router: Router,
+    private toastController: ToastController,
+    private requeteToUser: requeToUser,
+    private requeteToGeneralDataUser: requeToGeneralDataUsers
+  ) {
     // Initialize Firebase in the constructor
     firebase.initializeApp({
       // Your Firebase config here
-      apiKey: "AIzaSyAxFemQ3WoHgrgpvvjeQLhk2ZJOaQZ0QQQ",
-      authDomain: "infinity-fastfood.firebaseapp.com",
-      projectId: "infinity-fastfood",
-      storageBucket: "infinity-fastfood.appspot.com",
-      messagingSenderId: "496693477037",
-      appId: "1:496693477037:web:d1819debb382b12c611024"
-
+      apiKey: 'AIzaSyAxFemQ3WoHgrgpvvjeQLhk2ZJOaQZ0QQQ',
+      authDomain: 'infinity-fastfood.firebaseapp.com',
+      projectId: 'infinity-fastfood',
+      storageBucket: 'infinity-fastfood.appspot.com',
+      messagingSenderId: '496693477037',
+      appId: '1:496693477037:web:d1819debb382b12c611024',
     });
   }
 
@@ -77,7 +72,7 @@ export class AuthWithGooglePage implements OnInit {
 
   sendCode() {
     this.sendVerificationCode('+237696080087', this.recaptchaVerifier)
-      .then((result) => {
+      .then(result => {
         this.verificationId = result.verificationId;
         // Code envoyé, demandez à l'utilisateur de saisir le code de vérification
 
@@ -85,7 +80,7 @@ export class AuthWithGooglePage implements OnInit {
         console.log('ID de vérification:', this.verificationId);
         console.log('Détails de résultat:', result);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error during signInWithPhoneNumber', error);
       });
   }
@@ -96,20 +91,17 @@ export class AuthWithGooglePage implements OnInit {
 
   verifyCode() {
     this.verifyCode1(this.verificationId, this.verificationCode)
-      .then((result) => {
+      .then(result => {
         // Utilisateur connecté
         console.log('User signed in successfully', result);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error during verification', error);
       });
   }
   // Fonction pour vérifier le code reçu par SMS
   verifyCode1(verificationId: string, verificationCode: string) {
-    const credential = firebase.auth.PhoneAuthProvider.credential(
-      verificationId,
-      verificationCode
-    );
+    const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
     return this.afAuth.signInWithCredential(credential);
   }
   // googleSignIn() {
@@ -133,57 +125,46 @@ export class AuthWithGooglePage implements OnInit {
   // }
 
   createUser() {
-
-
-
     if (this.infos2ISCheck) {
-      this.infos3ISCheck = true
-
+      this.infos3ISCheck = true;
     }
 
-
     if (this.infos2ISCheck && this.infos3ISCheck) {
-      this.connect = true
+      this.connect = true;
 
       if (this.email != '' && this.password != '') {
-        const userCreate = this.requeteToAuth.createUser(this.email, this.password).then(user => {
-          console.log('User created:', user);
-          this.presentToast('bottom', 'compte creer avec succes un lien de verification a ete envoyer a votre email')
+        const userCreate = this.requeteToAuth
+          .createUser(this.email, this.password)
+          .then(user => {
+            console.log('User created:', user);
+            this.presentToast('bottom', 'compte creer avec succes un lien de verification a ete envoyer a votre email');
 
-          if (user?.email != null) {
-            const newUser = new Users(new UsersInfos(this.nom, this.prenom, +this.birth, +this.tel, user.uid, user.email, this.password), true, 100,
-              [])
-            this.requeteToGeneralDataUser.getUserGeneralDataFromFirestore().then(
-              data => {
+            if (user?.email != null) {
+              const newUser = new Users(new UsersInfos(this.nom, this.prenom, +this.birth, +this.tel, user.uid, user.email, this.password), true, 100, []);
+              this.requeteToGeneralDataUser.getUserGeneralDataFromFirestore().then(data => {
                 if (data?.nbrTotalUser != undefined) {
-                  const idxConvert = data.nbrTotalUser
+                  const idxConvert = data.nbrTotalUser;
 
-                  this.requeteToUser.addUserToFirestore(newUser, idxConvert.toString())
-                  const dataUpdate = data
-                  data.nbrTotalUser = data.nbrTotalUser + 1
-                  this.requeteToGeneralDataUser.addUserGeneralDataToFirestore(dataUpdate)
+                  this.requeteToUser.addUserToFirestore(newUser, idxConvert.toString());
+                  const dataUpdate = data;
+                  data.nbrTotalUser = data.nbrTotalUser + 1;
+                  this.requeteToGeneralDataUser.addUserGeneralDataToFirestore(dataUpdate);
                 }
-              }
+              });
+            }
 
-
-
-            )
-          }
-
-          this.router.navigate(['/auth']);
-        })
-          .catch(errorCode => {
-            this.connect = false
-
-            this.showErrorToast(errorCode)
-
+            this.router.navigate(['/auth']);
           })
+          .catch(errorCode => {
+            this.connect = false;
+
+            this.showErrorToast(errorCode);
+          });
       } else {
-        this.presentToast('bottom', 'l\'email ou le mot de passe ne doit etre vide')
+        this.presentToast('bottom', "l'email ou le mot de passe ne doit etre vide");
       }
 
       console.log('reuissite de creation');
-
     }
     // console.log('user created',userCreate);
 
@@ -191,124 +172,93 @@ export class AuthWithGooglePage implements OnInit {
 
     if (this.infos1ISCheck) {
       if (this.tel == '') {
-
-        this.presentToast('bottom', 'le numero ne doit pas etre vide')
+        this.presentToast('bottom', 'le numero ne doit pas etre vide');
         console.log('tel vide');
-
       } else {
-
         if (this.email == '') {
-
-          this.presentToast('bottom', 'le mail ne doit pas etre vide')
+          this.presentToast('bottom', 'le mail ne doit pas etre vide');
           console.log('mail vide');
-
         } else {
           if (this.password == '') {
-
-            this.presentToast('bottom', 'la mot de passe ne doit pas etre vide')
+            this.presentToast('bottom', 'la mot de passe ne doit pas etre vide');
             console.log('pass vide');
-
           }
         }
       }
 
-
-
       if (this.tel != '' && this.email != '' && this.password != '') {
-        this.infos2ISCheck = true
+        this.infos2ISCheck = true;
       }
       console.log('chech2', this.infos2ISCheck);
-
     }
     if (!this.infos1ISCheck) {
       if (this.nom == '') {
-
-        this.presentToast('bottom', 'le nom ne doit pas etre vide')
+        this.presentToast('bottom', 'le nom ne doit pas etre vide');
         console.log('nom vide');
-
       } else {
-
         if (this.prenom == '') {
-
-          this.presentToast('bottom', 'le prenom ne doit pas etre vide')
+          this.presentToast('bottom', 'le prenom ne doit pas etre vide');
           console.log('prenom vide');
-
         } else {
           if (this.birth == '') {
-
-            this.presentToast('bottom', 'la date de naissance ne doit pas etre vide')
+            this.presentToast('bottom', 'la date de naissance ne doit pas etre vide');
             console.log('birth vide');
-
           }
         }
       }
 
-
-
       if (this.nom != '' && this.prenom != '' && this.birth != '') {
-        this.infos1ISCheck = true
+        this.infos1ISCheck = true;
       }
       console.log('chech', this.infos1ISCheck);
-
     }
-
 
     console.log(this.infos1ISCheck, this.infos2ISCheck, this.infos3ISCheck);
   }
 
   back() {
     if (this.infos1ISCheck && !this.infos2ISCheck) {
-      this.infos1ISCheck = false
-      this.infos2ISCheck = false
-      this.infos3ISCheck = false
+      this.infos1ISCheck = false;
+      this.infos2ISCheck = false;
+      this.infos3ISCheck = false;
       console.log(this.infos1ISCheck, this.infos2ISCheck, this.infos3ISCheck);
-
     }
-
 
     if (this.infos1ISCheck && this.infos2ISCheck) {
-      this.infos1ISCheck = true
-      this.infos2ISCheck = false
-      this.infos3ISCheck = false
+      this.infos1ISCheck = true;
+      this.infos2ISCheck = false;
+      this.infos3ISCheck = false;
     }
-
-
-
   }
   connectUser() {
-
     if (this.email != '' || this.password != '') {
-      this.requeteToAuth.signInUser(this.email, this.password).then(user => {
-        console.log('User created:', user);
-        this.presentToast('bottom', 'connexion reussi')
-        this.router.navigate(['/tabs']);
-      })
-        .catch(errorCode => {
-
-          this.showErrorToast(errorCode.code)
-
-
+      this.requeteToAuth
+        .signInUser(this.email, this.password)
+        .then(user => {
+          console.log('User created:', user);
+          this.presentToast('bottom', 'connexion reussi');
+          this.router.navigate(['/tabs']);
         })
+        .catch(errorCode => {
+          this.showErrorToast(errorCode.code);
+        });
     } else {
-      this.presentToast('bottom', 'l\'email ou le mot de passe ne doit etre vide')
+      this.presentToast('bottom', "l'email ou le mot de passe ne doit etre vide");
     }
     // console.log('user created',userCreate);
-
-
-
   }
 
   async showErrorToast(error: any) {
     let message: string;
     switch (error) {
       case 'auth/invalid-email':
-        message = 'L\'e-mail doit avoir une syntaxe valide.';
+        message = "L'e-mail doit avoir une syntaxe valide.";
         break;
       case 'email-not-verified':
         message = 'Email non vérifié. Cliquez sur le lien envoyé à votre compte pour vérifier et valider votre email';
         break;
       case 'auth/email-already-in-use':
-        message = 'L\'adresse e-mail est déjà utilisée par un autre compte.';
+        message = "L'adresse e-mail est déjà utilisée par un autre compte.";
         break;
       case 'auth/weak-password':
         message = 'Le mot de passe est trop faible.';
@@ -326,28 +276,28 @@ export class AuthWithGooglePage implements OnInit {
         message = 'Trop de requêtes ont été envoyées depuis cette adresse IP, veuillez réessayer plus tard.';
         break;
       case 'auth/operation-not-allowed':
-        message = 'Cette opération n\'est pas autorisée pour ce type de compte.';
+        message = "Cette opération n'est pas autorisée pour ce type de compte.";
         break;
       case 'auth/user-disabled':
-        message = 'L\'utilisateur a été désactivé.';
+        message = "L'utilisateur a été désactivé.";
         break;
       case 'auth/account-exists-with-different-credential':
         message = 'Le compte existe déjà avec un identifiant différent.';
         break;
       case 'auth/requires-recent-login':
-        message = 'L\'opération nécessite une connexion récente de l\'utilisateur.';
+        message = "L'opération nécessite une connexion récente de l'utilisateur.";
         break;
       case 'auth/invalid-verification-code':
         message = 'Le code de vérification est incorrect.';
         break;
       case 'auth/invalid-verification-id':
-        message = 'L\'ID de vérification est incorrect.';
+        message = "L'ID de vérification est incorrect.";
         break;
       case 'auth/network-request-failed':
         message = 'connexion internet Indisponible.';
         break;
       case 'auth/internal-error':
-        message = 'Une erreur interne s\'est produite.';
+        message = "Une erreur interne s'est produite.";
         break;
       default:
         message = 'Une erreur est survenue.';
@@ -355,7 +305,7 @@ export class AuthWithGooglePage implements OnInit {
 
     // Afficher le message d'erreur sous forme de toast
     console.log(message);
-    this.presentToast('bottom', message)
+    this.presentToast('bottom', message);
   }
   async presentToast(position: 'top' | 'middle' | 'bottom', message: string) {
     const toast = await this.toastController.create({
@@ -364,10 +314,10 @@ export class AuthWithGooglePage implements OnInit {
       position: position,
       cssClass: 'monToast',
       swipeGesture: 'vertical',
-      buttons: this.toastButtons
+      buttons: this.toastButtons,
     });
 
-    toast.onDidDismiss().then((event) => this.setRoleMessage(event));
+    toast.onDidDismiss().then(event => this.setRoleMessage(event));
     await toast.present();
   }
 
@@ -387,21 +337,19 @@ export class AuthWithGooglePage implements OnInit {
     console.log(`Dismissed with role: ${role}`);
   }
 
-
   direct(rout: String) {
     this.router.navigate(['/', rout]);
   }
 
   showCarat() {
-    const passwordInput = document.getElementById('password-input') as HTMLIonInputElement
+    const passwordInput = document.getElementById('password-input') as HTMLIonInputElement;
 
     if (this.passwordIsShow) {
-      passwordInput.type = 'password'
-      this.passwordIsShow = false
+      passwordInput.type = 'password';
+      this.passwordIsShow = false;
     } else {
-
-      passwordInput.type = 'text'
-      this.passwordIsShow = true
+      passwordInput.type = 'text';
+      this.passwordIsShow = true;
     }
   }
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { IonLabel, NavController, Platform, ToastButton, ToastController } from '@ionic/angular';
 import { getElement } from 'ionicons/dist/types/stencil-public-runtime';
-import { DataService } from '../services/data.service';
+import { DataService } from '../../services/data.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { SocketService } from '../services/socket/socket.service';
-import { fcmService } from '../services/notifications/FCM/fcm.servicce';
+import { SocketService } from '../../services/socket/socket.service';
+import { fcmService } from '../../services/notifications/FCM/fcm.servicce';
 import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Component({

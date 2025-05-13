@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, AfterViewChecked } from '@angular/core';
-import { Commande } from 'src/app/data/commande';
+import { Commande } from 'src/app/data/cmd';
 import { Users } from 'src/app/data/Users';
-import { CardService } from 'src/app/services/card.service';
-import { DataService } from 'src/app/services/data.service';
-import { requeToUser } from 'src/app/services/requeToUser';
-import { showLoaderToast } from 'src/app/services/showLoaderToast';
+import { CardService } from 'src/services/card.service';
+import { DataService } from 'src/services/data.service';
+import { requeToUser } from 'src/services/requeToUser';
+import { showLoaderToast } from 'src/services/showLoaderToast';
 
 @Component({
   selector: 'app-pannier-achat-or',

@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { getScreenHeight } from 'src/app/utils/getScreenHeight';
 import { filterByArg } from 'src/app/utils/filterByArg';
-import { OrderDataService } from 'src/app/services/orders/data/order-data.service';
-import { OrderSocketService } from 'src/app/services/socket/order/order-socket.service';
+import { OrderDataService } from 'src/services/orders/data/order-data.service';
+import { OrderSocketService } from 'src/services/socket/order/order-socket.service';
 import { AppState } from 'src/app/store/indx';
 @Component({
   selector: 'app-finish-cmd',

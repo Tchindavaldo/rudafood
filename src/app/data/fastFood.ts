@@ -1,5 +1,5 @@
 import { Users } from './Users';
-import { Commande } from './commande';
+import { Commande } from './cmd';
 import { Menu } from './menu';
 
 export class FastFood {

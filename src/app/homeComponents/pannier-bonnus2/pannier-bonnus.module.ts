@@ -1,0 +1,18 @@
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+
+import { PannierBonnusPageRoutingModule } from './pannier-bonnus-routing.module';
+
+import { PannierBonnusPage } from './pannier-bonnus.page';
+import { SharedModule } from '../../shared/shared.module';
+
+@NgModule({
+  imports: [CommonModule, FormsModule, IonicModule, PannierBonnusPageRoutingModule, SharedModule],
+  declarations: [PannierBonnusPage],
+  exports: [PannierBonnusPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class PannierBonnusPageModule {}

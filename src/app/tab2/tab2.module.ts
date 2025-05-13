@@ -6,13 +6,14 @@ import { Tab2Page } from './tab2.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
-import { PannierBonnusPageModule } from '../homeComponents/pannier-bonnus/pannier-bonnus.module';
+import { PannierBonnusPageModule } from '../homeComponents/pannier-bonnus2/pannier-bonnus.module';
 import { CmdBottomCardPageModule } from '../componentTab2/cmd-bottom-card/cmd-bottom-card.module';
 import { CmdStatutPageModule } from './cmd-statut/cmd-statut.module';
 import { PendingOrderToBuyComponent } from './pending-order-to-buy/pending-order-to-buy.component';
 import { StatusOrderBuyedComponent } from './status-order-buyed/status-order-buyed.component';
 import { BonusOrderBuyedComponent } from './bonus-order-buyed/bonus-order-buyed.component';
 import { SharedModule } from '../shared/shared.module';
+import { SharedModule2 } from '../shared/shared2.module';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { SharedModule } from '../shared/shared.module';
     PannierBonnusPageModule,
     CmdBottomCardPageModule,
     CmdStatutPageModule,
-    SharedModule,
+    SharedModule2,
   ],
   declarations: [Tab2Page, StatusOrderBuyedComponent, BonusOrderBuyedComponent],
 

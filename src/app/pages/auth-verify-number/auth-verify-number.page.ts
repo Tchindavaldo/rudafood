@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -7,7 +6,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 // import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { requeToAuth } from 'src/app/services/requeToAuth';
+import { requeToAuth } from 'src/services/requeToAuth';
 import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-auth-verify-number',
@@ -15,8 +14,6 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./auth-verify-number.page.scss'],
 })
 export class AuthVerifyNumberPage implements OnInit {
-
-
   recaptchaVerifier!: firebase.auth.RecaptchaVerifier;
   verificationId: string = '';
   m: string | null = null;
@@ -24,25 +21,23 @@ export class AuthVerifyNumberPage implements OnInit {
   numero: string = '';
   code: string = '';
   verificationCode: string = '';
-  smsIsSend = false
-  constructor
-
-    (private afAuth: AngularFireAuth,
-      private requeteToAuth: requeToAuth,
-      // private googlePlus: GooglePlus,
-      private router: Router,
-      private toastController: ToastController
-    ) {
+  smsIsSend = false;
+  constructor(
+    private afAuth: AngularFireAuth,
+    private requeteToAuth: requeToAuth,
+    // private googlePlus: GooglePlus,
+    private router: Router,
+    private toastController: ToastController
+  ) {
     // Initialize Firebase in the constructor
     firebase.initializeApp({
       // Your Firebase config here
-      apiKey: "AIzaSyAxFemQ3WoHgrgpvvjeQLhk2ZJOaQZ0QQQ",
-      authDomain: "infinity-fastfood.firebaseapp.com",
-      projectId: "infinity-fastfood",
-      storageBucket: "infinity-fastfood.appspot.com",
-      messagingSenderId: "496693477037",
-      appId: "1:496693477037:web:d1819debb382b12c611024"
-
+      apiKey: 'AIzaSyAxFemQ3WoHgrgpvvjeQLhk2ZJOaQZ0QQQ',
+      authDomain: 'infinity-fastfood.firebaseapp.com',
+      projectId: 'infinity-fastfood',
+      storageBucket: 'infinity-fastfood.appspot.com',
+      messagingSenderId: '496693477037',
+      appId: '1:496693477037:web:d1819debb382b12c611024',
     });
   }
 
@@ -64,7 +59,7 @@ export class AuthVerifyNumberPage implements OnInit {
   }
   sendCode() {
     this.sendVerificationCode(this.numero, this.recaptchaVerifier)
-      .then((result) => {
+      .then(result => {
         this.verificationId = result.verificationId;
         // Code envoyé, demandez à l'utilisateur de saisir le code de vérification
 
@@ -72,9 +67,9 @@ export class AuthVerifyNumberPage implements OnInit {
         console.log('ID de vérification:', this.verificationId);
         console.log('Détails de résultat:', result);
 
-        this.smsIsSend = true
+        this.smsIsSend = true;
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error during signInWithPhoneNumber', error);
       });
   }
@@ -90,17 +85,13 @@ export class AuthVerifyNumberPage implements OnInit {
         console.log('uid auth number', result.uid);
         console.log('User signed in successfully', result);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error during verification', error);
       });
   }
   // Fonction pour vérifier le code reçu par SMS
   verifyCode1(verificationId: string, verificationCode: string) {
-    const credential = firebase.auth.PhoneAuthProvider.credential(
-      verificationId,
-      verificationCode
-    );
-
+    const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
 
     return this.afAuth.signInWithCredential(credential);
   }
@@ -124,34 +115,25 @@ export class AuthVerifyNumberPage implements OnInit {
   //     });
   // }
 
-
-
   connectUser() {
-
     if (this.verificationCode != '') {
-      this.verifyCode()
-
+      this.verifyCode();
     } else {
-      this.presentToast('bottom', 'veuiller entrer le code envoyer')
-
+      this.presentToast('bottom', 'veuiller entrer le code envoyer');
     }
-
-
-
-
   }
 
   async showErrorToast(error: any) {
     let message: string;
     switch (error) {
       case 'auth/invalid-email':
-        message = 'L\'e-mail doit avoir une syntaxe valide.';
+        message = "L'e-mail doit avoir une syntaxe valide.";
         break;
       case 'email-not-verified':
         message = 'Email non vérifié. Cliquez sur le lien envoyé à votre compte pour vérifier et valider votre email';
         break;
       case 'auth/email-already-in-use':
-        message = 'L\'adresse e-mail est déjà utilisée par un autre compte.';
+        message = "L'adresse e-mail est déjà utilisée par un autre compte.";
         break;
       case 'auth/weak-password':
         message = 'Le mot de passe est trop faible.';
@@ -169,28 +151,28 @@ export class AuthVerifyNumberPage implements OnInit {
         message = 'Trop de requêtes ont été envoyées depuis cette adresse IP, veuillez réessayer plus tard.';
         break;
       case 'auth/operation-not-allowed':
-        message = 'Cette opération n\'est pas autorisée pour ce type de compte.';
+        message = "Cette opération n'est pas autorisée pour ce type de compte.";
         break;
       case 'auth/user-disabled':
-        message = 'L\'utilisateur a été désactivé.';
+        message = "L'utilisateur a été désactivé.";
         break;
       case 'auth/account-exists-with-different-credential':
         message = 'Le compte existe déjà avec un identifiant différent.';
         break;
       case 'auth/requires-recent-login':
-        message = 'L\'opération nécessite une connexion récente de l\'utilisateur.';
+        message = "L'opération nécessite une connexion récente de l'utilisateur.";
         break;
       case 'auth/invalid-verification-code':
         message = 'Le code de vérification est incorrect.';
         break;
       case 'auth/invalid-verification-id':
-        message = 'L\'ID de vérification est incorrect.';
+        message = "L'ID de vérification est incorrect.";
         break;
       case 'auth/network-request-failed':
         message = 'La requête réseau a échoué.';
         break;
       case 'auth/internal-error':
-        message = 'Une erreur interne s\'est produite.';
+        message = "Une erreur interne s'est produite.";
         break;
       default:
         message = 'Une erreur est survenue.';
@@ -198,7 +180,7 @@ export class AuthVerifyNumberPage implements OnInit {
 
     // Afficher le message d'erreur sous forme de toast
     console.log(message);
-    this.presentToast('bottom', message)
+    this.presentToast('bottom', message);
   }
 
   async presentToast(position: 'top' | 'middle' | 'bottom', message: string) {
@@ -210,5 +192,4 @@ export class AuthVerifyNumberPage implements OnInit {
 
     await toast.present();
   }
-
 }

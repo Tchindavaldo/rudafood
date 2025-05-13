@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { SocketService } from './services/socket/socket.service';
+import { SocketService } from '../services/socket/socket.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CardService } from 'src/app/services/card.service';
-import { DataService } from 'src/app/services/data.service';
+import { CardService } from 'src/services/card.service';
+import { DataService } from 'src/services/data.service';
 
 @Component({
   selector: 'app-pannier-cmd-detail',

@@ -1,9 +1,9 @@
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
-import { UserStorageService } from '../services/storgae/user-storage';
-import { getFastFoodsService } from '../services/FastFood/requet/get-fastFoods.service';
-import { fastFoodsDataService } from '../services/FastFood/data/fastFood-data.service';
+import { UserStorageService } from '../../services/storgae/user-storage';
+import { getFastFoodsService } from '../../services/FastFood/requet/get-fastFoods.service';
+import { fastFoodsDataService } from '../../services/FastFood/data/fastFood-data.service';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',

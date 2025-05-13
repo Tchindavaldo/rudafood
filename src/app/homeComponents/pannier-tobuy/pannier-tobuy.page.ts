@@ -1,9 +1,9 @@
 import { AfterContentChecked, AfterContentInit, AfterViewChecked, Component, Input, OnInit } from '@angular/core';
-import { Commande, boisson, embalage, livraison } from 'src/app/data/commande';
+import { Commande, boisson, embalage, livraison } from 'src/app/data/cmd';
 import { Menu } from 'src/app/data/menu';
-import { CardService } from 'src/app/services/card.service';
-import { DataService } from 'src/app/services/data.service';
-import { PostOrdersService } from 'src/app/services/orders/get/post-orders.service';
+import { CardService } from 'src/services/card.service';
+import { DataService } from 'src/services/data.service';
+import { PostOrdersService } from 'src/services/orders/get/post-orders.service';
 import { showCard } from 'src/app/utils/showCard';
 
 @Component({

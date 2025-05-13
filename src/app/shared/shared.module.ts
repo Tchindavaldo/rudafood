@@ -32,6 +32,7 @@ import { CardNewFastFoodComponent } from '../components/no-fast-food/card-new-fa
 import { FormsModule } from '@angular/forms';
 import { PendingOrderToBuyComponent } from '../tab2/pending-order-to-buy/pending-order-to-buy.component';
 import { PannierAchatOrComponent } from '../homeComponents/pannier-achat-or/pannier-achat-or.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [

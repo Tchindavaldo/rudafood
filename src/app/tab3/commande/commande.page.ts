@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { fastFoodOrderRouteAnimation } from 'src/app/animations/fastfood-order-route-animations';
-import { OrderDataService } from 'src/app/services/orders/data/order-data.service';
-import { getOrdersService } from 'src/app/services/orders/get/get-orders.service';
-import { UserStorageService } from 'src/app/services/storgae/user-storage';
+import { OrderDataService } from 'src/services/orders/data/order-data.service';
+import { getOrdersService } from 'src/services/orders/get/get-orders.service';
+import { UserStorageService } from 'src/services/storgae/user-storage';
 import { AppState } from 'src/app/store/indx';
 
 @Component({
@@ -23,7 +23,7 @@ export class CommandePage implements OnInit {
 
   async ngOnInit() {
     this.userData = await this.user.get('user');
-    console.log('user get ala commande page  recupe des commande du fastfood', JSON.stringify(this.userData, null, 2));
+    // console.log('user get ala commande page  recupe des commande du fastfood', JSON.stringify(this.userData, null, 2));
 
     // console.log('etat', this.orderData.getFastfoodOrders());
     if (this.orderData.getFastfoodOrders() !== null) {

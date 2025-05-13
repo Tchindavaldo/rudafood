@@ -10,8 +10,9 @@ etc
 
 cmd graduite apres 100 cmd
 -->
+
 <ion-content [scrollX]="true" [fullscreen]="true">
-  <app-pannier-bonnus></app-pannier-bonnus>
+  <app-bonus *ngIf="bonusData.getbonus() !== null"></app-bonus>
 
   <app-cmd-bottom-card></app-cmd-bottom-card>
 </ion-content>

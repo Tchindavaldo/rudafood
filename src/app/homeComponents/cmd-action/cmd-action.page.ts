@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { DataService } from 'src/app/services/data.service';
+import { DataService } from 'src/services/data.service';
 import { setObjectOnTabByArg } from 'src/app/utils/setObjectOnTabByArg';
-import { OrderDataService } from 'src/app/services/orders/data/order-data.service';
-import { updateOrdersRequetService } from 'src/app/services/orders/update-orders-requet.service';
-import { requeToFastFood } from 'src/app/services/requeToFastFood';
+import { OrderDataService } from 'src/services/orders/data/order-data.service';
+import { updateOrdersRequetService } from 'src/services/orders/update-orders-requet.service';
+import { requeToFastFood } from 'src/services/requeToFastFood';
 import { AppState } from 'src/app/store/indx';
 import { addFastFoodOrder, setFastFoodOrder } from 'src/app/store/order/order-fastfood-reducer';
 

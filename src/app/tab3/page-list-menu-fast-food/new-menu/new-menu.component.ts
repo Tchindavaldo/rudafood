@@ -2,9 +2,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { requeToAuth } from 'src/app/services/requeToAuth';
-import { requeToGeneralDataUsers } from 'src/app/services/requeToGeneralDataUsers';
-import { requeToUser } from 'src/app/services/requeToUser';
+import { requeToAuth } from 'src/services/requeToAuth';
+import { requeToGeneralDataUsers } from 'src/services/requeToGeneralDataUsers';
+import { requeToUser } from 'src/services/requeToUser';
 
 import { FormsModule } from '@angular/forms';
 
@@ -14,8 +14,8 @@ import { ToastButton } from '@ionic/angular';
 import { Users } from 'src/app/data/Users';
 import { UsersInfos } from 'src/app/data/UsersInfos';
 import { Location } from '@angular/common';
-import { postMenuService } from 'src/app/services/menu/requet/post-menu.service';
-import { postImageService } from 'src/app/services/image/post-image.service';
+import { postMenuService } from 'src/services/menu/requet/post-menu.service';
+import { postImageService } from 'src/services/image/post-image.service';
 
 @Component({
   selector: 'app-new-menu',

@@ -6,8 +6,8 @@ import { group, style, transition, trigger, query, animate } from '@angular/anim
 import { Router } from '@angular/router';
 import { userOrderRouteAnimation } from 'src/app/animations/user-order-route-animations';
 import { userOrderRouteNoAnimation } from 'src/app/animations/user-order-route-noAnimations copy';
-import { getUserOrdersService } from 'src/app/services/orders/get/get-user-orders.service';
-import { OrderDataService } from 'src/app/services/orders/data/order-data.service';
+import { getUserOrdersService } from 'src/services/orders/get/get-user-orders.service';
+import { OrderDataService } from 'src/services/orders/data/order-data.service';
 
 @Component({
   selector: 'app-manage-passed-order-status',

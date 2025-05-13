@@ -3,13 +3,13 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { FastFood } from 'src/app/data/fastFood';
 import { Menu } from 'src/app/data/menu';
-import { CardService } from 'src/app/services/card.service';
-import { DataService } from 'src/app/services/data.service';
-import { getMenuService } from 'src/app/services/menu/requet/get-menu.service';
-import { requeToFastFood } from 'src/app/services/requeToFastFood';
-import { requeToMenu } from 'src/app/services/requeToMenu';
-import { showLoaderToast } from 'src/app/services/showLoaderToast';
-import { showPages } from 'src/app/services/showPages';
+import { CardService } from 'src/services/card.service';
+import { DataService } from 'src/services/data.service';
+import { getMenuService } from 'src/services/menu/requet/get-menu.service';
+import { requeToFastFood } from 'src/services/requeToFastFood';
+import { requeToMenu } from 'src/services/requeToMenu';
+import { showLoaderToast } from 'src/services/showLoaderToast';
+import { showPages } from 'src/services/showPages';
 import { showCardTranslateY } from 'src/app/utils/showCard';
 
 @Component({

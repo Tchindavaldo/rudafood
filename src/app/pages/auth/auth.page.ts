@@ -6,15 +6,15 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 // import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { requeToAuth } from 'src/app/services/requeToAuth';
+import { requeToAuth } from 'src/services/requeToAuth';
 import { ToastButton, ToastController } from '@ionic/angular';
-import { requeToUser } from 'src/app/services/requeToUser';
-import { requeToGeneralDataUsers } from 'src/app/services/requeToGeneralDataUsers';
-import { DataService } from 'src/app/services/data.service';
+import { requeToUser } from 'src/services/requeToUser';
+import { requeToGeneralDataUsers } from 'src/services/requeToGeneralDataUsers';
+import { DataService } from 'src/services/data.service';
 import { Users } from 'src/app/data/Users';
 import { UsersInfos } from 'src/app/data/UsersInfos';
-import { UserStorageService } from 'src/app/services/storgae/user-storage';
-import { getUserByIdServices } from 'src/app/services/user/requet/get-user-byId.services';
+import { UserStorageService } from 'src/services/storgae/user-storage';
+import { getUserByIdServices } from 'src/services/user/requet/get-user-byId.services';
 
 @Component({
   selector: 'app-auth',

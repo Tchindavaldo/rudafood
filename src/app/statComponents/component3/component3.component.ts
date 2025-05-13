@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { Menu } from 'src/app/data/menu';
-import { CardService } from 'src/app/services/card.service';
-import { DataService } from 'src/app/services/data.service';
-import { requeToMenu } from 'src/app/services/requeToMenu';
+import { CardService } from 'src/services/card.service';
+import { DataService } from 'src/services/data.service';
+import { requeToMenu } from 'src/services/requeToMenu';
 import { environment } from 'src/environments/environment';
 
 @Component({

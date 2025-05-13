@@ -1,0 +1,119 @@
+<ion-header style="z-index: 15">
+  <ion-toolbar style="--background: none">
+    <ion-grid>
+      <ion-row class="row-segment">
+        <ion-col class="col-segment" size="4">
+          <ion-chip [routerLink]="['/tabs/tab2/pending-order-toBuy']" routerLinkActive="router-link-active" class="firstCchip" color="danger" mode="ios">
+            <ion-label>ACHAT</ion-label>
+            <ion-label>4</ion-label>
+          </ion-chip>
+        </ion-col>
+        <ion-col class="col-segment" size="4">
+          <ion-chip [routerLink]="['/tabs/tab2/status-order']" color="danger" mode="ios">
+            <ion-label>STATUT</ion-label>
+            <ion-label>2</ion-label>
+          </ion-chip>
+        </ion-col>
+        <ion-col class="col-segment" size="4">
+          <ion-chip [routerLink]="['/tabs/tab2/bonus']" color="danger" mode="ios">
+            <ion-label>BONUS</ion-label>
+            <ion-label>5</ion-label>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<div class="carousel-slider swiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide" *ngFor="let item of slides">
+      <div class="item-content">
+        <ion-grid fixed>
+          <ion-row *ngIf="item.isFastFoodBonus" class="ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-chip color="secondary">
+                <ion-avatar>
+                  <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                </ion-avatar>
+                <ion-label> {{item.id}} </ion-label>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-card>
+                <img src="../../assets/gmy7.jpeg" alt="" srcset="" />
+              </ion-card>
+            </ion-col>
+          </ion-row>
+          <ion-row class="row-poGratuit ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-chip color="success">
+                <ion-label>{{item.data.name}}</ion-label>
+              </ion-chip>
+            </ion-col></ion-row
+          >
+          <ion-row class="row-condition ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-label>{{item.data.description}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="item.type==='order_count_bonus'" class="row-nbrRestant ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-label>Nombre d'achat restant pour etre éligible </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="item.type==='order_count_bonus'" class="row-val-nbrRestant ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-label color="danger">{{getBonusEligibility(item.order_count).restant}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row class="row-eligibiliter ion-justify-content-center">
+            <ion-col *ngIf="item.type !=='welcome_bonus'" size="auto">
+              <ion-chip *ngIf="!getBonusEligibility(item.order_count).eligible" color="danger">
+                <ion-label>NON ELIGIBLE</ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col *ngIf="item.type ==='welcome_bonus'||getBonusEligibility(item.order_count).eligible" size="auto">
+              <ion-chip style="color: white !important; background-color: hsl(136.43deg 66.67% 45.59%)" color="success">
+                <ion-label>Recevoir</ion-label>
+                <app-loader [load]="isPostingUserBonus" />
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <!-- <ion-grid fixed>
+          <ion-row class="row-bonus ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-chip color="success">
+                <ion-label>BONUS 1</ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col class="ion-text-center" size="4">
+              <ion-chip color="success">
+                <ion-label>BONUS 2</ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="auto">
+              <ion-chip color="success">
+                <ion-label>BONUS 3</ion-label>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+        </ion-grid> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div style="height: auto; width: 100%; position: fixed; bottom: 4%; color: white; z-index: 100; display: flex; justify-content: space-between; padding: 0px 18px" class="swiper-controls">
+  <ion-button style="--border-radius: 45px" (click)="scrollLeft()" fill="outline" size="default" shape="round" color="danger"> ← </ion-button>
+  <ion-button style="--border-radius: 45px" (click)="scrollRight()" fill="outline" size="default" shape="round" color="danger"> → </ion-button>
+</div>
+
+<div style="position: absolute; width: 100%; height: 100%; top: 0">
+  <ion-card style="border-radius: 0; margin: 0" class="el card-back"> </ion-card>
+  <ion-card style="border-radius: 0; margin: 0" class="el card-back2"> </ion-card>
+  <ion-card style="border-radius: 0; margin: 0" class="card-black"> </ion-card>
+</div>

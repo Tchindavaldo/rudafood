@@ -185,6 +185,14 @@ h6 {
   font-weight: 700; /* Poids gras pour les titres */
 }
 
+.monToast {
+  --white-space: pre-line !important; // ✅ change la variable utilisée par .toast-message
+}
+
+.monToast .toast-message {
+  text-align: center;
+}
+
 /* Description avec poids plus léger */
 
 html {

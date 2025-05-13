@@ -2,7 +2,7 @@ import { User } from 'firebase/auth';
 import { Component, OnInit } from '@angular/core';
 import { Users } from '../data/Users';
 import { dataMerchend } from '../data/dataMerchend';
-import { DataService } from '../services/data.service';
+import { DataService } from '../../services/data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { ToastButton, ToastController } from '@ionic/angular';
 
