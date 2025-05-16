@@ -10,12 +10,20 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth'; // Importation des fonctionnalités Firebase
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { Router } from '@angular/router';
+import { addNotificationReducer } from 'src/store/notification/notification-reducer';
+import { notificationDataService } from '../data/notification-data.service';
 
 @Injectable({ providedIn: 'root' })
 export class fcmService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private updateUserService: updateUserByIdServices, private store: Store, private userStorage: UserStorageService, private router: Router) {}
+  constructor(
+    public notificationData: notificationDataService,
+    private updateUserService: updateUserByIdServices,
+    private store: Store,
+    private userStorage: UserStorageService,
+    private router: Router
+  ) {}
 
   async setupPushNotifications() {
     // Récupérer un token non envoyé et tenter de l'envoyer au backend
@@ -63,6 +71,24 @@ export class fcmService {
     // Gérer les notifications reçues
     PushNotifications.addListener('pushNotificationReceived', async notification => {
       console.log('notification reçue:', notification);
+      const data = notification.data;
+      const newNotif: any = {};
+
+      if (data.id !== undefined) newNotif.id = data.id;
+      if (data.title !== undefined) newNotif.title = data.title;
+      if (data.body !== undefined) newNotif.body = data.body;
+
+      if (data.type !== undefined) newNotif.type = data.type;
+      if (data.target !== undefined) newNotif.target = data.target;
+
+      if (data.userId !== undefined) newNotif.userId = data.userId;
+      if (data.fastFoodId !== undefined) newNotif.fastFoodId = data.fastFoodId;
+
+      if (data.isRead !== undefined) newNotif.isRead = JSON.parse(data.isRead);
+      if (data.createdAt !== undefined) newNotif.createdAt = data.createdAt;
+      if (data.updatedAt !== undefined) newNotif.updatedAt = data.updatedAt;
+
+      if (this.notificationData.getNotification() != null) this.store.dispatch(addNotificationReducer({ Notification: newNotif }));
 
       const notificationId = Math.floor(Math.random() * 100000);
       LocalNotifications.schedule({
@@ -85,12 +111,52 @@ export class fcmService {
     // Gérer les actions de notification (clic sur notification)
     PushNotifications.addListener('pushNotificationActionPerformed', action => {
       console.log('Action de notification :', action);
+      console.log('data de fcm notification click :', action.notification.data);
+
+      const data = action.notification.data;
+      const newNotif: any = {};
+
+      if (data.id !== undefined) newNotif.id = data.id;
+      if (data.title !== undefined) newNotif.title = data.title;
+      if (data.body !== undefined) newNotif.body = data.body;
+
+      if (data.type !== undefined) newNotif.type = data.type;
+      if (data.target !== undefined) newNotif.target = data.target;
+
+      if (data.userId !== undefined) newNotif.userId = data.userId;
+      if (data.fastFoodId !== undefined) newNotif.fastFoodId = data.fastFoodId;
+
+      if (data.isRead !== undefined) newNotif.isRead = JSON.parse(data.isRead);
+      if (data.createdAt !== undefined) newNotif.createdAt = data.createdAt;
+      if (data.updatedAt !== undefined) newNotif.updatedAt = data.updatedAt;
+
+      if (this.notificationData.getNotification() != null) this.store.dispatch(addNotificationReducer({ Notification: newNotif }));
       this.router.navigateByUrl('/tabs/tab4');
     });
 
     // Quand une notif locale est cliquée
     LocalNotifications.addListener('localNotificationActionPerformed', event => {
       console.log('Action sur notification locale :', event);
+      console.log('data de local notification click :', event.notification.extra);
+
+      const data = event.notification.extra;
+      const newNotif: any = {};
+
+      if (data.id !== undefined) newNotif.id = data.id;
+      if (data.title !== undefined) newNotif.title = data.title;
+      if (data.body !== undefined) newNotif.body = data.body;
+
+      if (data.type !== undefined) newNotif.type = data.type;
+      if (data.target !== undefined) newNotif.target = data.target;
+
+      if (data.userId !== undefined) newNotif.userId = data.userId;
+      if (data.fastFoodId !== undefined) newNotif.fastFoodId = data.fastFoodId;
+
+      if (data.isRead !== undefined) newNotif.isRead = JSON.parse(data.isRead);
+      if (data.createdAt !== undefined) newNotif.createdAt = data.createdAt;
+      if (data.updatedAt !== undefined) newNotif.updatedAt = data.updatedAt;
+
+      if (this.notificationData.getNotification() != null) this.store.dispatch(addNotificationReducer({ Notification: newNotif }));
       this.router.navigateByUrl('/tabs/tab4');
     });
   }

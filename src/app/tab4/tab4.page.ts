@@ -58,11 +58,11 @@ export class Tab4Page implements OnInit {
     this.store.dispatch(
       markNotificationAsReadReducer({
         notificationId: notif.id,
-        notificationCreatedAt: notif.createdAt,
+        // notificationCreatedAt: notif.createdAt,
         userId: this.user.uid,
       })
     );
-    this.markNotificationAsRead.markNotificationAsRead(notif.id, notif.createdAt);
+    this.markNotificationAsRead.markNotificationAsRead(notif.id, notif.idGroup);
   }
 
   async fetchNotification() {

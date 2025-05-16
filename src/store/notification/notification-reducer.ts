@@ -10,7 +10,7 @@ export const addNotificationReducer = createAction('[Notification] Add', props<{
 
 export const setNotificationReducer = createAction('[Notification] Set', props<{ NotificationTab: any[] | null }>());
 
-export const markNotificationAsReadReducer = createAction('[Notification] Mark As Read', props<{ notificationId: any; notificationCreatedAt: any; userId: any }>());
+export const markNotificationAsReadReducer = createAction('[Notification] Mark As Read', props<{ notificationId: any; userId: any }>());
 
 /* --- Reducer --- */
 export const NotificationReducer = createReducer(
@@ -20,28 +20,24 @@ export const NotificationReducer = createReducer(
     Notification: NotificationTab,
   })),
 
-  on(addNotificationReducer, (state, { Notification }) => ({
-    Notification: state.Notification ? [Notification, ...state.Notification] : [Notification],
-  })),
+  on(addNotificationReducer, (state, { Notification }) => {
+    if (!state.Notification) return { Notification: [Notification] };
+    const notificationExists = state.Notification.some(notif => notif.id === Notification.id);
+    if (!notificationExists) return { Notification: [Notification, ...state.Notification] };
+    return state;
+  }),
 
-  on(markNotificationAsReadReducer, (state, { notificationId, notificationCreatedAt, userId }) => {
+  on(markNotificationAsReadReducer, (state, { notificationId, userId }) => {
     if (!state.Notification) return { Notification: [] };
 
     const updatedNotifications = state.Notification.map(notif => {
-      if (notif.id === notificationId && notif.createdAt === notificationCreatedAt) {
+      if (notif.id === notificationId) {
         const isReadArray = Array.isArray(notif.isRead) ? notif.isRead : [];
-        if (!isReadArray.includes(userId)) {
-          return {
-            ...notif,
-            isRead: [...isReadArray, userId],
-          };
-        }
+        if (!isReadArray.includes(userId)) return { ...notif, isRead: [...isReadArray, userId] };
       }
       return notif;
     });
 
-    return {
-      Notification: updatedNotifications,
-    };
+    return { Notification: updatedNotifications };
   })
 );

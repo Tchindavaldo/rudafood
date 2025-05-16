@@ -17,10 +17,7 @@ export class getUserNotificationService {
       if (!user || !user.uid) return;
 
       endpoint = user.fastFoodId !== undefined ? `/user?userId=${user.uid}&fastFoodId=${user.fastFoodId}` : `/user?userId=${user.uid}`;
-      const response = await axios.get(
-        `${this.apiUrl}/notification${endpoint}`
-        // { headers: { 'ngrok-skip-browser-warning': 'true' } }
-      );
+      const response = await axios.get(`${this.apiUrl}/notification${endpoint}`, { headers: { 'ngrok-skip-browser-warning': 'true' } });
 
       console.log('notification récupérées avec succès', response.data);
       this.store.dispatch(setNotificationReducer({ NotificationTab: response.data.data }));
