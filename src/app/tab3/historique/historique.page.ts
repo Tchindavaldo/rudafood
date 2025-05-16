@@ -7,26 +7,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./historique.page.scss'],
 })
 export class HistoriquePage implements OnInit {
+  totalAmountAccount = 0;
+  totalAmountSpend = 0;
+  constructor(private router: Router) {}
 
-  constructor(
-    private router:Router
-  ) { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  redirect(path: string) {
+    this.router.navigate([path]);
   }
 
+  showBack() {
+    const el = document.getElementById('backToShow');
 
-  redirect(path:string){
-    this.router.navigate([path])
-
-  }
-
-  showBack(){
-    const el = document.getElementById('backToShow')
-
-if (el != null) {
-  el.style.transform = 'scale(1)'
-
-}
+    if (el != null) {
+      el.style.transform = 'scale(1)';
+    }
   }
 }

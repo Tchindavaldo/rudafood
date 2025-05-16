@@ -5,6 +5,8 @@ import { environment } from 'src/environments/environment.prod';
 import { setNotificationReducer } from 'src/store/notification/notification-reducer';
 import { UserStorageService } from 'src/services/storgae/user-storage';
 import { io } from 'socket.io-client';
+import { initSessionSocketService } from 'src/services/socket/init-session-socket.service ';
+import { SocketService } from 'src/services/socket/socket.service';
 
 interface NotificationPayload {
   userId: string;
@@ -14,18 +16,26 @@ interface NotificationPayload {
 
 @Injectable({ providedIn: 'root' })
 export class markNotificationAsReadService {
-  private apiUrl = environment.apiUrl;
-  private socket = io(this.apiUrl);
+  private socket;
   private pendingPayloads: NotificationPayload[] = [];
 
-  constructor(private store: Store, private userStorage: UserStorageService) {
-    this.socket.on('connect', () => {
-      this.pendingPayloads.forEach(payload => {
-        this.socket.emit('isReadNotification', payload);
-        console.log('Re-emitted isReadNotification for:', payload.notificationId);
-      });
-      this.pendingPayloads = [];
+  constructor(private store: Store, private userStorage: UserStorageService, private initSocket: initSessionSocketService, private SocketService: SocketService) {
+    this.socket = this.SocketService.getSocket();
+
+    // 👇 Important : écouter quand socketReady devient "true"
+    this.initSocket.socketReady.subscribe(ready => {
+      if (ready) {
+        this.reEmitBufferedPayloads();
+      }
     });
+  }
+
+  private reEmitBufferedPayloads() {
+    this.pendingPayloads.forEach(payload => {
+      this.socket.emit('isReadNotification', payload);
+      console.log('✅ Re-emitted isReadNotification for:', payload.notificationId);
+    });
+    this.pendingPayloads = [];
   }
 
   async markNotificationAsRead(notificationId: string, notificationIdGroup: any) {
@@ -39,18 +49,16 @@ export class markNotificationAsReadService {
     };
 
     try {
-      await axios.put(`${this.apiUrl}/notification/markAsRead`, payload);
+      await axios.put(`${environment.apiUrl}/notification/markAsRead`, payload);
     } catch (error: any) {
       if (error.message === 'Network Error') {
         const alreadyPending = this.pendingPayloads.some(p => p.notificationId === notificationId && p.userId === user.uid && p.notificationIdGroup === notificationIdGroup);
         if (!alreadyPending) {
           this.pendingPayloads.push(payload);
-          console.warn('Ajout au buffer de reconnexion :', payload.notificationId);
-        } else {
-          console.log('Payload déjà en attente, non ajouté à nouveau :', payload.notificationId);
+          console.warn('🟡 Notification ajoutée au buffer :', payload.notificationId);
         }
       } else {
-        console.error('Erreur non liée au réseau :', error);
+        console.error('❌ Erreur API :', error);
       }
     }
   }

@@ -5,6 +5,7 @@ import { OrderSocketService } from './order/order-socket.service';
 import { initSessionSocketService } from './init-session-socket.service ';
 import { MenuSocketService } from './menu/menu-socket.service';
 import { FastfoodSocketService } from './fastFood/fastFood-socket.service';
+import { NotificationSocketService } from './notification/notification-socket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,8 @@ export class SocketService {
     private menuSocketService: MenuSocketService,
     private orderSocketService: OrderSocketService,
     private fastfoodSocketService: FastfoodSocketService,
-    private sessionSocketServie: initSessionSocketService
+    private sessionSocketServie: initSessionSocketService,
+    private notificationSocketServie: NotificationSocketService
   ) {
     this.socket = io(this.apiUrl);
   }
@@ -26,7 +28,10 @@ export class SocketService {
     this.sessionSocketServie.initializeSocket(this.socket);
 
     this.menuSocketService.initializeSocket(this.socket);
+    this.notificationSocketServie.initializeSocket(this.socket);
     this.fastfoodSocketService.initializeSocket(this.socket);
     this.orderSocketService.initializeOrderSocket(this.socket);
   }
+
+  getSocket = () => this.socket;
 }

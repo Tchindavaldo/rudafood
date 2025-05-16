@@ -1,96 +1,92 @@
-ion-header{
-    box-shadow: none;
+ion-header {
+  box-shadow: none;
 }
-ion-content{
-    top: -10px;
-    transition-duration: 0s;
+ion-content {
+  top: -10px;
+  transition-duration: 0s;
 }
-ion-card{
-    height: max-content;
-background-color: rgba(37, 36, 36, 0);
-color: rgba(0, 0, 0, 0.81);
-margin-top: 2px;
-margin-right: 0px;
-margin-left: 0px;
-margin-bottom: 0;
-padding-left: 5px;
-border-top-left-radius: 45px;
-border-top-right-radius: 45px;
-border-radius: 0px;
-box-shadow: none;
+ion-card {
+  height: max-content;
+  background-color: rgba(37, 36, 36, 0);
+  color: rgba(0, 0, 0, 0.81);
+  margin-top: 2px;
+  margin-right: 0px;
+  margin-left: 0px;
+  margin-bottom: 0;
+  padding-left: 5px;
+  border-top-left-radius: 45px;
+  border-top-right-radius: 45px;
+  border-radius: 0px;
+  box-shadow: none;
 }
-ion-chip ion-label{
-    font-size: 8px;
+ion-chip ion-label {
+  font-size: 8px;
 }
-.focusedChip{
-    background-color: darkred;  
-    transition-duration: 0s;
-    color: rgb(255, 255, 255);
+.focusedChip {
+  background-color: darkred;
+  transition-duration: 0s;
+  color: rgb(255, 255, 255);
 }
 
+.row-montant {
+  margin: 0px 0 0px -7px;
+}
+.lable-amount {
+  font-size: 15px;
+}
+.val-montant {
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+  margin: 0px 0px 0px 0px;
+  color: black;
+}
+.row-sgement {
+  margin: 0px 0px 0px -40px;
+}
 
-.row-montant{
-    margin: 10px 0 -5px -7px;
-    
-    font-size: 10px;
-    
-    }
-    .val-montant{
-        font-size: 25px;
-    font-weight: bold;
-    letter-spacing: 1.2px;
-        margin: 0px 0px -3px -8px;
-        color: black;
-    }
-    .row-sgement{
-    margin: 0px 0px 0px -40px;
-    
-    }
-    
-    .col-segment ion-col{
-    padding-bottom: 0;
-    display: flex;
-    align-items: center;
-    flex-direction: column;    font-size: 0.01rem;
-        font-weight: 300;
-        font-size: 8px;
-        font-weight: 300;
-    }
-    .label-sgement {
-    font-size: 9px;
-    }
-    
-    .col-porteFeuille{
-        margin-top: -20px;
-        margin-left: -25px;
-        padding: 7px 0 0 8px;
-        background: white;
-        z-index: 50000;
-        position: relative;
-        
-        }
+.col-segment ion-col {
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 0.01rem;
+  font-weight: 300;
+  font-size: 8px;
+  font-weight: 300;
+}
+.label-sgement {
+  font-size: 9px;
+}
 
-    
-            ion-col ion-label{
-            // margin: 4px 0px 0px 0px;
-            }
-            ion-col ion-icon{
-            
-            font-size: 12px;
-            }
-            
-            .ctn{
-                padding: 0;
-                margin: 0;
-            }
+.col-porteFeuille {
+  margin-top: -20px;
+  margin-left: -25px;
+  padding: 7px 0 0 8px;
+  background: white;
+  z-index: 50000;
+  position: relative;
+}
 
-#backToShow{
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    box-shadow: none;
-    background: #00000085;
-    z-index: 1000;
-    transform: scale(0);
+ion-col ion-label {
+  // margin: 4px 0px 0px 0px;
+}
+ion-col ion-icon {
+  font-size: 12px;
+}
+
+.ctn {
+  padding: 0;
+  margin: 0;
+}
+
+#backToShow {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: none;
+  background: #00000085;
+  z-index: 1000;
+  transform: scale(0);
 }
