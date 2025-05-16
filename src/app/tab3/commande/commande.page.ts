@@ -6,7 +6,7 @@ import { fastFoodOrderRouteAnimation } from 'src/app/animations/fastfood-order-r
 import { OrderDataService } from 'src/services/orders/data/order-data.service';
 import { getOrdersService } from 'src/services/orders/get/get-orders.service';
 import { UserStorageService } from 'src/services/storgae/user-storage';
-import { AppState } from 'src/app/store/indx';
+import { AppState } from 'src/store/indx';
 
 @Component({
   selector: 'app-commande',

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
-import { setFastFoods } from 'src/app/store/fastFood/fastfoods-reducer';
+import { setFastFoods } from 'src/store/fastFood/fastfoods-reducer';
 import { UserStorageService } from '../../storgae/user-storage';
 
 @Injectable({ providedIn: 'root' })

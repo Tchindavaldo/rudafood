@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { OrderDataService } from 'src/services/orders/data/order-data.service';
 import { getUserOrdersService } from 'src/services/orders/get/get-user-orders.service';
 import { updatePendingToBuyOrdersService } from 'src/services/orders/get/update-pending-tobuy-orders.service copy';
-import { AppState } from 'src/app/store/indx';
-import { filterByArg } from 'src/app/utils/filterByArg';
+import { AppState } from 'src/store/indx';
+import { filterByArg } from 'src/utils/filterByArg';
 
 @Component({
   selector: 'app-pending-order-to-buy',

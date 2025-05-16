@@ -5,9 +5,9 @@ import { environment } from 'src/environments/environment.prod';
 import { UserStorageService } from '../../storgae/user-storage';
 import { DataService } from '../../data.service';
 import { OrderDataService } from '../data/order-data.service';
-import { setFastFoodOrder } from 'src/app/store/order/order-fastfood-reducer';
+import { setFastFoodOrder } from 'src/store/order/order-fastfood-reducer';
 import { Store } from '@ngrx/store';
-import { setUserOrderReducer } from 'src/app/store/order/order-user-reducer';
+import { setUserOrderReducer } from 'src/store/order/order-user-reducer';
 
 @Injectable({
   providedIn: 'root',

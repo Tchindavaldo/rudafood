@@ -2,9 +2,9 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { bonusDataService } from 'src/services/bonus/data/bonus-data.service';
-import { AppState } from 'src/app/store/indx';
-import { filterByArgs } from 'src/app/utils/filterByArg';
-import { getBonusEligibility } from 'src/app/utils/getBonusEligibility';
+import { AppState } from 'src/store/indx';
+import { filterByArgs } from 'src/utils/filterByArg';
+import { getBonusEligibility } from 'src/utils/getBonusEligibility';
 import Swiper from 'swiper';
 import { ToastService } from 'src/services/toast/toast.service';
 import { postBonusRequestService } from 'src/services/bonusRequest/post-bonusRequest.service';
@@ -45,8 +45,11 @@ export class BonusComponent implements AfterViewInit, OnInit {
         total = totalBonus;
       }
 
+      console.log(bonusId, bonusType, total);
+
       await this.bonusRequestService.postBonusRequest({ bonusId, bonusType }, total);
       this.isPostingUserBonusRequest = false;
+      // this.toast.presentToast('bottom', `✨ Demande de bonus envoyée ! 🍀🌟`, 105500);
       this.toast.presentToast('bottom', `✨ Demande de bonus envoyée ! 🍀🌟`, 5500);
       setTimeout(() => {
         this.toast.presentToast('bottom', `🎉 Vous recevrez une notification avec tous les détails.👀🎁`, 3000);

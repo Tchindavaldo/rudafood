@@ -5,8 +5,8 @@ import { environment } from 'src/environments/environment.prod';
 import { Store } from '@ngrx/store';
 import { UserStorageService } from '../../storgae/user-storage';
 import { OrderDataService } from '../data/order-data.service';
-import { setObjectOnTabByArg } from 'src/app/utils/setObjectOnTabByArg';
-import { setUserOrderReducer } from 'src/app/store/order/order-user-reducer';
+import { setObjectOnTabByArg } from 'src/utils/setObjectOnTabByArg';
+import { setUserOrderReducer } from 'src/store/order/order-user-reducer';
 
 @Injectable({
   providedIn: 'root',

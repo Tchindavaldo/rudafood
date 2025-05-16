@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { showCard, showCardTranslateY, toggleElementVisibility } from 'src/app/utils/showCard';
+import { showCard, showCardTranslateY, toggleElementVisibility } from 'src/utils/showCard';
 
 @Component({
   selector: 'app-no-fast-food',

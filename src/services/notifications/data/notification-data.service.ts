@@ -7,12 +7,12 @@ import { AppState } from 'src/store/indx';
 @Injectable({
   providedIn: 'root',
 })
-export class fastFoodsDataService {
-  private fastFoods!: any[];
+export class notificationDataService {
+  private notification!: any[];
 
   constructor(private store: Store<AppState>) {
-    this.store.select(state => state.fastFoods.fastFoods).subscribe(fastFoods => (this.fastFoods = fastFoods));
+    this.store.select(state => state.userNotification.Notification).subscribe(notif => (this.notification = notif));
   }
 
-  getFastfoods = () => this.fastFoods;
+  getNotification = () => this.notification;
 }

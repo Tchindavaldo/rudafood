@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { getScreenHeight } from 'src/app/utils/getScreenHeight';
-import { filterByArg } from 'src/app/utils/filterByArg';
+import { getScreenHeight } from 'src/utils/getScreenHeight';
+import { filterByArg } from 'src/utils/filterByArg';
 import { OrderDataService } from 'src/services/orders/data/order-data.service';
-import { AppState } from 'src/app/store/indx';
+import { AppState } from 'src/store/indx';
 @Component({
   selector: 'app-pending-cmd',
   templateUrl: './pending-cmd.component.html',

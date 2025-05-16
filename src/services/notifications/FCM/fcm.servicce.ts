@@ -3,18 +3,19 @@ import axios from 'axios';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
-import { setFastFoods } from 'src/app/store/fastFood/fastfoods-reducer';
+import { setFastFoods } from 'src/store/fastFood/fastfoods-reducer';
 import { UserStorageService } from '../../storgae/user-storage';
 import { updateUserByIdServices } from '../../user/requet/update-user-byId.services';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth'; // Importation des fonctionnalités Firebase
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class fcmService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private updateUserService: updateUserByIdServices, private store: Store, private userStorage: UserStorageService) {}
+  constructor(private updateUserService: updateUserByIdServices, private store: Store, private userStorage: UserStorageService, private router: Router) {}
 
   async setupPushNotifications() {
     // Récupérer un token non envoyé et tenter de l'envoyer au backend
@@ -61,32 +62,36 @@ export class fcmService {
 
     // Gérer les notifications reçues
     PushNotifications.addListener('pushNotificationReceived', async notification => {
-      console.log('frontend reçue:', notification);
-      // const { group, groupSummary, tag } = notification.data;
+      console.log('notification reçue:', notification);
 
-      // try {
-      //   const notification: any = {
-      //     // Utilisez 'any' pour contourner la vérification
-      //     id: new Date().getTime(),
-      //     title: 'Titre important',
-      //     body: 'Message urgent',
-      //     sound: 'default',
-      //     channelId: 'high_priority_channel',
-      //     smallIcon: 'ic_launcher',
-      //     vibrate: true,
-      //     group,
-      //     tag,
-      //     priority: 'high',
-      //   };
-      //   await LocalNotifications.schedule({ notifications: [notification] });
-      // } catch (error) {
-      //   console.error('Erreur lors de la création de la notification locale:', error);
-      // }
+      const notificationId = Math.floor(Math.random() * 100000);
+      LocalNotifications.schedule({
+        notifications: [
+          {
+            id: notificationId,
+            title: notification.title || 'tire',
+            body: notification.body ?? 'No content available',
+            schedule: { at: new Date(Date.now() + 100) },
+            channelId: 'high_priority_channel', // 👈 DOIT correspondre à ton ID Java
+            sound: 'default', // 👈 Active le heads-up
+            smallIcon: 'ic_launcher',
+            iconColor: '#FF0000',
+            extra: notification.data,
+          },
+        ],
+      });
     });
 
     // Gérer les actions de notification (clic sur notification)
     PushNotifications.addListener('pushNotificationActionPerformed', action => {
       console.log('Action de notification :', action);
+      this.router.navigateByUrl('/tabs/tab4');
+    });
+
+    // Quand une notif locale est cliquée
+    LocalNotifications.addListener('localNotificationActionPerformed', event => {
+      console.log('Action sur notification locale :', event);
+      this.router.navigateByUrl('/tabs/tab4');
     });
   }
 

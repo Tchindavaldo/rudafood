@@ -2,9 +2,9 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { bonusDataService } from 'src/services/bonus/data/bonus-data.service';
-import { AppState } from 'src/app/store/indx';
-import { filterByArgs } from 'src/app/utils/filterByArg';
-import { getBonusEligibility } from 'src/app/utils/getBonusEligibility';
+import { AppState } from 'src/store/indx';
+import { filterByArgs } from 'src/utils/filterByArg';
+import { getBonusEligibility } from 'src/utils/getBonusEligibility';
 import Swiper from 'swiper';
 
 @Component({

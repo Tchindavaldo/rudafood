@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { postFastFoodService } from 'src/services/FastFood/requet/post-fastFood.service';
-import { showCard, showCardTranslateY, toggleElementVisibility } from 'src/app/utils/showCard';
+import { showCard, showCardTranslateY, toggleElementVisibility } from 'src/utils/showCard';
 
 @Component({
   selector: 'app-card-new-fast-food',

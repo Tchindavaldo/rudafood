@@ -1,4 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { markNotificationAsReadService } from 'src/services/notifications/request/updater-notification-readStatus.service';
+import { UserStorageService } from 'src/services/storgae/user-storage';
+import { markNotifcationAsRead } from 'src/utils/markNotifcationAsRead';
 
 @Component({
   selector: 'app-notif',
@@ -6,68 +9,109 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./notif.page.scss'],
 })
 export class NotifPage implements OnInit {
-  @Input() idxToGet2 = 1
-  @Input() iconn = 'pizza'
-  @Input() titre = 'Commande enregistrer'
-  @Input() valeuNotif = 'la commande que vous venew de passer a ete enregistrer avec success'
-  @Input() nbrNotif = 2
-  @Input() date = '16h'
- grid = document.getElementsByClassName("gridd") as HTMLCollectionOf<(HTMLElement)>
- label = document.getElementsByClassName("valNotif") as HTMLCollectionOf<(HTMLElement)>
- icon = document.getElementsByClassName("iconNotif") as HTMLCollectionOf<(HTMLElement)>
+  @Input() userId!: any;
+  @Input() notif: any;
+  @Input() notifId: any;
+  @Input() selectedId: any;
+  @Input() isRead: any;
+  @Output() handleNotifyClick = new EventEmitter<void>();
+  @Input() showLabel!: (idxtoget: any) => void;
 
-  constructor() { }
+  @Input() idxToGet2: undefined | string = '';
+  @Input() iconn = 'pizza';
+  @Input() titre = 'Commande enregistrer';
+  @Input() valeuNotif =
+    'la commande que vous venew de passer a ete enregistrer avec success gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg';
+  @Input() nbrNotif = 2;
+  @Input() date = '16h';
 
-  ngOnInit() {
-    
+  dynamicStyles: { [key: string]: string } = {};
 
+  grid!: HTMLCollectionOf<HTMLElement>;
+  label!: HTMLCollectionOf<HTMLElement>;
+  icon!: HTMLCollectionOf<HTMLElement>;
+  gridElement!: HTMLElement;
+
+  // @ViewChild(this.idxToGet2, { static: false }) notifLabel!: ElementRef;
+  constructor() {}
+
+  async ngOnInit() {
+    console.log('isread', this.isRead, this.userId, 'idxToGet2', this.idxToGet2);
+  }
+  // onClick(labelEl: ElementRef) {
+  //   this.handleNotifyClick.emit();
+  //   this.showLabel(this.idxToGet2);
+  //   const fakeElementRef = { nativeElement: labelEl };
+  //   this.dynamicStyles = this.getDynamicHeight(true, fakeElementRef);
+  // }
+
+  onClick() {
+    if (!this.isRead.includes(this.userId)) {
+      this.handleNotifyClick.emit();
+      console.log('servie de mise a jour du statuts appler');
+    }
+    this.showLabel(this.idxToGet2);
+
+    setTimeout(() => {
+      const el = document.getElementById('label' + this.idxToGet2 || '');
+      if (el) {
+        this.dynamicStyles = this.getDynamicHeight(true, { nativeElement: el } as ElementRef);
+      } else {
+        console.warn('Element avec id non trouvé');
+      }
+    });
   }
 
-  showLabel(idx:number){
-    for (let index = 0; index < this.grid.length; index++) {
-       
-    this.grid[index].style.background = 'none'
-    this.grid[index].style.padding = 'none'
-    this.grid[index].style.width = '100%'
-    this.grid[index].style.boxShadow = 'none';
-    this.grid[index].style.borderRadius = '0';
-    this.grid[index].style.margin = '0';
+  async markRead() {
+    // await this.handleNotifyClick();
+    this.showLabel(this.idxToGet2);
+  }
 
-    
-    this.label[index].style.overflow = 'hidden'   
-    this.label[index].style.height = '11px'
-    this.label[index].style.fontSize = '10px';
-    this.label[index].style.marginTop = '0px'; 
-    this.label[index].style.fontWeight = '300';
+  getDynamicHeight(isSelected: boolean, elRef: ElementRef): { [key: string]: string } {
+    this.setDynamicHeightOnClass('15px');
+    if (!isSelected || !elRef?.nativeElement) return {};
 
+    const el: HTMLElement = elRef.nativeElement;
 
-    
-    this.icon[index].style.background = 'rgba(139, 0, 0, 0.1490196078)';
- 
+    let lineHeightStr = getComputedStyle(el).lineHeight;
+    let lineHeight = parseFloat(lineHeightStr);
+
+    if (isNaN(lineHeight)) {
+      const fontSizeStr = getComputedStyle(el).fontSize;
+      lineHeight = parseFloat(fontSizeStr) * 1.2;
     }
 
-    this.grid[idx].style.background = '#8b00000a'
-    this.grid[idx].style.padding = '11px'
-    this.grid[idx].style.width = '95%'
-    this.grid[idx].style.boxShadow = '0 0 7px 0px red';
-    this.grid[idx].style.borderRadius = '31px';
-    this.grid[idx].style.margin = '2.5%';
+    const totalHeight = el.scrollHeight;
+    const lineCount = Math.round(totalHeight / lineHeight);
 
+    console.log('lineHeight:', lineHeight);
+    console.log('totalHeight:', totalHeight);
+    console.log('Nombre de lignes:', lineCount);
 
-    this.label[idx].style.height = 'max-content'
-    this.label[idx].style.overflow = 'visible'
-    this.label[idx].style.fontWeight = '400';
-    this.label[idx].style.fontSize = '12px';
-    this.label[idx].style.marginTop = '2px'; 
-    this.label[idx].style.fontWeight = '400';
-    
-    this.icon[idx].style.background = 'none';
- console.log('idx',idx)
-  console.log('idxtg',this.idxToGet2);
-  
- 
- 
-  
+    const calculatedHeight = lineCount * lineHeight + 'px'; // On peut multiplier par lineHeight directement
+
+    this.setDynamicHeightOnId(calculatedHeight);
+    return {
+      height: calculatedHeight,
+      overflow: 'visible',
+      transition: 'height 0.3s ease',
+    };
+  }
+
+  setDynamicHeightOnClass(height: string) {
+    const elements = document.getElementsByClassName('valNotif');
+    for (let i = 0; i < elements.length; i++) {
+      const el = elements[i] as HTMLElement;
+      el.style.height = height;
+      el.style.overflow = 'hidden';
     }
-
- }
+  }
+  setDynamicHeightOnId(height: string) {
+    const el = document.getElementById('label' + this.idxToGet2);
+    if (el) {
+      el.style.height = height;
+      el.style.overflow = 'visible';
+      el.style.transition = 'height 0.4s ease';
+    }
+  }
+}

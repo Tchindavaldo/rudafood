@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AppState } from 'src/app/store/indx';
+import { AppState } from 'src/store/indx';
 // Removed deprecated import of isArray
 
 @Injectable({

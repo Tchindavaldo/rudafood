@@ -4,7 +4,7 @@ import { Menu } from 'src/app/data/menu';
 import { CardService } from 'src/services/card.service';
 import { DataService } from 'src/services/data.service';
 import { PostOrdersService } from 'src/services/orders/get/post-orders.service';
-import { showCard } from 'src/app/utils/showCard';
+import { showCard } from 'src/utils/showCard';
 
 @Component({
   selector: 'app-pannier-tobuy',

@@ -10,7 +10,7 @@ import { requeToFastFood } from 'src/services/requeToFastFood';
 import { requeToMenu } from 'src/services/requeToMenu';
 import { showLoaderToast } from 'src/services/showLoaderToast';
 import { showPages } from 'src/services/showPages';
-import { showCardTranslateY } from 'src/app/utils/showCard';
+import { showCardTranslateY } from 'src/utils/showCard';
 
 @Component({
   selector: 'app-list-menu',

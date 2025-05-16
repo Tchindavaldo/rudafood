@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { environment } from 'src/environments/environment.prod';
-import { setFastFoodOrder } from 'src/app/store/order/order-fastfood-reducer';
+import { setFastFoodOrder } from 'src/store/order/order-fastfood-reducer';
 import { Store } from '@ngrx/store';
 
 @Injectable({

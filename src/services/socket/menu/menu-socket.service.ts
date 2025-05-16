@@ -3,14 +3,14 @@ import { io, Socket } from 'socket.io-client';
 import { OrderDataService } from '../../orders/data/order-data.service';
 import { environment } from 'src/environments/environment.prod';
 import { Store } from '@ngrx/store';
-import { addFastFoodOrder, setFastFoodOrder } from 'src/app/store/order/order-fastfood-reducer';
-import { setObjectOnTabByArg } from '../../../app/utils/setObjectOnTabByArg';
+import { addFastFoodOrder, setFastFoodOrder } from 'src/store/order/order-fastfood-reducer';
+import { setObjectOnTabByArg } from '../../../utils/setObjectOnTabByArg';
 import { Observable } from 'rxjs';
-import { AppState } from 'src/app/store/indx';
-import { setUserOrderReducer } from 'src/app/store/order/order-user-reducer';
+import { AppState } from 'src/store/indx';
+import { setUserOrderReducer } from 'src/store/order/order-user-reducer';
 import { initSessionSocketService } from '../init-session-socket.service ';
 import { fastFoodsDataService } from '../../FastFood/data/fastFood-data.service';
-import { addFastFoods, setFastFoods } from 'src/app/store/fastFood/fastfoods-reducer';
+import { addFastFoods, setFastFoods } from 'src/store/fastFood/fastfoods-reducer';
 
 @Injectable({
   providedIn: 'root',

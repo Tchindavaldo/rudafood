@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AppState } from 'src/app/store/indx';
+import { AppState } from 'src/store/indx';
 import { group, style, transition, trigger, query, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import { userOrderRouteAnimation } from 'src/app/animations/user-order-route-animations';

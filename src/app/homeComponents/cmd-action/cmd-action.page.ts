@@ -2,12 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/services/data.service';
-import { setObjectOnTabByArg } from 'src/app/utils/setObjectOnTabByArg';
+import { setObjectOnTabByArg } from 'src/utils/setObjectOnTabByArg';
 import { OrderDataService } from 'src/services/orders/data/order-data.service';
 import { updateOrdersRequetService } from 'src/services/orders/update-orders-requet.service';
 import { requeToFastFood } from 'src/services/requeToFastFood';
-import { AppState } from 'src/app/store/indx';
-import { addFastFoodOrder, setFastFoodOrder } from 'src/app/store/order/order-fastfood-reducer';
+import { AppState } from 'src/store/indx';
+import { addFastFoodOrder, setFastFoodOrder } from 'src/store/order/order-fastfood-reducer';
 
 @Component({
   selector: 'app-cmd-action',

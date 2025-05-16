@@ -1,108 +1,81 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-  <ion-card>
-    <ion-grid>
-      <ion-row class="col-porteFeuille">
-       
-        <ion-col size="auto" class="col-fastfood">
-          <ion-chip color="danger">
-            <ion-icon name="notifications-outline">
+    <ion-card>
+      <ion-grid>
+        <ion-row class="col-porteFeuille">
+          <ion-col size="auto" class="col-fastfood">
+            <ion-chip color="danger">
+              <ion-icon name="notifications-outline"> </ion-icon>
 
-            </ion-icon>
-
-            <ion-label>
-              Notifications
-            </ion-label>
-          </ion-chip>
-        </ion-col>
-      </ion-row>
-
-      
-    </ion-grid>
-  </ion-card>
+              <ion-label> Notifications </ion-label>
+            </ion-chip>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [scrollX]="true" [fullscreen]="true">
-  <ion-infinite-scroll   >
-
-    
+  <ion-infinite-scroll *ngIf="!isLoading && !erroDataGeting">
     <ion-list>
-
-     
-        <app-notif
+      <!-- <app-notif
         titre="commander en avance "
         valeuNotif="passer vos commande la veille le  matin en soire a midi et passer le recuper des qu'il est pres ou faite vous livrer"
-        [nbrNotif]="3" 
-         [idxToGet2]="0">
-        
-        </app-notif>
-       
+        [nbrNotif]="3"
+        [idxToGet2]="0"
+      >
+      </app-notif>
 
-
-      
-        <app-notif
-        iconn="storefront-outline" 
+      <app-notif
+        iconn="storefront-outline"
         titre="Nouveau FastFood"
         valeuNotif="decouvre les nouveau fastfood disponible sur rudafood parcourer les menu offert et passer vos commande"
         [nbrNotif]="4"
         date="30min"
-        [idxToGet2]="1">
-      
-      </app-notif>
-       
+        [idxToGet2]="1"
+      >
+      </app-notif> -->
 
+      <!-- <ng-container *ngFor="let item of notificationData.getNotification()">
+        <app-notif *ngFor="let notif of item.allNotif" iconn="cart-outline" [idxToGet2]="inCrementeIdx()"></app-notif>
+      </ng-container> -->
 
-      
-     
-       
-   
-      
-         <app-notif  iconn="cart-outline"  [idxToGet2]="2"></app-notif>
-        
-<!-- cmd en avance soyer le premier mouveau fast food
- reserver 
+      <app-notif
+        *ngFor="let notif of userNotification | async; trackBy: trackByNotifId; let idx = index"
+        [selectedId]="selectedId"
+        [showLabel]="showLabel.bind(this)"
+        (handleNotifyClick)="markAsRead(notif)"
+        [isRead]="notif.isRead"
+        [userId]="user.uid"
+        [notif]="notif"
+        [idxToGet2]="notif.id.toString() + notif.createdAt.toString()"
+      ></app-notif>
+
+      <!-- [idxToGet2]="getAndIncrementGlobalIndex()" -->
+      <!-- cmd en avance soyer le premier mouveau fast food
+ reserver
  personaliser vos gamelles
  decouvrez
  nouveaute sur rudafood
   -->
- 
-    <app-notif
-    titre="soyez le premier"
-    valeuNotif="ne manquer pas les dernier informations sur les menu fastfood et commande a venir"
-    [nbrNotif]="1"
-    date="1jrs"
-    [idxToGet2]="3">
-  
-  </app-notif>
-   
 
+      <!-- <app-notif titre="soyez le premier" valeuNotif="ne manquer pas les dernier informations sur les menu fastfood et commande a venir" [nbrNotif]="1" date="1jrs" [idxToGet2]="3">
+      </app-notif>
 
-  
-    <app-notif
-    titre="gamelle personnaliser"
-    valeuNotif="sur rudafood vos commande sont emballer dans des gamelle"
-    [nbrNotif]="1"
-    date="2semaine"
-    [idxToGet2]="4">
-  </app-notif>
+      <app-notif titre="gamelle personnaliser" valeuNotif="sur rudafood vos commande sont emballer dans des gamelle" [nbrNotif]="1" date="2semaine" [idxToGet2]="4"> </app-notif> -->
 
-  
-  <app-notif
-  iconn="cog-outline"
-  titre="nouveaute sur rudafood"
-  valeuNotif="des mise on ete faite sur l'application decouvrer toutes les derniers fonctionalites "
-  [nbrNotif]="5"
-  date="1mois"
-  [idxToGet2]="5">
-
-</app-notif>
-
-
-
-    </ion-list> 
-
-      
+      <!-- <app-notif
+        iconn="cog-outline"
+        titre="nouveaute sur rudafood"
+        valeuNotif="des mise on ete faite sur l'application decouvrer toutes les derniers fonctionalites "
+        [nbrNotif]="5"
+        date="1mois"
+        [idxToGet2]="5"
+      >
+      </app-notif> -->
+    </ion-list>
   </ion-infinite-scroll>
+
+  <app-loader [load]="isLoading"></app-loader>
 </ion-content>

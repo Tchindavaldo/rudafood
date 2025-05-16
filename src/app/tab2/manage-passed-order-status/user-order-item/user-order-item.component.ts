@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { setObjectOnTabByArg } from 'src/app/utils/setObjectOnTabByArg';
+import { setObjectOnTabByArg } from 'src/utils/setObjectOnTabByArg';
 import { updateOrdersRequetService } from 'src/services/orders/update-orders-requet.service';
-import { AppState } from 'src/app/store/indx';
-import { setFastFoodOrder } from 'src/app/store/order/order-fastfood-reducer';
+import { AppState } from 'src/store/indx';
+import { setFastFoodOrder } from 'src/store/order/order-fastfood-reducer';
 
 @Component({
   selector: 'app-user-order-item',

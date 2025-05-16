@@ -41,15 +41,28 @@
  *  (window as any).__Zone_enable_cross_context_check = true;
  *
  */
- 
+
 import './zone-flags';
 
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js';  // Included with Angular CLI.
-
+import 'zone.js'; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+/***************************************************************************************************
+ * POLYFILLS POUR ANDROID 8 ET NAVIGATEURS ANCIENS
+ */
+import 'core-js/es/object';
+import 'core-js/es/array';
+import 'core-js/es/promise';
+import 'core-js/es/string';
+import 'core-js/es/map';
+import 'core-js/es/set';
+import 'core-js/es/weak-map';
+import 'core-js/es/symbol';
+// Ajoute ceci si tu utilises async/await
+import 'regenerator-runtime/runtime';

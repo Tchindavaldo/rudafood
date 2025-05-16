@@ -2,8 +2,8 @@ import axios from 'axios';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
-import { setFastFoods } from 'src/app/store/fastFood/fastfoods-reducer';
-import { setBonusReducer } from 'src/app/store/bonus/bonus-reducer';
+import { setFastFoods } from 'src/store/fastFood/fastfoods-reducer';
+import { setBonusReducer } from 'src/store/bonus/bonus-reducer';
 import { UserStorageService } from '../storgae/user-storage';
 import { fcmService } from '../notifications/FCM/fcm.servicce';
 
