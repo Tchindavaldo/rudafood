@@ -45,4 +45,7 @@ export class PannierTobuyPage implements OnInit {
     const { isPosting, isError } = await this.postOrderSerice.postOrder({ ...data, status });
     if (!isError) showCard('bottom-card-home', 'y', '230px');
   };
+  closeBottomCard() {
+    showCard('bottom-card-home', 'y', '230px');
+  }
 }

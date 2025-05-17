@@ -139,11 +139,11 @@
 
       <ion-row style="margin: 50px 0px" class="row-cmpt-marchant" *ngIf="showStatusInput">
         <ion-col size="4">
-          <ion-checkbox [checked]="availability === 'avaible'" (ionChange)="setAvailability('avaible')"> Disponible </ion-checkbox>
+          <ion-checkbox [checked]="availability === 'available'" (ionChange)="setAvailability('available')"> Disponible </ion-checkbox>
         </ion-col>
 
         <ion-col size="4">
-          <ion-checkbox [checked]="availability === 'unAvaible'" (ionChange)="setAvailability('unAvaible')" style="margin-left: 25px"> Indisponible </ion-checkbox>
+          <ion-checkbox [checked]="availability === 'unavailable'" (ionChange)="setAvailability('unavailable')" style="margin-left: 25px"> Indisponible </ion-checkbox>
         </ion-col>
       </ion-row>
       <ion-row style="margin-bottom: 25px" *ngIf="showStatusInput" class="row-cmpt-marchant-descript">

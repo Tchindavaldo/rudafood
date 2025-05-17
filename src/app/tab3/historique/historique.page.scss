@@ -45,6 +45,25 @@ ion-chip ion-label {
   margin: 0px 0px 0px -40px;
 }
 
+.col-segment {
+  transition-duration: 100ms;
+
+  &.active-segment {
+    background-color: darkred;
+    color: white;
+    border-radius: 20px;
+    padding: 4px 7px;
+
+    ion-icon {
+      color: white !important;
+    }
+
+    ion-col {
+      padding: 3px 0 0 0;
+    }
+  }
+}
+
 .col-segment ion-col {
   padding-bottom: 0;
   display: flex;
@@ -55,8 +74,10 @@ ion-chip ion-label {
   font-size: 8px;
   font-weight: 300;
 }
+
 .label-sgement {
   font-size: 9px;
+  font-weight: bold;
 }
 
 .col-porteFeuille {

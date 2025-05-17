@@ -41,7 +41,7 @@ export class NewMenuComponent {
   showPrice1DescriptionInput = false;
   showPrice2DescriptionInput = false;
   showPrice3DescriptionInput = false;
-  availability: string = 'avaible'; // coché par défaut
+  availability: string = 'available'; // coché par défaut
 
   nom = '';
   birth = '';

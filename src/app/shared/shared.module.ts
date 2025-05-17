@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from '../components/loader/loader.component';
-import { NetworkErrorComponent } from '../components/network-error/network-error.component';
 import { IonicModule } from '@ionic/angular';
 import { PendingUserOrderComponent } from '../tab2/manage-passed-order-status/pending-user-order/pending-user-order.component';
 import { CmdActionPage } from '../homeComponents/cmd-action/cmd-action.page';
@@ -33,6 +32,7 @@ import { FormsModule } from '@angular/forms';
 import { PendingOrderToBuyComponent } from '../tab2/pending-order-to-buy/pending-order-to-buy.component';
 import { PannierAchatOrComponent } from '../homeComponents/pannier-achat-or/pannier-achat-or.component';
 import { RouterModule } from '@angular/router';
+import { TextActionComponent } from '../components/text-action/text-action.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +71,7 @@ import { RouterModule } from '@angular/router';
     CmdActionPage,
 
     LoaderComponent,
-    NetworkErrorComponent,
+    TextActionComponent,
   ],
   imports: [CommonModule, IonicModule, FormsModule],
   exports: [
@@ -98,7 +98,7 @@ import { RouterModule } from '@angular/router';
 
     CmdActionPage,
     LoaderComponent,
-    NetworkErrorComponent,
+    TextActionComponent,
 
     PendingCmdComponent,
     ProccessCmdComponent,

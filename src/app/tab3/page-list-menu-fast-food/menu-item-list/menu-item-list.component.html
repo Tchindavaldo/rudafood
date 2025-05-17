@@ -1,0 +1,54 @@
+<ion-item>
+  <ion-grid [ngStyle]="{ margin: '35px 0px 35px 0' }" id="d" fixed class="grid">
+    <ion-row class="row">
+      <ion-col class="actions" size="1">
+        <ion-chip color="primary">
+          <ion-label>{{ nbr }}</ion-label>
+        </ion-chip>
+      </ion-col>
+      <ion-col size="{{ showOrderNbr ? '9' : '10' }}">
+        <ion-grid fixed>
+          <ion-row class="row-text">
+            <ion-col [ngStyle]="{ 'padding-bottom': '8px' }" class="col-Name" size="12">
+              <ion-label>{{ menu.name }}</ion-label>
+            </ion-col>
+            <ion-col size="12" style="display: flex" *ngIf="!showCheck">
+              <ion-col size="auto" class="label-prix">
+                <ion-label>Prix</ion-label>
+              </ion-col>
+              <ion-col size="auto" class="val-prix" *ngIf="menu.prices">
+                <ion-label>{{ menu.prices[0]?.price }}</ion-label>
+              </ion-col>
+              <ion-col size="auto" class="val-prix" *ngIf="menu.prices">
+                <ion-label>{{ menu.prices[1]?.price }}</ion-label>
+              </ion-col>
+              <ion-col size="auto" class="val-prix" *ngIf="menu.prices">
+                <ion-label>{{ menu.prices[2]?.price }}</ion-label>
+              </ion-col>
+              <ion-col [ngStyle]="{ padding: paddingText7 }" size="auto" class="label-statut">
+                <ion-label>statut</ion-label>
+              </ion-col>
+              <ion-col size="auto" class="val-statut">
+                <ion-label [ngStyle]="{ color: colorText8 }">{{ menu.status === 'available' ? 'Disponible' : 'Indisponible' }}</ion-label>
+              </ion-col>
+            </ion-col>
+
+            <ion-col *ngIf="showCheck" size="12" class="val-statut" style="display: flex; padding-top: 2px; padding-left: 0">
+              <ion-col style="display: flex; align-items: center; padding-left: 0" *ngIf="showCheck" size="auto" class="val-statut">
+                <ion-label>{{ text8 }}</ion-label> <ion-checkbox (click)="triggerModal()" checked="{{ menu.status === 'available' }}" class="firstCheck"></ion-checkbox>
+              </ion-col>
+              <ion-col style="display: flex; align-items: center; padding-left: 30px" *ngIf="showCheck" size="auto" class="val-statut">
+                <ion-label>{{ text9 }}</ion-label> <ion-checkbox (click)="triggerModal()" checked="{{ menu.status === 'unavailable' }}"></ion-checkbox>
+              </ion-col>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+      <ion-col (click)="triggerModal()" class="col-icon" size="{{ showOrderNbr ? '2' : '1' }}">
+        <ion-icon *ngIf="!showOrderNbr" color="danger" name="{{ iconName }}"></ion-icon>
+        <ion-label style="font-size: 16px" class="col-Name" *ngIf="showOrderNbr">{{ orderNbr }}</ion-label
+        ><ion-label style="font-size: 20px" *ngIf="showOrderNbr">/{{ totalOrder }}</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>

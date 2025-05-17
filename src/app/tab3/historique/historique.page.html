@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header style="position: sticky; top: 0">
   <ion-toolbar>
     <ion-card>
       <ion-grid>
@@ -24,37 +24,54 @@
         <ion-row class="row-sgement">
           <ion-col>
             <ion-grid>
-              <ion-row>
-                <ion-col class="col-segment" size="3">
+              <ion-row style="justify-content: space-around">
+                <ion-col class="col-segment active-segment" size="auto" (click)="showToast('Historique', 'top')">
                   <ion-col size="auto" color="light">
-                    <ion-icon size="5" name="options"> </ion-icon>
+                    <ion-icon name="time-outline"> </ion-icon>
                   </ion-col>
-                  <ion-col class="label-sgement" size="12" color="light">
+                  <ion-col class="label-sgement" size="auto" color="light">
+                    <ion-label> HISTORIQUE </ion-label>
+                  </ion-col>
+                </ion-col>
+                <ion-col #depotSegment id="depot" class="col-segment" size="auto" (click)="showToast('Dépôt', 'top')" (click)="$event.stopPropagation()" (mousedown)="onTouchStart('depot')">
+                  <ion-col size="auto" color="light">
+                    <ion-icon size="5" name="cash-outline"> </ion-icon>
+                  </ion-col>
+                  <ion-col class="label-sgement" size="auto" color="light">
                     <ion-label> DEPOT </ion-label>
                   </ion-col>
                 </ion-col>
-                <ion-col class="col-segment" size="3">
-                  <ion-col size="12" color="light">
-                    <ion-icon name="options"> </ion-icon>
+
+                <ion-col
+                  #retraitSegment
+                  id="retrait"
+                  class="col-segment"
+                  size="auto"
+                  (click)="showToast('Retrait', 'top')"
+                  (click)="$event.stopPropagation()"
+                  (mousedown)="onTouchStart('retrait')"
+                >
+                  <ion-col size="auto" color="light">
+                    <ion-icon name="arrow-back-circle-outline"> </ion-icon>
                   </ion-col>
-                  <ion-col class="label-sgement" size="12" color="light">
+                  <ion-col class="label-sgement" size="auto" color="light">
                     <ion-label> RETRAIT </ion-label>
                   </ion-col>
                 </ion-col>
-                <ion-col class="col-segment" size="3">
-                  <ion-col size="12" color="light">
-                    <ion-icon name="options"> </ion-icon>
+                <ion-col
+                  #transfertSegment
+                  id="transfert"
+                  class="col-segment"
+                  size="auto"
+                  (click)="showToast('Transfert', 'top')"
+                  (click)="$event.stopPropagation()"
+                  (mousedown)="onTouchStart('transfert')"
+                >
+                  <ion-col size="auto" color="light">
+                    <ion-icon name="arrow-redo-circle-outline"> </ion-icon>
                   </ion-col>
-                  <ion-col class="label-sgement" size="12" color="light">
+                  <ion-col class="label-sgement" size="auto" color="light">
                     <ion-label> TRANSFERT </ion-label>
-                  </ion-col>
-                </ion-col>
-                <ion-col class="col-segment" size="3">
-                  <ion-col size="12" color="light">
-                    <ion-icon name="options"> </ion-icon>
-                  </ion-col>
-                  <ion-col class="label-sgement" size="12" color="light">
-                    <ion-label> HISTORIQUE </ion-label>
                   </ion-col>
                 </ion-col>
               </ion-row>
@@ -66,11 +83,23 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [scrollX]="true" [fullscreen]="true">
-  <ion-infinite-scroll>
-    <ion-list>
-      <app-porte-feuil-historique></app-porte-feuil-historique>
-      <app-porte-feuil-historique></app-porte-feuil-historique>
-    </ion-list>
-  </ion-infinite-scroll>
-</ion-content>
+<ion-list>
+  <ng-container *ngFor="let item of transaction | async; trackBy: trackByTransactionId">
+    <app-porte-feuil-historique [transaction]="item"></app-porte-feuil-historique>
+  </ng-container>
+</ion-list>
+
+<app-text-action
+  *ngIf="(transaction | async)?.length === 0"
+  title="pas de transaction"
+  subtitle="passer votre première commande"
+  buttonText="commander"
+  marginTop="35%"
+  (chipClick)="redirect('/tabs/tab1')"
+></app-text-action>
+
+<!-- <ion-infinite-scroll threshold="100px" [disabled]="!hasMoreTransactions" (ionInfinite)="loadMoreTransactions($event)">
+  <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Chargement des transactions..."> </ion-infinite-scroll-content>
+</ion-infinite-scroll> -->
+
+<app-loader [load]="isLoading"></app-loader>

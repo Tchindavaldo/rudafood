@@ -44,7 +44,7 @@
           <ion-icon name="cart-outline"></ion-icon>
         </ion-chip>
 
-        <ion-chip class="chip3" style="padding: 5px" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }" color="success">
+        <ion-chip (click)="emitCloseOrder()" class="chip3" style="padding: 5px" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }" color="success">
           <ion-icon style="margin: 0" name="close-outline"></ion-icon>
         </ion-chip>
       </ion-col>

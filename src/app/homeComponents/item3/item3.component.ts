@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PorteFeuilHistoriquePage } from '../porte-feuil-historique/porte-feuil-historique.page';
+import { PorteFeuilHistoriquePage } from '../../tab3/historique/porte-feuil-historique/porte-feuil-historique.page';
 
 @Component({
   selector: 'app-item3',

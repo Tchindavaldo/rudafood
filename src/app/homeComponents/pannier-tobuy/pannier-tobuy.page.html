@@ -2,7 +2,7 @@
   <ion-grid fixed>
     <ion-row>
       <ion-col size="12">
-        <app-header [postOrder]="postOrder.bind(this)" />
+        <app-header [postOrder]="postOrder.bind(this)" (outputCloseOrder)="closeBottomCard()" />
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-between ion-align-items-center">

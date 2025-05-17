@@ -7,16 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { HistoriquePageRoutingModule } from './historique-routing.module';
 
 import { HistoriquePage } from './historique.page';
-import { PorteFeuilHistoriquePageModule } from 'src/app/homeComponents/porte-feuil-historique/porte-feuil-historique.module';
+import { PorteFeuilHistoriquePageModule } from 'src/app/tab3/historique/porte-feuil-historique/porte-feuil-historique.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HistoriquePageRoutingModule,
-    PorteFeuilHistoriquePageModule
-  ],
-  declarations: [HistoriquePage]
+  imports: [CommonModule, FormsModule, IonicModule, HistoriquePageRoutingModule, PorteFeuilHistoriquePageModule, SharedModule],
+  declarations: [HistoriquePage],
 })
 export class HistoriquePageModule {}

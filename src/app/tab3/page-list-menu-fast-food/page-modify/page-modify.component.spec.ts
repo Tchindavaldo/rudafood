@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { NetworkErrorComponent } from './network-error.component';
+import { PageModifyComponent } from './page-modify.component';
 
-describe('NetworkErrorComponent', () => {
-  let component: NetworkErrorComponent;
-  let fixture: ComponentFixture<NetworkErrorComponent>;
+describe('PageModifyComponent', () => {
+  let component: PageModifyComponent;
+  let fixture: ComponentFixture<PageModifyComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NetworkErrorComponent ],
+      declarations: [ PageModifyComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NetworkErrorComponent);
+    fixture = TestBed.createComponent(PageModifyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

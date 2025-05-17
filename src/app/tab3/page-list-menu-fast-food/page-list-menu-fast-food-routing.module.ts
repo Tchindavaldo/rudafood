@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { PageListMenuFastFoodPage } from './page-list-menu-fast-food.page';
-import { NewMenuComponent } from './new-menu/new-menu.component';
 import { ListMenuComponent } from './list-menu/list-menu.component';
+import { NewMenuComponent } from './new-menu/new-menu.component';
+import { PageModifyComponent } from './page-modify/page-modify.component';
 
 const routes: Routes = [
   {
@@ -20,8 +21,16 @@ const routes: Routes = [
         component: ListMenuComponent,
       },
       {
-        path: 'new-menu',
-        component: NewMenuComponent,
+        path: 'disponibilite',
+        loadChildren: () => import('./page-dispo/page-dispo.module').then(m => m.PageDispoPageModule),
+      },
+      {
+        path: 'modification',
+        component: PageModifyComponent,
+      },
+      {
+        path: 'suppression',
+        loadChildren: () => import('./page-delete/page-delete.module').then(m => m.PageDeletePageModule),
       },
     ],
   },

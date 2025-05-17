@@ -12,7 +12,11 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from '../store/indx';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import { LOCALE_ID } from '@angular/core';
 
+registerLocaleData(localeFr);
 register();
 
 @NgModule({
@@ -29,6 +33,7 @@ register();
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: LOCALE_ID, useValue: 'fr-FR' },
 
     // GooglePlus,
   ],

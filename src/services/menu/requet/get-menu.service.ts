@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
-import { setFastFoods } from 'src/store/fastFood/fastfoods-reducer';
+import { initMenu } from 'src/store/menu/menu-reducer';
 import { UserStorageService } from '../../storgae/user-storage';
 
 @Injectable({ providedIn: 'root' })
@@ -17,6 +17,7 @@ export class getMenuService {
 
       // console.log('appeeeeeeeeeeeeeeeeeeeeler de la fonction');
       const response = await axios.get(`${this.apiUrl}/menu/${user.fastFoodId}`, { headers: { 'ngrok-skip-browser-warning': 'true' } });
+      this.store.dispatch(initMenu({ menuTab: response.data.data }));
       const dataReturn = { data: response.data.data, ispending: false, isError: false };
       return dataReturn;
     } catch (error) {

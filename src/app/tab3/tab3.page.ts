@@ -1,8 +1,5 @@
-import { User } from 'firebase/auth';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Users } from '../data/Users';
-import { dataMerchend } from '../data/dataMerchend';
-import { DataService } from '../../services/data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { ToastButton, ToastController } from '@ionic/angular';
 
@@ -27,6 +24,6 @@ export class Tab3Page {
   }
 
   shouldHideElement(): boolean {
-    return this.currentUrl.includes('menu/new-menu');
+    return this.currentUrl.includes('   menu/new-menu');
   }
 }

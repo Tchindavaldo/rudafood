@@ -9,12 +9,12 @@ import { PageListMenuFastFoodPageRoutingModule } from './page-list-menu-fast-foo
 import { PageListMenuFastFoodPage } from './page-list-menu-fast-food.page';
 import { FormPageModule } from 'src/app/tab3/form/form.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { NewMenuComponent } from './new-menu/new-menu.component';
-import { ListMenuComponent } from './list-menu/list-menu.component';
+import { PageDispoPageModule } from './page-dispo/page-dispo.module';
+import { SharedModule2 } from 'src/app/shared/shared2.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, PageListMenuFastFoodPageRoutingModule, SharedModule, FormPageModule],
-  declarations: [PageListMenuFastFoodPage, NewMenuComponent, ListMenuComponent],
+  imports: [CommonModule, FormsModule, IonicModule, PageListMenuFastFoodPageRoutingModule, SharedModule, FormPageModule, SharedModule2],
+  declarations: [PageListMenuFastFoodPage],
   exports: [PageListMenuFastFoodPage],
 })
 export class PageListMenuFastFoodPageModule {}

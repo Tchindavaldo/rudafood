@@ -1,0 +1,67 @@
+ion-card {
+  height: 75px;
+  width: 75px;
+  background-color: darkred;
+  border-radius: 199px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 5px 0px 10px;
+}
+
+ion-grid,
+ion-col {
+  padding: 0;
+}
+.ion_grid1 {
+  padding-left: 8px;
+}
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  padding-top: 40px;
+  --inner-border-width: 0;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --min-height: max-content;
+}
+
+ion-label {
+  width: max-content;
+}
+
+ion-chip {
+  position: absolute;
+  bottom: 0;
+  right: 0px;
+}
+
+.row-titre {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.row-action {
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+.col-annuler {
+  padding-left: 8px;
+}
+.col-modifier {
+  color: rgb(28, 139, 0);
+}
+
+.row-prix {
+  position: absolute;
+  bottom: 0;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.col_action {
+  transform: scale(0.79);
+  left: 18px;
+}
