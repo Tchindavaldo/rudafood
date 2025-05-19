@@ -1,12 +1,20 @@
-<ion-grid fixed [ngStyle]="{ 'background-color': backgrd, 'box-shadow': shadow, 'margin-left': mLeft }">
-  <ion-row class="ion-justify-content-center">
-    <ion-col size="auto">
-      <ion-label [ngStyle]="{ color: color1 }">{{ text1 }}</ion-label>
-    </ion-col>
-  </ion-row>
-  <ion-row class="ion-justify-content-center">
-    <ion-col size="auto">
-      <ion-label [ngStyle]="{ color: color2 }">{{ text2 }}</ion-label>
-    </ion-col>
-  </ion-row>
+<ion-grid fixed [ngStyle]="{ 'background-color': backgrd, 'box-shadow': shadow, 'margin-left': mLeft }" class="date-selector">
+  <ng-container *ngIf="!icon; else iconTemplate">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-label [ngStyle]="{ color: color1 }">{{ text1 }}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-label [ngStyle]="{ color: color2 }">{{ text2 }}</ion-label>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+  
+  <ng-template #iconTemplate>
+    <ion-row class="ion-justify-content-center ion-align-items-center" style="height: 100%">
+      <ion-icon [name]="icon" [style.color]="color2" style="font-size: 24px"></ion-icon>
+    </ion-row>
+  </ng-template>
 </ion-grid>

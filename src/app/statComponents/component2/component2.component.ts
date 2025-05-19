@@ -14,5 +14,6 @@ export class Component2Component implements OnInit {
   @Input() color2 = '';
   @Input() text1 = 'LUN';
   @Input() text2 = '12';
+  @Input() icon = ''; // Pour afficher une icône au lieu du texte
   ngOnInit() {}
 }

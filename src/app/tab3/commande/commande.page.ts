@@ -23,6 +23,10 @@ export class CommandePage implements OnInit, OnDestroy {
   private ffOrder!: any[];
   currentDate!: string;
 
+  // Gestion des dates
+  selectedDate: Date = new Date();
+  nextDays: Array<{ day: string; date: number; fullDate: Date }> = [];
+
   // Compteurs pour les commandes
   totalOrder: number = 0;
   totalAmount: number = 0;
@@ -45,6 +49,7 @@ export class CommandePage implements OnInit, OnDestroy {
     this.selectChip(this.selectedChip); // Abonnement dynamique sur l'onglet actif au démarrage
     this.fetchFastFoodOrders();
     this.formatCurrentDate();
+    this.initializeNextDays();
   }
 
   ngOnDestroy() {
@@ -128,15 +133,83 @@ export class CommandePage implements OnInit, OnDestroy {
   }
 
   formatCurrentDate() {
-    const date = new Date();
-    const day = date.getDate();
+    const options: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    this.currentDate = new Date().toLocaleDateString('fr-FR', options);
+  }
 
-    // Tableau des mois en français avec majuscule
-    const months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+  initializeNextDays() {
+    const today = new Date();
+    // Ajouter les 2 prochains jours
+    for (let i = 1; i <= 2; i++) {
+      const nextDay = new Date(today);
+      nextDay.setDate(today.getDate() + i);
+      this.nextDays.push({
+        day: nextDay.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase(),
+        date: nextDay.getDate(),
+        fullDate: nextDay,
+      });
+    }
+  }
 
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
+  async openDatePicker() {
+    // Créer un élément input de type date
+    const dateInput = document.createElement('input');
+    dateInput.type = 'date';
+    dateInput.style.position = 'absolute';
+    dateInput.style.top = '0';
+    dateInput.style.left = '0';
+    dateInput.style.width = '100%';
+    dateInput.style.height = '100%';
+    dateInput.style.opacity = '0';
+    dateInput.style.position = 'fixed';
+    dateInput.style.zIndex = '9999';
+    
+    // Définir la date minimale à aujourd'hui
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+    
+    // Ajouter l'input au DOM
+    document.body.appendChild(dateInput);
+    
+    // Déclencher le clic sur l'input
+    dateInput.click();
+    
+    // Gérer la sélection de date
+    dateInput.addEventListener('change', (event: any) => {
+      if (event.target.value) {
+        const selectedDate = new Date(event.target.value);
+        this.onDateSelected(selectedDate);
+      }
+      // Nettoyer l'input après utilisation
+      document.body.removeChild(dateInput);
+    });
+    
+    // Nettoyer en cas d'annulation
+    dateInput.addEventListener('blur', () => {
+      if (document.body.contains(dateInput)) {
+        document.body.removeChild(dateInput);
+      }
+    });
+    
+    // Pour iOS, forcer le focus
+    dateInput.focus();
+  }
 
-    this.currentDate = `${day} ${month} ${year}`;
+  onDateSelected(date: Date) {
+    this.selectedDate = date;
+    // Mettre à jour l'affichage avec la date sélectionnée
+    this.currentDate = date.toLocaleDateString('fr-FR', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+
+    // Ici, vous pouvez ajouter la logique pour filtrer les commandes par date
+    // par exemple : this.filterOrdersByDate(date);
+  }
+
+  selectDay(day: { fullDate: Date }) {
+    this.onDateSelected(day.fullDate);
   }
 }

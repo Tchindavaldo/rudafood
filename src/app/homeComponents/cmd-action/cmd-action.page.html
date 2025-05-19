@@ -6,7 +6,7 @@
       </ion-col>
       <ion-col size="2"></ion-col>
     </ion-row>
-    <ion-row class="row-cmd" style="flex-wrap: nowrap; overflow-x: scroll">
+    <ion-row class="row-cmd" style="flex-wrap: nowrap; overflow-x: scroll; justify-content: space-between">
       <ion-col size="9">
         <ion-grid fixed>
           <ion-row style="margin: 8px 0">
@@ -39,9 +39,9 @@
           </ion-row>
         </ion-grid>
       </ion-col>
-      <ion-col size="3" style="display: flex; justify-content: space-between">
+      <ion-col size="auto" style="display: flex; justify-content: space-between">
         <div class="ctn-add">
-          <ion-chip (click)="statutChange()" style="background-color: black; font-size: 10px; font-weight: bold; color: white; letter-spacing: 1.1px; margin-bottom: 0">
+          <ion-chip (click)="statutChange()" style="background-color: black; font-size: 10px; font-weight: bold; color: white; letter-spacing: 1.1px; margin-bottom: 0; margin-right: 0">
             <app-loader [strokeWidth]="8" stokeColor="white" fillColor="white" [load]="isUpdating"></app-loader>
             <ion-label [ngStyle]="{'visibility': !isUpdating ? 'visible' : 'hidden'}" class="nbre-item"> {{showedAction}} </ion-label>
           </ion-chip>

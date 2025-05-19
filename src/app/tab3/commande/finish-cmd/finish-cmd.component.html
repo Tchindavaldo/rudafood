@@ -1,9 +1,146 @@
-<div [style.height.px]="screenHeight" style="position: relative; background-color: white; width: 100%">
-  <div [style.height.px]="screenHeight" style="position: relative; background-color: white"></div>
-  <!-- <ion-content style="position: absolute;height: 100%; top: 0;" class=" ionContent proccessCmd"> -->
-  <div style="position: absolute; height: 100%; top: 0; right: 0; width: 100%">
+<!-- <div [style.height.px]="screenHeight" style="position: relative"></div>
+<ion-content style="position: absolute; height: 100%; top: 0" class="ionContent pendingCmd">
+  <ion-infinite-scroll class="infinitScroll2">
     <ion-list>
-      <app-cmd-action procededAction="notify" showedAction="notifier" *ngFor="let finishedOrderItem of finishOrder; let idx = index" [order]="finishOrder?.[idx]"></app-cmd-action>
+
+      <app-cmd-action procededAction="processing" showedAction="valider" *ngFor="let pendingOrderItem of pendingOrders; let idx = index" [order]="pendingOrderItem"></app-cmd-action>
     </ion-list>
-  </div>
-</div>
+  </ion-infinite-scroll>
+</ion-content> -->
+
+<ion-list>
+  <ng-container *ngFor="let date of getUniqueDates()">
+    <ion-card class="date-card">
+      <!-- Section Livraison Express -->
+      <ng-container *ngIf="getTotalOrdersByTypeExpress(date) > 0">
+        <ion-card style="box-shadow: 0px 0px 5px hsl(0, 100%, 83%); border: 0px solid hsl(0, 100%, 50%)" class="section-card">
+          <ion-card-header class="section-header">
+            <div style="display: flex; justify-content: space-between; align-items: center">
+              <ion-card-title class="date-title">
+                <ion-chip style="font-size: 0.75rem; flex-direction: column; justify-content: start; align-items: start" color="danger">
+                  {{ date | date : 'EEEE d MMMM yyyy' | titlecase }}
+                  <div style="display: block; margin-top: 6px">
+                    <ion-card-subtitle> Livraison Express ({{ getTotalOrdersByTypeExpress(date) }}) </ion-card-subtitle>
+                  </div>
+                </ion-chip>
+              </ion-card-title>
+            </div>
+          </ion-card-header>
+          <ion-card-content>
+            <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'express')">
+              <ion-item-group class="user-group">
+                <ion-item lines="none" class="user-header">
+                  <ion-avatar slot="start">
+                    <ion-icon name="person-circle" class="user-avatar"></ion-icon>
+                  </ion-avatar>
+                  <ion-label>Utilisateur #{{ userId }}</ion-label>
+                </ion-item>
+
+                <ion-list lines="none" class="order-list">
+                  <app-cmd-action
+                    *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'express'); trackBy: trackByOrderId"
+                    [order]="order"
+                    procededAction="processing"
+                    showedAction="valider"
+                  ></app-cmd-action>
+                </ion-list>
+              </ion-item-group>
+            </ng-container>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+
+      <!-- Section Livraison Programmée -->
+      <ng-container *ngIf="getTotalOrdersByTypeTime(date, times) > 0">
+        <ion-card class="section-card">
+          <ion-card-header style="padding-bottom: 0" class="section-header">
+            <div style="display: flex; justify-content: space-between; align-items: center">
+              <ion-card-title class="date-title">
+                <ion-chip style="margin-bottom: 0px; font-size: 0.75rem; flex-direction: column; justify-content: start; align-items: start" color="danger">
+                  {{ date | date : 'EEEE d MMMM yyyy' | titlecase }}
+                  <div style="display: block; margin-top: 6px">
+                    <ion-card-subtitle> Livraison par heure ({{ getTotalOrdersByTypeTime(date, times) }}) </ion-card-subtitle>
+                  </div>
+                </ion-chip>
+              </ion-card-title>
+            </div>
+          </ion-card-header>
+
+          <ion-card-content style="padding-top: 0">
+            <ng-container *ngFor="let time of times">
+              <ng-container *ngIf="getUserIdsByDateType(true, date, 'time', time).length > 0">
+                <ion-item-group class="time-group">
+                  <ion-item lines="none" class="time-header">
+                    <ion-chip style="font-size: 0.75rem; flex-direction: column; justify-content: start; align-items: start" color="light">
+                      <ion-label> {{ time }} </ion-label>
+                    </ion-chip>
+                  </ion-item>
+
+                  <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'time', time)">
+                    <ion-item-group class="user-group">
+                      <ion-item lines="none" class="user-header">
+                        <ion-avatar slot="start">
+                          <ion-icon name="person-circle" class="user-avatar"></ion-icon>
+                        </ion-avatar>
+                        <ion-label>Utilisateur #{{ userId }}</ion-label>
+                      </ion-item>
+
+                      <ion-list lines="none" class="order-list">
+                        <app-cmd-action
+                          *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'time', time); trackBy: trackByOrderId"
+                          [order]="order"
+                          procededAction="processing"
+                          showedAction="valider"
+                        ></app-cmd-action>
+                      </ion-list>
+                    </ion-item-group>
+                  </ng-container>
+                </ion-item-group>
+              </ng-container>
+            </ng-container>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+
+      <!-- Section Commandes non livrées -->
+      <ng-container *ngIf="getTotalOrdersByStatus(date, false) > 0">
+        <ion-card class="section-card">
+          <ion-card-header class="section-header">
+            <div style="display: flex; justify-content: space-between; align-items: center">
+              <ion-card-title class="date-title">
+                <ion-chip style="margin-bottom: 0px; font-size: 0.75rem; flex-direction: column; justify-content: start; align-items: start" color="danger">
+                  {{ date | date : 'EEEE d MMMM yyyy' | titlecase }}
+                  <div style="display: block; margin-top: 6px">
+                    <ion-card-subtitle>Non Livraison ({{ getTotalOrdersByStatus(date, false) }}) </ion-card-subtitle>
+                  </div>
+                </ion-chip>
+              </ion-card-title>
+            </div>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ng-container *ngFor="let userId of getUserIdsByDateType(false, date)">
+              <ion-item-group class="user-group">
+                <ion-item lines="none" class="user-header">
+                  <ion-avatar slot="start">
+                    <ion-icon name="person-circle" class="user-avatar"></ion-icon>
+                  </ion-avatar>
+                  <ion-label>Utilisateur #{{ userId }}</ion-label>
+                </ion-item>
+
+                <ion-list lines="none" class="order-list">
+                  <app-cmd-action
+                    *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, false); trackBy: trackByOrderId"
+                    [order]="order"
+                    procededAction="processing"
+                    showedAction="valider"
+                  ></app-cmd-action>
+                </ion-list>
+              </ion-item-group>
+            </ng-container>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+    </ion-card>
+  </ng-container>
+</ion-list>

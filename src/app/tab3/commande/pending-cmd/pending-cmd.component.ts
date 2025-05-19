@@ -3,19 +3,21 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { getScreenHeight } from 'src/utils/getScreenHeight';
+import {
+  OrderGroupByDate,
+  formatDateCreated,
+  getUniqueDates,
+  getOrdersByDate,
+  getUserIdsByDateType,
+  getOrdersByDateAndUserDelivery,
+  getTotalOrdersByTypeTime,
+  getTotalOrdersByTypeExpress,
+  getTotalOrdersByStatus,
+} from 'src/utils/order-utils';
 import { OrderDataService } from 'src/services/orders/data/order-data.service';
-import { OrderCountersService } from 'src/services/orders/counters/order-counters.service';
 import { AppState } from 'src/store/indx';
-import * as moment from 'moment';
-import { groupBy } from 'lodash';
+import { OrderCountersService } from 'src/services/orders/counters/order-counters.service';
 import { sortAsc, sortDesc } from 'src/utils/sort-helpers';
-import { formatDate } from '@angular/common';
-
-interface OrderGroupByDate {
-  noDelivery: Record<string, any[]>; // groupé par userId
-  deliveryExpress: Record<string, any[]>; // groupé par userId
-  deliveryTime: Record<string, Record<string, any[]>>; // {heure: {userId: orders[]}}
-}
 
 @Component({
   selector: 'app-pending-cmd',
@@ -29,7 +31,7 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
   totalAmount: number = 0;
   pendingOrdersCount: number = 0;
   pendingOrders!: any[];
-  times: string[] = ['12:45', '1:45', '13:45'];
+  times: string[] = ['10:00', '16:00', '13:45'];
 
   screenHeight: number = getScreenHeight();
 
@@ -37,7 +39,7 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
 
   // Abonnement
   private subscription: Subscription = new Subscription();
-  constructor(public ordersService: OrderDataService, private store: Store<AppState>, private orderCountersService: OrderCountersService) {}
+  constructor(private store: Store<AppState>, private orderCountersService: OrderCountersService) {}
 
   ngOnInit() {
     // S'abonner uniquement aux changements du compteur pour mettre à jour l'UI
@@ -61,131 +63,49 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
     return order.id;
   }
 
-  // 1. Formater createdAt en date simple 'yyyy-MM-dd'
+  // Méthodes wrapper pour utiliser les fonctions du service avec les données du composant
   formatDateCreated(createdAt: string | Date): string {
-    return formatDate(createdAt, 'yyyy-MM-dd', 'fr-FR');
+    return formatDateCreated(createdAt);
   }
 
-  // 2. Extraire les dates uniques
   getUniqueDates(): string[] {
-    const dates = this.pendingOrders.map(order => this.formatDateCreated(order.createdAt));
-    return Array.from(new Set(dates)).sort();
+    return getUniqueDates(this.pendingOrders);
   }
 
-  // 3. Extraire commandes pour une date donnée
   getOrdersByDate(date: string): any[] {
-    return this.pendingOrders.filter(order => this.formatDateCreated(order.createdAt) === date);
+    return getOrdersByDate(this.pendingOrders, date);
   }
+
   getUserIdsByDateType(status: boolean, date: string, type?: string, time?: string): string[] {
-    const users = this.getOrdersByDate(date)
-      .filter(order => {
-        if (!status) {
-          return order.delivery?.status === false;
-        }
-
-        const matchType = order.delivery?.type === type;
-        const matchStatus = order.delivery?.status === true;
-        const matchTime = time ? order.delivery?.time === time : true;
-        // if (type == 'time') {
-        //   if (matchType && matchStatus && matchTime) {
-        //     console.log('touver ');
-        //   } else {
-        //     console.log('non trouver');
-        //   }
-        // }
-        return matchType && matchStatus && matchTime;
-      })
-      .map(order => order.userId);
-
-    return Array.from(new Set(users));
+    return getUserIdsByDateType(this.pendingOrders, status, date, type, time);
   }
 
-  // 5. Extraire commandes par date ET utilisateur
   getOrdersByDateAndUser(date: string, userId: string): any[] {
     return this.getOrdersByDate(date).filter(order => order.userId === userId);
   }
 
   getOrderByDeliveryType(date: string, status: boolean, type?: string): any[] {
-    return this.getOrdersByDate(date).filter(order => {
-      // Si le statut ne correspond pas, on filtre
+    return getOrdersByDate(this.pendingOrders, date).filter(order => {
       if (order.delivery?.status !== status) {
         return false;
       }
-
-      // Si pas de type spécifié, on retourne toutes les commandes avec le bon statut
-      if (!type) {
-        return true;
-      }
-
-      // Vérification du type de livraison
-      return order.delivery?.type === type;
+      return !type || order.delivery?.type === type;
     });
   }
 
   getOrdersByDateAndUserDelivery(date: string, userId: string, status: boolean, type?: string, time?: string): any[] {
-    return this.getOrdersByDate(date).filter(order => {
-      // Vérification de base : même utilisateur et statut correspondant
-
-      if (order.userId !== userId || order.delivery?.status !== status) {
-        return false;
-      }
-
-      // Si le statut est false, on retourne toutes les commandes avec delivery.status === false
-      if (status === false) {
-        return true;
-      }
-
-      // Si le statut est true, on filtre par type
-      if (type === 'express') {
-        return order.delivery?.type === 'express';
-      } else if (type === 'time') {
-        //  if (type == 'time') console.log(userId, time, type);
-        // Pour le type 'time', on vérifie aussi l'heure si elle est fournie
-        const timeMatch = time ? order.delivery?.time === time : true;
-        // if (time) {
-        //   console.log(order.id, time, type);
-        // }
-        return order.delivery?.type === 'time' && timeMatch;
-      }
-
-      if (type === order.delivery?.type) {
-        return true;
-      }
-
-      return false;
-    });
+    return getOrdersByDateAndUserDelivery(this.pendingOrders, date, userId, status, type, time);
   }
 
   getTotalOrdersByTypeTime(date: string, times: string[]): number {
-    let total = 0;
-
-    for (const time of times) {
-      const userIds = this.getUserIdsByDateType(true, date, 'time', time);
-      for (const userId of userIds) {
-        total += this.getOrdersByDateAndUserDelivery(date, userId, true, 'time', time).length;
-      }
-    }
-
-    return total;
+    return getTotalOrdersByTypeTime(this.pendingOrders, date, times);
   }
 
   getTotalOrdersByTypeExpress(date: string): number {
-    let total = 0;
-    const userIds = this.getUserIdsByDateType(true, date, 'express');
-
-    for (const userId of userIds) {
-      total += this.getOrdersByDateAndUserDelivery(date, userId, true, 'express').length;
-    }
-
-    return total;
+    return getTotalOrdersByTypeExpress(this.pendingOrders, date);
   }
 
   getTotalOrdersByStatus(date: string, status: boolean): number {
-    let total = 0;
-    const userIds = this.getUserIdsByDateType(status, date);
-    for (const userId of userIds) {
-      total += this.getOrdersByDateAndUserDelivery(date, userId, status).length;
-    }
-    return total;
+    return getTotalOrdersByStatus(this.pendingOrders, date, status);
   }
 }

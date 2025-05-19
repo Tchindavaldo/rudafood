@@ -34,7 +34,7 @@ export class CmdActionPage implements OnInit {
     this.isUpdating = true;
     console.log('order fastfood reducer', this.isUpdating);
     try {
-      // await this.updateOrdersRequet.updateFastFood({ status: this.procededAction, id: this.order.id });
+      await this.updateOrdersRequet.updateFastFood({ status: this.procededAction, id: this.order.id });
       // await this.updateOrdersRequet.updateFastFood({ status: 'pending', id: this.order.id });
       // this.isUpdating = false;
     } catch (error) {

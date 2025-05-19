@@ -6,8 +6,28 @@
           <app-component0 marginGrid="0"></app-component0>
         </ion-col>
       </ion-row> -->
-      <ion-row>
-        <ion-col size="12"> <ion-label style="font-size: 18px">aujourd'hui</ion-label><ion-label style="margin-left: 10px; font-size: 14px">{{ currentDate }}</ion-label> </ion-col>
+      <ion-row style="display: flex; justify-content: space-between">
+        <ion-col style="flex-direction: column" size="5">
+          <ion-label style="font-size: 18px">aujourd'hui</ion-label><ion-label style="margin-left: 10px; font-size: 14px">{{ currentDate }}</ion-label>
+        </ion-col>
+        <ion-col style="display: flex; align-items: center" size="auto">
+          <!-- Afficher les 2 prochains jours -->
+          <ion-col *ngFor="let day of nextDays" size="auto" (click)="selectDay(day)">
+            <app-component2
+              [backgrd]="'#fff5f5'"
+              [mLeft]="'5px'"
+              [shadow]="'none'"
+              [text1]="day.day"
+              [text2]="day.date.toString()"
+              [style.opacity]="selectedDate.getDate() === day.fullDate.getDate() ? '1' : '0.6'"
+            ></app-component2>
+          </ion-col>
+
+          <!-- Bouton de sélection de date -->
+          <ion-col size="auto" (click)="openDatePicker()" class="calendar-icon">
+            <ion-icon name="calendar-outline" style="font-size: 24px; color: var(--ion-color-primary)"></ion-icon>
+          </ion-col>
+        </ion-col>
       </ion-row>
       <ion-row class="rowPrixCmd">
         <ion-col size="6">
