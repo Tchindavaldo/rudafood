@@ -29,6 +29,7 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
   totalAmount: number = 0;
   pendingOrdersCount: number = 0;
   pendingOrders!: any[];
+  times: string[] = ['12:45', '1:45', '13:45'];
 
   screenHeight: number = getScreenHeight();
 
@@ -85,7 +86,13 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
         const matchType = order.delivery?.type === type;
         const matchStatus = order.delivery?.status === true;
         const matchTime = time ? order.delivery?.time === time : true;
-
+        // if (type == 'time') {
+        //   if (matchType && matchStatus && matchTime) {
+        //     console.log('touver ');
+        //   } else {
+        //     console.log('non trouver');
+        //   }
+        // }
         return matchType && matchStatus && matchTime;
       })
       .map(order => order.userId);
@@ -118,6 +125,7 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
   getOrdersByDateAndUserDelivery(date: string, userId: string, status: boolean, type?: string, time?: string): any[] {
     return this.getOrdersByDate(date).filter(order => {
       // Vérification de base : même utilisateur et statut correspondant
+
       if (order.userId !== userId || order.delivery?.status !== status) {
         return false;
       }
@@ -131,8 +139,12 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
       if (type === 'express') {
         return order.delivery?.type === 'express';
       } else if (type === 'time') {
+        //  if (type == 'time') console.log(userId, time, type);
         // Pour le type 'time', on vérifie aussi l'heure si elle est fournie
         const timeMatch = time ? order.delivery?.time === time : true;
+        // if (time) {
+        //   console.log(order.id, time, type);
+        // }
         return order.delivery?.type === 'time' && timeMatch;
       }
 
@@ -142,5 +154,38 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
 
       return false;
     });
+  }
+
+  getTotalOrdersByTypeTime(date: string, times: string[]): number {
+    let total = 0;
+
+    for (const time of times) {
+      const userIds = this.getUserIdsByDateType(true, date, 'time', time);
+      for (const userId of userIds) {
+        total += this.getOrdersByDateAndUserDelivery(date, userId, true, 'time', time).length;
+      }
+    }
+
+    return total;
+  }
+
+  getTotalOrdersByTypeExpress(date: string): number {
+    let total = 0;
+    const userIds = this.getUserIdsByDateType(true, date, 'express');
+
+    for (const userId of userIds) {
+      total += this.getOrdersByDateAndUserDelivery(date, userId, true, 'express').length;
+    }
+
+    return total;
+  }
+
+  getTotalOrdersByStatus(date: string, status: boolean): number {
+    let total = 0;
+    const userIds = this.getUserIdsByDateType(status, date);
+    for (const userId of userIds) {
+      total += this.getOrdersByDateAndUserDelivery(date, userId, status).length;
+    }
+    return total;
   }
 }

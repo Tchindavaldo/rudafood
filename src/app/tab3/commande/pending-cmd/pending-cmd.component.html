@@ -11,49 +11,74 @@
 <ng-container *ngFor="let date of getUniqueDates()">
   <h3>Date : {{ date }}</h3>
 
+  <!-- Total express pour la date -->
+  <h4>🚚 Livraison express : {{ getTotalOrdersByTypeExpress(date) }}</h4>
+
+  <!-- Boucle sur les utilisateurs qui ont des commandes express ce jour -->
   <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'express')">
-    <h4>express : {{ getOrdersByDateAndUserDelivery(date, userId, true, 'express').length }}</h4>
-    <ion-list>
-      <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'express')">
-        <h4>👤 Utilisateur : {{ userId }}</h4>
+    <h5>👤 Utilisateur : {{ userId }}</h5>
 
+    <ion-list>
+      <app-cmd-action
+        *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'express'); trackBy: trackByOrderId"
+        [order]="order"
+        procededAction="processing"
+        showedAction="valider"
+      >
+      </app-cmd-action>
+    </ion-list>
+  </ng-container>
+
+  <!-- <ng-container *ngFor="let time of times">
+    <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'time', time)">
+      <h4>livraison non express : {{ getOrdersByDateAndUserDelivery(date, userId, true, 'time', time).length }}</h4>
+      <ion-list>
+        <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'time')">
+          <h4>👤 Utilisateur : {{ userId }}</h4>
+
+          <app-cmd-action
+            *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'time'); trackBy: trackByOrderId"
+            [order]="order"
+            procededAction="processing"
+            showedAction="valider"
+          >
+          </app-cmd-action>
+        </ng-container>
+      </ion-list>
+    </ng-container>
+  </ng-container> -->
+
+  <!-- 🔢 Total commandes "time" -->
+  <h6>Totlivraison non express : {{ getTotalOrdersByTypeTime(date, times) }}</h6>
+
+  <!-- ⏰ Boucle sur chaque horaire -->
+  <ng-container *ngFor="let time of times">
+    <h3>🕒 Heure : {{ time }}</h3>
+
+    <!-- 👤 Boucle sur chaque utilisateur qui a des commandes à cette heure -->
+    <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'time', time)">
+      <h4>👤 Utilisateur : {{ userId }}</h4>
+
+      <ion-list>
         <app-cmd-action
-          *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'express'); trackBy: trackByOrderId"
+          *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'time', time); trackBy: trackByOrderId"
           [order]="order"
           procededAction="processing"
           showedAction="valider"
         >
         </app-cmd-action>
-      </ng-container>
-    </ion-list>
+      </ion-list>
+    </ng-container>
   </ng-container>
 
-  <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'time')">
-    <h4>livraison non express : {{ getOrdersByDateAndUserDelivery(date, userId, true, 'time').length }}</h4>
-    <ion-list>
-      <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'time')">
-        <h4>👤 Utilisateur : {{ userId }}</h4>
-
-        <app-cmd-action
-          *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'time'); trackBy: trackByOrderId"
-          [order]="order"
-          procededAction="processing"
-          showedAction="valider"
-        >
-        </app-cmd-action>
-      </ng-container>
-    </ion-list>
-  </ng-container>
+  <h4>Total commandes non livrées : {{ getTotalOrdersByStatus(date, false) }}</h4>
 
   <ng-container *ngFor="let userId of getUserIdsByDateType(false, date)">
-    <h4>non livre : {{ getOrdersByDateAndUserDelivery(date, userId, false, '').length }}</h4>
-    <ion-list>
-      <ng-container *ngFor="let userId of getUserIdsByDateType(false, date)">
-        <h4>👤 Utilisateur : {{ userId }}</h4>
+    <h5>👤 Utilisateur : {{ userId }} — {{ getOrdersByDateAndUserDelivery(date, userId, false).length }} commande(s)</h5>
 
-        <app-cmd-action *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, false); trackBy: trackByOrderId" [order]="order" procededAction="processing" showedAction="valider">
-        </app-cmd-action>
-      </ng-container>
+    <ion-list>
+      <app-cmd-action *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, false); trackBy: trackByOrderId" [order]="order" procededAction="processing" showedAction="valider">
+      </app-cmd-action>
     </ion-list>
   </ng-container>
 </ng-container>
