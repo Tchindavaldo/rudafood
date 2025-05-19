@@ -14,6 +14,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ConfirmMenuDialogComponent } from '../confirm-menu-dialog/confirm-menu-dialog.component';
 import { showCard } from 'src/utils/showCard';
+import { getMenuService } from 'src/services/menu/requet/get-menu.service';
+import { DeleteMenuService } from 'src/services/menu/requet/del-menu.service';
 
 @Component({
   selector: 'app-page-delete',
@@ -21,8 +23,10 @@ import { showCard } from 'src/utils/showCard';
   styleUrls: ['./page-delete.page.scss'],
 })
 export class PageDeletePage implements OnInit {
+  isDeleting = false;
+  clikedMenu!: any;
   menuTab!: Observable<any>;
-  constructor(public dataGet: DataService, private router: Router, private store: Store<AppState>) {}
+  constructor(public menuRequest: DeleteMenuService, private router: Router, private store: Store<AppState>) {}
 
   ngOnInit() {
     this.fetchMenu();
@@ -39,8 +43,15 @@ export class PageDeletePage implements OnInit {
     return item.id;
   }
 
-  showDeleteCard() {
-    console.log('showDeleteCard clicker');
+  showDeleteCard(menu: any) {
+    this.clikedMenu = menu;
     showCard('bottom-card-delteMenu');
   }
+
+  deleTeMenu = async () => {
+    this.isDeleting = true;
+    const { data, message, success } = await this.menuRequest.DeleteMenu(this.clikedMenu.id);
+    if (success) showCard('bottom-card-delteMenu', 'y', '140px', 1000);
+    this.isDeleting = false;
+  };
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./item2.component.scss'],
 })
 export class Item2Component implements OnInit {
+  @Input() menu: any;
   constructor() {}
 
   ngOnInit() {}

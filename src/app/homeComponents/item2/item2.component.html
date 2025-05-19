@@ -10,19 +10,19 @@
         <ion-grid class="grid-infos">
           <ion-row>
             <ion-col size="auto" class="ligne-titre">
-              <ion-label class="titre"> Beignets haricots </ion-label>
+              <ion-label class="titre"> {{ menu.name }} </ion-label>
             </ion-col>
           </ion-row>
 
           <ion-row>
             <ion-col size="auto" class="ligne-statut">
-              <ion-label class="statut"> disponible</ion-label>
+              <ion-label class="statut"> {{ menu.status }} </ion-label>
             </ion-col>
           </ion-row>
 
           <ion-row class="ion-justify-content-between">
             <ion-col size="auto">
-              <ion-label class="prix"> 500f </ion-label>
+              <ion-label class="prix"> {{ menu?.prices && menu.prices.length > 0 ? menu.prices[0].price : '' }} </ion-label>
             </ion-col>
           </ion-row>
           <ion-row class="row-option ion-justify-content-start">

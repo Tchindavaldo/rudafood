@@ -13,6 +13,7 @@ import { AppState } from 'src/store/indx';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { showCard } from 'src/utils/showCard';
+import { UpdateMenuService } from 'src/services/menu/requet/update-menu.service';
 
 @Component({
   selector: 'app-page-dispo',
@@ -21,7 +22,9 @@ import { showCard } from 'src/utils/showCard';
 })
 export class PageDispoPage implements OnInit {
   menuTab!: Observable<any>;
-  constructor(public dataGet: DataService, private router: Router, private store: Store<AppState>) {}
+  clickedMenu!: any;
+  isUpdating = false;
+  constructor(public dataGet: DataService, private router: Router, private store: Store<AppState>, private menuRequest: UpdateMenuService) {}
 
   ngOnInit() {
     this.fetchMenu();
@@ -38,7 +41,16 @@ export class PageDispoPage implements OnInit {
     return item.id;
   }
 
-  showDispoCard() {
+  showDispoCard(menu: any) {
+    this.clickedMenu = menu;
     showCard('bottom-card-dispoMenu');
   }
+
+  updateDispoMenu = async () => {
+    this.isUpdating = true;
+    console.log('status recu ', this.clickedMenu.status);
+    const { data, message, success } = await this.menuRequest.updateMenu(this.clickedMenu.id, { status: this.clickedMenu.status });
+    if (success) showCard('bottom-card-dispoMenu', 'y', '140px', 1000);
+    this.isUpdating = false;
+  };
 }

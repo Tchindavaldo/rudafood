@@ -1,40 +1,40 @@
-<ion-header *ngIf="userData.fastFoodId!==undefined">
+<ion-header *ngIf="userData.fastFoodId!==undefined" style="position: sticky; top: 0; z-index: 5000">
   <ion-toolbar>
     <ion-grid fixed>
-      <ion-row class="firstRow">
+      <!-- <ion-row class="firstRow">
         <ion-col size="12">
           <app-component0 marginGrid="0"></app-component0>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-row>
-        <ion-col size="12">
-          <ion-label>aujourd'hui</ion-label>
-          <ion-label>02 AOUT 2024</ion-label>
-        </ion-col>
+        <ion-col size="12"> <ion-label style="font-size: 18px">aujourd'hui</ion-label><ion-label style="margin-left: 10px; font-size: 14px">{{ currentDate }}</ion-label> </ion-col>
       </ion-row>
       <ion-row class="rowPrixCmd">
         <ion-col size="6">
-          <app-component1></app-component1>
+          <app-component1 [text1]="totalOrder.toString()"></app-component1>
         </ion-col>
         <ion-col size="6">
-          <app-component1 text1="18000" text2="fcfa" text3="Montant Total"></app-component1>
+          <app-component1 [text1]="totalAmount.toString()" text2="fcfa" text3="Montant Total"></app-component1>
         </ion-col>
       </ion-row>
 
-      <ion-row class="rowNavGestionChipNav">
-        <ion-row class="rowNavGestionCmd" id="rowActionGestionCmd">
+      <ion-row class="rowNavGestionChipNav" style="height: 20px; margin: 10px 0 20px 0">
+        <ion-row class="rowNavGestionMenu" id="rowActionGestionMenu">
           <ion-col size="auto">
-            <ion-chip color="danger" [routerLink]="['/tabs/tab3/commande/pending']">
+            <ion-chip color="danger" [class.selected]="isSelected('pending')" routerLink="pending" (click)="selectChip('pending')">
+              <ion-icon name="time-outline"></ion-icon>
               <ion-label>Cmds en Attente</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col size="auto">
-            <ion-chip color="danger" [routerLink]="['/tabs/tab3/commande/proccess']">
+            <ion-chip color="danger" [class.selected]="isSelected('proccess')" routerLink="proccess" (click)="selectChip('proccess')">
+              <ion-icon name="restaurant-outline"></ion-icon>
               <ion-label>Cmds en cours</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col size="auto">
-            <ion-chip color="danger" [routerLink]="['/tabs/tab3/commande/finish']">
+            <ion-chip color="danger" [class.selected]="isSelected('finish')" routerLink="finish" (click)="selectChip('finish')">
+              <ion-icon name="checkmark-done-outline"></ion-icon>
               <ion-label>Cmds en Terminer</ion-label>
             </ion-chip>
           </ion-col>
@@ -44,21 +44,20 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <app-loader [load]="this.orderData.getFastfoodOrders() === null && userData.fastFoodId!==undefined" height="65%"></app-loader>
+<app-loader [load]="this.orderData.getFastfoodOrders() === null && userData.fastFoodId!==undefined" height="65%"></app-loader>
 
-  <!-- Affichage du contenu lorsque fastFoodOrder est différent de null -->
-  <main
-    *ngIf="this.orderData.getFastfoodOrders() !== null"
-    style="height: 500px"
-    [@fastFoodOrderRouteAnimation]="getAnimationData(outlet) !== 'fastFood-pending-order-NoAnim' ? getAnimationData(outlet) : undefined"
-  >
-    <router-outlet #outlet="outlet" [@.disabled]="false"></router-outlet>
-  </main>
+<!-- Affichage du contenu lorsque fastFoodOrder est différent de null -->
+<!-- <main
+  *ngIf="this.orderData.getFastfoodOrders() !== null"
+  style="height: 500px; position: relative"
+  [@fastFoodOrderRouteAnimation]="getAnimationData(outlet) !== 'fastFood-pending-order-NoAnim' ? getAnimationData(outlet) : undefined"
+>
+  <router-outlet #outlet="outlet" [@.disabled]="false"></router-outlet>
+</main> -->
 
-  <app-no-fast-food
-    titre="Creer votre boutique et recever vos cammande"
-    description="Gerer facillement vos comades vos livraisons vos transactions avec votre Boutique"
-    *ngIf="userData.fastFoodId===undefined"
-  ></app-no-fast-food>
-</ion-content>
+<router-outlet></router-outlet>
+<app-no-fast-food
+  titre="Creer votre boutique et recever vos cammande"
+  description="Gerer facillement vos comades vos livraisons vos transactions avec votre Boutique"
+  *ngIf="userData.fastFoodId===undefined"
+></app-no-fast-food>

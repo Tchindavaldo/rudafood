@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 })
 export class LoaderComponent implements OnInit {
   @Input() load: boolean = false;
+  @Input() backGroundCtn = 'rgba(0, 0, 0, 0)';
   @Input() height: string = '100%';
   @Input() strokeWidth = 5;
   @Input() fillColor = 'rgb(255, 0, 0)';

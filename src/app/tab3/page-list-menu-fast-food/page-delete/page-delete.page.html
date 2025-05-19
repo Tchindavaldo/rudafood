@@ -1,13 +1,12 @@
-<ion-content>
-  <ion-list>
-    <app-menu-item-list
-      (openModal)="showDeleteCard()"
-      [showOrderNbr]="false"
-      [menu]="menu"
-      iconName="trash-outline"
-      *ngFor="let menu of menuTab | async; trackBy: trackByFn"
-    ></app-menu-item-list>
-  </ion-list>
+<ion-list style="padding-bottom: 145px">
+  <app-menu-item-list
+    [nbr]="i + 1"
+    (openModal)="showDeleteCard($event.menu)"
+    [showOrderNbr]="false"
+    [menu]="menu"
+    iconName="trash-outline"
+    *ngFor="let menu of menuTab | async; let i = index; trackBy: trackByFn"
+  ></app-menu-item-list>
+</ion-list>
 
-  <app-confirm-menu-dialog idConfirmModal="bottom-card-delteMenu"></app-confirm-menu-dialog>
-</ion-content>
+<app-confirm-menu-dialog [data]="clikedMenu" (confirmBtnClick)="deleTeMenu()" [showLoader]="isDeleting" modalId="bottom-card-delteMenu"></app-confirm-menu-dialog>

@@ -1,12 +1,59 @@
-<div [style.height.px]="screenHeight" style="position: relative;"></div>
-<ion-content style="position: absolute;height: 100%; top: 0; " class="ionContent pendingCmd">
-
+<!-- <div [style.height.px]="screenHeight" style="position: relative"></div>
+<ion-content style="position: absolute; height: 100%; top: 0" class="ionContent pendingCmd">
   <ion-infinite-scroll class="infinitScroll2">
     <ion-list>
 
-
-      <!-- pending -->
-      <app-cmd-action procededAction="processing" showedAction="valider" *ngFor="let pendingOrderItem of pendingCmd; let idx = index" [order]="pendingCmd?.[idx]"></app-cmd-action>
+      <app-cmd-action procededAction="processing" showedAction="valider" *ngFor="let pendingOrderItem of pendingOrders; let idx = index" [order]="pendingOrderItem"></app-cmd-action>
     </ion-list>
   </ion-infinite-scroll>
-</ion-content>
+</ion-content> -->
+
+<ng-container *ngFor="let date of getUniqueDates()">
+  <h3>Date : {{ date }}</h3>
+
+  <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'express')">
+    <h4>express : {{ getOrdersByDateAndUserDelivery(date, userId, true, 'express').length }}</h4>
+    <ion-list>
+      <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'express')">
+        <h4>👤 Utilisateur : {{ userId }}</h4>
+
+        <app-cmd-action
+          *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'express'); trackBy: trackByOrderId"
+          [order]="order"
+          procededAction="processing"
+          showedAction="valider"
+        >
+        </app-cmd-action>
+      </ng-container>
+    </ion-list>
+  </ng-container>
+
+  <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'time')">
+    <h4>livraison non express : {{ getOrdersByDateAndUserDelivery(date, userId, true, 'time').length }}</h4>
+    <ion-list>
+      <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'time')">
+        <h4>👤 Utilisateur : {{ userId }}</h4>
+
+        <app-cmd-action
+          *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'time'); trackBy: trackByOrderId"
+          [order]="order"
+          procededAction="processing"
+          showedAction="valider"
+        >
+        </app-cmd-action>
+      </ng-container>
+    </ion-list>
+  </ng-container>
+
+  <ng-container *ngFor="let userId of getUserIdsByDateType(false, date)">
+    <h4>non livre : {{ getOrdersByDateAndUserDelivery(date, userId, false, '').length }}</h4>
+    <ion-list>
+      <ng-container *ngFor="let userId of getUserIdsByDateType(false, date)">
+        <h4>👤 Utilisateur : {{ userId }}</h4>
+
+        <app-cmd-action *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, false); trackBy: trackByOrderId" [order]="order" procededAction="processing" showedAction="valider">
+        </app-cmd-action>
+      </ng-container>
+    </ion-list>
+  </ng-container>
+</ng-container>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { showCard } from 'src/utils/showCard';
 
 @Component({
@@ -6,11 +6,15 @@ import { showCard } from 'src/utils/showCard';
   templateUrl: './modal-item1.component.html',
   styleUrls: ['./modal-item1.component.scss'],
 })
-export class ModalItem1Component implements OnInit {
+export class ModalItem1Component implements OnInit, OnChanges {
   iconBtn1 = 'trash-outline';
+  titleColor = 'danger';
+  confirmationColor = 'darkRed';
+  titleAction = 'Voulez vous vraiment supprimer ?';
 
   @Input() id!: string;
-  @Output() outputBtn1Click = new EventEmitter<any>();
+  @Input() data?: any;
+  @Output() outputConfirmBtnClick = new EventEmitter<any>();
   @Output() outputBtn2Click = new EventEmitter<any>();
   textConfirmation: string = '';
 
@@ -21,16 +25,32 @@ export class ModalItem1Component implements OnInit {
   }
 
   updateTextConfirmation() {
-    if (this.id === 'bottom-card-dispoMenu') {
-      this.textConfirmation = 'Changer';
+    if (this.id === 'bottom-card-dispoMenu' && this.data && this.data.status !== undefined) {
+      this.textConfirmation = 'confirmer';
+      console.log('status recu ', this.data.status);
+      this.confirmationColor = this.data.status === 'available' ? 'forestgreen' : 'darkRed';
+      const statusText = this.data.status === 'available' ? 'Disponible' : 'Indisponible';
+      const statusColor = this.data.status === 'available' ? 'success' : 'danger';
+      this.titleAction = `Voulez vous rendre ${statusText} ?`;
+      this.titleColor = statusColor;
       this.iconBtn1 = 'checkmark-outline';
     } else if (this.id === 'bottom-card-delteMenu') {
       this.textConfirmation = 'Supprimer';
     }
   }
 
-  emitBtn1Click() {
-    this.outputBtn1Click.emit();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['data']) {
+      // console.log('data recu ', this.data);
+      // Only call updateTextConfirmation if data exists
+      if (this.data) {
+        this.updateTextConfirmation();
+      }
+    }
+  }
+
+  emitConfirmBtnClick() {
+    this.outputConfirmBtnClick.emit();
   }
 
   emitBtn2Click() {
@@ -38,6 +58,6 @@ export class ModalItem1Component implements OnInit {
   }
 
   closeCard() {
-    showCard(this.id, 'y', '95px', 1000);
+    showCard(this.id, 'y', '140px', 1000);
   }
 }

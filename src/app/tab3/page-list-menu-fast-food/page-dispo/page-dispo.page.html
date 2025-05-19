@@ -1,7 +1,12 @@
-<ion-content>
-  <ion-list>
-    <app-menu-item-list (openModal)="showDispoCard()" [showCheck]="true" [menu]="menu" iconName="options" *ngFor="let menu of menuTab | async; trackBy: trackByFn"></app-menu-item-list>
-  </ion-list>
+<ion-list style="padding-bottom: 145px">
+  <app-menu-item-list
+    [nbr]="i + 1"
+    (openModal)="showDispoCard($event.menu)"
+    [showCheck]="true"
+    [menu]="menu"
+    iconName="options"
+    *ngFor="let menu of menuTab | async; let i = index; trackBy: trackByFn"
+  ></app-menu-item-list>
+</ion-list>
 
-  <app-confirm-menu-dialog idConfirmModal="bottom-card-dispoMenu"></app-confirm-menu-dialog>
-</ion-content>
+<app-confirm-menu-dialog [data]="clickedMenu" (confirmBtnClick)="updateDispoMenu()" [showLoader]="isUpdating" modalId="bottom-card-dispoMenu"></app-confirm-menu-dialog>

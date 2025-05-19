@@ -7,7 +7,7 @@ import { OrderDataService } from 'src/services/orders/data/order-data.service';
 import { updateOrdersRequetService } from 'src/services/orders/update-orders-requet.service';
 import { requeToFastFood } from 'src/services/requeToFastFood';
 import { AppState } from 'src/store/indx';
-import { addFastFoodOrder, setFastFoodOrder } from 'src/store/order/order-fastfood-reducer';
+import { addFastFoodOrder, setFastFoodOrder, updateFastFoodOrder } from 'src/store/order/order-fastfood-reducer';
 
 @Component({
   selector: 'app-cmd-action',
@@ -32,14 +32,11 @@ export class CmdActionPage implements OnInit {
 
   async statutChange() {
     this.isUpdating = true;
-    console.log('order fastfood reducer', this.order);
+    console.log('order fastfood reducer', this.isUpdating);
     try {
-      const response = await this.updateOrdersRequet.updateFastFood({ ...this.order, status: this.procededAction });
-      const dataSet = setObjectOnTabByArg(this.fastfoodOrder, response, 'id', this.order.id);
-      this.store.dispatch(setFastFoodOrder({ orderTab: dataSet }));
-      console.log('reussite');
-
-      this.isUpdating = false;
+      // await this.updateOrdersRequet.updateFastFood({ status: this.procededAction, id: this.order.id });
+      // await this.updateOrdersRequet.updateFastFood({ status: 'pending', id: this.order.id });
+      // this.isUpdating = false;
     } catch (error) {
       console.log('error', error);
 

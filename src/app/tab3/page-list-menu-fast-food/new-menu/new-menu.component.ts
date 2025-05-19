@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastService } from 'src/services/toast/toast.service';
 import { requeToAuth } from 'src/services/requeToAuth';
 import { requeToGeneralDataUsers } from 'src/services/requeToGeneralDataUsers';
 import { requeToUser } from 'src/services/requeToUser';
@@ -15,6 +15,7 @@ import { Users } from 'src/app/data/Users';
 import { UsersInfos } from 'src/app/data/UsersInfos';
 import { Location } from '@angular/common';
 import { postMenuService } from 'src/services/menu/requet/post-menu.service';
+import { UpdateMenuService } from 'src/services/menu/requet/update-menu.service';
 import { postImageService } from 'src/services/image/post-image.service';
 
 @Component({
@@ -22,7 +23,7 @@ import { postImageService } from 'src/services/image/post-image.service';
   templateUrl: './new-menu.component.html',
   styleUrls: ['./new-menu.component.scss', './new-menu.component2.scss', './new-menu.component3.scss'],
 })
-export class NewMenuComponent {
+export class NewMenuComponent implements OnInit {
   recaptchaVerifier!: firebase.auth.RecaptchaVerifier;
   verificationId: string = '';
   m: string | null = null;
@@ -52,9 +53,17 @@ export class NewMenuComponent {
   price3: Number | null = null;
 
   isLoadingImg1 = false;
+  isLoadingImg2 = false;
+  isLoadingImg3 = false;
+  // Variables pour l'affichage des aperçus d'images
   image2Url: string | ArrayBuffer | null = '';
   image1Url: string | ArrayBuffer | null = '';
-  image3Url = '';
+  image3Url: string | ArrayBuffer | null = '';
+
+  // Variables pour stocker les URLs des images téléchargées sur le serveur
+  uploadedImage1Url: string = '';
+  uploadedImage2Url: string = '';
+  uploadedImage3Url: string = '';
 
   descriptionPrice2: string = '';
   descriptionPrice1: string = '';
@@ -63,23 +72,94 @@ export class NewMenuComponent {
   verificationCode: string = '';
 
   file1!: File | null;
-  uploadProgress = 0;
+  uploadProgress1 = 0;
+  uploadProgress2 = 0;
+  uploadProgress3 = 0;
   isLoadingImage: boolean = true;
   isErrorLoadingImage: boolean = false;
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('fileInput2') fileInput2!: ElementRef<HTMLInputElement>;
+  @ViewChild('fileInput3') fileInput3!: ElementRef<HTMLInputElement>;
+
+  // Variable pour stocker le menu reçu du state
+  menuFromState: any = null;
 
   constructor(
     private postImageService: postImageService,
     private psotMenuServices: postMenuService,
+    private updateMenuService: UpdateMenuService,
     private router: Router,
-    private toastController: ToastController,
+    private toast: ToastService,
     private location: Location
   ) {}
+
+  ngOnInit() {
+    // Récupérer le menu passé via le router state
+    this.menuFromState = null;
+
+    // Vérifier d'abord dans history.state qui est plus fiable
+    if (history.state && history.state.data) {
+      this.menuFromState = history.state.data;
+    }
+
+    if (this.menuFromState) {
+      console.log('Menu reçu pour modification:', this.menuFromState);
+
+      // Initialiser les champs du formulaire avec les données du menu
+      this.nom = this.menuFromState.name || '';
+      this.availability = this.menuFromState.status || 'available';
+
+      // Initialiser les prix et descriptions si disponibles
+      if (this.menuFromState.prices && this.menuFromState.prices.length > 0) {
+        if (this.menuFromState.prices[0]) {
+          this.price1 = this.menuFromState.prices[0].price || null;
+          this.descriptionPrice1 = this.menuFromState.prices[0].description || '';
+        }
+
+        if (this.menuFromState.prices[1]) {
+          this.price2 = this.menuFromState.prices[1].price || null;
+          this.descriptionPrice2 = this.menuFromState.prices[1].description || '';
+        }
+
+        if (this.menuFromState.prices[2]) {
+          this.price3 = this.menuFromState.prices[2].price || null;
+          this.descriptionPrice3 = this.menuFromState.prices[2].description || '';
+        }
+      }
+
+      // Initialiser les images si disponibles
+      if (this.menuFromState.images && Array.isArray(this.menuFromState.images)) {
+        // Initialiser jusqu'à 3 images si disponibles
+        if (this.menuFromState.images[0]) {
+          this.image1Url = this.menuFromState.images[0];
+        }
+
+        if (this.menuFromState.images[1]) {
+          this.image2Url = this.menuFromState.images[1];
+        }
+
+        if (this.menuFromState.images[2]) {
+          this.image3Url = this.menuFromState.images[2];
+        }
+      } else if (this.menuFromState.image) {
+        // Fallback pour la compatibilité avec l'ancien format
+        this.image1Url = this.menuFromState.image;
+      }
+    }
+  }
 
   goBack = () => this.location.back();
 
   triggerFileInput() {
     this.fileInput.nativeElement.click();
+  }
+
+  triggerFileInput2() {
+    this.fileInput2.nativeElement.click();
+  }
+
+  triggerFileInput3() {
+    this.fileInput3.nativeElement.click();
   }
 
   onImageLoad() {
@@ -102,24 +182,123 @@ export class NewMenuComponent {
     this.file1 = event.target.files[0];
     if (this.file1) {
       this.isLoadingImg1 = true;
+      this.uploadProgress1 = 0;
 
-      this.uploadProgress = 0;
+      // Télécharger l'image sur le serveur
+      try {
+        const { data, isPosting, isError } = await this.postImageService.postImage(this.file1, (progress: number) => {
+          this.uploadProgress1 = progress;
+        });
 
-      const reader = new FileReader();
-      reader.onload = () => (this.image1Url = reader.result);
-      const { data, isPosting, isError } = await this.postImageService.postImage(this.file1, (progress: number) => {
-        this.uploadProgress = progress;
-      });
+        // Stocker l'URL retournée par le serveur
+        if (data && typeof data === 'string') {
+          console.log('Image 1 téléchargée avec succès:', data);
+          this.uploadedImage1Url = data;
 
-      reader.readAsDataURL(this.file1);
+          // Afficher l'image locale seulement après le téléchargement réussi
+          const reader = new FileReader();
+          reader.onload = () => (this.image1Url = reader.result);
+          reader.readAsDataURL(this.file1);
+        }
+      } catch (error) {
+        console.error("Erreur lors du téléchargement de l'image 1:", error);
+        this.toast.presentToast('top', "Erreur: L'image 1 n'a pas pu être téléchargée");
+      }
+
       this.isLoadingImg1 = false;
+    }
+  }
+
+  async onFileSelected2(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.isLoadingImg2 = true;
+      this.uploadProgress2 = 0;
+
+      // Télécharger l'image sur le serveur
+      try {
+        const { data, isPosting, isError } = await this.postImageService.postImage(file, (progress: number) => {
+          this.uploadProgress2 = progress;
+        });
+
+        // Stocker l'URL retournée par le serveur
+        if (data && typeof data === 'string') {
+          console.log('Image 2 téléchargée avec succès:', data);
+          this.uploadedImage2Url = data;
+
+          // Afficher l'image locale seulement après le téléchargement réussi
+          const reader = new FileReader();
+          reader.onload = () => (this.image2Url = reader.result);
+          reader.readAsDataURL(file);
+        }
+      } catch (error) {
+        console.error("Erreur lors du téléchargement de l'image 2:", error);
+        this.toast.presentToast('top', "Erreur: L'image 2 n'a pas pu être téléchargée");
+      }
+
+      this.isLoadingImg2 = false;
+    }
+  }
+
+  async onFileSelected3(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.isLoadingImg3 = true;
+      this.uploadProgress3 = 0;
+
+      // Télécharger l'image sur le serveur
+      try {
+        const { data, isPosting, isError } = await this.postImageService.postImage(file, (progress: number) => {
+          this.uploadProgress3 = progress;
+        });
+
+        // Stocker l'URL retournée par le serveur
+        if (data && typeof data === 'string') {
+          console.log('Image 3 téléchargée avec succès:', data);
+          this.uploadedImage3Url = data;
+
+          // Afficher l'image locale seulement après le téléchargement réussi
+          const reader = new FileReader();
+          reader.onload = () => (this.image3Url = reader.result);
+          reader.readAsDataURL(file);
+        }
+      } catch (error) {
+        console.error("Erreur lors du téléchargement de l'image 3:", error);
+        this.toast.presentToast('top', "Erreur: L'image 3 n'a pas pu être téléchargée");
+      }
+
+      this.isLoadingImg3 = false;
     }
   }
   postMenu = async (data: any) => {
     this.postingMenu = true;
-    const { isPosting, isError } = await this.psotMenuServices.postMenu(data);
-    this.postingMenu = isPosting;
-    this.goBack();
+
+    // Si nous avons reçu un menu dans le state, c'est une mise à jour
+    if (this.menuFromState && this.menuFromState.id) {
+      console.log('Mise à jour du menu existant:', this.menuFromState.id);
+      try {
+        const result = await this.updateMenuService.updateMenu(this.menuFromState.id, data);
+        this.postingMenu = false;
+        this.goBack();
+      } catch (error) {
+        console.error('Erreur lors de la mise à jour du menu:', error);
+        this.postingMenu = false;
+        this.toast.presentToast('bottom', 'Erreur lors de la mise à jour du menu');
+      }
+    } else {
+      // Sinon, c'est une création
+      console.log("Création d'un nouveau menu");
+      try {
+        const { isPosting, isError } = await this.psotMenuServices.postMenu(data);
+        this.toast.presentToast('bottom', 'Menu ajouter avec succes');
+        this.postingMenu = isPosting;
+        this.goBack();
+      } catch (error) {
+        console.error('Erreur lors de la création du menu:', error);
+        this.postingMenu = false;
+        this.toast.presentToast('bottom', 'Erreur lors de la création du menu');
+      }
+    }
   };
 
   setAvailability(value: string) {
@@ -130,7 +309,7 @@ export class NewMenuComponent {
   next() {
     if (this.showImageInput) {
       if (this.image1Url === '' || this.image2Url === '' || this.image3Url === '') {
-        this.presentToast('bottom', '3 Images doivent etre selectioner');
+        this.toast.presentToast('bottom', '3 Images doivent etre selectioner');
         return;
       } else {
         this.showImageInput = false;
@@ -141,7 +320,7 @@ export class NewMenuComponent {
 
     if (this.showNameInput) {
       if (this.nom === '') {
-        this.presentToast('bottom', 'le nom ne doit pas être vide');
+        this.toast.presentToast('bottom', 'le nom ne doit pas être vide');
         return;
       } else {
         this.showNameInput = false;
@@ -152,7 +331,7 @@ export class NewMenuComponent {
 
     if (this.showPriceInput) {
       if (this.price1 === null) {
-        this.presentToast('bottom', 'le prix 1 ne doit pas être vide');
+        this.toast.presentToast('bottom', 'le prix 1 ne doit pas être vide');
         return;
       } else {
         this.showPriceInput = false;
@@ -163,7 +342,7 @@ export class NewMenuComponent {
 
     if (this.showPrice1DescriptionInput) {
       if (this.descriptionPrice1 === '') {
-        this.presentToast('bottom', 'la description du prix 1 ne doit pas être vide');
+        this.toast.presentToast('bottom', 'la description du prix 1 ne doit pas être vide');
         return;
       } else {
         this.showPrice1DescriptionInput = false;
@@ -175,7 +354,7 @@ export class NewMenuComponent {
 
     if (this.showPrice2DescriptionInput) {
       if (this.descriptionPrice2 === '') {
-        this.presentToast('bottom', 'la description du prix 2 ne doit pas être vide');
+        this.toast.presentToast('bottom', 'la description du prix 2 ne doit pas être vide');
         return;
       } else {
         this.showPrice2DescriptionInput = false;
@@ -187,7 +366,7 @@ export class NewMenuComponent {
 
     if (this.showPrice3DescriptionInput) {
       if (this.descriptionPrice3 === '') {
-        this.presentToast('bottom', 'la description du prix 3 ne doit pas être vide');
+        this.toast.presentToast('bottom', 'la description du prix 3 ne doit pas être vide');
         return;
       } else {
         this.showPrice3DescriptionInput = false;
@@ -197,6 +376,10 @@ export class NewMenuComponent {
     }
 
     if (this.showStatusInput) {
+      // Créer un tableau d'images en filtrant les valeurs vides
+      // Utiliser les URLs retournées par le serveur plutôt que les aperçus locaux
+      const images = [this.uploadedImage1Url, this.uploadedImage2Url, this.uploadedImage3Url].filter(img => img !== '' && img !== null);
+
       const menuObject = {
         name: this.nom,
         prices: [
@@ -205,6 +388,8 @@ export class NewMenuComponent {
           { price: this.price3 || 0, description: this.descriptionPrice3 },
         ],
         status: this.availability,
+        images: images,
+        coverImage: images.length > 0 ? images[0] : '',
       };
       this.postMenu(menuObject);
     }
@@ -252,95 +437,6 @@ export class NewMenuComponent {
       this.showImageInput = true;
       return;
     }
-  }
-
-  async showErrorToast(error: any) {
-    let message: string;
-    switch (error) {
-      case 'auth/invalid-email':
-        message = "L'e-mail doit avoir une syntaxe valide.";
-        break;
-      case 'email-not-verified':
-        message = 'Email non vérifié. Cliquez sur le lien envoyé à votre compte pour vérifier et valider votre email';
-        break;
-      case 'auth/email-already-in-use':
-        message = "L'adresse e-mail est déjà utilisée par un autre compte.";
-        break;
-      case 'auth/weak-password':
-        message = 'Le mot de passe est trop faible.';
-        break;
-      case 'auth/wrong-password':
-        message = 'Le mot de passe est incorrect.';
-        break;
-      case 'auth/missing-password':
-        message = 'Le mot de passe ne doit pas etre vide.';
-        break;
-      case 'auth/user-not-found':
-        message = 'Aucun utilisateur ne correspond à ces identifiants.';
-        break;
-      case 'auth/too-many-requests':
-        message = 'Trop de requêtes ont été envoyées depuis cette adresse IP, veuillez réessayer plus tard.';
-        break;
-      case 'auth/operation-not-allowed':
-        message = "Cette opération n'est pas autorisée pour ce type de compte.";
-        break;
-      case 'auth/user-disabled':
-        message = "L'utilisateur a été désactivé.";
-        break;
-      case 'auth/account-exists-with-different-credential':
-        message = 'Le compte existe déjà avec un identifiant différent.';
-        break;
-      case 'auth/requires-recent-login':
-        message = "L'opération nécessite une connexion récente de l'utilisateur.";
-        break;
-      case 'auth/invalid-verification-code':
-        message = 'Le code de vérification est incorrect.';
-        break;
-      case 'auth/invalid-verification-id':
-        message = "L'ID de vérification est incorrect.";
-        break;
-      case 'auth/network-request-failed':
-        message = 'connexion internet Indisponible.';
-        break;
-      case 'auth/internal-error':
-        message = "Une erreur interne s'est produite.";
-        break;
-      default:
-        message = 'Une erreur est survenue.';
-    }
-
-    // Afficher le message d'erreur sous forme de toast
-    console.log(message);
-    this.presentToast('bottom', message);
-  }
-  async presentToast(position: 'top' | 'middle' | 'bottom', message: string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 10000,
-      position: position,
-      cssClass: 'monToast',
-      swipeGesture: 'vertical',
-      buttons: this.toastButtons,
-    });
-
-    toast.onDidDismiss().then(event => this.setRoleMessage(event));
-    await toast.present();
-  }
-
-  public toastButtons: (string | ToastButton)[] = [
-    {
-      side: 'end' as 'end', // Ensuring the type is correct
-      icon: 'close-circle-outline',
-      role: 'cancel',
-      handler: () => {
-        console.log('Dismiss clicked');
-      },
-    },
-  ];
-
-  setRoleMessage(ev: any) {
-    const { role } = ev.detail;
-    console.log(`Dismissed with role: ${role}`);
   }
 
   direct(rout: String) {

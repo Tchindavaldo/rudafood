@@ -9,7 +9,8 @@
       <ion-row class="">
         <ion-col size="auto">
           <ion-label class="text-sm-4 text-md-3 text-lg-2 text-xl-1" style=""
-            ><span>Creation du</span><br />Nouveau<br />
+            ><span>{{ menuFromState && menuFromState.id ? '' : 'Creation du' }}</span
+            ><br />{{ menuFromState && menuFromState.id ? 'Modification' : 'Nouveau' }}<br />
             Menu</ion-label
           >
         </ion-col>
@@ -19,7 +20,9 @@
           <ion-label *ngIf="showImageInput">Image du menu</ion-label>
           <ion-label *ngIf="showNameInput">Nom du menu</ion-label>
           <ion-label *ngIf="showPriceInput">Prix du menu</ion-label>
-          <ion-label *ngIf="showPrice1DescriptionInput || showPrice2DescriptionInput || showPrice3DescriptionInput"> Description du menu </ion-label>
+          <ion-label *ngIf="showPrice1DescriptionInput">Description pour le prix 1</ion-label>
+          <ion-label *ngIf="showPrice2DescriptionInput">Description pour le prix 2</ion-label>
+          <ion-label *ngIf="showPrice3DescriptionInput">Description pour le prix 3</ion-label>
           <ion-label *ngIf="showStatusInput">Statut du menu</ion-label>
         </ion-col>
 
@@ -51,22 +54,17 @@
           <!-- Conteneur pour l'icône personnalisée et l'input de fichier caché -->
           <div class="custom-file-upload">
             <!-- Icône par défaut avant la sélection de l'image -->
-            <div *ngIf="image2Url === ''" class="ctn-img">
+            <div *ngIf="image2Url === ''" (click)="triggerFileInput2()" class="ctn-img">
               <img src="assets/icon/camera-outline.svg" alt="Default Icon" class="default-icon" />
             </div>
 
             <!-- Aperçu de l'image après la sélection -->
+            <div (click)="triggerFileInput2()" *ngIf="image2Url !== ''" class="preview-image-ctn" id="iconPhotoAdd" style="background-color: hsl(0deg 0% 100% / 41%)">
+              <img (error)="onImageError()" [src]="image2Url" alt="Selected Image" />
+            </div>
 
-            <!-- <div *ngIf="image2Url !=='' " id="iconPhotoAdd">
-              <img
-                style="background-repeat: no-repeat; background-position: center; background-image: url(../../../assets/svg/loader2.svg)"
-                (click)="triggerFileInput()"
-                (load)="onImageLoad()"
-                (error)="onImageError()"
-                class="preview-image"
-              />
-
-             </div> -->
+            <!-- Input de fichier caché -->
+            <input type="file" #fileInput2 (change)="onFileSelected2($event)" hidden />
 
             <!-- Input de fichier caché -->
             <!-- <input type="file" #fileInput2 (change)="onFileSelected($event)" hidden /> -->
@@ -76,25 +74,17 @@
           <!-- Conteneur pour l'icône personnalisée et l'input de fichier caché -->
           <div class="custom-file-upload">
             <!-- Icône par défaut avant la sélection de l'image -->
-            <div *ngIf="image3Url === ''" class="ctn-img">
+            <div *ngIf="image3Url === ''" (click)="triggerFileInput3()" class="ctn-img">
               <img src="assets/icon/camera-outline.svg" alt="Default Icon" class="default-icon" />
             </div>
 
             <!-- Aperçu de l'image après la sélection -->
-
-            <!-- <div *ngIf="image3Url !=='' " id="iconPhotoAdd">
-              <img
-                style="background-repeat: no-repeat; background-position: center; background-image: url(../../../assets/svg/loader2.svg)"
-                (click)="triggerFileInput()"
-                (load)="onImageLoad()"
-                (error)="onImageError()"
-                class="preview-image"
-              />
-
-             </div> -->
+            <div (click)="triggerFileInput3()" *ngIf="image3Url !== ''" class="preview-image-ctn" id="iconPhotoAdd" style="background-color: hsl(0deg 0% 100% / 41%)">
+              <img (error)="onImageError()" [src]="image3Url" alt="Selected Image" />
+            </div>
 
             <!-- Input de fichier caché -->
-            <!-- <input type="file" #fileInput3 (change)="onFileSelected($event)" hidden /> -->
+            <input type="file" #fileInput3 (change)="onFileSelected3($event)" hidden />
           </div>
         </ion-col>
       </ion-row>
@@ -132,7 +122,7 @@
       </ion-row>
 
       <ion-row *ngIf="showPrice3DescriptionInput">
-        <ion-col size="4">
+        <ion-col size="12">
           <ion-textarea class="ion-input" placeholder="Entrez la description pour le prix 3" [(ngModel)]="descriptionPrice3" autoGrow="true"></ion-textarea>
         </ion-col>
       </ion-row>
@@ -204,9 +194,22 @@
       </ion-row>
       <ion-row>
         <ion-col>
+          <!-- Indicateur de chargement pour l'image 1 -->
           <div *ngIf="isLoadingImg1">
-            <p>Téléchargement : {{ uploadProgress }}%</p>
-            <ion-progress-bar [value]="uploadProgress / 100"></ion-progress-bar>
+            <p>Téléchargement image 1 : {{ uploadProgress1 }}%</p>
+            <ion-progress-bar [value]="uploadProgress1 / 100"></ion-progress-bar>
+          </div>
+
+          <!-- Indicateur de chargement pour l'image 2 -->
+          <div *ngIf="isLoadingImg2">
+            <p>Téléchargement image 2 : {{ uploadProgress2 }}%</p>
+            <ion-progress-bar [value]="uploadProgress2 / 100"></ion-progress-bar>
+          </div>
+
+          <!-- Indicateur de chargement pour l'image 3 -->
+          <div *ngIf="isLoadingImg3">
+            <p>Téléchargement image 3 : {{ uploadProgress3 }}%</p>
+            <ion-progress-bar [value]="uploadProgress3 / 100"></ion-progress-bar>
           </div>
         </ion-col>
       </ion-row>

@@ -1,1 +1,1 @@
-<ion-list> <app-menu-item-list [showOrderNbr]="false" [menu]="menu" iconName="options" *ngFor="let menu of menuTab | async; trackBy: trackByFn"></app-menu-item-list> </ion-list>
+<ion-list> <app-menu-item-list [nbr]="i + 1" [showOrderNbr]="true" [menu]="menu" iconName="options" *ngFor="let menu of menuTab | async; let i = index; trackBy: trackByFn"></app-menu-item-list> </ion-list>

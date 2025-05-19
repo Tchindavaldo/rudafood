@@ -1,5 +1,19 @@
 <ion-item [ngStyle]="{ '--background': 'none', 'padding-top': '0px' }">
   <ion-grid class="ion_grid1" [ngStyle]="{ 'background-color': 'none' }">
+    <ion-row style="margin-bottom: 15px">
+      <ion-col style="display: flex; align-items: center; justify-content: space-between" size="12">
+        <ion-chip color="{{ titleColor }}" style="position: relative">
+          <ion-label style="font-size: 10px; font-weight: 900"> {{ titleAction }} </ion-label>
+        </ion-chip>
+        <!-- <ion-chip
+          (click)="closeCard()"
+          class="chip3"
+          style="position: relative; background-color: darkred; padding: 3px; width: 25px; height: 25px; color: white; display: flex; min-height: 25px !important; color: white !important"
+        >
+          <ion-icon color="light" style="margin: 0" name="close-outline"></ion-icon>
+        </ion-chip> -->
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col size="5">
         <ion-grid>
@@ -28,15 +42,15 @@
         </ion-chip> -->
 
         <!-- <ion-chip class="chip2" [ngStyle]="{ right: '40px', color: 'white', 'background-color': 'darkred' }" color="success"> -->
-        <ion-chip class="chip2" [ngStyle]="{ right: '100px', color: 'white', 'background-color': 'darkred' }" color="success">
+        <ion-chip class="chip2" [ngStyle]="{ right: '110px', color: 'white', 'background-color': confirmationColor }">
           <!-- showIcon = false -->
-          <ion-label (click)="closeCard()">{{ textConfirmation }}</ion-label>
-          <ion-icon name="{{ iconBtn1 }}"></ion-icon>
+          <ion-label (click)="emitConfirmBtnClick()">{{ textConfirmation }}</ion-label>
+          <ion-icon color="light" name="{{ iconBtn1 }}"></ion-icon>
         </ion-chip>
 
-        <ion-chip (click)="closeCard()" class="chip3" style="padding: 5px" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }" color="success">
+        <ion-chip (click)="closeCard()" class="chip3" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }">
           <ion-label (click)="closeCard()">Annuler</ion-label>
-          <ion-icon style="margin: 0" name="close-outline"></ion-icon>
+          <ion-icon color="light" name="close-circle-outline"></ion-icon>
         </ion-chip>
       </ion-col>
     </ion-row>

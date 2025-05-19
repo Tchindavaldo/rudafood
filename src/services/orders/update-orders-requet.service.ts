@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment.prod';
 import { UserStorageService } from '../storgae/user-storage';
 import { DataService } from '../data.service';
 import { OrderDataService } from './data/order-data.service';
-import { setFastFoodOrder } from 'src/store/order/order-fastfood-reducer';
+import { setFastFoodOrder, updateFastFoodOrder } from 'src/store/order/order-fastfood-reducer';
 import { Store } from '@ngrx/store';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class updateOrdersRequetService {
       // console.log('update fonction called',order);
       // const response = await axios.get(`${this.apiUrl}/order/all/${fastFoodId}`);
       const response = await axios.put(`${this.apiUrl}/order`, order);
-      console.log(response.data, 'update requet reposne', response);
+      this.store.dispatch(updateFastFoodOrder({ updatedOrder: response.data.data }));
       return response.data.data;
     } catch (error) {
       console.error('update requet order error:', error);

@@ -1,8 +1,8 @@
-<ion-card z-index="100500" [attr.id]="idConfirmModal" class="bottom-card-home">
+<ion-card z-index="100500" [attr.id]="modalId" class="bottom-card-home">
   <ion-grid style="align-items: center; display: flex" fixed>
     <ion-row style="width: 100%">
       <ion-col size="12">
-        <app-modal-item1 [id]="idConfirmModal" (outputCloseOrder)="emitCloseModl()" />
+        <app-modal-item1 (outputConfirmBtnClick)="emitConfirmBtnClick()" (outputBtn2Click)="emitCloseModl()" [data]="data" [id]="modalId" />
       </ion-col>
     </ion-row>
     <!-- <ion-row class="ion-justify-content-between ion-align-items-center">
@@ -37,4 +37,5 @@
       </ion-col>
     </ion-row> -->
   </ion-grid>
+  <app-loader backGroundCtn="#0000009c" fillColor="white" [load]="showLoader"></app-loader>
 </ion-card>
