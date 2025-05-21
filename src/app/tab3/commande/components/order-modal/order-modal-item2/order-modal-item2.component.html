@@ -1,0 +1,23 @@
+<ion-col size="auto">
+  <ion-grid fixed  [ngStyle]="{'padding-right': paddingright}">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-label>{{textLigne1}}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-label>{{textLigne2}}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-chip (click)="actionToCmd('buy')"  [ngStyle]="{'background-color': backgroundChip,'box-shadow': shadow,'color':black}" color="light">
+          <ion-icon *ngIf="iconIshow"  name="remove-outline"></ion-icon>
+          <ion-label *ngIf="labelIshow" style="color: white; font-size: 14px;"  >buy</ion-label>
+          <ion-icon *ngIf="iconIshow"   name="add-outline"></ion-icon>
+        </ion-chip >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-col>

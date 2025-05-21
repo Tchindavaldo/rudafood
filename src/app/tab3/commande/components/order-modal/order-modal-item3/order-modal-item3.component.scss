@@ -1,0 +1,29 @@
+ion-checkbox {
+    --size: 18px;
+    --checkbox-background-checked: darkred;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+}
+
+ion-checkbox::part(container) {
+    border-radius: 6px;
+    border: 2px solid darkred;
+}
+
+ion-col {
+    height: max-content;
+    display: flex;
+    padding: 7px 7px 0 0;
+}
+
+:host(.checkbox-label-placement-start) .label-text-wrapper {
+    -webkit-margin-start: 0;
+    margin-inline-start: 0;
+    -webkit-margin-end: 16px;
+    margin-inline-end: 5px;
+}
+
+ion-checkbox .label-text-wrapper {
+    margin-inline-end: 5px;
+}

@@ -1,0 +1,89 @@
+<ion-item [style]="itemStyle">
+  <ion-grid>
+    <ion-row style="margin: 0px 0 35px" *ngIf="extras && extras.length > 0">
+      <!-- Afficher les extras limités au nombre maximal défini -->
+      <ion-col size="2.75" *ngFor="let extra of extrasToShow">
+        <ion-chip style="font-size: 8px; font-weight: bold; margin-left: 0px" color="light">
+          <ion-label>{{ extra.name }}</ion-label>
+          <div class="custom-checkbox" [ngClass]="{ 'cross-checkbox': !extra.status, 'check-checkbox': extra.status }">
+            <ion-icon *ngIf="!extra.status" name="close" class="icon-symbol"></ion-icon>
+            <ion-icon *ngIf="extra.status" name="checkmark" class="icon-symbol"></ion-icon>
+          </div>
+        </ion-chip>
+      </ion-col>
+
+      <!-- Afficher l'indicateur "+X éléments en plus" si nécessaire -->
+      <ion-col style="align-items: center" size="1" *ngIf="hasAdditionalExtras">
+        <!-- <ion-chip style="font-size: 12px; font-weight: bold" color="danger"> -->
+        <ion-label style="font-size: 14px; font-weight: bold">+{{ additionalExtrasCount }} </ion-label>
+        <!-- </ion-chip> -->
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="10">
+        <ion-chip style="font-size: 12px; font-weight: bold; margin-left: 0px" color="success">
+          <ion-icon name="wallet-outline" style="margin-right: 5px"></ion-icon>
+          <ion-label class="NomCmdUser">{{ order.total || noDef }} fcfa</ion-label>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+    <ion-row style="flex-wrap: nowrap; overflow-x: scroll; justify-content: space-between; margin-bottom: 0">
+      <ion-col size="9">
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col size="10">
+              <ion-chip style="font-size: 12px; font-weight: bold; margin-left: 0px" color="success">
+                <ion-icon style="transition-duration: 2s" name="restaurant-outline" [style.margin-right.px]="menuNameExpanded ? 0 : 5" [style.opacity]="menuNameExpanded ? 0 : 1"></ion-icon>
+                <div class="text-container" [ngClass]="{ expanded: menuNameExpanded }" (click)="toggleMenuNameExpand($event)">
+                  <ion-label class="NomCmdUser">{{ displayedText || (menuNameExpanded ? logText : truncatedText) }}</ion-label>
+                </div>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <div
+                class="text-container"
+                [ngClass]="{ expanded: deliveryAddressExpanded, 'no-truncate': !truncateDeliveryAddress }"
+                (click)="truncateDeliveryAddress && toggleDeliveryAddressExpand($event)"
+              >
+                <div class="delivery-info">
+                  <ion-label class="delivery-address" style="flex-wrap: nowrap; font-size: 13px">
+                    <!-- </div> -->
+                    <span *ngIf="truncateDeliveryAddress; else fullAddress">
+                      {{
+                        deliveryAddressDisplayed ||
+                          (deliveryAddressExpanded
+                            ? order.delivery?.location || 'Quartier Nkomo, après le marché central, à côté de la pharmacie du soleil, immeuble bleu à 3 étages, 2ème étage, porte 204'
+                            : deliveryAddressTruncated)
+                      }}
+                    </span>
+                    <ng-template #fullAddress>
+                      <span>
+                        <!-- <ion-icon name="navigate-outline" style="color: red; margin-right: 5px"></ion-icon> -->
+                        <span class="delivery-label" style="font-size: 15px; font-weight: 900; color: hsl(0, 0%, 100%); vertical-align: bottom">Livraison: </span>
+                        {{ order.delivery?.location || 'Quartier Nkomo, après le marché central, à côté de la pharmacie du soleil, immeuble bleu à 3 étages, 2ème étage, porte 204' }}</span
+                      >
+                    </ng-template>
+                  </ion-label>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+      <ion-col size="auto" style="display: flex; justify-content: space-between">
+        <div class="ctn-add">
+          <ion-chip (click)="statutChange()" style="background-color: black; font-size: 10px; font-weight: bold; color: white; letter-spacing: 1.1px; margin-bottom: 0; margin-right: 0">
+            <app-loader *ngIf="order.status !== 'finished'" [strokeWidth]="8" stokeColor="white" fillColor="white" [load]="isUpdating"></app-loader>
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <ion-label *ngIf="order.status !== 'finished'" [ngStyle]="{ visibility: isUpdating ? 'hidden' : 'visible' }" class="nbre-item"> {{ showedAction }} </ion-label>
+              <ion-icon *ngIf="order.status === 'finished'" name="notifications" style="color: white; font-size: 16px"></ion-icon>
+            </div>
+          </ion-chip>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>

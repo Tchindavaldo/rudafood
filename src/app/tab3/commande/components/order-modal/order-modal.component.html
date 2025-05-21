@@ -1,0 +1,42 @@
+<ion-card z-index="100500" [attr.id]="modalId" class="bottom-card-home">
+  <!-- <ion-grid style="align-items: center; display: flex" fixed> -->
+  <ion-grid style="align-items: center" fixed>
+    <ion-row style="width: 100%">
+      <ion-col size="12">
+        <app-order-modal-item1 (outputConfirmBtnClick)="emitConfirmBtnClick()" (outputBtn2Click)="emitCloseModl()" [data]="data" [id]="modalId" />
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-between ion-align-items-center">
+      <ion-col size="7">
+        <ion-grid fixed>
+          <ion-row>
+            <app-order-modal-item2
+              [postOrder]="postOrder.bind(this)"
+              shadow="0px 0px 9px rgb(255, 157, 157)"
+              backgroundChip="darkred"
+              [iconIshow]="false"
+              [labelIshow]="true"
+              textLigne1="Total"
+              [textLigne2]="1000"
+            ></app-order-modal-item2>
+            <app-order-modal-item2 textLigne1="plastic" [textLigne2]="44 + 'f'"></app-order-modal-item2>
+            <app-order-modal-item2 textLigne1="Quantite" [textLigne2]="2"></app-order-modal-item2>
+            <app-order-modal-item2 textLigne1="boisson" [textLigne2]="1000 + 'f'"></app-order-modal-item2>
+            <app-order-modal-item2 textLigne1="gamelle" [textLigne2]="222 + 'f'"></app-order-modal-item2>
+            <app-order-modal-item2 textLigne1="Livraison" [textLigne2]="333 + 'f'"></app-order-modal-item2>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+      <ion-col class="ion-align-self-start" size="4">
+        <ion-grid fixed>
+          <ion-row>
+            <app-order-modal-item3></app-order-modal-item3>
+            <app-order-modal-item3 titre="Piment"></app-order-modal-item3>
+            <app-order-modal-item3 titre="cube"></app-order-modal-item3>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <app-loader backGroundCtn="#0000009c" fillColor="white" [load]="showLoader"></app-loader>
+</ion-card>

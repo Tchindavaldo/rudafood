@@ -1,0 +1,91 @@
+ion-grid {
+  padding-left: 0;
+}
+
+.bottom-card-home {
+  position: fixed;
+  height: 225px;
+  // height: 125px;
+  // height: 85px;
+  // height: 138px;
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  color: #ffffff;
+  transition-duration: 500ms;
+  box-shadow: none;
+  margin: 0px;
+  border-top-left-radius: 45px;
+  border-top-right-radius: 45px;
+  // background-color: rgba(0, 0, 0, 0);
+  // background-image: url('../../../../assets/images/background/backgroundGradient.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position-y: 28%;
+  // transform: translateY(230px);
+  border-radius: 133px;
+  border-radius: 40px;
+  width: 98%;
+  margin: 0 1%;
+}
+
+ion-card > ion-grid:nth-child(1) {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.55);
+  border-top-left-radius: 45px;
+  border-top-right-radius: 45px;
+  // -webkit-backdrop-filter: blur(36px);
+  backdrop-filter: blur(36px);
+}
+
+ion-grid {
+  --background: none;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(2) ion-grid {
+  padding: 0 10px 0 0;
+  height: max-content;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(2) ion-grid ion-row ion-col {
+  padding: 0;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) {
+  height: 70%;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(1) {
+  height: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding-left: 0;
+  padding-right: 20px;
+  // /* scrollbar-width: none;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(2) ion-grid ion-row ion-col ion-label {
+  width: max-content;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(1) > ion-grid:nth-child(1) > ion-row:nth-child(1) {
+  flex-wrap: nowrap;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(3) ion-grid ion-row ion-col ion-chip {
+  background-color: #ffffff29;
+  color: white;
+  justify-content: center;
+  width: 85px;
+  font-size: 11px;
+}
+
+#ctnLoaderBottomCard {
+  display: flex;
+  visibility: hidden;
+}
