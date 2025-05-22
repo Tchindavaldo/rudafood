@@ -16,7 +16,7 @@ export class MenuItemListComponent implements OnInit {
   @Input() text9 = 'Indisponible';
   @Input() iconName = '';
   @Input() showCheck = false;
-  @Input() showOrderNbr = true;
+  @Input() showOrderNbr = false;
   @Input() orderNbr = '50';
   @Input() totalOrder = '50';
   constructor(private router: Router) {}

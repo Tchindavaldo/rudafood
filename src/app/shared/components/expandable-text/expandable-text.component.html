@@ -1,0 +1,55 @@
+<div style="width: 100%">
+  <ng-container *ngIf="chipColor">
+    <!-- Affichage avec chip -->
+    <ion-chip [color]="chipColor" style="font-size: 12px; font-weight: bold; margin-left: 0px" class="custom-chip" [ngClass]="{ 'expanded-chip': expanded }">
+      <div class="chip-content">
+        <ion-icon
+          *ngIf="icon"
+          [name]="icon"
+          [style.color]="iconColor"
+          [style.margin-right.px]="expanded ? 0 : 5"
+          [style.opacity]="expanded ? 0 : 1"
+          [style.transition-duration]="'2s'"
+          class="chip-icon"
+        ></ion-icon>
+        <div class="text-container" [ngClass]="{ expanded: expanded }" (click)="toggleExpand($event)">
+          <ng-container *ngIf="!expanded && !isCollapsing">
+            <ion-label #textElement class="truncated-text">{{ truncatedText }}</ion-label>
+          </ng-container>
+          <ng-container *ngIf="expanded || isCollapsing">
+            <ion-label #textElement class="full-text" [ngClass]="{ collapsing: isCollapsing }">{{ text }}</ion-label>
+          </ng-container>
+        </div>
+      </div>
+    </ion-chip>
+  </ng-container>
+
+  <ng-container *ngIf="!chipColor">
+    <!-- Affichage standard -->
+    <div class="text-container" [ngClass]="{ expanded: expanded, 'no-truncate': !truncate }" (click)="truncate && toggleExpand($event)">
+      <div class="text-content">
+        <ion-icon
+          *ngIf="icon"
+          [name]="icon"
+          [style.color]="iconColor"
+          [style.margin-right.px]="expanded ? 0 : 5"
+          [style.opacity]="expanded ? 0 : 1"
+          [style.transition-duration]="'2s'"
+          class="chip-icon"
+        ></ion-icon>
+        <ng-container *ngIf="!expanded && !isCollapsing">
+          <ion-label #textElement class="truncated-text">
+            <span *ngIf="label" class="text-label" [style.color]="iconColor">{{ label }}</span
+            >{{ truncatedText }}</ion-label
+          >
+        </ng-container>
+        <ng-container *ngIf="expanded || isCollapsing">
+          <ion-label #textElement class="full-text" [ngClass]="{ collapsing: isCollapsing }">
+            <span *ngIf="label" class="text-label" [style.color]="iconColor">{{ label }}</span
+            >{{ text }}</ion-label
+          >
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div>

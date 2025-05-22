@@ -12,10 +12,41 @@ import { PageDispoPageModule } from '../tab3/page-list-menu-fast-food/page-dispo
 import { PageModifyComponent } from '../tab3/page-list-menu-fast-food/page-modify/page-modify.component';
 import { ConfirmMenuDialogComponent } from '../tab3/page-list-menu-fast-food/confirm-menu-dialog/confirm-menu-dialog.component';
 import { ModalItem1Component } from '../tab3/page-list-menu-fast-food/confirm-menu-dialog/modal-item1/modal-item1.component';
+import { OrderModalComponent } from '../tab3/commande/components/order-modal/order-modal.component';
+import { OrderModalItem1Component } from '../tab3/commande/components/order-modal/order-modal-item1/order-modal-item1.component';
+import { OrderModalItem2Component } from '../tab3/commande/components/order-modal/order-modal-item2/order-modal-item2.component';
+import { OrderModalItem3Component } from '../tab3/commande/components/order-modal/order-modal-item3/order-modal-item3.component';
+import { PendingCmdComponent } from '../tab3/commande/pending-cmd/pending-cmd.component';
 
 @NgModule({
-  declarations: [BonusComponent, ListMenuComponent, NewMenuComponent, MenuItemListComponent, PageModifyComponent, ConfirmMenuDialogComponent, ModalItem1Component],
+  declarations: [
+    BonusComponent,
+    ListMenuComponent,
+    NewMenuComponent,
+    MenuItemListComponent,
+    PageModifyComponent,
+    ConfirmMenuDialogComponent,
+    ModalItem1Component,
+    OrderModalComponent,
+    OrderModalItem1Component,
+    OrderModalItem2Component,
+    OrderModalItem3Component,
+
+    PendingCmdComponent,
+  ],
   imports: [CommonModule, IonicModule, FormsModule, SharedModule, RouterModule],
-  exports: [BonusComponent, MenuItemListComponent, PageModifyComponent, ConfirmMenuDialogComponent, ModalItem1Component],
+  exports: [
+    BonusComponent,
+    MenuItemListComponent,
+    PageModifyComponent,
+    ConfirmMenuDialogComponent,
+    ModalItem1Component,
+    OrderModalComponent,
+    OrderModalItem1Component,
+    OrderModalItem2Component,
+    OrderModalItem3Component,
+
+    PendingCmdComponent,
+  ],
 })
 export class SharedModule2 {}

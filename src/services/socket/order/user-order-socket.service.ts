@@ -19,7 +19,7 @@ export class UserOrderSocketService {
   public initializeOrderSocket(socket: Socket) {
     socket.on('newUserOrder', (data: any) => {
       console.log('🍔 Nouvelle commande reçue :', data);
-      this.store.dispatch(addUserOrderReducer({ order: data.order }));
+      this.store.dispatch(addUserOrderReducer({ order: data.data }));
     });
 
     socket.on('newUserOrders', (data: any) => {
@@ -32,7 +32,7 @@ export class UserOrderSocketService {
 
     socket.on('userOrderUpdated', (data: any) => {
       console.log(' 🍔 Commande mise à jour  :', data);
-      this.store.dispatch(updateUserOrderReducer({ updatedOrder: data.order }));
+      this.store.dispatch(updateUserOrderReducer({ updatedOrder: data.data }));
     });
   }
 }

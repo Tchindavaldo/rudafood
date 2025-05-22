@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { OrderDataService } from 'src/services/orders/data/order-data.service';
 import { getUserOrdersService } from 'src/services/orders/get/get-user-orders.service';
-import { updatePendingToBuyOrdersService } from 'src/services/orders/get/update-pending-tobuy-orders.service copy';
+import { updateOrdersService } from 'src/services/orders/update/update-orders.service';
 import { AppState } from 'src/store/indx';
 import { filterByArg } from 'src/utils/filterByArg';
 
@@ -18,7 +18,7 @@ export class PendingOrderToBuyComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private updatePendingOrderService: updatePendingToBuyOrdersService,
+    private updatePendingOrderService: updateOrdersService,
     public orderData: OrderDataService,
     private getUserOrdersService: getUserOrdersService
   ) {}

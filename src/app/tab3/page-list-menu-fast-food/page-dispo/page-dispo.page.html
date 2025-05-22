@@ -4,7 +4,6 @@
     (openModal)="showDispoCard($event.menu)"
     [showCheck]="true"
     [menu]="menu"
-    iconName="options"
     *ngFor="let menu of menuTab | async; let i = index; trackBy: trackByFn"
   ></app-menu-item-list>
 </ion-list>

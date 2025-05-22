@@ -17,17 +17,28 @@ export class getOrdersService {
 
   constructor(private userStorage: UserStorageService, private orderData: OrderDataService, private store: Store) {}
 
-  async getFastFoodOrders(): Promise<void> {
+  async getFastFoodOrders(): Promise<any[]> {
     try {
-      // console.log('appeeeeeeeeeeeeeeeeeeeeler de la fonction');
       const user = await this.userStorage.get('user');
-      if (!user || !user.uid) return;
+      if (!user || !user.uid) {
+        console.error('Utilisateur non connecté ou ID manquant');
+        return [];
+      }
 
-      // const response = await axios.get(`${this.apiUrl}/order/all/${fastFoodId}`);
-      const response = await axios.get(`${this.apiUrl}/order/all/${user.fastFoodId}`, { headers: { 'ngrok-skip-browser-warning': 'true' } });
-      this.store.dispatch(setFastFoodOrder({ orderTab: response.data.data }));
+      const response = await axios.get(`${this.apiUrl}/order/all/${user.fastFoodId}`, {
+        headers: { 'ngrok-skip-browser-warning': 'true' },
+      });
+
+      const orders = response?.data?.data || [];
+      // console.log('Données des commandes récupérées:', orders);
+
+      // Dispatcher les commandes dans le store
+      this.store.dispatch(setFastFoodOrder({ orderTab: orders }));
+
+      return orders;
     } catch (error) {
       console.error('Erreur lors de la récupération des commandes:', error);
+      return [];
     }
   }
 }

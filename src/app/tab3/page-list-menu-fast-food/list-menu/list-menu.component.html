@@ -1,4 +1,4 @@
 <ion-list>
-  <app-menu-item-list [nbr]="i + 1" [menu]="menu" iconName="options" *ngFor="let menu of menuTab | async; let i = index; trackBy: trackByFn"></app-menu-item-list>
+  <app-menu-item-list [nbr]="i + 1" [menu]="menu" *ngFor="let menu of menuTab | async; let i = index; trackBy: trackByFn"></app-menu-item-list>
 </ion-list>
 <ion-button *ngIf="(menuTab | async)?.length !== 0" (click)="redirect('tabs/tab3/menu/new-menu')"> <ion-icon name="add"></ion-icon></ion-button>

@@ -11,7 +11,7 @@ import { setUserOrderReducer } from 'src/store/order/order-user-reducer';
 @Injectable({
   providedIn: 'root',
 })
-export class updatePendingToBuyOrdersService {
+export class updateOrdersService {
   private apiUrl = environment.apiUrl;
 
   constructor(private orderData: OrderDataService, private userStorage: UserStorageService, private store: Store) {}
@@ -28,7 +28,7 @@ export class updatePendingToBuyOrdersService {
         userId: user.uid,
       }));
 
-      const response = await axios.put(`${this.apiUrl}/order/pending-toBuy`, ordersWithUserId);
+      const response = await axios.put(`${this.apiUrl}/order/tabs/${user.uid}`, ordersWithUserId);
 
       response.data.data.forEach((updatedOrder: any) => {
         const updatedOrders = setObjectOnTabByArg(this.orderData.getUserOrders(), updatedOrder, 'id', updatedOrder.id);

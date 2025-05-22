@@ -1,0 +1,111 @@
+/* Styles pour le chip personnalisé */
+.custom-chip {
+  display: inline-flex;
+  width: 100%;
+  padding: 4px 8px;
+  transition: all 0.7s ease-in-out;
+
+  &.expanded-chip {
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Conteneur pour l'icône et le texte */
+.chip-content {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+}
+
+/* Style pour l'icône */
+.chip-icon {
+  margin-top: 4px; /* Ajustement pour aligner avec la première ligne de texte */
+  flex-shrink: 0;
+}
+
+/* Conteneur qui gère l'animation de hauteur */
+.text-container {
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  height: 1.5em; /* Hauteur initiale d'une ligne */
+  transition: height 0.7s ease-in-out; /* Animation pour les deux sens */
+  margin-bottom: 0px;
+  text-overflow: ellipsis; /* Ajouter des points de suspension */
+  white-space: nowrap; /* Empêcher le retour à la ligne quand non étendu */
+
+  /* Classe pour désactiver la troncature */
+  &.no-truncate {
+    height: auto !important;
+    overflow: visible;
+    cursor: default;
+    white-space: normal;
+  }
+
+  /* État étendu */
+  &.expanded {
+    height: 6em; /* Hauteur fixe pour l'état étendu - ajustez selon vos besoins */
+    white-space: normal; /* Permettre le retour à la ligne quand étendu */
+    text-overflow: clip; /* Ne pas ajouter de points de suspension quand étendu */
+  }
+}
+
+/* Styles pour le contenu du texte */
+.text-content {
+  display: flex;
+  align-items: flex-start;
+  font-size: 12px;
+  color: hsl(0, 0%, 80%);
+}
+
+/* Style pour le libellé */
+.text-label {
+  font-weight: 600;
+  margin-right: 5px;
+  font-size: 15px;
+  vertical-align: middle;
+}
+
+/* Style du label qui peut déborder naturellement */
+ion-label {
+  font-size: 12px;
+  font-weight: 400;
+  position: relative;
+  line-height: 1.5em;
+  display: block;
+  margin-bottom: 0;
+}
+
+/* Style pour le texte tronqué avec points de suspension */
+.truncated-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+/* Style pour le texte complet */
+.full-text {
+  white-space: normal;
+  overflow: visible;
+
+  &.collapsing {
+    /* Styles spécifiques pendant l'animation de collapse */
+    opacity: 0.9; /* Légère réduction d'opacité pendant l'animation */
+    transition: opacity 0.7s ease-in-out;
+  }
+}
+
+/* Styles pour les appareils mobiles */
+@media (max-width: 350px) {
+  .text-content {
+    font-size: 10px;
+  }
+
+  .text-label {
+    font-size: 13px;
+  }
+}

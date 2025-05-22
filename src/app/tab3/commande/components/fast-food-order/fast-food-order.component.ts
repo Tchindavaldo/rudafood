@@ -1,9 +1,10 @@
-import { Component, ElementRef, Input, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, AfterViewInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/store/indx';
 import { updateOrdersRequetService } from 'src/services/FastFood/requet/update-orders-requet.service';
 import { TextExpansionService } from './text-expansion.service';
+import { showCard } from 'src/utils/showCard';
 
 @Component({
   selector: 'app-fast-food-order',
@@ -24,29 +25,41 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
   @Input() showCrossIcon = false;
   @Input() extras: any[] = [];
   @Input() truncateDeliveryAddress = false;
+  @Output() openModal = new EventEmitter<{ order: any }>();
 
   // Nombre maximum d'extras à afficher avant de montrer l'indicateur "+X éléments"
   private maxExtrasToShow = 4;
 
-  // Méthode pour obtenir les extras à afficher (limités à maxExtrasToShow)
+  // Variable pour suivre si tous les extras sont affichés
+  private showingAllExtras = false;
+
+  // Méthode pour obtenir les extras à afficher (limités à maxExtrasToShow ou tous si showingAllExtras est true)
   get extrasToShow(): any[] {
-    return this.extras && this.extras.length > 0 ? this.extras.slice(0, this.maxExtrasToShow) : [];
+    if (!this.extras || this.extras.length === 0) {
+      return [];
+    }
+
+    return this.showingAllExtras ? this.extras : this.extras.slice(0, this.maxExtrasToShow);
   }
 
   // Méthode pour obtenir le nombre d'extras supplémentaires non affichés
   get additionalExtrasCount(): number {
+    if (this.showingAllExtras) {
+      return 0;
+    }
     return this.extras && this.extras.length > this.maxExtrasToShow ? this.extras.length - this.maxExtrasToShow : 0;
   }
 
   // Vérifier si des extras supplémentaires existent
   get hasAdditionalExtras(): boolean {
-    return this.additionalExtrasCount > 0;
+    return !this.showingAllExtras && this.additionalExtrasCount > 0;
   }
 
   // Style combiné pour l'élément ion-item
   get itemStyle() {
     return {
       background: this.background,
+      position: 'relative',
       padding: this.padding,
       'border-radius': this.borderRadius,
       'backdrop-filter': this.backdropFilter,
@@ -108,8 +121,9 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
   noDef = 'pas def';
   // Texte du menu à afficher
   get logText(): string {
-    // return this.order?.menu?.name || 'Nom du menu non disponible';
-    return 'looooooooooooooooooooongggggggg         ggggggggggggggggggg  texte de Nom du menu non disponible';
+    const result = this.order?.menu?.name || 'Nom du menu non disponible';
+
+    return result;
   }
 
   public isUpdating = false;
@@ -150,6 +164,7 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
 
     // Initialiser le texte affiché avec le texte tronqué
     this.displayedText = this.truncatedText;
+
     this.deliveryAddressDisplayed = this.deliveryAddressTruncated;
 
     // S'abonner aux événements d'expansion
@@ -176,6 +191,7 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
   // Préparer le texte tronqué pour l'affichage
   prepareTruncatedText() {
     const menuName = this.logText;
+
     if (menuName && menuName.length > this.maxLength) {
       this.truncatedText = menuName.substring(0, this.maxLength) + '...';
     } else {
@@ -357,14 +373,41 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
       }
 
       if (this.order.status === 'finished') {
-        console.log('fini');
       }
 
       // await this.updateOrdersRequet.updateFastFood({ status: 'pending', id: this.order.id });
     } catch (error) {
-      console.log('error', error);
-
       this.isUpdating = false;
+    }
+  }
+
+  /**
+   * Affiche tous les extras en désactivant la limitation
+   */
+  showAllExtras() {
+    this.showingAllExtras = true;
+  }
+
+  showConfirmCancelOrder(id: string) {
+    showCard(id);
+  }
+
+  validateOrder() {
+    // Préparer l'objet order à envoyer
+    const orderToSend = { ...this.order };
+
+    // Si order.extras n'existe pas, ajouter des extras par défaut
+    if (!orderToSend.extras) {
+      orderToSend.extras = this.extras;
+    }
+
+    // Si la commande est en attente (pending) et que tous les extras ne sont pas affichés
+    if (this.order.status === 'pending' && !this.showingAllExtras && this.extras && this.extras.length > this.maxExtrasToShow) {
+      // Ouvrir le modal avec tous les extras
+      this.openModal.emit({ order: orderToSend });
+    } else {
+      // Pour tous les autres statuts, exécuter directement la fonction de changement de statut
+      this.statutChange();
     }
   }
 }

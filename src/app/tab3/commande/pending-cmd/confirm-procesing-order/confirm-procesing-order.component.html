@@ -1,0 +1,10 @@
+<ion-card z-index="100500" [attr.id]="modalId" class="bottom-card-home">
+  <ion-grid style="align-items: center; display: flex; padding: 0 3px" fixed>
+    <ion-row style="width: 100%">
+      <ion-col size="12" style="padding: 0">
+        <app-confirm-procesing-order-item1 (outputConfirmBtnClick)="emitConfirmBtnClick()" (outputBtn2Click)="emitCloseModl()" [data]="data" [id]="modalId" />
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <app-loader backGroundCtn="#0000009c" fillColor="white" [load]="showLoader"></app-loader>
+</ion-card>

@@ -5,29 +5,53 @@ export interface OrderCountResult {
 }
 
 export function countOrders(orders: any[], dateParam?: Date, status = 'pending'): OrderCountResult {
-  if (!orders) return { count: 0, totalAmount: 0, filteredOrders: [] };
+  if (!orders) {
+    console.log('countOrders - Aucune commande fournie');
+    return { count: 0, totalAmount: 0, filteredOrders: [] };
+  }
 
-  const date = dateParam || new Date();
+  const date = dateParam;
+  if (!date) {
+    console.log('countOrders - Aucune date fournie');
+    return { count: 0, totalAmount: 0, filteredOrders: [] };
+  } else {
+    // console.log('apppeler avec la date', date);
+  }
+
   date.setHours(0, 0, 0, 0); // on compare uniquement les dates, pas les heures
 
+  let undefinedCount = 0;
   const filteredOrders = orders.filter(order => {
+    if (order.status !== status) return false;
+
+    const deliveryDate = new Date(order?.delivery?.date);
+    if (order?.delivery?.date === undefined) {
+      undefinedCount++;
+      console.log(`Commande sans date de livraison (total: ${undefinedCount}) - ID:`, order.id, order);
+      return false;
+    }
+    deliveryDate.setHours(0, 0, 0, 0);
     // if (!order.userReceptionDate) return false;
 
-    const receptionDate = new Date(order.userReceptionDate);
-    receptionDate.setHours(0, 0, 0, 0);
+    // Log la date de livraison uniquement si elle est définie et <= à aujourd'hui
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-    const isPending = order.status === status;
+    if (order?.delivery?.date) {
+      const deliveryDate = new Date(order.delivery.date);
+      deliveryDate.setHours(0, 0, 0, 0);
 
-    if (!isPending) return false;
+      // if (deliveryDate <= today) {
+      //   console.log('Delivery date (past or today):', order.delivery.date, 'for order:', order.id || order._id);
+      // } else {
+      //   // console.log('Delivery date (future):', order.delivery.date, 'for order:', order.id || order._id);
+      // }
+    }
 
-    // ✅ Cas 1 : si la date est future, on ne garde que les commandes de cette date précise
-    // if (receptionDate.getTime() > date.getTime()) {
-    //   return receptionDate.getTime() === date.getTime();
-    // }
-
-    // // ✅ Cas 2 : si la date est aujourd’hui ou passée
-    // return receptionDate.getTime() <= date.getTime();
-    return true;
+    if (today.getTime() > date.getTime() || today.getTime() < date.getTime()) {
+      return deliveryDate.getTime() === date.getTime();
+    }
+    return deliveryDate.getTime() <= date.getTime();
   });
 
   // Calculer le montant total
@@ -36,6 +60,11 @@ export function countOrders(orders: any[], dateParam?: Date, status = 'pending')
     const amount = order.total ? parseFloat(order.total) : 0;
     return total + amount;
   }, 0);
+
+  // if (undefinedCount > 0) {
+  //   console.log(`⚠️ ${undefinedCount} commande(s) sans date de livraison ont été ignorées`);
+  // }
+  // console.log(`✅ ${filteredOrders.length} commande(s) valides filtrées pour le statut: ${status}`, filteredOrders);
 
   return {
     count: filteredOrders.length,

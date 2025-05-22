@@ -15,3 +15,16 @@
 .manage {
   height: max-content;
 }
+.selected {
+  background-color: darkred !important;
+  border-radius: 20px;
+  // box-shadow: 0 2px 4px darkred;
+  color: white;
+  ion-icon {
+    color: white !important;
+  }
+}
+
+ion-chip {
+  transition: background-color 0.3s ease;
+}

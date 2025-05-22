@@ -19,7 +19,7 @@ export class FastFoodOrderSocketService {
   public initializeOrderSocket(socket: Socket) {
     socket.on('newFastFoodOrder', (data: any) => {
       console.log('🍔 Nouvelle commande reçue :', data);
-      this.store.dispatch(addFastFoodOrder({ order: data.order }));
+      this.store.dispatch(addFastFoodOrder({ order: data.data }));
     });
 
     socket.on('newFastFoodOrders', (data: any) => {
@@ -31,7 +31,7 @@ export class FastFoodOrderSocketService {
 
     socket.on('fastFoodOrderUpdated', (data: any) => {
       console.log('🍔 Commande mise à jour :', data);
-      this.store.dispatch(updateFastFoodOrder({ updatedOrder: data.order }));
+      this.store.dispatch(updateFastFoodOrder({ updatedOrder: data.data }));
     });
   }
 }

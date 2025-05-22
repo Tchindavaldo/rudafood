@@ -46,6 +46,26 @@ ion-header {
   transition-duration: 500ms;
   transform: translateY(105%);
 }
+// Styles pour la colonne des jours
+ion-col.day-col {
+  app-component2 {
+    transition: all 0.2s ease;
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+// Styles pour le défilement horizontal
+ion-col[scrollx] {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 // Styles pour l'icône de calendrier
 .calendar-icon {
   display: flex;
@@ -58,12 +78,12 @@ ion-header {
   height: 40px;
   cursor: pointer;
   transition: all 0.3s ease;
-  
+
   &:active {
     transform: scale(0.9);
     opacity: 0.8;
   }
-  
+
   ion-icon {
     color: var(--ion-color-primary);
     font-size: 24px;

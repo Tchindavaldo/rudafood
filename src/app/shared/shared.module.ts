@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { LoaderComponent } from '../components/loader/loader.component';
 import { IonicModule } from '@ionic/angular';
 import { PendingUserOrderComponent } from '../tab2/manage-passed-order-status/pending-user-order/pending-user-order.component';
-import { CmdActionPage } from '../homeComponents/cmd-action/cmd-action.page';
 import { ProcessingUserOrderComponent } from '../tab2/manage-passed-order-status/processing-user-order/processing-user-order.component';
 import { FinishedUserOrderComponent } from '../tab2/manage-passed-order-status/finished-user-order/finished-user-order.component';
 import { UserOrderItemComponent } from '../tab2/manage-passed-order-status/user-order-item/user-order-item.component';
@@ -33,6 +32,10 @@ import { PendingOrderToBuyComponent } from '../tab2/pending-order-to-buy/pending
 import { PannierAchatOrComponent } from '../homeComponents/pannier-achat-or/pannier-achat-or.component';
 import { RouterModule } from '@angular/router';
 import { TextActionComponent } from '../components/text-action/text-action.component';
+import { FastFoodOrderComponent } from '../tab3/commande/components/fast-food-order/fast-food-order.component';
+import { ExpandableTextComponent } from './components/expandable-text/expandable-text.component';
+import { ConfirmProcesingOrderItem1Component } from '../tab3/commande/pending-cmd/confirm-procesing-order/confirm-procesing-order-item1/confirm-procesing-order-item1.component';
+import { ConfirmProcesingOrderComponent } from '../tab3/commande/pending-cmd/confirm-procesing-order/confirm-procesing-order.component';
 
 @NgModule({
   declarations: [
@@ -55,9 +58,11 @@ import { TextActionComponent } from '../components/text-action/text-action.compo
     Component2Component,
     Component3Component,
 
+    ConfirmProcesingOrderComponent,
+    ConfirmProcesingOrderItem1Component,
+
     Item2Component,
     Item3Component,
-    PendingCmdComponent,
     ProccessCmdComponent,
     FinishCmdComponent,
 
@@ -68,7 +73,8 @@ import { TextActionComponent } from '../components/text-action/text-action.compo
     FastFoodDesign3Component,
     FastFoodDesign4Component,
 
-    CmdActionPage,
+    FastFoodOrderComponent,
+    ExpandableTextComponent,
 
     LoaderComponent,
     TextActionComponent,
@@ -91,16 +97,19 @@ import { TextActionComponent } from '../components/text-action/text-action.compo
     FastFoodDesign3Component,
     FastFoodDesign4Component,
 
+    ConfirmProcesingOrderComponent,
+    ConfirmProcesingOrderItem1Component,
+
     Component0Component,
     Component1Component,
     Component2Component,
     Component3Component,
 
-    CmdActionPage,
+    FastFoodOrderComponent,
+    ExpandableTextComponent,
     LoaderComponent,
     TextActionComponent,
 
-    PendingCmdComponent,
     ProccessCmdComponent,
     FinishCmdComponent,
   ],

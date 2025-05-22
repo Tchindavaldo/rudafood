@@ -5,24 +5,21 @@
       <ion-grid fixed>
         <ion-row class="row-header">
           <ion-col size="auto">
-            <ion-chip [routerLink]="['/tabs/tab3/historique']" color="danger">
-              <ion-icon name="options"> </ion-icon>
-
+            <ion-chip [routerLink]="['/tabs/tab3/historique']" color="danger" [class.selected]="isSelected('historique')" (click)="selectChip('historique')">
+              <ion-icon name="wallet-outline"></ion-icon>
               <ion-label> Mon porte feuille </ion-label>
             </ion-chip>
           </ion-col>
           <ion-col size="auto" class="col-fastfood">
-            <ion-chip [routerLink]="['/tabs/tab3/commande']" class="chip focusedChip" color="danger">
-              <ion-icon name="options"> </ion-icon>
-
+            <ion-chip [routerLink]="['/tabs/tab3/commande']" color="danger" [class.selected]="isSelected('commande')" (click)="selectChip('commande')">
+              <ion-icon name="receipt-outline"></ion-icon>
               <ion-label> Commande </ion-label>
             </ion-chip>
           </ion-col>
           <ion-col size="auto" class="col-fastfood">
-            <ion-chip [routerLink]="['/tabs/tab3/menu']" class="chip" color="danger">
-              <ion-icon name="options"> </ion-icon>
-
-              <ion-label> menu </ion-label>
+            <ion-chip [routerLink]="['/tabs/tab3/menu']" color="danger" [class.selected]="isSelected('menu')" (click)="selectChip('menu')">
+              <ion-icon name="restaurant-outline"></ion-icon>
+              <ion-label> Menu </ion-label>
             </ion-chip>
           </ion-col>
         </ion-row>

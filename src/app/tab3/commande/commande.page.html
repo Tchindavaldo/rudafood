@@ -1,32 +1,34 @@
 <ion-header *ngIf="userData.fastFoodId!==undefined" style="position: sticky; top: 0; z-index: 5000">
   <ion-toolbar>
     <ion-grid fixed>
-      <!-- <ion-row class="firstRow">
-        <ion-col size="12">
-          <app-component0 marginGrid="0"></app-component0>
+      <ion-row style="display: flex; justify-content: space-between; margin-bottom: 7px">
+        <ion-col style="flex-direction: column; display: flex; align-items: flex-start" size="5">
+          <ion-label style="font-size: 18px; white-space: nowrap">{{ getRelativeDate(selectedDate) | titlecase }}</ion-label>
+          <ion-label style="margin-left: 0px; font-size: 14px">{{ currentDate }}</ion-label>
         </ion-col>
-      </ion-row> -->
-      <ion-row style="display: flex; justify-content: space-between">
-        <ion-col style="flex-direction: column" size="5">
-          <ion-label style="font-size: 18px">aujourd'hui</ion-label><ion-label style="margin-left: 10px; font-size: 14px">{{ currentDate }}</ion-label>
-        </ion-col>
-        <ion-col style="display: flex; align-items: center" size="auto">
-          <!-- Afficher les 2 prochains jours -->
-          <ion-col *ngFor="let day of nextDays" size="auto" (click)="selectDay(day)">
-            <app-component2
-              [backgrd]="'#fff5f5'"
-              [mLeft]="'5px'"
-              [shadow]="'none'"
-              [text1]="day.day"
-              [text2]="day.date.toString()"
-              [style.opacity]="selectedDate.getDate() === day.fullDate.getDate() ? '1' : '0.6'"
-            ></app-component2>
-          </ion-col>
+        <ion-col *ngIf="nextDays.length>1" size="7" style="display: flex; align-items: center; overflow-x: auto; white-space: nowrap">
+          <!-- Afficher les dates avec des commandes -->
+          <ng-container *ngFor="let day of nextDays.slice(0,7)">
+            <ion-col size="auto" (click)="selectDay(day)" class="day-col">
+              <app-component2
+                [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'darkred' : '#fff5f5'"
+                [mLeft]="'5px'"
+                [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px darkred' : 'none'"
+                [text1]="day.day"
+                [text2]="day.date.toString()"
+                [style.opacity]="isSameDay(selectedDate, day.fullDate) ? '1' : '0.6'"
+                [color1]="isSameDay(selectedDate, day.fullDate) ? 'white' : 'black'"
+                [color2]="isSameDay(selectedDate, day.fullDate) ? 'white' : 'black'"
+              ></app-component2>
+            </ion-col>
+          </ng-container>
 
           <!-- Bouton de sélection de date -->
-          <ion-col size="auto" (click)="openDatePicker()" class="calendar-icon">
-            <ion-icon name="calendar-outline" style="font-size: 24px; color: var(--ion-color-primary)"></ion-icon>
-          </ion-col>
+          <!-- <ion-col size="auto" class="see-more-col">
+            <ion-icon name="add" style="font-size: 24px; color: var(--ion-color-primary)"></ion-icon>
+          </ion-col> -->
+
+          <!-- Modal pour la sélection de date -->
         </ion-col>
       </ion-row>
       <ion-row class="rowPrixCmd">
@@ -44,18 +46,21 @@
             <ion-chip color="danger" [class.selected]="isSelected('pending')" routerLink="pending" (click)="selectChip('pending')">
               <ion-icon name="time-outline"></ion-icon>
               <ion-label>Cmds en Attente</ion-label>
+              <ion-label style="font-size: 12px; font-weight: 900; margin-left: 5px">({{totalPendingOrder.toString()}})</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col size="auto">
             <ion-chip color="danger" [class.selected]="isSelected('proccess')" routerLink="proccess" (click)="selectChip('proccess')">
               <ion-icon name="restaurant-outline"></ion-icon>
               <ion-label>Cmds en cours</ion-label>
+              <ion-label style="font-size: 12px; font-weight: 900; margin-left: 5px">({{totalProcessingOrder.toString()}})</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col size="auto">
             <ion-chip color="danger" [class.selected]="isSelected('finish')" routerLink="finish" (click)="selectChip('finish')">
               <ion-icon name="checkmark-done-outline"></ion-icon>
               <ion-label>Cmds en Terminer</ion-label>
+              <ion-label style="font-size: 12px; font-weight: 900; margin-left: 5px">({{totalFinishedOrder.toString()}})</ion-label>
             </ion-chip>
           </ion-col>
         </ion-row>
@@ -64,7 +69,11 @@
   </ion-toolbar>
 </ion-header>
 
-<app-loader [load]="this.orderData.getFastfoodOrders() === null && userData.fastFoodId!==undefined" height="65%"></app-loader>
+<!-- <div *ngIf="isDatePickerOpen">
+  <ion-datetime [(ngModel)]="selectedDateString" [min]="minDate" [max]="maxDate" presentation="date" locale="fr-FR"></ion-datetime>
+  <ion-button (click)="isDatePickerOpen = false">Valider</ion-button>
+</div> -->
+<app-loader [load]="this.orderData.getFastfoodOrders() === null && userData.fastFoodId!==undefined" height="125%"></app-loader>
 
 <!-- Affichage du contenu lorsque fastFoodOrder est différent de null -->
 <!-- <main

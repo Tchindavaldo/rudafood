@@ -1,0 +1,135 @@
+ion-card {
+  height: 75px;
+  width: 75px;
+  background-color: darkred;
+  border-radius: 199px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 5px 0px 10px;
+}
+
+ion-grid,
+ion-col {
+  padding: 0;
+}
+.ion_grid1 {
+  padding-left: 0px;
+}
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  padding-top: 40px;
+  --inner-border-width: 0;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --min-height: max-content;
+}
+
+ion-label {
+  width: max-content;
+}
+
+ion-chip {
+  // position: absolute;
+  bottom: 0;
+  right: 0px;
+  max-width: 100%;
+  overflow: hidden;
+  height: auto !important;
+  --min-height: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* Styles pour l'élément personnalisé avec icônes */
+.custom-checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+/* Style pour l'icône de croix (rouge) */
+.cross-checkbox {
+  background-color: darkred;
+  border: 1px solid darkred;
+}
+
+/* Style pour l'icône de coche (vert) */
+.check-checkbox {
+  background-color: #00cc00;
+  border: 1px solid darkgreen;
+}
+
+/* Style commun pour les icônes */
+.icon-symbol {
+  color: white;
+  font-size: 10px;
+}
+
+.row-titre {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.row-action {
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+.col-annuler {
+  padding-left: 8px;
+}
+.col-modifier {
+  color: rgb(28, 139, 0);
+}
+
+.row-prix {
+  position: absolute;
+  bottom: 0;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.col_action {
+  transform: scale(0.79);
+  left: 18px;
+}
+
+/* Conteneur qui gère l'animation de hauteur */
+.text-container {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  height: 1.5em; /* Hauteur initiale d'une ligne */
+  transition: height 0.7s ease-in-out; /* Animation pour les deux sens */
+  margin-bottom: 4px;
+  max-width: 100%;
+  width: 100%;
+}
+
+/* État étendu */
+.text-container.expanded {
+  height: 6em; /* Hauteur fixe pour l'état étendu - ajustez selon vos besoins */
+}
+
+.NomCmdUser {
+  font-size: 12px;
+  font-weight: 400;
+  white-space: normal;
+  line-height: 1.5em;
+  display: block;
+  margin-bottom: 0;
+  word-wrap: break-word;
+  word-break: break-word;
+
+  &:hover {
+    color: hsl(0, 0%, 90%);
+  }
+}

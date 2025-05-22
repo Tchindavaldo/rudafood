@@ -15,6 +15,7 @@ export class Tab3Page {
   showFatsFood = true;
 
   currentUrl: string = '';
+  selectedChip: string = 'commande';
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -25,5 +26,13 @@ export class Tab3Page {
 
   shouldHideElement(): boolean {
     return this.currentUrl.includes('   menu/new-menu');
+  }
+
+  isSelected(chip: string): boolean {
+    return this.selectedChip === chip;
+  }
+
+  selectChip(chip: string): void {
+    this.selectedChip = chip;
   }
 }

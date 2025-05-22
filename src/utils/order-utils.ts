@@ -11,12 +11,15 @@ export const formatDateCreated = (createdAt: string | Date): string => {
 };
 
 export const getUniqueDates = (orders: any[]): string[] => {
-  const dates = orders.map(order => formatDateCreated(order.createdAt));
+  // console.log('order getttt uniiiiiqqq  ddddaaattteee ', orders);
+
+  const dates = orders.map(order => formatDateCreated(order.delivery.date));
+  // console.log('order getttt uniiiiiqqq  ddddaaattteee ', dates);
   return Array.from(new Set(dates)).sort();
 };
 
 export const getOrdersByDate = (orders: any[], date: string): any[] => {
-  return orders.filter(order => formatDateCreated(order.createdAt) === date);
+  return orders.filter(order => formatDateCreated(order.delivery.date) === date);
 };
 
 export const getUserIdsByDateType = (orders: any[], status: boolean, date: string, type?: string, time?: string): string[] => {

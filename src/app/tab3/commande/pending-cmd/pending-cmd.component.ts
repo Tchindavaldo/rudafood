@@ -18,6 +18,7 @@ import { OrderDataService } from 'src/services/orders/data/order-data.service';
 import { AppState } from 'src/store/indx';
 import { OrderCountersService } from 'src/services/orders/counters/order-counters.service';
 import { sortAsc, sortDesc } from 'src/utils/sort-helpers';
+import { showCard } from 'src/utils/showCard';
 
 @Component({
   selector: 'app-pending-cmd',
@@ -34,6 +35,10 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
   times: string[] = ['10:00', '16:00', '13:45'];
 
   screenHeight: number = getScreenHeight();
+
+  order!: any;
+
+  isUpdating = false;
 
   pendingCmdGroupedCmdByDate: Record<string, OrderGroupByDate> = {};
 
@@ -56,6 +61,13 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  showDispoCard(order: any) {
+    this.order = order;
+    console.log('order recu ', this.order);
+
+    showCard('confirmPendingOrder');
   }
 
   // Utilisé pour trackBy
@@ -107,5 +119,33 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
 
   getTotalOrdersByStatus(date: string, status: boolean): number {
     return getTotalOrdersByStatus(this.pendingOrders, date, status);
+  }
+
+  // Obtenir le nombre total de commandes pour un utilisateur à une date donnée
+  getTotalOrdersForUser(date: string, userId: string): number {
+    return this.getOrdersByDate(date).filter(order => order.userId === userId).length;
+  }
+
+  // Obtenir les données complètes de l'utilisateur
+  getUserData(userId: string): any {
+    const userOrder = this.pendingOrders.find(order => order.userId === userId);
+
+    // Valeurs par défaut si l'objet n'existe pas
+    const defaultUserData = { firstName: 'Client', lastName: '', email: '', phoneNumber: 696080087, photoUrl: '' };
+
+    if (!userOrder) return defaultUserData;
+
+    return {
+      firstName: userOrder.userFirstName || userOrder.userName || defaultUserData.firstName,
+      lastName: userOrder.userLastName || '',
+      email: userOrder.userEmail || '',
+      phoneNumber: userOrder.userPhone || userOrder.userPhoneNumber || 696080087,
+      photoUrl: userOrder.userPhotoUrl || '',
+    };
+  }
+
+  // Obtenir le numéro de téléphone de l'utilisateur (pour compatibilité)
+  getUserPhoneNumber(userId: string): string {
+    return this.getUserData(userId).phoneNumber;
   }
 }

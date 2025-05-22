@@ -1,10 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { setObjectOnTabByArg } from 'src/utils/setObjectOnTabByArg';
-import { updateOrdersRequetService } from 'src/services/orders/update-orders-requet.service';
 import { AppState } from 'src/store/indx';
-import { setFastFoodOrder } from 'src/store/order/order-fastfood-reducer';
 
 @Component({
   selector: 'app-user-order-item',
@@ -21,7 +18,7 @@ export class UserOrderItemComponent implements OnInit {
   fastfoodOrder!: any[];
   fastFoodOrderReducer!: Observable<any[]>;
 
-  constructor(public updateOrdersRequet: updateOrdersRequetService, private store: Store<AppState>) {
+  constructor(private store: Store<AppState>) {
     this.fastFoodOrderReducer = this.store.select(state => state.fastFoodOrder.orders);
     this.fastFoodOrderReducer.subscribe(order => (this.fastfoodOrder = order));
   }
@@ -31,9 +28,9 @@ export class UserOrderItemComponent implements OnInit {
     this.isUpdating = true;
     console.log('order fastfood reducer', this.order);
     try {
-      const response = await this.updateOrdersRequet.updateFastFood({ ...this.order, status: this.procededAction });
-      const dataSet = setObjectOnTabByArg(this.fastfoodOrder, response, 'id', this.order.id);
-      this.store.dispatch(setFastFoodOrder({ orderTab: dataSet }));
+      // const response = await this.updateOrdersRequet.updateFastFood({ ...this.order, status: this.procededAction });
+      // const dataSet = setObjectOnTabByArg(this.fastfoodOrder, response, 'id', this.order.id);
+      // this.store.dispatch(setFastFoodOrder({ orderTab: dataSet }));
       console.log('reussite');
 
       this.isUpdating = false;

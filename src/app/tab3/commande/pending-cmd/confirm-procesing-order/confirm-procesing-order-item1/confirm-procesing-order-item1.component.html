@@ -1,0 +1,31 @@
+<ion-item [ngStyle]="{ '--background': 'none', 'padding-top': '0px' }">
+  <ion-grid style="width: 100%" class="ion_grid1" [ngStyle]="{ 'background-color': 'none' }">
+    <!-- <ion-row style="justify-content: start">
+
+
+      <ion-col size="6">
+        <app-expandable-text [text]="'sdddddddddddddddddddddddddddddddddddddddd'" [maxLength]="30" [icon]="'restaurant-outline'" [chipColor]="'success'" [truncate]="true">
+        </app-expandable-text>
+      </ion-col>
+    </ion-row> -->
+    <ion-row style="margin-top: 0px; justify-content: space-between; flex-wrap: nowrap">
+      <ion-col size="auto">
+        <ion-chip color="{{ titleColor }}" style="position: relative; font-size: 10px">
+          <ion-label style="font-size: 10px; font-weight: 900"> {{ titleAction }} </ion-label>
+        </ion-chip>
+      </ion-col>
+
+      <ion-col size="auto" style="display: flex; align-items: center; justify-content: space-between; align-items: flex-end; transform: scale(0.9)">
+        <ion-chip class="chip2" [ngStyle]="{ color: 'white', 'background-color': confirmationColor }">
+          <ion-label (click)="emitConfirmBtnClick()" style="font-size: 10px">{{ textConfirmation }}</ion-label>
+          <ion-icon color="light" name="{{ iconBtn1 }}"></ion-icon>
+        </ion-chip>
+        <ion-chip (click)="emitBtn2Click()" class="chip3" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }">
+          <ion-label style="font-size: 10px">Non</ion-label>
+          <ion-icon color="light" name="close-circle-outline"></ion-icon>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <app-loader backGroundCtn="#0000009c" fillColor="white" [load]="isUpdating"></app-loader>
+</ion-item>
