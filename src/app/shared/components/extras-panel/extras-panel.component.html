@@ -21,12 +21,12 @@
     <ion-grid>
       <ion-row>
         <ion-col size="auto">
-          <ion-button fill="clear" size="small" (click)="closePanel()" style="--color: white">
+          <ion-button fill="solid" size="small" (click)="closePanel()" style="--background-activated: red; --color: white; --background: darkred; --border-radius: 40px">
             <ion-icon name="close-circle-outline" slot="start"></ion-icon>
             Fermer
           </ion-button>
         </ion-col>
-        <ion-col size="auto" *ngFor="let extra of extras">
+        <ion-col size="auto" *ngFor="let extra of getSortedExtras()">
           <ion-chip color="light" style="font-size: 10px; font-weight: bold">
             <ion-label>{{ extra.name }}</ion-label>
             <div class="custom-checkbox" [ngClass]="{ 'cross-checkbox': !extra.status, 'check-checkbox': extra.status }">

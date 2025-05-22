@@ -13,4 +13,18 @@ export class ExtrasPanelComponent {
   closePanel() {
     showCard(this.orderId, 'y', '100%');
   }
+
+  /**
+   * Trie les extras par la longueur de leur nom, du plus court au plus long
+   * @returns Les extras triés
+   */
+  getSortedExtras(): any[] {
+    if (!this.extras || this.extras.length === 0) {
+      return [];
+    }
+    
+    return [...this.extras].sort((a, b) => {
+      return a.name.length - b.name.length;
+    });
+  }
 }
