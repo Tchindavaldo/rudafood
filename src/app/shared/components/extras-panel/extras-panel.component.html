@@ -1,0 +1,40 @@
+<div
+  [attr.id]="orderId"
+  style="
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: max-content;
+    max-height: 80%;
+    width: 100%;
+    transform: translateY(100px);
+    display: flex;
+    background: rgb(0, 0, 0);
+    border-radius: 17px;
+    transition-duration: 900ms;
+    background: url('../../../../../assets/images/background/backgroundGradient.png');
+    background-size: cover;
+    padding: 5px;
+  "
+>
+  <div style="display: flex; flex-direction: column; align-items: center">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="auto">
+          <ion-button fill="clear" size="small" (click)="closePanel()" style="--color: white">
+            <ion-icon name="close-circle-outline" slot="start"></ion-icon>
+            Fermer
+          </ion-button>
+        </ion-col>
+        <ion-col size="auto" *ngFor="let extra of extras">
+          <ion-chip color="light" style="font-size: 10px; font-weight: bold">
+            <ion-label>{{ extra.name }}</ion-label>
+            <div class="custom-checkbox" [ngClass]="{ 'cross-checkbox': !extra.status, 'check-checkbox': extra.status }">
+              <ion-icon [name]="extra.status ? 'checkmark' : 'close'" class="icon-symbol"></ion-icon>
+            </div>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</div>

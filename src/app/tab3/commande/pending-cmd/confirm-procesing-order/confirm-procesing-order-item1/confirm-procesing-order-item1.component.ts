@@ -11,7 +11,7 @@ export class ConfirmProcesingOrderItem1Component {
   iconBtn1 = 'checkmark-outline';
   titleColor = 'danger';
   confirmationColor = 'darkRed';
-  titleAction = 'Voulez vraiment Annuler ?';
+  titleAction = 'Voulez vous vraiment Annuler ?';
   textConfirmation = '  OUI  ';
 
   @Input() id!: string;

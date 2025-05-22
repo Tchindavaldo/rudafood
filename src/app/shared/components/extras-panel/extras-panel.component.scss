@@ -1,0 +1,30 @@
+ion-grid,
+ion-col {
+  padding: 0;
+}
+.custom-checkbox {
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  margin-left: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.cross-checkbox {
+    background-color: darkred;
+    border: 1px solid darkred;
+  }
+
+  &.check-checkbox {
+    background-color: #00cc00;
+    border: 1px solid darkgreen;
+  }
+}
+
+.icon-symbol {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}

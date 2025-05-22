@@ -57,6 +57,13 @@
                       { name: ' oignon', status: false },
                       { name: 'Sauce ', status: true }
                     ]"
+                    [extrasDrink]="[
+                      { name: ' top grenadine', status: true },
+                      { name: ' Djino', status: false },
+                      { name: ' CoCa Cola', status: true },
+                      { name: ' Fanta', status: true },
+                      { name: ' guiness', status: true }
+                    ]"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'express'); trackBy: trackByOrderId"
                     [order]="order"
                     procededAction="processing"
@@ -119,6 +126,13 @@
                             { name: ' oignon', status: false },
                             { name: 'Sauce ', status: true }
                           ]"
+                          [extrasDrink]="[
+                            { name: ' top grenadine', status: true },
+                            { name: ' Djino', status: false },
+                            { name: ' CoCa Cola', status: true },
+                            { name: ' Fanta', status: true },
+                            { name: ' guiness', status: true }
+                          ]"
                           *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'time', time); trackBy: trackByOrderId"
                           [order]="order"
                           procededAction="processing"
@@ -172,6 +186,13 @@
                       { name: ' fromage', status: true },
                       { name: ' oignon', status: false },
                       { name: ' piquante', status: true }
+                    ]"
+                    [extrasDrink]="[
+                      { name: ' top grenadine', status: true },
+                      { name: ' Djino', status: false },
+                      { name: ' CoCa Cola', status: true },
+                      { name: ' Fanta', status: true },
+                      { name: ' guiness', status: true }
                     ]"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, false); trackBy: trackByOrderId"
                     [order]="order"

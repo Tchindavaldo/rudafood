@@ -1,4 +1,4 @@
-<ion-item [style]="itemStyle">
+<ion-item [ngStyle]="itemStyle" (click)="hideExtrasPanel(order.id)">
   <ion-grid>
     <ion-row style="margin: 0px 2px 35px; justify-content: space-between">
       <!-- Afficher les extras limités au nombre maximal défini -->
@@ -14,14 +14,14 @@
         </ion-col> -->
 
         <ion-col size="auto">
-          <ion-chip style="font-size: 10px; font-weight: bold; margin-left: 0px" color="light">
+          <ion-chip (click)="hideExtrasPanel(order.id); toggleExtrasPanel($event, order.id + '-extra')" style="font-size: 10px; font-weight: bold; margin-left: 0px" color="light">
             <ion-icon name="fast-food-outline"></ion-icon>
-            <ion-label> Extras +4 </ion-label>
+            <ion-label> Extras +{{ extrasToShow.length }} </ion-label>
           </ion-chip>
         </ion-col>
 
         <ion-col size="auto">
-          <ion-chip style="font-size: 10px; font-weight: bold; margin-left: 0px" color="light">
+          <ion-chip (click)="hideExtrasPanel(order.id); toggleExtrasPanel($event, order.id + '-drink')" style="font-size: 10px; font-weight: bold; margin-left: 0px" color="light">
             <ion-icon name="beer-outline"></ion-icon>
             <ion-label> Boisson +5 </ion-label>
           </ion-chip>
@@ -33,7 +33,7 @@
         <ion-label (click)="showAllExtras()" style="font-size: 14px; font-weight: bold; cursor: pointer">+{{ additionalExtrasCount }} </ion-label>
       </ion-col> -->
 
-      <ion-col style="align-items: center" size="auto" *ngIf="hasAdditionalExtras">
+      <ion-col style="align-items: center" size="auto">
         <ion-chip (click)="showConfirmCancelOrder(order.id)" color="danger" style="background-color: darkred; color: white; font-size: 10px; font-weight: bold">
           <ion-label> Annuler </ion-label>
           <ion-icon name="close-circle-outline"></ion-icon>
@@ -55,10 +55,10 @@
           <ion-row>
             <ion-col size="7" style="display: block">
               <!-- Utilisation du composant expandable-text pour le nom du menu -->
-              <app-expandable-text [text]="logText" [maxLength]="30" [icon]="'restaurant-outline'" [chipColor]="'success'" [truncate]="true"> </app-expandable-text>
+              <app-expandable-text [text]="logText" [maxLength]="25" [icon]="'restaurant-outline'" [chipColor]="'success'" [truncate]="true"> </app-expandable-text>
             </ion-col>
           </ion-row>
-          <ion-row>
+          <ion-row style="justify-content: space-between">
             <ion-col size="12">
               <!-- Utilisation du composant expandable-text pour l'adresse de livraison -->
               <app-expandable-text
@@ -87,5 +87,10 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <app-confirm-procesing-order [data]="order" [modalId]="order.id"></app-confirm-procesing-order>
+
+  <!-- Panneau latéral des extras -->
+  <app-extras-panel [orderId]="order.id + '-extra'" [extras]="extrasToShow"></app-extras-panel>
+  <app-extras-panel [orderId]="order.id + '-drink'" [extras]="extrasDrink"></app-extras-panel>
 </ion-item>
+
+<app-confirm-procesing-order [data]="order" [modalId]="order.id"></app-confirm-procesing-order>

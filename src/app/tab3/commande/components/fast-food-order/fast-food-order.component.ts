@@ -1,10 +1,10 @@
 import { Component, ElementRef, Input, OnInit, AfterViewInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { showCard } from 'src/utils/showCard';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/store/indx';
 import { updateOrdersRequetService } from 'src/services/FastFood/requet/update-orders-requet.service';
 import { TextExpansionService } from './text-expansion.service';
-import { showCard } from 'src/utils/showCard';
 
 @Component({
   selector: 'app-fast-food-order',
@@ -24,11 +24,13 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
   @Input() checkboxBorderColorChecked = '';
   @Input() showCrossIcon = false;
   @Input() extras: any[] = [];
+  @Input() extrasDrink: any[] = [];
+  showExtrasPanel = false;
   @Input() truncateDeliveryAddress = false;
   @Output() openModal = new EventEmitter<{ order: any }>();
 
   // Nombre maximum d'extras à afficher avant de montrer l'indicateur "+X éléments"
-  private maxExtrasToShow = 4;
+  private maxExtrasToShow = 5;
 
   // Variable pour suivre si tous les extras sont affichés
   private showingAllExtras = false;
@@ -386,6 +388,23 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
    */
   showAllExtras() {
     this.showingAllExtras = true;
+  }
+
+  toggleExtrasPanel(event: Event, id: string) {
+    event.stopPropagation();
+    // this.hideExtrasPanel(id);
+    showCard(id, 'y', '0px');
+  }
+
+  hideExtrasPanel(id: string) {
+    const extraId = id + '-extra';
+    const drinkId = id + '-drink';
+    showCard(extraId, 'y', '100%');
+    showCard(drinkId, 'y', '100%');
+  }
+
+  onItemClick() {
+    // Gérer le clic sur l'item
   }
 
   showConfirmCancelOrder(id: string) {

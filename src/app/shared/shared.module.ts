@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from '../components/loader/loader.component';
-import { IonicModule } from '@ionic/angular';
 import { PendingUserOrderComponent } from '../tab2/manage-passed-order-status/pending-user-order/pending-user-order.component';
 import { ProcessingUserOrderComponent } from '../tab2/manage-passed-order-status/processing-user-order/processing-user-order.component';
 import { FinishedUserOrderComponent } from '../tab2/manage-passed-order-status/finished-user-order/finished-user-order.component';
@@ -36,9 +36,11 @@ import { FastFoodOrderComponent } from '../tab3/commande/components/fast-food-or
 import { ExpandableTextComponent } from './components/expandable-text/expandable-text.component';
 import { ConfirmProcesingOrderItem1Component } from '../tab3/commande/pending-cmd/confirm-procesing-order/confirm-procesing-order-item1/confirm-procesing-order-item1.component';
 import { ConfirmProcesingOrderComponent } from '../tab3/commande/pending-cmd/confirm-procesing-order/confirm-procesing-order.component';
+import { ExtrasPanelComponent } from './components/extras-panel/extras-panel.component';
 
 @NgModule({
   declarations: [
+    ExtrasPanelComponent,
     NoDataComponent,
     NoFastFoodComponent,
     CardNewFastFoodComponent,
@@ -81,6 +83,7 @@ import { ConfirmProcesingOrderComponent } from '../tab3/commande/pending-cmd/con
   ],
   imports: [CommonModule, IonicModule, FormsModule],
   exports: [
+    ExtrasPanelComponent,
     NoFastFoodComponent,
     CardNewFastFoodComponent,
 

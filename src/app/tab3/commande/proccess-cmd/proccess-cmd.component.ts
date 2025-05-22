@@ -146,7 +146,7 @@ export class ProccessCmdComponent implements OnInit, OnDestroy {
       ...order,
       menu: {
         ...order.menu,
-        name: 'jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj',
+        name: 'menu mis update avec photo',
       },
     };
   }

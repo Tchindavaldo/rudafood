@@ -34,11 +34,14 @@ export class ExpandableTextComponent implements OnInit, AfterViewInit, OnDestroy
     this.prepareText();
 
     // S'abonner aux événements d'expansion pour fermer ce texte quand un autre est ouvert
-    this.expansionSubscription = TextExpansionService.expansionEmitter.subscribe((itemId: string) => {
-      if (itemId !== this.uniqueId && this.expanded) {
-        this.collapseText();
-      }
-    });
+    // Ne pas s'abonner si truncate est false
+    if (this.truncate) {
+      this.expansionSubscription = TextExpansionService.expansionEmitter.subscribe((itemId: string) => {
+        if (itemId !== this.uniqueId && this.expanded) {
+          this.collapseText();
+        }
+      });
+    }
   }
 
   ngAfterViewInit() {
@@ -51,15 +54,18 @@ export class ExpandableTextComponent implements OnInit, AfterViewInit, OnDestroy
   // Préparer le texte tronqué pour l'affichage
   prepareText() {
     if (!this.text) {
-      console.log('pas de texte');
-
       this.text = '';
-    } else {
-      console.log('texte trouvés', this.text);
+    }
+
+    // Si truncate est désactivé, afficher le texte complet
+    if (!this.truncate) {
+      this.truncatedText = this.text;
+      this.expanded = true;
+      return;
     }
 
     // Si le texte est plus court que la longueur maximale, pas besoin de le tronquer
-    if (this.text.length <= this.maxLength || !this.truncate) {
+    if (this.text.length <= this.maxLength) {
       this.truncatedText = this.text;
     } else {
       this.truncatedText = this.text.substring(0, this.maxLength) + '...';
@@ -85,7 +91,8 @@ export class ExpandableTextComponent implements OnInit, AfterViewInit, OnDestroy
 
   // Méthode pour fermer le texte (collapse)
   collapseText() {
-    if (!this.expanded || this.isAnimating) {
+    // Ne pas fermer si truncate est false
+    if (!this.expanded || this.isAnimating || !this.truncate) {
       return;
     }
 
@@ -102,8 +109,14 @@ export class ExpandableTextComponent implements OnInit, AfterViewInit, OnDestroy
 
   // Basculer l'affichage du texte complet/tronqué
   toggleExpand(event: Event) {
-    // Si le texte est plus court que la limite ou si truncate est désactivé, ne rien faire
-    if (this.text.length <= this.maxLength || !this.truncate) {
+    // Si truncate est désactivé, ne rien faire
+    if (!this.truncate) {
+      return;
+    }
+    // Si le texte est plus court que la limite, ne rien faire
+    if (this.text.length <= this.maxLength) {
+      console.log("Texte trop court pour l'expansion:", this.text, 'taille', this.text.length);
+      console.log("taille max l'expansion:", this.maxLength);
       return;
     }
 
