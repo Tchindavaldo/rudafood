@@ -37,23 +37,14 @@
                     <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
                     <p>{{ getUserData(userId).phoneNumber }}</p>
                   </ion-label>
-                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser(date, userId) }} cmd(s)</ion-label>
+                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('express', date, userId) }} cmd(s)</ion-label>
                 </ion-item>
 
                 <ion-list lines="none" class="order-list">
                   <app-fast-food-order
-                    [background]="getTotalOrdersForUser(date, userId) > 1 ? '#00000061' : 'none'"
-                    [extras]="[
-                      { name: ' fromage', status: true },
-                      { name: ' oignon', status: false },
-                      { name: ' piquante', status: true },
-                      { name: ' oignon', status: false },
-                      { name: 'Sauce ', status: true },
-                      { name: ' oignon', status: false },
-                      { name: ' piquante', status: true },
-                      { name: ' oignon', status: false },
-                      { name: 'Sauce ', status: true }
-                    ]"
+                    [background]="getTotalOrdersForUser('express', date, userId) > 1 ? '#00000061' : 'none'"
+                    [extras]="order.extra || []"
+                    [extrasDrink]="order.drink || []"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'express'); trackBy: trackByOrderId"
                     [order]="getOrderWithLongMenuName(order)"
                     procededAction="processing"
@@ -102,23 +93,14 @@
                           <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
                           <p>{{ getUserData(userId).phoneNumber }}</p>
                         </ion-label>
-                        <ion-label slot="end" color="danger">{{ getTotalOrdersForUser(date, userId) }} cmd(s)</ion-label>
+                        <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('', date, userId, time) }} cmd(s)</ion-label>
                       </ion-item>
 
                       <ion-list lines="none" class="order-list">
                         <app-fast-food-order
-                          [background]="getTotalOrdersForUser(date, userId) > 1 ? '#00000061' : 'none'"
-                          [extras]="[
-                            { name: ' fromage', status: true },
-                            { name: ' oignon', status: false },
-                            { name: ' piquante', status: true },
-                            { name: ' oignon', status: false },
-                            { name: 'Sauce ', status: true },
-                            { name: ' oignon', status: false },
-                            { name: ' piquante', status: true },
-                            { name: ' oignon', status: false },
-                            { name: 'Sauce ', status: true }
-                          ]"
+                          [background]="getTotalOrdersForUser('', date, userId, time) > 1 ? '#00000061' : 'none'"
+                          [extras]="order.extra || []"
+                          [extrasDrink]="order.drink || []"
                           *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'time', time); trackBy: trackByOrderId"
                           [order]="getOrderWithLongMenuName(order)"
                           procededAction="processing"
@@ -161,23 +143,14 @@
                     <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
                     <p>{{ getUserData(userId).phoneNumber }}</p>
                   </ion-label>
-                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser(date, userId) }} cmd(s)</ion-label>
+                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('', date, userId) }} cmd(s)</ion-label>
                 </ion-item>
 
                 <ion-list lines="none" class="order-list">
                   <app-fast-food-order
-                    [background]="getTotalOrdersForUser(date, userId) > 1 ? '#00000061' : 'none'"
-                    [extras]="[
-                      { name: ' fromage', status: true },
-                      { name: ' oignon', status: false },
-                      { name: ' piquante', status: true },
-                      { name: ' oignon', status: false },
-                      { name: 'Sauce ', status: true },
-                      { name: ' oignon', status: false },
-                      { name: ' piquante', status: true },
-                      { name: ' oignon', status: false },
-                      { name: 'Sauce ', status: true }
-                    ]"
+                    [background]="getTotalOrdersForUser('', date, userId) > 1 ? '#00000061' : 'none'"
+                    [extras]="order.extra || []"
+                    [extrasDrink]="order.drink || []"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, false); trackBy: trackByOrderId"
                     [order]="getOrderWithLongMenuName(order)"
                     procededAction="processing"

@@ -11,7 +11,7 @@ export class ExtrasPanelComponent {
   @Input() extras: any[] = [];
 
   closePanel() {
-    showCard(this.orderId, 'y', '100%');
+    showCard(this.orderId, 'y', '200%');
   }
 
   /**
@@ -22,7 +22,7 @@ export class ExtrasPanelComponent {
     if (!this.extras || this.extras.length === 0) {
       return [];
     }
-    
+
     return [...this.extras].sort((a, b) => {
       return a.name.length - b.name.length;
     });

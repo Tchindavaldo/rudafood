@@ -108,9 +108,21 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
     return getTotalOrdersByStatus(this.finishOrder, date, status);
   }
 
-  // Obtenir le nombre total de commandes pour un utilisateur à une date donnée
-  getTotalOrdersForUser(date: string, userId: string): number {
-    return this.getOrdersByDate(date).filter(order => order.userId === userId).length;
+  getTotalOrdersForUser(type: string, date: string, userId: string, time: string | null = null): number {
+    let orders = this.getOrdersByDate(date).filter(order => order.userId === userId);
+
+    if (type !== '') {
+      orders = orders.filter(order => order?.delivery?.type === type);
+    }
+    if (time !== null) {
+      orders = orders.filter(order => order?.delivery?.time === time);
+    }
+
+    if (type === '' && time === null) {
+      orders = orders.filter(order => order?.delivery?.status === false);
+    }
+
+    return orders.length;
   }
 
   // Obtenir les données complètes de l'utilisateur

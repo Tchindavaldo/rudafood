@@ -18,7 +18,7 @@ ion-item {
   --padding-start: 0px;
   --inner-padding-end: 0;
   --inner-border-width: 0px 0px 0 0px;
-
+  overflow: visible;
   --background: none;
 }
 
@@ -155,4 +155,38 @@ ion-item {
   ion-grid {
     font-size: 10px;
   }
+}
+
+// Styles pour l'animation des panneaux d'extras
+.extras-panel-visible {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.extras-panel-hidden {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+// Styles pour l'animation du contenu principal
+.main-content {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.content-visible {
+  opacity: 1;
+}
+
+.content-hidden {
+  opacity: 0;
+}
+
+// Style pour le chip actif
+.chip-active {
+  color: white;
+  box-shadow: 0px 0px 6px rgb(45 213 91 / 37%);
+  background: black;
+  transform: scale(1.05) !important;
+  transition: all 0.7s ease;
+  font-weight: bold;
 }

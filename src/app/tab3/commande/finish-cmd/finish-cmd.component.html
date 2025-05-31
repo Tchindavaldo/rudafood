@@ -37,23 +37,14 @@
                     <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
                     <p>{{ getUserData(userId).phoneNumber }}</p>
                   </ion-label>
-                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser(date, userId) }} cmd(s)</ion-label>
+                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('express', date, userId) }} cmd(s)</ion-label>
                 </ion-item>
 
                 <ion-list lines="none" class="order-list">
                   <app-fast-food-order
-                    [background]="getTotalOrdersForUser(date, userId) > 1 ? '#00000061' : 'none'"
-                    [extras]="[
-                      { name: ' fromage', status: true },
-                      { name: ' oignon', status: false },
-                      { name: ' piquante', status: true },
-                      { name: ' oignon', status: false },
-                      { name: 'Sauce ', status: true },
-                      { name: ' oignon', status: false },
-                      { name: ' piquante', status: true },
-                      { name: ' oignon', status: false },
-                      { name: 'Sauce ', status: true }
-                    ]"
+                    [background]="getTotalOrdersForUser('express', date, userId) > 1 ? '#00000061' : 'none'"
+                    [extras]="order.extra || []"
+                    [extrasDrink]="order.drink || []"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'express'); trackBy: trackByOrderId"
                     [order]="order"
                     procededAction="processing"
@@ -71,11 +62,17 @@
         <ion-card class="section-card">
           <ion-card-header style="padding-bottom: 0" class="section-header">
             <div style="display: flex; justify-content: space-between; align-items: center">
-              <ion-card-title class="date-title">
+              <ion-card-title class="date-title" style="width: 100%; justify-content: space-between">
                 <ion-chip style="margin-bottom: 0px; font-size: 0.75rem; flex-direction: column; justify-content: start; align-items: start" color="danger">
                   {{ date | date : 'EEEE d MMMM yyyy' | titlecase }}
                   <div style="display: block; margin-top: 6px">
                     <ion-card-subtitle> Livraison par heure ({{ getTotalOrdersByTypeTime(date, times) }}) </ion-card-subtitle>
+                  </div>
+                </ion-chip>
+
+                <ion-chip style="margin-bottom: 0px; font-size: 0.75rem; flex-direction: column; justify-content: start; align-items: start" color="danger">
+                  <div style="display: block; margin-top: 6px">
+                    <ion-card-subtitle> Debuter la livraison </ion-card-subtitle>
                   </div>
                 </ion-chip>
               </ion-card-title>
@@ -102,23 +99,14 @@
                           <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
                           <p>{{ getUserData(userId).phoneNumber }}</p>
                         </ion-label>
-                        <ion-label slot="end" color="danger">{{ getTotalOrdersForUser(date, userId) }} cmd(s)</ion-label>
+                        <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('', date, userId, time) }} cmd(s)</ion-label>
                       </ion-item>
 
                       <ion-list lines="none" class="order-list">
                         <app-fast-food-order
-                          [background]="getTotalOrdersForUser(date, userId) > 1 ? '#00000061' : 'none'"
-                          [extras]="[
-                            { name: ' fromage', status: true },
-                            { name: ' oignon', status: false },
-                            { name: ' piquante', status: true },
-                            { name: ' oignon', status: false },
-                            { name: 'Sauce ', status: true },
-                            { name: ' oignon', status: false },
-                            { name: ' piquante', status: true },
-                            { name: ' oignon', status: false },
-                            { name: 'Sauce ', status: true }
-                          ]"
+                          [background]="getTotalOrdersForUser('', date, userId, time) > 1 ? '#00000061' : 'none'"
+                          [extras]="order.extra || []"
+                          [extrasDrink]="order.drink || []"
                           *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'time', time); trackBy: trackByOrderId"
                           [order]="order"
                           procededAction="processing"
@@ -161,23 +149,14 @@
                     <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
                     <p>{{ getUserData(userId).phoneNumber }}</p>
                   </ion-label>
-                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser(date, userId) }} cmd(s)</ion-label>
+                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('', date, userId) }} cmd(s)</ion-label>
                 </ion-item>
 
                 <ion-list lines="none" class="order-list">
                   <app-fast-food-order
-                    [background]="getTotalOrdersForUser(date, userId) > 1 ? '#00000061' : 'none'"
-                    [extras]="[
-                      { name: ' fromage', status: true },
-                      { name: ' oignon', status: false },
-                      { name: ' piquante', status: true },
-                      { name: ' oignon', status: false },
-                      { name: 'Sauce ', status: true },
-                      { name: ' oignon', status: false },
-                      { name: ' piquante', status: true },
-                      { name: ' oignon', status: false },
-                      { name: 'Sauce ', status: true }
-                    ]"
+                    [background]="getTotalOrdersForUser('', date, userId) > 1 ? '#00000061' : 'none'"
+                    [extras]="order.extra || []"
+                    [extrasDrink]="order.drink || []"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, false); trackBy: trackByOrderId"
                     [order]="order"
                     procededAction="processing"

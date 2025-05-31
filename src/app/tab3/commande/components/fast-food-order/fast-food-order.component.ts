@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/store/indx';
 import { updateOrdersRequetService } from 'src/services/FastFood/requet/update-orders-requet.service';
 import { TextExpansionService } from './text-expansion.service';
+import { ToastService } from 'src/services/toast/toast.service';
 
 @Component({
   selector: 'app-fast-food-order',
@@ -25,7 +26,13 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
   @Input() showCrossIcon = false;
   @Input() extras: any[] = [];
   @Input() extrasDrink: any[] = [];
-  showExtrasPanel = false;
+  shouldShowExtrasPanel = false;
+  isExtrasPanelVisible = false;
+  isDrinkPanelVisible = false;
+  extraAlreadyVisited = false;
+  boissonAlreadyVisited = false;
+  isExtrasPanelAnimating = false;
+  isDrinkPanelAnimating = false;
   @Input() truncateDeliveryAddress = false;
   @Output() openModal = new EventEmitter<{ order: any }>();
 
@@ -154,7 +161,7 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
   // Abonnement aux événements d'expansion
   private expansionSubscription: Subscription = new Subscription();
 
-  constructor(public updateOrdersRequet: updateOrdersRequetService, private store: Store<AppState>) {
+  constructor(public updateOrdersRequet: updateOrdersRequetService, private store: Store<AppState>, private toast: ToastService) {
     this.fastFoodOrderReducer = this.store.select(state => state.fastFoodOrder.orders);
     this.fastFoodOrderReducer.subscribe(order => (this.fastfoodOrder = order));
   }
@@ -375,6 +382,13 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
       }
 
       if (this.order.status === 'finished') {
+        // Première notification en haut pour informer que la notification a été envoyée au client
+        this.toast.presentToast('top', 'Notification déjà envoyée au client', 5000);
+
+        // Deuxième notification en bas après 3 secondes
+        setTimeout(() => {
+          this.toast.presentToast('bottom', "L'envoi de nouvelles notifications sera possible dans les mises à jour à venir", 3000);
+        }, 3000);
       }
 
       // await this.updateOrdersRequet.updateFastFood({ status: 'pending', id: this.order.id });
@@ -392,40 +406,164 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
 
   toggleExtrasPanel(event: Event, id: string) {
     event.stopPropagation();
-    // this.hideExtrasPanel(id);
-    showCard(id, 'y', '0px');
+
+    if (id === this.order.id + '-extra') {
+      // Si une animation est déjà en cours, ne rien faire
+      if (this.isExtrasPanelAnimating) return;
+
+      // Mettre à jour immédiatement les états pour changer les classes
+      this.isExtrasPanelVisible = true;
+      this.isDrinkPanelVisible = false;
+      this.isExtrasPanelAnimating = true;
+
+      // Déclencher l'animation de translation
+      showCard(id, 'y', '0px');
+
+      // Réinitialiser l'état d'animation après la fin de l'animation
+      setTimeout(() => {
+        this.isExtrasPanelAnimating = false;
+      }, 500); // Durée de l'animation de translation
+    } else if (id === this.order.id + '-drink') {
+      // Si une animation est déjà en cours, ne rien faire
+      if (this.isDrinkPanelAnimating) return;
+
+      // Mettre à jour immédiatement les états pour changer les classes
+      this.isDrinkPanelVisible = true;
+      this.isExtrasPanelVisible = false;
+      this.isDrinkPanelAnimating = true;
+
+      // Déclencher l'animation de translation
+      showCard(id, 'y', '0px');
+
+      // Réinitialiser l'état d'animation après la fin de l'animation
+      setTimeout(() => {
+        this.isDrinkPanelAnimating = false;
+      }, 500); // Durée de l'animation de translation
+    }
+  }
+
+  showExtrasPanel() {
+    this.isExtrasPanelVisible = !this.isExtrasPanelVisible;
+    this.isDrinkPanelVisible = false;
+    this.extraVisited();
+  }
+
+  extraVisited() {
+    this.extraAlreadyVisited = true;
+  }
+
+  showDrinkPanel() {
+    this.isDrinkPanelVisible = !this.isDrinkPanelVisible;
+    this.isExtrasPanelVisible = false;
+    this.drinkVisited();
+  }
+
+  drinkVisited() {
+    this.boissonAlreadyVisited = true;
   }
 
   hideExtrasPanel(id: string) {
     const extraId = id + '-extra';
     const drinkId = id + '-drink';
-    showCard(extraId, 'y', '100%');
-    showCard(drinkId, 'y', '100%');
+
+    // Si des animations sont déjà en cours, ne rien faire
+    if (this.isExtrasPanelAnimating || this.isDrinkPanelAnimating) return;
+
+    // Cacher les panneaux avec animation de translation
+    showCard(extraId, 'y', '200%');
+    showCard(drinkId, 'y', '200%');
+
+    // Mettre à jour immédiatement les états pour changer les classes
+    this.isExtrasPanelVisible = false;
+    this.isDrinkPanelVisible = false;
+
+    // Marquer que les animations sont en cours
+    if (this.isExtrasPanelVisible) {
+      this.isExtrasPanelAnimating = true;
+      setTimeout(() => {
+        this.isExtrasPanelAnimating = false;
+      }, 500); // Durée de l'animation
+    }
+
+    if (this.isDrinkPanelVisible) {
+      this.isDrinkPanelAnimating = true;
+      setTimeout(() => {
+        this.isDrinkPanelAnimating = false;
+      }, 500); // Durée de l'animation
+    }
   }
 
   onItemClick() {
     // Gérer le clic sur l'item
   }
 
+  /**
+   * Réinitialise l'affichage en masquant tous les panneaux d'extras
+   * et en affichant le contenu principal
+   */
+  resetPanels() {
+    // Si des animations sont déjà en cours, ne rien faire
+    if (this.isExtrasPanelAnimating || this.isDrinkPanelAnimating) return;
+
+    // Mettre à jour immédiatement les états pour changer les classes
+    this.isExtrasPanelVisible = false;
+    this.isDrinkPanelVisible = false;
+
+    // Cacher tous les panneaux avec animation de translation
+    const extraId = this.order.id + '-extra';
+    const drinkId = this.order.id + '-drink';
+
+    showCard(extraId, 'y', '200%');
+    showCard(drinkId, 'y', '200%');
+
+    // Marquer que les animations sont en cours
+    this.isExtrasPanelAnimating = true;
+    this.isDrinkPanelAnimating = true;
+
+    // Réinitialiser les états d'animation après la fin des animations
+    setTimeout(() => {
+      this.isExtrasPanelAnimating = false;
+      this.isDrinkPanelAnimating = false;
+    }, 500);
+  }
+
   showConfirmCancelOrder(id: string) {
-    showCard(id);
+    if (this.order.status === 'processing' || this.order.status === 'pending') {
+      showCard(id);
+    }
   }
 
   validateOrder() {
-    // Préparer l'objet order à envoyer
-    const orderToSend = { ...this.order };
+    // Vérifier si l'utilisateur a consulté les extras et les boissons
+    if (this.order.status === 'pending') {
+      const hasExtras = this.extras && this.extras.length > 0;
+      const hasDrinks = this.extrasDrink && this.extrasDrink.length > 0;
 
-    // Si order.extras n'existe pas, ajouter des extras par défaut
-    if (!orderToSend.extras) {
-      orderToSend.extras = this.extras;
+      // Ne vérifier que si les inputs contiennent des données
+      if (hasExtras && hasDrinks && !this.extraAlreadyVisited && !this.boissonAlreadyVisited) {
+        this.toast.presentToast('top', 'Veuillez consulter les extras et les boissons avant de valider la commande.', 3000);
+        return;
+      }
+      if (hasExtras && !this.extraAlreadyVisited) {
+        this.toast.presentToast('top', 'Veuillez consulter les extras avant de valider la commande.', 3000);
+        return;
+      }
+
+      if (hasDrinks && !this.boissonAlreadyVisited) {
+        this.toast.presentToast('top', 'Veuillez consulter les boissons avant de valider la commande.', 3000);
+        return;
+      }
     }
+    // Préparer l'objet order à envoyer
+    // const orderToSend = { ...this.order };
+
+    // // Si order.extras n'existe pas, ajouter des extras par défaut
+    // if (!orderToSend.extras) {
+    //   orderToSend.extras = this.extras;
+    // }
 
     // Si la commande est en attente (pending) et que tous les extras ne sont pas affichés
-    if (this.order.status === 'pending' && !this.showingAllExtras && this.extras && this.extras.length > this.maxExtrasToShow) {
-      // Ouvrir le modal avec tous les extras
-      this.openModal.emit({ order: orderToSend });
-    } else {
-      // Pour tous les autres statuts, exécuter directement la fonction de changement de statut
+    if (this.order.status !== 'delivered') {
       this.statutChange();
     }
   }

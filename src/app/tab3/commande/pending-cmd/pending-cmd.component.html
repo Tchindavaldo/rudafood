@@ -37,7 +37,7 @@
                     <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
                     <p>{{ getUserData(userId).phoneNumber }}</p>
                   </ion-label>
-                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser(date, userId) }} cmd(s)</ion-label>
+                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('express', date, userId) }} cmd(s)</ion-label>
                 </ion-item>
 
                 <ion-list lines="none" class="order-list">
@@ -45,25 +45,9 @@
                     (openModal)="showDispoCard($event.order)"
                     checkboxBackgroundChecked="#ff0000"
                     checkboxBorderColorChecked="darkred"
-                    [background]="getTotalOrdersForUser(date, userId) > 1 ? '#00000061' : 'none'"
-                    [extras]="[
-                      { name: ' fromage', status: true },
-                      { name: ' oignon', status: false },
-                      { name: ' piquante', status: true },
-                      { name: ' oignon', status: false },
-                      { name: 'Sauce ', status: true },
-                      { name: ' oignon', status: false },
-                      { name: ' piquante', status: true },
-                      { name: ' oignon', status: false },
-                      { name: 'Sauce ', status: true }
-                    ]"
-                    [extrasDrink]="[
-                      { name: ' top grenadine', status: true },
-                      { name: ' Djino', status: false },
-                      { name: ' CoCa Cola', status: true },
-                      { name: ' Fanta', status: true },
-                      { name: ' guiness', status: true }
-                    ]"
+                    [background]="getTotalOrdersForUser('express', date, userId) > 1 ? '#00000061' : 'none'"
+                    [extras]="order.extra || []"
+                    [extrasDrink]="order.drink || []"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'express'); trackBy: trackByOrderId"
                     [order]="order"
                     procededAction="processing"
@@ -112,27 +96,15 @@
                           <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
                           <p>{{ getUserData(userId).phoneNumber }}</p>
                         </ion-label>
-                        <ion-label slot="end" color="danger">{{ getTotalOrdersForUser(date, userId) }} cmd(s)</ion-label>
+                        <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('', date, userId, time) }} cmd(s)</ion-label>
                       </ion-item>
 
                       <ion-list lines="none" class="order-list">
                         <app-fast-food-order
                           (openModal)="showDispoCard($event.order)"
-                          [background]="getTotalOrdersForUser(date, userId) > 1 ? '#00000061' : '#00000061'"
-                          [extras]="[
-                            { name: ' fromage', status: true },
-                            { name: ' oignon', status: false },
-                            { name: ' piquante', status: true },
-                            { name: ' oignon', status: false },
-                            { name: 'Sauce ', status: true }
-                          ]"
-                          [extrasDrink]="[
-                            { name: ' top grenadine', status: true },
-                            { name: ' Djino', status: false },
-                            { name: ' CoCa Cola', status: true },
-                            { name: ' Fanta', status: true },
-                            { name: ' guiness', status: true }
-                          ]"
+                          [background]="getTotalOrdersForUser('', date, userId) > 1 ? '#00000061' : '#00000061'"
+                          [extras]="order.extra || []"
+                          [extrasDrink]="order.drink || []"
                           *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'time', time); trackBy: trackByOrderId"
                           [order]="order"
                           procededAction="processing"
@@ -175,25 +147,15 @@
                     <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
                     <p>{{ getUserData(userId).phoneNumber }}</p>
                   </ion-label>
-                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser(date, userId) }} cmd(s)</ion-label>
+                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('', date, userId) }} cmd(s)</ion-label>
                 </ion-item>
 
                 <ion-list lines="none" class="order-list">
                   <app-fast-food-order
                     (openModal)="showDispoCard($event.order)"
-                    [background]="getTotalOrdersForUser(date, userId) > 1 ? '#00000061' : '#00000061'"
-                    [extras]="[
-                      { name: ' fromage', status: true },
-                      { name: ' oignon', status: false },
-                      { name: ' piquante', status: true }
-                    ]"
-                    [extrasDrink]="[
-                      { name: ' top grenadine', status: true },
-                      { name: ' Djino', status: false },
-                      { name: ' CoCa Cola', status: true },
-                      { name: ' Fanta', status: true },
-                      { name: ' guiness', status: true }
-                    ]"
+                    [background]="getTotalOrdersForUser('', date, userId) > 1 ? '#00000061' : '#00000061'"
+                    [extras]="order.extra || []"
+                    [extrasDrink]="order.drink || []"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, false); trackBy: trackByOrderId"
                     [order]="order"
                     procededAction="processing"

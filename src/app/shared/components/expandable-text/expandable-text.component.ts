@@ -114,7 +114,7 @@ export class ExpandableTextComponent implements OnInit, AfterViewInit, OnDestroy
       return;
     }
     // Si le texte est plus court que la limite, ne rien faire
-    if (this.text.length <= this.maxLength) {
+    if (this.text.length < this.maxLength) {
       console.log("Texte trop court pour l'expansion:", this.text, 'taille', this.text.length);
       console.log("taille max l'expansion:", this.maxLength);
       return;
