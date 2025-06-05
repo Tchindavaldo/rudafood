@@ -1,5 +1,15 @@
-h2 {
+h2,
+p {
   margin-top: -3px;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
+}
+
+.label-header-userData {
+  width: 45%;
 }
 .ionll::before {
   content: '';

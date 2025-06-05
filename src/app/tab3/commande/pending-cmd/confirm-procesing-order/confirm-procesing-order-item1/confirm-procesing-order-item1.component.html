@@ -1,27 +1,54 @@
 <ion-item [ngStyle]="{ '--background': 'none', 'padding-top': '0px' }">
   <ion-grid style="width: 100%" class="ion_grid1" [ngStyle]="{ 'background-color': 'none' }">
-    <!-- <ion-row style="justify-content: start">
-
-
-      <ion-col size="6">
-        <app-expandable-text [text]="'sdddddddddddddddddddddddddddddddddddddddd'" [maxLength]="30" [icon]="'restaurant-outline'" [chipColor]="'success'" [truncate]="true">
-        </app-expandable-text>
-      </ion-col>
-    </ion-row> -->
     <ion-row style="margin-top: 0px; justify-content: space-between; flex-wrap: nowrap">
+      <!-- Première colonne: titre ou champ de saisie selon l'étape -->
       <ion-col size="auto">
-        <ion-chip color="{{ titleColor }}" style="position: relative; font-size: 10px">
+        <!-- Étape 0: Affichage du titre normal -->
+        <ion-chip *ngIf="currentStep === 0" color="{{ titleColor }}" style="position: relative; font-size: 10px">
+          <ion-label style="font-size: 10px; font-weight: 900"> {{ titleAction }} </ion-label>
+        </ion-chip>
+
+        <!-- Étape 1: Affichage du montant et des frais sur deux lignes -->
+        <ion-chip *ngIf="currentStep === 1" color="{{ titleColor }}" style="position: relative; font-size: 10px">
+          <ion-label style="font-size: 10px; font-weight: 900; white-space: pre-line">frais: {{ feePercentage }}% <br />Remboursé: {{ finalRefundAmount.toFixed(0) }} FCFA </ion-label>
+        </ion-chip>
+
+        <!-- Étape 2: Champ de saisie pour le numéro de téléphone Orange Money -->
+        <ion-chip *ngIf="currentStep === 2" color="{{ titleColor }}" style="position: relative; font-size: 10px; color: white">
+          <!-- <ion-icon name="logo-euro" style="color: #ff6600"></ion-icon> -->
+          <ion-input type="tel" placeholder="Entrer Le Numéro OM" [(ngModel)]="phoneNumber" (ionChange)="updatePhoneNumber($event)" style="font-size: 10px; width: 120px"></ion-input>
+        </ion-chip>
+
+        <!-- Étape 3: Instructions de validation Orange Money -->
+        <ion-chip *ngIf="currentStep === 3" color="{{ titleColor }}" style="position: relative; font-size: 10px">
+          <ion-icon name="alert-circle-outline" color="light"></ion-icon>
+          <ion-label style="font-size: 10px; font-weight: 900; white-space: normal; max-width: 200px"> {{ titleAction }} </ion-label>
+        </ion-chip>
+
+        <!-- Étape 4: Message de confirmation -->
+        <ion-chip *ngIf="currentStep === 4" color="{{ titleColor }}" style="position: relative; font-size: 10px">
+          <ion-icon name="checkmark-circle" color="light"></ion-icon>
           <ion-label style="font-size: 10px; font-weight: 900"> {{ titleAction }} </ion-label>
         </ion-chip>
       </ion-col>
 
-      <ion-col size="auto" style="display: flex; align-items: center; justify-content: space-between; align-items: flex-end; transform: scale(0.9)">
-        <ion-chip class="chip2" [ngStyle]="{ color: 'white', 'background-color': confirmationColor }">
-          <ion-label (click)="emitConfirmBtnClick()" style="font-size: 10px">{{ textConfirmation }}</ion-label>
+      <ion-col
+        size="auto"
+        style="display: flex; align-items: center; justify-content: space-between; align-items: center; transform: scale(0.9)"
+        *ngIf="currentStep !== 3 && currentStep !== 4"
+      >
+        <!-- Bouton de confirmation qui change selon l'étape -->
+        <ion-chip class="chip2" (click)="emitConfirmBtnClick()" [ngStyle]="{ color: 'white', 'background-color': confirmationColor }">
+          <ion-label style="font-size: 10px">{{ textConfirmation }}</ion-label>
           <ion-icon color="light" name="{{ iconBtn1 }}"></ion-icon>
         </ion-chip>
+
+        <!-- Bouton Non/Annuler selon l'étape -->
         <ion-chip (click)="emitBtn2Click()" class="chip3" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }">
-          <ion-label style="font-size: 10px">Non</ion-label>
+          <ion-label style="font-size: 10px">
+            <ng-container *ngIf="currentStep === 0">Non</ng-container>
+            <ng-container *ngIf="currentStep > 0">Annuler</ng-container>
+          </ion-label>
           <ion-icon color="light" name="close-circle-outline"></ion-icon>
         </ion-chip>
       </ion-col>

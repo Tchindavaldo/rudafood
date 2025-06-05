@@ -33,9 +33,21 @@
                   <ion-avatar slot="start">
                     <ion-icon name="person-circle" class="user-avatar"></ion-icon>
                   </ion-avatar>
-                  <ion-label>
-                    <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
-                    <p>{{ getUserData(userId).phoneNumber }}</p>
+                  <ion-label class="label-header-userData">
+                    <h2>
+                      {{
+                        getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                          ? getUserData(userId).firstName
+                          : getUserData(userId).email
+                      }}
+                    </h2>
+                    <p>
+                      {{
+                        getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                          ? getUserData(userId).lastName
+                          : ''
+                      }}
+                    </p>
                   </ion-label>
                   <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('express', date, userId) }} cmd(s)</ion-label>
                 </ion-item>
@@ -89,9 +101,21 @@
                         <ion-avatar slot="start">
                           <ion-icon name="person-circle" class="user-avatar"></ion-icon>
                         </ion-avatar>
-                        <ion-label>
-                          <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
-                          <p>{{ getUserData(userId).phoneNumber }}</p>
+                        <ion-label class="label-header-userData">
+                          <h2>
+                            {{
+                              getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                                ? getUserData(userId).firstName
+                                : getUserData(userId).email
+                            }}
+                          </h2>
+                          <p>
+                            {{
+                              getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                                ? getUserData(userId).lastName
+                                : ''
+                            }}
+                          </p>
                         </ion-label>
                         <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('', date, userId, time) }} cmd(s)</ion-label>
                       </ion-item>
@@ -139,9 +163,21 @@
                   <ion-avatar slot="start">
                     <ion-icon name="person-circle" class="user-avatar"></ion-icon>
                   </ion-avatar>
-                  <ion-label>
-                    <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
-                    <p>{{ getUserData(userId).phoneNumber }}</p>
+                  <ion-label class="label-header-userData">
+                    <h2>
+                      {{
+                        getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                          ? getUserData(userId).firstName
+                          : getUserData(userId).email
+                      }}
+                    </h2>
+                    <p>
+                      {{
+                        getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                          ? getUserData(userId).lastName
+                          : ''
+                      }}
+                    </p>
                   </ion-label>
                   <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('', date, userId) }} cmd(s)</ion-label>
                 </ion-item>

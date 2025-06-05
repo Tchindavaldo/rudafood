@@ -7,6 +7,7 @@ import { filterByArg } from 'src/utils/filterByArg';
 import { countOrders } from 'src/utils/countOrders';
 import { OrderDataService } from 'src/services/orders/data/order-data.service';
 import { OrderCountersService } from 'src/services/orders/counters/order-counters.service';
+import { OrderDeliveryService } from 'src/services/orders/delivery/order-delivery.service';
 import { AppState } from 'src/store/indx';
 import {
   OrderGroupByDate,
@@ -19,6 +20,7 @@ import {
   getTotalOrdersByTypeExpress,
   getTotalOrdersByStatus,
 } from 'src/utils/order-utils';
+import { updateOrdersRequetService } from 'src/services/FastFood/requet/update-orders-requet.service';
 
 @Component({
   selector: 'app-finish-cmd',
@@ -32,19 +34,35 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
   finishedOrdersCount: number = 0;
   totalAmount: number = 0;
 
-  times: string[] = ['10:00', '16:00', '13:45'];
+  isUpdating: boolean = false;
+  times: string[] = ['10:00', '13:45', '16:00'];
+
+  // Stocker les identifiants des clients en cours de livraison avec leur date et type
+  // Format: date_type_time_userId ou date_type_userId
+  activeDeliveryClients: Set<string> = new Set<string>();
+
+  // Stocker les périodes de livraison actives
+  activeDeliveryPeriods: Set<string> = new Set<string>();
 
   // Abonnement
   private subscription: Subscription = new Subscription();
 
-  constructor(public ordersService: OrderDataService, private store: Store<AppState>, private orderCountersService: OrderCountersService) {}
+  constructor(
+    private updateOrdersRequet: updateOrdersRequetService,
+    public ordersService: OrderDataService,
+    private store: Store<AppState>,
+    private orderCountersService: OrderCountersService,
+    private orderDeliveryService: OrderDeliveryService
+  ) {}
 
   ngOnInit() {
     // S'abonner uniquement aux changements du compteur pour mettre à jour l'UI
     // Le composant parent (commande.page.ts) gère la mise à jour des données
     this.subscription.add(
       this.orderCountersService.finishedOrders$.subscribe(result => {
-        console.log(' finiiissshhhee   ddde  dotot', result);
+        result.filteredOrders.forEach(order => {
+          // console.log(' finiiissshhhee   ddde  dotot', order.status);
+        });
         this.finishOrder = result.filteredOrders;
       })
     );
@@ -127,30 +145,238 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
 
   // Obtenir les données complètes de l'utilisateur
   getUserData(userId: string): any {
-    const userOrder = this.finishOrder.find(order => order.userId === userId);
+    const userOrder = this.finishOrder.find(order => order.userId === userId && order.userData);
 
-    // Valeurs par défaut si l'objet n'existe pas
     const defaultUserData = {
-      firstName: 'Client',
+      firstName: 'Client ',
       lastName: '',
       email: '',
-      phoneNumber: 696080087,
+      phoneNumber: '',
       photoUrl: '',
     };
 
     if (!userOrder) return defaultUserData;
 
     return {
-      firstName: userOrder.userFirstName || userOrder.userName || defaultUserData.firstName,
-      lastName: userOrder.userLastName || '',
-      email: userOrder.userEmail || '',
-      phoneNumber: userOrder.userPhone || userOrder.userPhoneNumber || 696080087,
-      photoUrl: userOrder.userPhotoUrl || '',
+      firstName: userOrder?.userData?.firstName || defaultUserData.firstName,
+      lastName: userOrder?.userData?.lastName || defaultUserData.lastName,
+      email: userOrder?.userData?.email || defaultUserData.email,
+      phoneNumber: userOrder?.userData?.phoneNumber || defaultUserData.phoneNumber,
+      photoUrl: userOrder?.userData?.photoUrl || defaultUserData.photoUrl,
     };
   }
 
   // Obtenir le numéro de téléphone de l'utilisateur (pour compatibilité)
   getUserPhoneNumber(userId: string): string {
     return this.getUserData(userId).phoneNumber;
+  }
+
+  /**
+   * Génère un identifiant unique pour un client avec sa date et son type
+   * @param date La date de la période
+   * @param type Le type de livraison ('express' ou 'time')
+   * @param clientId L'identifiant du client
+   * @param time L'heure de la période (optionnel, uniquement pour le type 'time')
+   * @returns L'identifiant unique du client
+   */
+  private getUniqueClientId(date: string, type: string, clientId: string, time?: string): string {
+    return type === 'time' && time ? `${date}_${type}_${time}_${clientId}` : `${date}_${type}_${clientId}`;
+  }
+
+  /**
+   * Démarre la livraison pour un client spécifique
+   * @param clientId L'identifiant du client
+   * @param date La date de la période
+   * @param type Le type de livraison ('express' ou 'time')
+   * @param time L'heure de la période (optionnel, uniquement pour le type 'time')
+   */
+  async startDelivery(clientId: string, date: string, type: string = 'time', time?: string) {
+    let userSorders: any[] = [];
+    let orders: any[] = [];
+
+    const uniqueClientId = this.getUniqueClientId(date, type, clientId, time);
+    const periodKey = type === 'time' && time ? `${date}_${type}_${time}` : `${date}_${type}`;
+
+    userSorders.push(...this.getOrdersByDateAndUserDelivery(date, clientId, true, 'express'));
+    userSorders.forEach(order => {
+      orders.push({ status: order.status, id: order.id, fastFoodId: order.fastFoodId, clientId: this.getUniqueClientId(date, type, order.userId, time), periodKey });
+    });
+
+    await this.statutChange(orders);
+    this.activeDeliveryPeriods.add(periodKey);
+    this.activeDeliveryClients.add(uniqueClientId);
+  }
+
+  /**
+   * Vérifie si la livraison est active pour un client spécifique
+   * @param clientId L'identifiant du client
+   * @param date La date de la période (optionnel)
+   * @param type Le type de livraison (optionnel)
+   * @param time L'heure de la période (optionnel)
+   * @returns true si la livraison est active pour ce client, false sinon
+   */
+  isDeliveryActive(clientId: string, date?: string, type?: string, time?: string): boolean {
+    // Si nous avons tous les paramètres, nous pouvons vérifier l'ID unique
+    if (date && type) {
+      const uniqueId = this.getUniqueClientId(date, type, clientId, time);
+      return this.activeDeliveryClients.has(uniqueId);
+    }
+
+    // Sinon, vérifier si le client est actif de n'importe quelle façon
+    // (compatibilité arrière ou pour les tests)
+    if (this.activeDeliveryClients.has(clientId)) {
+      return true;
+    }
+
+    // Vérifier si le client est actif avec n'importe quelle combinaison de date/type
+    return Array.from(this.activeDeliveryClients).some(id => id.endsWith(`_${clientId}`));
+  }
+
+  /**
+   * Annule la livraison pour un client spécifique
+   * @param clientId L'identifiant du client
+   * @param date La date de la période (optionnel)
+   * @param type Le type de livraison (optionnel)
+   * @param time L'heure de la période (optionnel)
+   */
+  cancelDelivery(clientId: string, date?: string, type?: string, time?: string) {
+    // Si nous avons tous les paramètres, nous pouvons supprimer l'ID unique
+    if (date && type) {
+      const uniqueId = this.getUniqueClientId(date, type, clientId, time);
+      // Mettre à jour le Set local
+      this.activeDeliveryClients.delete(uniqueId);
+      // Mettre à jour le service pour la communication entre composants
+      this.orderDeliveryService.removeActiveClientId(uniqueId);
+      return;
+    }
+
+    // Sinon, supprimer toutes les entrées pour ce client
+    this.activeDeliveryClients.delete(clientId);
+    this.orderDeliveryService.removeActiveClientId(clientId);
+
+    // Supprimer toutes les entrées qui se terminent par l'ID du client
+    const clientIdsToRemove = Array.from(this.activeDeliveryClients).filter(id => id.endsWith(`_${clientId}`));
+
+    clientIdsToRemove.forEach(id => {
+      this.activeDeliveryClients.delete(id);
+      this.orderDeliveryService.removeActiveClientId(id);
+    });
+  }
+
+  /**
+   * Termine la livraison pour un client spécifique
+   * @param clientId L'identifiant du client
+   * @param date La date de la période (optionnel)
+   * @param type Le type de livraison (optionnel)
+   * @param time L'heure de la période (optionnel)
+   */
+  completeDelivery(clientId: string, date?: string, type?: string, time?: string) {
+    // Utiliser la même logique que pour l'annulation
+    this.cancelDelivery(clientId, date, type, time);
+
+    // Ici, on pourrait ajouter une logique supplémentaire pour marquer les commandes comme livrées
+  }
+
+  /**
+   * Démarre la livraison pour tous les clients d'une période et d'un type spécifiques
+   * @param date La date de la période
+   * @param type Le type de livraison ('express' ou 'time')
+   * @param time L'heure de la période (optionnel, uniquement pour le type 'time')
+   */
+  async startDeliveryForPeriod(date: string, type: string = 'time', time?: string) {
+    // Marquer la période comme active avec son type
+    const periodKey = type === 'time' && time ? `${date}_${type}_${time}` : `${date}_${type}`;
+
+    // Mettre à jour le Set local
+    this.activeDeliveryPeriods.add(periodKey);
+
+    // Mettre à jour le service pour la communication entre composants
+    this.orderDeliveryService.addActivePeriodKey(periodKey);
+
+    // Activer tous les clients de cette période et de ce type
+    const userIds = this.getUserIdsByDateType(true, date, type, time);
+
+    let userSorders: any[] = [];
+    let orders: any[] = [];
+    userIds.forEach(userId => {
+      userSorders.push(...this.getOrdersByDateAndUserDelivery(date, userId, true, 'time', time));
+    });
+    userSorders.forEach(order => {
+      orders.push({ status: order.status, id: order.id, fastFoodId: order.fastFoodId, clientId: this.getUniqueClientId(date, type, order.userId, time), periodKey });
+    });
+
+    // console.log('orders to update for delivery status', orders);
+    await this.statutChange(orders);
+
+    userIds.forEach(userId => {
+      const uniqueClientId = this.getUniqueClientId(date, type, userId, time);
+      // Mettre à jour le Set local
+      this.activeDeliveryClients.add(uniqueClientId);
+    });
+  }
+
+  /**
+   * Vérifie si la livraison est active pour une période et un type spécifiques
+   * @param date La date de la période
+   * @param type Le type de livraison ('express' ou 'time')
+   * @param time L'heure de la période (optionnel, uniquement pour le type 'time')
+   * @returns true si la livraison est active pour cette période et ce type, false sinon
+   */
+  isDeliveryPeriodActive(date: string, type: string = 'time', time?: string): boolean {
+    // Vérifier uniquement si au moins un client de cette période et de ce type est en livraison
+    const userIds = this.getUserIdsByDateType(true, date, type, time);
+    const hasActiveClient = userIds.some(userId => {
+      const uniqueClientId = this.getUniqueClientId(date, type, userId, time);
+      return this.activeDeliveryClients.has(uniqueClientId);
+    });
+
+    // Si aucun client n'est actif, nettoyer la période
+    const periodKey = type === 'time' && time ? `${date}_${type}_${time}` : `${date}_${type}`;
+
+    // Vérifier si la période est active dans le Set local
+    const isPeriodActiveLocal = this.activeDeliveryPeriods.has(periodKey);
+
+    if (!hasActiveClient && isPeriodActiveLocal) {
+      // Mettre à jour le Set local
+      this.activeDeliveryPeriods.delete(periodKey);
+      // Mettre à jour le service pour la communication entre composants
+      this.orderDeliveryService.removeActivePeriodKey(periodKey);
+    }
+
+    return hasActiveClient;
+  }
+
+  /**
+   * Compte le nombre de livraisons actives pour une période donnée
+   * @param date La date de la période
+   * @param type Le type de livraison ('express' ou 'time')
+   * @param time L'heure de la période (optionnel, uniquement pour le type 'time')
+   * @returns Le nombre de livraisons actives
+   */
+  getActiveDeliveryCount(date: string, type: string = 'time', time?: string): number {
+    const userIds = this.getUserIdsByDateType(true, date, type, time);
+    let count = 0;
+
+    userIds.forEach(userId => {
+      const uniqueClientId = this.getUniqueClientId(date, type, userId, time);
+      if (this.activeDeliveryClients.has(uniqueClientId)) {
+        count++;
+      }
+    });
+
+    return count;
+  }
+
+  async statutChange(orders: any[]) {
+    try {
+      // if (orders.status !== 'finished') {
+      //   this.isUpdating = true;
+
+      await this.updateOrdersRequet.updateOrders(orders);
+      // this.isUpdating = false;
+      // }
+    } catch (error) {
+      this.isUpdating = false;
+    }
   }
 }

@@ -199,6 +199,17 @@ export class CommandePage implements OnInit, OnDestroy {
     const result = countOrders(orders, Date);
     const processResult = countOrders(orders, Date, 'processing');
     const finishResult = countOrders(orders, Date, 'finished');
+    const delivering = countOrders(orders, Date, 'delivering');
+    const delivered = countOrders(orders, Date, 'delivered');
+
+    finishResult.count += delivering.count;
+    finishResult.count += delivered.count;
+
+    finishResult.totalAmount += delivering.totalAmount;
+    finishResult.totalAmount += delivered.totalAmount;
+
+    finishResult.filteredOrders.push(...delivering.filteredOrders);
+    finishResult.filteredOrders.push(...delivered.filteredOrders);
 
     // Mettre à jour le service de compteurs
     this.orderCountersService.updatePendingOrders(result);

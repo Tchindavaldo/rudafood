@@ -24,7 +24,7 @@ export class updateOrdersRequetService {
       this.toastService.presentToast('top', 'Commande mise à jour avec succès');
 
       this.store.dispatch(updateFastFoodOrder({ updatedOrder: response.data.data }));
-      console.log(response.data, 'update requet reposne', response);
+      // console.log(response.data, 'update requet reposne', response);
       return response.data.data;
     } catch (error) {
       this.toastService.presentToast('top', 'Erreur lors de la mise à jour de la commande');

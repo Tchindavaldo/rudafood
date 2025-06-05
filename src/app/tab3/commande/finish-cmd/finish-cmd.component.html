@@ -16,7 +16,7 @@
         <ion-card style="box-shadow: 0px 0px 5px hsl(0, 100%, 83%); border: 0px solid hsl(0, 100%, 50%)" class="section-card">
           <ion-card-header class="section-header">
             <div style="display: flex; justify-content: space-between; align-items: center">
-              <ion-card-title class="date-title">
+              <ion-card-title class="date-title" style="width: 100%; justify-content: space-between">
                 <ion-chip style="font-size: 0.75rem; flex-direction: column; justify-content: start; align-items: start" color="danger">
                   {{ date | date : 'EEEE d MMMM yyyy' | titlecase }}
                   <div style="display: block; margin-top: 6px">
@@ -27,20 +27,67 @@
             </div>
           </ion-card-header>
           <ion-card-content>
+            <div *ngIf="isDeliveryPeriodActive(date, 'express')" class="delivery-status-container">
+              <div class="delivery-status">
+                <ion-icon name="bicycle" class="delivery-icon-animated"></ion-icon>
+                <span>Livraison Express - {{ getActiveDeliveryCount(date, 'express') }} livraison(s) active(s)</span>
+              </div>
+            </div>
             <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'express')">
               <ion-item-group class="user-group">
                 <ion-item lines="none" class="user-header">
                   <ion-avatar slot="start">
                     <ion-icon name="person-circle" class="user-avatar"></ion-icon>
                   </ion-avatar>
-                  <ion-label>
-                    <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
+                  <ion-label class="label-header-userData">
+                    <h2>
+                      {{
+                        getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                          ? getUserData(userId).firstName + ' ' + getUserData(userId).lastName
+                          : getUserData(userId).email
+                      }}
+                    </h2>
                     <p>{{ getUserData(userId).phoneNumber }}</p>
                   </ion-label>
-                  <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('express', date, userId) }} cmd(s)</ion-label>
+                  <div style="display: flex; align-items: center">
+                    <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('express', date, userId) }} cmd(s)</ion-label>
+                    <ion-chip
+                      [outline]="true"
+                      *ngIf="!isDeliveryActive(userId, date, 'express')"
+                      (click)="startDelivery(userId, date, 'express')"
+                      color="danger"
+                      style="margin-left: 10px; font-size: 0.75rem; background: darkred; color: white"
+                    >
+                      <ion-icon name="bicycle-outline"></ion-icon>
+                      <ion-label style="font-size: 0.85rem; color: white">Livrer</ion-label>
+                    </ion-chip>
+                  </div>
                 </ion-item>
 
-                <ion-list lines="none" class="order-list">
+                <ion-list lines="none" class="order-list" style="position: relative">
+                  <div
+                    *ngIf="isDeliveryActive(userId, date, 'express')"
+                    class="delivery-status-container"
+                    style="position: absolute; top: 0; left: 0; width: 100%; z-index: 1000; margin: 0; height: 99%; flex-direction: column"
+                  >
+                    <div class="delivery-status">
+                      <ion-icon name="bicycle" class="delivery-icon-animated"></ion-icon>
+                      <span>Livraison en cours pour {{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</span>
+                    </div>
+
+                    <!-- Boutons d'action de livraison pour ce client spécifique -->
+                    <div class="delivery-actions">
+                      <ion-chip [outline]="true" color="danger" (click)="cancelDelivery(userId, date, 'express')">
+                        <ion-icon name="close-circle-outline"></ion-icon>
+                        <ion-label>Annuler</ion-label>
+                      </ion-chip>
+                      <ion-chip [outline]="true" color="success" (click)="completeDelivery(userId, date, 'express')">
+                        <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        <ion-label>Terminer</ion-label>
+                      </ion-chip>
+                    </div>
+                  </div>
+
                   <app-fast-food-order
                     [background]="getTotalOrdersForUser('express', date, userId) > 1 ? '#00000061' : 'none'"
                     [extras]="order.extra || []"
@@ -69,25 +116,46 @@
                     <ion-card-subtitle> Livraison par heure ({{ getTotalOrdersByTypeTime(date, times) }}) </ion-card-subtitle>
                   </div>
                 </ion-chip>
-
-                <ion-chip style="margin-bottom: 0px; font-size: 0.75rem; flex-direction: column; justify-content: start; align-items: start" color="danger">
-                  <div style="display: block; margin-top: 6px">
-                    <ion-card-subtitle> Debuter la livraison </ion-card-subtitle>
-                  </div>
-                </ion-chip>
               </ion-card-title>
             </div>
           </ion-card-header>
 
           <ion-card-content style="padding-top: 0">
+            <div *ngIf="isDeliveryPeriodActive(date, 'time')" class="delivery-status-container">
+              <div class="delivery-status">
+                <ion-icon name="bicycle" class="delivery-icon-animated"></ion-icon>
+                <span>Livraison en cours pour cette période (par heure) - {{ getActiveDeliveryCount(date, 'time') }} livraison(s) active(s)</span>
+              </div>
+            </div>
             <ng-container *ngFor="let time of times">
               <ng-container *ngIf="getUserIdsByDateType(true, date, 'time', time).length > 0">
                 <ion-item-group class="time-group">
                   <ion-item lines="none" class="time-header">
-                    <ion-chip style="font-size: 0.75rem; flex-direction: column; justify-content: start; align-items: start" color="light">
-                      <ion-label> {{ time }} </ion-label>
-                    </ion-chip>
+                    <div style="display: flex; width: 100%; justify-content: space-between; align-items: center">
+                      <ion-chip style="font-size: 0.75rem; flex-direction: column; justify-content: start; align-items: start" color="light">
+                        <ion-label> {{ time }} </ion-label>
+                      </ion-chip>
+
+                      <ion-chip
+                        (click)="startDeliveryForPeriod(date, 'time', time)"
+                        [ngClass]="{ 'delivery-active': isDeliveryPeriodActive(date, 'time', time) }"
+                        style="margin-bottom: 0px; font-size: 0.75rem; flex-direction: row; justify-content: center; align-items: center; cursor: pointer"
+                        color="danger"
+                      >
+                        <ion-icon color="danger" name="bicycle-outline" style="margin-right: 5px"></ion-icon>
+                        <div style="display: block">
+                          <ion-card-subtitle style="margin-bottom: 0px; font-size: 0.65rem; color: white">Livrer {{ time }}</ion-card-subtitle>
+                        </div>
+                      </ion-chip>
+                    </div>
                   </ion-item>
+
+                  <div *ngIf="isDeliveryPeriodActive(date, 'time', time)" class="delivery-status-container">
+                    <div class="delivery-status">
+                      <ion-icon name="bicycle" class="delivery-icon-animated"></ion-icon>
+                      <span>Livraison {{ time }} - {{ getActiveDeliveryCount(date, 'time', time) }} livraison(s) active(s)</span>
+                    </div>
+                  </div>
 
                   <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'time', time)">
                     <ion-item-group class="user-group">
@@ -95,14 +163,44 @@
                         <ion-avatar slot="start">
                           <ion-icon name="person-circle" class="user-avatar"></ion-icon>
                         </ion-avatar>
-                        <ion-label>
-                          <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
+                        <ion-label class="label-header-userData">
+                          <h2>
+                            {{
+                              getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                                ? getUserData(userId).firstName + ' ' + getUserData(userId).lastName
+                                : getUserData(userId).email
+                            }}
+                          </h2>
                           <p>{{ getUserData(userId).phoneNumber }}</p>
                         </ion-label>
                         <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('', date, userId, time) }} cmd(s)</ion-label>
+                        <!-- Le bouton individuel de livraison a été supprimé car la livraison est gérée au niveau de la période -->
                       </ion-item>
 
-                      <ion-list lines="none" class="order-list">
+                      <ion-list lines="none" class="order-list" style="position: relative">
+                        <div
+                          *ngIf="isDeliveryActive(userId, date, 'time', time)"
+                          class="delivery-status-container"
+                          style="position: absolute; top: 0; left: 0; width: 100%; z-index: 1000; margin: 0; height: 99%; flex-direction: column"
+                        >
+                          <div class="delivery-status">
+                            <ion-icon name="bicycle" class="delivery-icon-animated"></ion-icon>
+                            <span>Livraison en cours pour {{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</span>
+                          </div>
+
+                          <!-- Boutons d'action de livraison pour ce client spécifique -->
+                          <div class="delivery-actions">
+                            <ion-chip [outline]="true" color="danger" (click)="cancelDelivery(userId, date, 'time', time)">
+                              <ion-icon name="close-circle-outline"></ion-icon>
+                              <ion-label>Annuler</ion-label>
+                            </ion-chip>
+                            <ion-chip [outline]="true" color="success" (click)="completeDelivery(userId, date, 'time', time)">
+                              <ion-icon name="checkmark-circle-outline"></ion-icon>
+                              <ion-label>Terminer</ion-label>
+                            </ion-chip>
+                          </div>
+                        </div>
+
                         <app-fast-food-order
                           [background]="getTotalOrdersForUser('', date, userId, time) > 1 ? '#00000061' : 'none'"
                           [extras]="order.extra || []"
@@ -145,8 +243,14 @@
                   <ion-avatar slot="start">
                     <ion-icon name="person-circle" class="user-avatar"></ion-icon>
                   </ion-avatar>
-                  <ion-label>
-                    <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
+                  <ion-label class="label-header-userData">
+                    <h2>
+                      {{
+                        getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                          ? getUserData(userId).firstName + ' ' + getUserData(userId).lastName
+                          : getUserData(userId).email
+                      }}
+                    </h2>
                     <p>{{ getUserData(userId).phoneNumber }}</p>
                   </ion-label>
                   <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('', date, userId) }} cmd(s)</ion-label>

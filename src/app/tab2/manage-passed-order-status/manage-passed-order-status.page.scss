@@ -1,8 +1,8 @@
 ion-grid > :nth-child(5) ion-col {
   display: flex;
 }
-.ionContent {
-  transition-duration: 800ms;
+ion-content {
+  transition-duration: 00ms;
 }
 ion-col {
   padding-left: 0;
@@ -11,15 +11,15 @@ ion-chip {
   margin: 15px 0 5px 0;
 }
 
-ion-grid > :nth-child(3) ion-col > :nth-child(1) {
+ion-grid > :nth-child(2) ion-col > :nth-child(1) {
   font-size: 13px;
   /* font-weight: bold; */
   color: #0000009c;
 }
-ion-grid > :nth-child(3) ion-col > :nth-child(2) {
+ion-grid > :nth-child(2) ion-col > :nth-child(2) {
   padding-left: 8px;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: bold;
   color: darkred;
 }
 
@@ -46,6 +46,50 @@ ion-header {
   transition-duration: 500ms;
   transform: translateY(105%);
 }
+// Styles pour la colonne des jours
+ion-col.day-col {
+  app-component2 {
+    transition: all 0.2s ease;
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+// Styles pour le défilement horizontal
+ion-col[scrollx] {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+// Styles pour l'icône de calendrier
+.calendar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  background: #f5f5f5;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:active {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+
+  ion-icon {
+    color: var(--ion-color-primary);
+    font-size: 24px;
+  }
+}
+
 ion-button {
   --border-radius: 15px;
   width: 55px;
@@ -54,10 +98,10 @@ ion-button {
   position: fixed;
   bottom: 0;
   right: 15px;
+  z-index: 1000000000000000000;
 }
 
 ion-icon {
-  color: white;
   font-size: 32px;
   font-weight: 900;
 }
@@ -75,8 +119,15 @@ ion-col ion-icon {
 }
 .focusedChip {
   background-color: darkred;
-  transition-duration: 0s;
+  transition-duration: 1s;
   color: rgb(255, 255, 255);
+}
+.ionContent {
+  position: absolute;
+  top: 0;
+}
+.ionContent1 {
+  position: relative;
 }
 .RowNavGestion {
   position: relative;
@@ -91,68 +142,42 @@ ion-col ion-icon {
 }
 .chipGestionMenu {
   background: #cbffd1;
-  color: darkgreen;
-  background: rgb(0 233 124 / 15%);
-}
-.chipGestionCmd {
-  background: darkblue;
   color: white;
+  background: darkgreen;
 }
+
 .rowNavGestionChipNav {
   position: relative;
   height: 20px;
+  margin: 10px 0 20px 0;
 }
 .rowNavGestionMenu,
 .rowNavGestionCmd {
   justify-content: space-evenly;
   position: absolute;
   width: 100%;
-  transition-duration: 0s;
-}
-.rowNavGestionMenu {
-  transform: translateX(110%);
-}
-.rowNavGestionMenu ion-col ion-chip,
-.rowNavGestionCmd ion-col ion-chip {
-  margin: 0px 0 1px 0;
-  padding: 0;
-  height: max-content;
-  min-height: max-content;
-  background: none;
+  transition-duration: 1s;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
 }
 
 .rowNavGestionMenu ion-col ion-chip,
 .rowNavGestionCmd ion-col ion-chip {
-  margin: 0px 0 1px 0;
-  padding: 0;
+  margin: 0px 0 1px -1px;
+  // padding: 0;
   height: max-content;
   min-height: max-content;
-  background: none;
+  // background: none;
+  transition-duration: 700ms;
 }
-.rowNavGestionMenu,
-.rowNavGestionCmd {
-  justify-content: space-evenly;
-  position: absolute;
-  width: 100%;
-  transition-duration: 0s;
-}
-
-.rowNavGestionMenu ion-col ion-chip,
-.rowNavGestionCmd ion-col ion-chip {
-  margin: 0px 0 1px 0;
-  padding: 0;
-  height: max-content;
-  min-height: max-content;
-  background: none;
-}
-
-.rowNavGestionMenu ion-col ion-chip,
-.rowNavGestionCmd ion-col ion-chip {
-  margin: 0px 0 1px 0;
-  padding: 0;
-  height: max-content;
-  min-height: max-content;
-  background: none;
+.selected {
+  background-color: darkred !important;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px darkred;
+  color: white;
+  ion-icon {
+    color: white !important;
+  }
 }
 .ctnGeneral {
   position: relative;
@@ -166,14 +191,6 @@ ion-col ion-icon {
   --offset-bottom: 0px;
 }
 
-.ionContent1 {
-  position: relative;
-}
-
-.ionContent {
-  position: absolute;
-  top: 0;
-}
 ion-item {
   --min-height: auto;
   height: auto;
@@ -187,13 +204,13 @@ ion-item {
     font-size: 10px;
   }
 
-  ion-grid > :nth-child(3) {
-    margin: -10px 0 0 0;
+  ion-grid > :nth-child(2) {
+    margin: -5px 0 0 0;
   }
   ion-chip {
-    margin: -10px 0 5px 0;
+    margin: 5px 0 5px 0;
   }
-  ion-grid > :nth-child(3) ion-col > :nth-child(1) {
+  ion-grid > :nth-child(2) ion-col > :nth-child(1) {
     font-size: 10px;
   }
 
@@ -201,7 +218,7 @@ ion-item {
     margin-top: -10px;
   }
 }
-ion-grid :nth-child(3) ion-col > :nth-child(2) {
+ion-grid :nth-child(2) ion-col > :nth-child(2) {
   font-size: 10px;
   font-weight: 300;
 }

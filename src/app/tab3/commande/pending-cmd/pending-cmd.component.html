@@ -33,9 +33,21 @@
                   <ion-avatar slot="start">
                     <ion-icon name="person-circle" class="user-avatar"></ion-icon>
                   </ion-avatar>
-                  <ion-label>
-                    <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
-                    <p>{{ getUserData(userId).phoneNumber }}</p>
+                  <ion-label class="label-header-userData">
+                    <h2>
+                      {{
+                        getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                          ? getUserData(userId).firstName
+                          : getUserData(userId).email
+                      }}
+                    </h2>
+                    <p>
+                      {{
+                        getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                          ? getUserData(userId).lastName
+                          : ''
+                      }}
+                    </p>
                   </ion-label>
                   <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('express', date, userId) }} cmd(s)</ion-label>
                 </ion-item>
@@ -92,9 +104,21 @@
                         <ion-avatar slot="start">
                           <ion-icon name="person-circle" class="user-avatar"></ion-icon>
                         </ion-avatar>
-                        <ion-label>
-                          <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
-                          <p>{{ getUserData(userId).phoneNumber }}</p>
+                        <ion-label class="label-header-userData">
+                          <h2>
+                            {{
+                              getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                                ? getUserData(userId).firstName
+                                : getUserData(userId).email
+                            }}
+                          </h2>
+                          <p>
+                            {{
+                              getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                                ? getUserData(userId).lastName
+                                : ''
+                            }}
+                          </p>
                         </ion-label>
                         <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('', date, userId, time) }} cmd(s)</ion-label>
                       </ion-item>
@@ -102,7 +126,7 @@
                       <ion-list lines="none" class="order-list">
                         <app-fast-food-order
                           (openModal)="showDispoCard($event.order)"
-                          [background]="getTotalOrdersForUser('', date, userId) > 1 ? '#00000061' : '#00000061'"
+                          [background]="getTotalOrdersForUser('', date, userId) > 1 ? '#00000061' : 'none'"
                           [extras]="order.extra || []"
                           [extrasDrink]="order.drink || []"
                           *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'time', time); trackBy: trackByOrderId"
@@ -143,9 +167,21 @@
                   <ion-avatar slot="start">
                     <ion-icon name="person-circle" class="user-avatar"></ion-icon>
                   </ion-avatar>
-                  <ion-label>
-                    <h2>{{ getUserData(userId).firstName }} {{ getUserData(userId).lastName }}</h2>
-                    <p>{{ getUserData(userId).phoneNumber }}</p>
+                  <ion-label class="label-header-userData">
+                    <h2>
+                      {{
+                        getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                          ? getUserData(userId).firstName
+                          : getUserData(userId).email
+                      }}
+                    </h2>
+                    <p>
+                      {{
+                        getUserData(userId).firstName && getUserData(userId).firstName !== '' && getUserData(userId).lastName && getUserData(userId).lastName !== ''
+                          ? getUserData(userId).lastName
+                          : ''
+                      }}
+                    </p>
                   </ion-label>
                   <ion-label slot="end" color="danger">{{ getTotalOrdersForUser('', date, userId) }} cmd(s)</ion-label>
                 </ion-item>
@@ -153,7 +189,7 @@
                 <ion-list lines="none" class="order-list">
                   <app-fast-food-order
                     (openModal)="showDispoCard($event.order)"
-                    [background]="getTotalOrdersForUser('', date, userId) > 1 ? '#00000061' : '#00000061'"
+                    [background]="getTotalOrdersForUser('', date, userId) > 1 ? '#00000061' : 'none'"
                     [extras]="order.extra || []"
                     [extrasDrink]="order.drink || []"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, false); trackBy: trackByOrderId"

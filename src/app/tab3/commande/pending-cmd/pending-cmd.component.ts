@@ -144,17 +144,22 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
   getUserData(userId: string): any {
     const userOrder = this.pendingOrders.find(order => order.userId === userId);
 
-    // Valeurs par défaut si l'objet n'existe pas
-    const defaultUserData = { firstName: 'Client', lastName: '', email: '', phoneNumber: 696080087, photoUrl: '' };
+    const defaultUserData = {
+      firstName: 'Client ',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      photoUrl: '',
+    };
 
     if (!userOrder) return defaultUserData;
 
     return {
-      firstName: userOrder.userFirstName || userOrder.userName || defaultUserData.firstName,
-      lastName: userOrder.userLastName || '',
-      email: userOrder.userEmail || '',
-      phoneNumber: userOrder.userPhone || userOrder.userPhoneNumber || 696080087,
-      photoUrl: userOrder.userPhotoUrl || '',
+      firstName: userOrder?.userData?.firstName || defaultUserData.firstName,
+      lastName: userOrder?.userData?.lastName || defaultUserData.lastName,
+      email: userOrder?.userData?.email || defaultUserData.email,
+      phoneNumber: userOrder?.userData?.phoneNumber || defaultUserData.phoneNumber,
+      photoUrl: userOrder?.userData?.photoUrl || defaultUserData.photoUrl,
     };
   }
 

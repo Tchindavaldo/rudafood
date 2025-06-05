@@ -135,18 +135,18 @@ export class ProccessCmdComponent implements OnInit, OnDestroy {
       firstName: 'Client',
       lastName: '',
       email: '',
-      phoneNumber: 696080087,
+      phoneNumber: '',
       photoUrl: '',
     };
 
     if (!userOrder) return defaultUserData;
 
     return {
-      firstName: userOrder.userFirstName || userOrder.userName || defaultUserData.firstName,
-      lastName: userOrder.userLastName || '',
-      email: userOrder.userEmail || '',
-      phoneNumber: userOrder.userPhone || userOrder.userPhoneNumber || 696080087,
-      photoUrl: userOrder.userPhotoUrl || '',
+      firstName: userOrder?.userData?.firstName || defaultUserData.firstName,
+      lastName: userOrder?.userData?.lastName || defaultUserData.lastName,
+      email: userOrder?.userData?.email || defaultUserData.email,
+      phoneNumber: userOrder?.userData?.phoneNumber || defaultUserData.phoneNumber,
+      photoUrl: userOrder?.userData?.photoUrl || defaultUserData.photoUrl,
     };
   }
 
