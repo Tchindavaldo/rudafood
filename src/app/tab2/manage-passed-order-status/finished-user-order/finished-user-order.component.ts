@@ -123,6 +123,32 @@ export class FinishedUserOrderComponent implements OnInit, OnDestroy {
         }
       })
     );
+
+    // S'abonner aux changements des identifiants de client et périodes supprimés via removedDeliveryOrders$
+    this.subscription.add(
+      this.orderDeliveryService.removedDeliveryOrders$.subscribe(removedDeliveryOrders => {
+        console.log('FinishedUserOrderComponent - removedDeliveryOrders mis à jour:', removedDeliveryOrders);
+        // Supprimer les périodes supprimées depuis le service
+        if (removedDeliveryOrders.periodeKey && removedDeliveryOrders.periodeKey.length > 0) {
+          removedDeliveryOrders.periodeKey.forEach((periodKey: string) => {
+            this.activeDeliveryPeriods.delete(periodKey);
+            console.log('Période supprimée:', periodKey);
+            this.orderDeliveryService.removeFromRemovedOrdersPeriod(periodKey);
+          });
+        }
+
+        // Supprimer les identifiants clients supprimés depuis le service
+        if (removedDeliveryOrders.uniqueClientId && removedDeliveryOrders.uniqueClientId.length > 0) {
+          removedDeliveryOrders.uniqueClientId.forEach((clientId: string) => {
+            this.activeDeliveryClients.delete(clientId);
+            console.log('Client supprimé:', clientId);
+            this.orderDeliveryService.removeFromRemovedOrdersClient(clientId);
+          });
+        }
+        // Appeler detectChanges pour s'assurer que l'UI est mise à jour
+        // this.cdr.detectChanges();
+      })
+    );
   }
 
   ngOnDestroy() {

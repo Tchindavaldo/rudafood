@@ -202,19 +202,17 @@ export class CommandePage implements OnInit, OnDestroy {
     const delivering = countOrders(orders, Date, 'delivering');
     const delivered = countOrders(orders, Date, 'delivered');
 
+    // Séparer les commandes livrées des commandes finies
+    // Les commandes "finished" incluent seulement "finished" et "delivering"
     finishResult.count += delivering.count;
-    finishResult.count += delivered.count;
-
     finishResult.totalAmount += delivering.totalAmount;
-    finishResult.totalAmount += delivered.totalAmount;
-
     finishResult.filteredOrders.push(...delivering.filteredOrders);
-    finishResult.filteredOrders.push(...delivered.filteredOrders);
 
     // Mettre à jour le service de compteurs
     this.orderCountersService.updatePendingOrders(result);
     this.orderCountersService.updateProcessingOrders(processResult);
     this.orderCountersService.updateFinishedOrders(finishResult);
+    this.orderCountersService.updateDeliveredOrders(delivered);
   };
   async fetchFastFoodOrders() {
     try {

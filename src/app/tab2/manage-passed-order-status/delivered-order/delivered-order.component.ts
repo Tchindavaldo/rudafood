@@ -1,14 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { skip } from 'rxjs/operators';
 import { getScreenHeight } from 'src/utils/getScreenHeight';
 import { filterByArg } from 'src/utils/filterByArg';
-import { countOrders } from 'src/utils/countOrders';
 import { OrderDataService } from 'src/services/orders/data/order-data.service';
-import { OrderCountersService } from 'src/services/orders/counters/order-counters.service';
-import { OrderDeliveryService, OrderDeliveryKey } from 'src/services/orders/delivery/order-delivery.service';
 import { AppState } from 'src/store/indx';
 import {
   OrderGroupByDate,
@@ -21,18 +16,19 @@ import {
   getTotalOrdersByTypeExpress,
   getTotalOrdersByStatus,
 } from 'src/utils/order-utils';
-import { updateOrdersRequetService } from 'src/services/FastFood/requet/update-orders-requet.service';
+import { UserOrderCountersService } from 'src/services/orders/counters/User-order-counters.service';
+import { OrderDeliveryService } from 'src/services/orders/delivery/order-delivery.service';
 
 @Component({
-  selector: 'app-finish-cmd',
-  templateUrl: './finish-cmd.component.html',
-  styleUrls: ['./finish-cmd.component.scss'],
+  selector: 'app-delivered-order',
+  templateUrl: './delivered-order.component.html',
+  styleUrls: ['./delivered-order.component.scss'],
 })
-export class FinishCmdComponent implements OnInit, OnDestroy {
-  finishOrder!: any[];
+export class DeliveredOrderComponent implements OnInit, OnDestroy {
+  deliveredOrder!: any[];
   fastFoodOrder!: Observable<any[]>;
   screenHeight: number = getScreenHeight();
-  finishedOrdersCount: number = 0;
+  deliveredOrdersCount: number = 0;
   totalAmount: number = 0;
 
   isUpdating: boolean = false;
@@ -48,14 +44,10 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
   // Abonnement
   private subscription: Subscription = new Subscription();
 
-  // Variable pour suivre si l'initialisation est terminée
-  private isInitialized = false;
-
   constructor(
-    private updateOrdersRequet: updateOrdersRequetService,
     public ordersService: OrderDataService,
     private store: Store<AppState>,
-    private orderCountersService: OrderCountersService,
+    private orderCountersService: UserOrderCountersService,
     private orderDeliveryService: OrderDeliveryService
   ) {}
 
@@ -63,21 +55,21 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
     // S'abonner uniquement aux changements du compteur pour mettre à jour l'UI
     // Le composant parent (commande.page.ts) gère la mise à jour des données
     this.subscription.add(
-      this.orderCountersService.finishedOrders$.subscribe(result => {
+      this.orderCountersService.deliveredOrders$.subscribe(result => {
         result.filteredOrders.forEach(order => {
-          if (order.delivery.type === 'time') console.log(' finiiissshhhee   ddde  dotot', order);
+          if (order.delivery?.type === 'time') console.log(' delivered order', order);
 
           if (order.periodKey && !this.activeDeliveryPeriods.has(order.periodKey)) {
             this.activeDeliveryPeriods.add(order.periodKey);
-            console.log(' finiiissshhhee   ddde  dotot', order.periodKey);
+            console.log(' delivered order periodKey', order.periodKey);
           }
 
           if (order.clientId && !this.activeDeliveryClients.has(order.clientId)) {
             this.activeDeliveryClients.add(order.clientId);
-            console.log(' finiiissshhhee   ddde  dotot', order.clientId);
+            console.log(' delivered order clientId', order.clientId);
           }
         });
-        this.finishOrder = result.filteredOrders;
+        this.deliveredOrder = result.filteredOrders;
       })
     );
 
@@ -90,7 +82,7 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
             this.activeDeliveryPeriods.add(period);
           }
         });
-        console.log('FinishedUserOrderComponent - Périodes actives mises à jour:', Array.from(this.activeDeliveryPeriods));
+        console.log('DeliveredOrderComponent - Périodes actives mises à jour:', Array.from(this.activeDeliveryPeriods));
       })
     );
 
@@ -103,14 +95,14 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
             this.activeDeliveryClients.add(clientId);
           }
         });
-        console.log('FinishedUserOrderComponent - Clients actifs mis à jour:', Array.from(this.activeDeliveryClients));
+        console.log('DeliveredOrderComponent - Clients actifs mis à jour:', Array.from(this.activeDeliveryClients));
       })
     );
 
     // S'abonner aux changements des identifiants de client et périodes via deliveryOrders$
     this.subscription.add(
       this.orderDeliveryService.deliveryOrders$.subscribe(deliveryOrders => {
-        console.log('FinishedUserOrderComponent - deliveryOrders mis à jour:', deliveryOrders);
+        console.log('DeliveredOrderComponent - deliveryOrders mis à jour:', deliveryOrders);
         // Mettre à jour les périodes actives depuis le service
         if (deliveryOrders.periodeKey && deliveryOrders.periodeKey.length > 0) {
           deliveryOrders.periodeKey.forEach(periodKey => {
@@ -129,32 +121,6 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
             }
           });
         }
-      })
-    );
-
-    // S'abonner aux changements des identifiants de client et périodes supprimés via removedDeliveryOrders$
-    this.subscription.add(
-      this.orderDeliveryService.removedDeliveryOrders$.subscribe(removedDeliveryOrders => {
-        console.log('FinishedUserOrderComponent - removedDeliveryOrders mis à jour:', removedDeliveryOrders);
-        // Supprimer les périodes supprimées depuis le service
-        if (removedDeliveryOrders.periodeKey && removedDeliveryOrders.periodeKey.length > 0) {
-          removedDeliveryOrders.periodeKey.forEach((periodKey: string) => {
-            this.activeDeliveryPeriods.delete(periodKey);
-            console.log('Période supprimée:', periodKey);
-            this.orderDeliveryService.removeFromRemovedOrdersPeriod(periodKey);
-          });
-        }
-
-        // Supprimer les identifiants clients supprimés depuis le service
-        if (removedDeliveryOrders.uniqueClientId && removedDeliveryOrders.uniqueClientId.length > 0) {
-          removedDeliveryOrders.uniqueClientId.forEach((clientId: string) => {
-            this.activeDeliveryClients.delete(clientId);
-            console.log('Client supprimé:', clientId);
-            this.orderDeliveryService.removeFromRemovedOrdersClient(clientId);
-          });
-        }
-        // Appeler detectChanges pour s'assurer que l'UI est mise à jour
-        // this.cdr.detectChanges();
       })
     );
   }
@@ -177,15 +143,15 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
   }
 
   getUniqueDates(): string[] {
-    return getUniqueDates(this.finishOrder);
+    return getUniqueDates(this.deliveredOrder);
   }
 
   getOrdersByDate(date: string): any[] {
-    return getOrdersByDate(this.finishOrder, date);
+    return getOrdersByDate(this.deliveredOrder, date);
   }
 
   getUserIdsByDateType(status: boolean, date: string, type?: string, time?: string): string[] {
-    return getUserIdsByDateType(this.finishOrder, status, date, type, time);
+    return getUserIdsByDateType(this.deliveredOrder, status, date, type, time);
   }
 
   getOrdersByDateAndUser(date: string, userId: string): any[] {
@@ -193,7 +159,7 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
   }
 
   getOrderByDeliveryType(date: string, status: boolean, type?: string): any[] {
-    return getOrdersByDate(this.finishOrder, date).filter(order => {
+    return getOrdersByDate(this.deliveredOrder, date).filter(order => {
       if (order.delivery?.status !== status) {
         return false;
       }
@@ -202,19 +168,19 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
   }
 
   getOrdersByDateAndUserDelivery(date: string, userId: string, status: boolean, type?: string, time?: string): any[] {
-    return getOrdersByDateAndUserDelivery(this.finishOrder, date, userId, status, type, time);
+    return getOrdersByDateAndUserDelivery(this.deliveredOrder, date, userId, status, type, time);
   }
 
   getTotalOrdersByTypeTime(date: string, times: string[]): number {
-    return getTotalOrdersByTypeTime(this.finishOrder, date, times);
+    return getTotalOrdersByTypeTime(this.deliveredOrder, date, times);
   }
 
   getTotalOrdersByTypeExpress(date: string): number {
-    return getTotalOrdersByTypeExpress(this.finishOrder, date);
+    return getTotalOrdersByTypeExpress(this.deliveredOrder, date);
   }
 
   getTotalOrdersByStatus(date: string, status: boolean): number {
-    return getTotalOrdersByStatus(this.finishOrder, date, status);
+    return getTotalOrdersByStatus(this.deliveredOrder, date, status);
   }
 
   getTotalOrdersForUser(type: string, date: string, userId: string, time: string | null = null): number {
@@ -236,7 +202,7 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
 
   // Obtenir les données complètes de l'utilisateur
   getUserData(userId: string): any {
-    const userOrder = this.finishOrder.find(order => order.userId === userId && order.userData);
+    const userOrder = this.deliveredOrder.find(order => order.userId === userId && order.userData);
 
     const defaultUserData = {
       firstName: 'Client ',
@@ -275,30 +241,6 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Démarre la livraison pour un client spécifique
-   * @param clientId L'identifiant du client
-   * @param date La date de la période
-   * @param type Le type de livraison ('express' ou 'time')
-   * @param time L'heure de la période (optionnel, uniquement pour le type 'time')
-   */
-  async startDelivery(clientId: string, date: string, type: string = 'time', time?: string) {
-    let userSorders: any[] = [];
-    let orders: any[] = [];
-
-    const uniqueClientId = this.getUniqueClientId(date, type, clientId, time);
-    const periodKey = type === 'time' && time ? `${date}_${type}_${time}` : `${date}_${type}`;
-
-    userSorders.push(...this.getOrdersByDateAndUserDelivery(date, clientId, true, 'express'));
-    userSorders.forEach(order => {
-      orders.push({ status: 'finished', id: order.id, fastFoodId: order.fastFoodId, clientId: this.getUniqueClientId(date, type, order.userId, time), periodKey });
-    });
-
-    await this.statutChange(orders);
-    this.activeDeliveryPeriods.add(periodKey);
-    this.activeDeliveryClients.add(uniqueClientId);
-  }
-
-  /**
    * Vérifie si la livraison est active pour un client spécifique
    * @param clientId L'identifiant du client
    * @param date La date de la période (optionnel)
@@ -324,120 +266,6 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Annule la livraison pour un client spécifique
-   * @param clientId L'identifiant du client
-   * @param date La date de la période (optionnel)
-   * @param type Le type de livraison (optionnel)
-   * @param time L'heure de la période (optionnel)
-   */
-  async cancelDelivery(clientId: string, date?: string, type?: string, time?: string) {
-    let userSorders: any[] = [];
-    let orders: any[] = [];
-
-    if (date && type) {
-      // Pour les livraisons express
-      if (type === 'express') {
-        userSorders.push(...this.getOrdersByDateAndUserDelivery(date, clientId, true, 'express'));
-      }
-      // Pour les livraisons time
-      else if (type === 'time' && time) {
-        userSorders.push(...this.getOrdersByDateAndUserDelivery(date, clientId, true, 'time', time));
-      }
-
-      // Préparer les commandes à mettre à jour
-      userSorders.forEach(order => {
-        orders.push({ status: 'processing', id: order.id, fastFoodId: order.fastFoodId });
-      });
-
-      // Mettre à jour le statut
-      if (orders.length > 0) {
-        await this.statutChange(orders);
-      }
-
-      // Supprimer l'ID unique
-      const uniqueId = this.getUniqueClientId(date, type, clientId, time);
-      this.activeDeliveryClients.delete(uniqueId);
-      this.orderDeliveryService.removeActiveClientId(uniqueId);
-    }
-  }
-
-  /**
-   * Termine la livraison pour un client spécifique
-   * @param clientId L'identifiant du client
-   * @param date La date de la période (optionnel)
-   * @param type Le type de livraison (optionnel)
-   * @param time L'heure de la période (optionnel)
-   */
-
-  async completeDeliveryExpress(clientId: string, date: string, type: string, time?: string) {
-    let userSorders: any[] = [];
-    let orders: any[] = [];
-
-    userSorders.push(...this.getOrdersByDateAndUserDelivery(date, clientId, true, 'express'));
-    userSorders.forEach(order => {
-      orders.push({ status: 'delivering', id: order.id, fastFoodId: order.fastFoodId });
-    });
-
-    await this.statutChange(orders);
-    this.cancelDelivery(clientId, date, type, time);
-
-    // Ici, on pourrait ajouter une logique supplémentaire pour marquer les commandes comme livrées
-  }
-
-  async completeDeliveryTime(clientId: string, date: string, type?: string, time?: string) {
-    let userSorders: any[] = [];
-    let orders: any[] = [];
-
-    userSorders.push(...this.getOrdersByDateAndUserDelivery(date, clientId, true, 'time', time));
-    userSorders.forEach(order => {
-      orders.push({ status: 'delivering', id: order.id, fastFoodId: order.fastFoodId });
-    });
-
-    await this.statutChange(orders);
-    this.cancelDelivery(clientId, date, type, time);
-
-    // Ici, on pourrait ajouter une logique supplémentaire pour marquer les commandes comme livrées
-  }
-
-  /**
-   * Démarre la livraison pour tous les clients d'une période et d'un type spécifiques
-   * @param date La date de la période
-   * @param type Le type de livraison ('express' ou 'time')
-   * @param time L'heure de la période (optionnel, uniquement pour le type 'time')
-   */
-  async startDeliveryForPeriod(date: string, type: string = 'time', time?: string) {
-    // Marquer la période comme active avec son type
-    const periodKey = type === 'time' && time ? `${date}_${type}_${time}` : `${date}_${type}`;
-
-    // Mettre à jour le Set local
-    this.activeDeliveryPeriods.add(periodKey);
-
-    // Mettre à jour le service pour la communication entre composants
-    this.orderDeliveryService.addActivePeriodKey(periodKey);
-
-    // Activer tous les clients de cette période et de ce type
-    const userIds = this.getUserIdsByDateType(true, date, type, time);
-
-    let userSorders: any[] = [];
-    let orders: any[] = [];
-    userIds.forEach(userId => {
-      userSorders.push(...this.getOrdersByDateAndUserDelivery(date, userId, true, 'time', time));
-    });
-    userSorders.forEach(order => {
-      orders.push({ status: 'finished', id: order.id, fastFoodId: order.fastFoodId, clientId: this.getUniqueClientId(date, type, order.userId, time), periodKey });
-    });
-
-    // console.log('orders to update for delivery status', orders);
-    await this.statutChange(orders);
-
-    userIds.forEach(userId => {
-      const uniqueClientId = this.getUniqueClientId(date, type, userId, time);
-      // Mettre à jour le Set local
-      this.activeDeliveryClients.add(uniqueClientId);
-    });
-  }
-
-  /**
    * Vérifie si la livraison est active pour une période et un type spécifiques
    * @param date La date de la période
    * @param type Le type de livraison ('express' ou 'time')
@@ -455,14 +283,8 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
     // Si aucun client n'est actif, nettoyer la période
     const periodKey = type === 'time' && time ? `${date}_${type}_${time}` : `${date}_${type}`;
 
-    // Vérifier si la période est active dans le Set local
-    const isPeriodActiveLocal = this.activeDeliveryPeriods.has(periodKey);
-
-    if (!hasActiveClient && isPeriodActiveLocal) {
-      // Mettre à jour le Set local
+    if (!hasActiveClient && this.activeDeliveryPeriods.has(periodKey)) {
       this.activeDeliveryPeriods.delete(periodKey);
-      // Mettre à jour le service pour la communication entre composants
-      this.orderDeliveryService.removeActivePeriodKey(periodKey);
     }
 
     return hasActiveClient;
@@ -487,18 +309,5 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
     });
 
     return count;
-  }
-
-  async statutChange(orders: any[]) {
-    try {
-      // if (orders.status !== 'finished') {
-      //   this.isUpdating = true;
-
-      await this.updateOrdersRequet.updateOrders(orders);
-      // this.isUpdating = false;
-      // }
-    } catch (error) {
-      this.isUpdating = false;
-    }
   }
 }

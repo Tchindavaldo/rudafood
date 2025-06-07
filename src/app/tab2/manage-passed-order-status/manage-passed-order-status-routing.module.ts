@@ -5,6 +5,7 @@ import { ManagePassedOrderStatusPage } from './manage-passed-order-status.page';
 import { PendingUserOrderComponent } from './pending-user-order/pending-user-order.component';
 import { ProcessingUserOrderComponent } from './processing-user-order/processing-user-order.component';
 import { FinishedUserOrderComponent } from './finished-user-order/finished-user-order.component';
+import { DeliveredOrderComponent } from './delivered-order/delivered-order.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,12 @@ const routes: Routes = [
         path: 'user-finished-order',
         component: FinishedUserOrderComponent,
         data: { animation: 'user-finished-order' },
+      },
+
+      {
+        path: 'user-delivered-order',
+        component: DeliveredOrderComponent,
+        data: { animation: 'user-delivered-order' },
       },
     ],
   },

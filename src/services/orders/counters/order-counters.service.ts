@@ -10,11 +10,13 @@ export class OrderCountersService {
   private pendingOrdersSubject = new BehaviorSubject<OrderCountResult>({ count: 0, totalAmount: 0, filteredOrders: [] });
   private processingOrdersSubject = new BehaviorSubject<OrderCountResult>({ count: 0, totalAmount: 0, filteredOrders: [] });
   private finishedOrdersSubject = new BehaviorSubject<OrderCountResult>({ count: 0, totalAmount: 0, filteredOrders: [] });
+  private deliveredOrdersSubject = new BehaviorSubject<OrderCountResult>({ count: 0, totalAmount: 0, filteredOrders: [] });
 
   // Observables publics pour que les composants puissent s'y abonner
   public pendingOrders$: Observable<OrderCountResult> = this.pendingOrdersSubject.asObservable();
   public processingOrders$: Observable<OrderCountResult> = this.processingOrdersSubject.asObservable();
   public finishedOrders$: Observable<OrderCountResult> = this.finishedOrdersSubject.asObservable();
+  public deliveredOrders$: Observable<OrderCountResult> = this.deliveredOrdersSubject.asObservable();
 
   constructor() {}
 
@@ -31,6 +33,10 @@ export class OrderCountersService {
     this.finishedOrdersSubject.next(result);
   }
 
+  updateDeliveredOrders(result: OrderCountResult): void {
+    this.deliveredOrdersSubject.next(result);
+  }
+
   // Méthodes pour récupérer les valeurs actuelles
   getPendingOrders(): OrderCountResult {
     return this.pendingOrdersSubject.value;
@@ -42,5 +48,9 @@ export class OrderCountersService {
 
   getFinishedOrders(): OrderCountResult {
     return this.finishedOrdersSubject.value;
+  }
+
+  getDeliveredOrders(): OrderCountResult {
+    return this.deliveredOrdersSubject.value;
   }
 }

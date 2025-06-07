@@ -5,6 +5,7 @@ import { LoaderComponent } from '../components/loader/loader.component';
 import { PendingUserOrderComponent } from '../tab2/manage-passed-order-status/pending-user-order/pending-user-order.component';
 import { ProcessingUserOrderComponent } from '../tab2/manage-passed-order-status/processing-user-order/processing-user-order.component';
 import { FinishedUserOrderComponent } from '../tab2/manage-passed-order-status/finished-user-order/finished-user-order.component';
+import { DeliveredOrderComponent } from '../tab2/manage-passed-order-status/delivered-order/delivered-order.component';
 import { UserOrderItemComponent } from '../tab2/manage-passed-order-status/user-order-item/user-order-item.component';
 
 import { FastFoodDesign1Component } from '../tab1/fastFood/fast-food-design1/fast-food-design1.component';
@@ -48,6 +49,7 @@ import { ExtrasPanelComponent } from './components/extras-panel/extras-panel.com
     PendingUserOrderComponent,
     ProcessingUserOrderComponent,
     FinishedUserOrderComponent,
+    DeliveredOrderComponent,
     UserOrderItemComponent,
     PannierAchatOrComponent,
 

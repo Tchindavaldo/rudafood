@@ -22,6 +22,7 @@ import { CommandePageModule } from './commande/commande.module';
     PorteFeuilHistoriquePageModule,
     HistoriquePageModule,
     CommandePageModule,
+    SharedModule,
   ],
   declarations: [Tab3Page],
 })

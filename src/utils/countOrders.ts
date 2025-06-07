@@ -27,7 +27,7 @@ export function countOrders(orders: any[], dateParam?: Date, status = 'pending')
     const deliveryDate = new Date(order?.delivery?.date);
     if (order?.delivery?.date === undefined) {
       undefinedCount++;
-      console.log(`Commande sans date de livraison (total: ${undefinedCount}) - ID:`, order.id, order);
+      // console.log(`Commande sans date de livraison (total: ${undefinedCount}) - ID:`, order.id, order);
       return false;
     }
     deliveryDate.setHours(0, 0, 0, 0);

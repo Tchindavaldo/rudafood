@@ -31,3 +31,7 @@
 <ion-content>
   <router-outlet />
 </ion-content>
+
+<app-loader [showMessage]="true" [load]="(showLoader$ | async) || false" position="fixed" backGroundCtn="rgb(0 0 0 / 88%)"></app-loader>
+
+<!-- <app-loader [showMessage]="true" [load]="true" position="fixed" backGroundCtn="rgb(0 0 0 / 88%)"></app-loader> -->

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Users } from '../data/Users';
 import { NavigationEnd, Router } from '@angular/router';
 import { ToastButton, ToastController } from '@ionic/angular';
+import { updateOrdersRequetService } from 'src/services/FastFood/requet/update-orders-requet.service';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tab3',
@@ -16,7 +19,14 @@ export class Tab3Page {
 
   currentUrl: string = '';
   selectedChip: string = 'commande';
-  constructor(private router: Router) {
+
+  loading$ = this.updateOrdersRequet.loading$;
+
+  showLoader$ = combineLatest([this.updateOrdersRequet.loading$, this.router.events.pipe(map(() => this.router.url.includes('/commande/finish')))]).pipe(
+    map(([loading, isFinishCmd]) => loading && isFinishCmd)
+  );
+
+  constructor(private router: Router, private updateOrdersRequet: updateOrdersRequetService) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.currentUrl = event.urlAfterRedirects;

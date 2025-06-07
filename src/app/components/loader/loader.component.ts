@@ -13,6 +13,8 @@ export class LoaderComponent implements OnInit {
   @Input() strokeWidth = 5;
   @Input() fillColor = 'rgb(255, 0, 0)';
   @Input() stokeColor = 'none';
+  @Input() position: string = 'absolute';
+  @Input() showMessage = false;
 
   constructor() {}
 

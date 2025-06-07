@@ -36,6 +36,7 @@ export class ManagePassedOrderStatusPage implements OnInit, OnDestroy {
   totalPendingOrder: number = 0;
   totalProcessingOrder: number = 0;
   totalFinishedOrder: number = 0;
+  totalDeliveredOrder: number = 0;
   totalAmount: number = 0;
 
   // Abonnements
@@ -71,11 +72,14 @@ export class ManagePassedOrderStatusPage implements OnInit, OnDestroy {
       obs$ = this.orderCountersService.processingOrders$;
     } else if (chipId === 'finish') {
       obs$ = this.orderCountersService.finishedOrders$;
+    } else if (chipId === 'delivered') {
+      obs$ = this.orderCountersService.deliveredOrders$;
     }
 
     const pendingObs = this.orderCountersService.pendingOrders$;
     const processingObs = this.orderCountersService.processingOrders$;
     const finishedObs = this.orderCountersService.finishedOrders$;
+    const deliveredObs = this.orderCountersService.deliveredOrders$;
 
     pendingObs.subscribe(result => {
       this.totalPendingOrder = result.count;
@@ -85,6 +89,9 @@ export class ManagePassedOrderStatusPage implements OnInit, OnDestroy {
     });
     finishedObs.subscribe(result => {
       this.totalFinishedOrder = result.count;
+    });
+    deliveredObs.subscribe(result => {
+      this.totalDeliveredOrder = result.count;
     });
 
     // Vérifier que obs$ est défini avant de s'abonner
@@ -99,6 +106,8 @@ export class ManagePassedOrderStatusPage implements OnInit, OnDestroy {
             this.totalProcessingOrder = result.count;
           } else if (chipId === 'finish') {
             this.totalFinishedOrder = result.count;
+          } else if (chipId === 'delivered') {
+            this.totalDeliveredOrder = result.count;
           }
         },
         error: err => console.error('Erreur lors de la souscription:', err),
@@ -119,19 +128,17 @@ export class ManagePassedOrderStatusPage implements OnInit, OnDestroy {
     const delivering = countOrders(orders, Date, 'delivering');
     const delivered = countOrders(orders, Date, 'delivered');
 
+    // Séparer les commandes livrées des commandes finies
+    // Les commandes "finished" incluent seulement "finished" et "delivering"
     finishResult.count += delivering.count;
-    finishResult.count += delivered.count;
-
     finishResult.totalAmount += delivering.totalAmount;
-    finishResult.totalAmount += delivered.totalAmount;
-
     finishResult.filteredOrders.push(...delivering.filteredOrders);
-    finishResult.filteredOrders.push(...delivered.filteredOrders);
 
     // Mettre à jour le service de compteurs
     this.orderCountersService.updatePendingOrders(result);
     this.orderCountersService.updateProcessingOrders(processResult);
     this.orderCountersService.updateFinishedOrders(finishResult);
+    this.orderCountersService.updateDeliveredOrders(delivered);
   };
 
   async fetchFastFoodOrders() {

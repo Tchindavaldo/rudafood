@@ -19,11 +19,11 @@ export class UserOrderSocketService {
 
   public initializeOrderSocket(socket: Socket) {
     socket.on('newUserOrder', (data: any) => {
-      console.log(' Nouvelle commande reçue :', data);
+      console.log('📥 Nouvelle commande reçue :', data);
       this.store.dispatch(addUserOrderReducer({ order: data.data }));
     });
     socket.on('newUserOrders', (data: any) => {
-      console.log(' Nouvelle commande reçue :', data);
+      console.log('📦 Nouvelles commandes reçues :', data);
       if (this.orderData.getUserOrders() !== null)
         data.data.forEach((order: any) => {
           this.store.dispatch(addUserOrderReducer({ order }));
@@ -31,20 +31,34 @@ export class UserOrderSocketService {
     });
 
     socket.on('userOrderUpdated', (data: any) => {
-      console.log('  Commande mise à jour  :', data);
+      console.log('🔄 Commande mise à jour :', data);
       this.store.dispatch(updateUserOrderReducer({ updatedOrder: data.data }));
     });
 
     socket.on('newPeriodKeyDelivering', (data: any) => {
-      console.log(' Nouvelle periodKey livraison en cours :', data.periodKey);
+      console.log('🚀 Nouvelle période de livraison en cours :', data.periodKey);
       if (!this.orderDeliveryService.isPeriodActive(data.periodKey)) {
         this.orderDeliveryService.addActivePeriodKey(data.periodKey);
       }
     });
     socket.on('newClientIdDelivering', (data: any) => {
-      console.log(' Nouvelle clientId de livraison en cours :', data.clientId);
+      console.log('🚴 Nouveau client en livraison :', data.clientId);
       if (!this.orderDeliveryService.isClientActive(data.clientId)) {
         this.orderDeliveryService.addActiveClientId(data.clientId);
+      }
+    });
+
+    socket.on('removePeriodKeyDelivering', (data: any) => {
+      console.log('✅ [Socket] Période à supprimer:', data.periodKey);
+      if (this.orderDeliveryService.isPeriodActive(data.periodKey)) {
+        this.orderDeliveryService.removeActivePeriodKey(data.periodKey);
+      }
+    });
+
+    socket.on('removeClientIdDelivering', (data: any) => {
+      console.log('🏁 [Socket] Client à supprimer:', data.clientId);
+      if (this.orderDeliveryService.isClientActive(data.clientId)) {
+        this.orderDeliveryService.removeActiveClientId(data.clientId);
       }
     });
   }

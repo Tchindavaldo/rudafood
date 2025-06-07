@@ -63,6 +63,13 @@
               <ion-label style="font-size: 12px; font-weight: 900; margin-left: 5px">({{totalFinishedOrder.toString()}})</ion-label>
             </ion-chip>
           </ion-col>
+          <ion-col size="auto">
+            <ion-chip color="success" [class.selected]="isSelected('delivered')" routerLink="user-delivered-order" (click)="selectChip('delivered')">
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
+              <ion-label>Cmds Livrées</ion-label>
+              <ion-label style="font-size: 12px; font-weight: 900; margin-left: 5px">({{totalDeliveredOrder.toString()}})</ion-label>
+            </ion-chip>
+          </ion-col>
         </ion-row>
       </ion-row>
     </ion-grid>

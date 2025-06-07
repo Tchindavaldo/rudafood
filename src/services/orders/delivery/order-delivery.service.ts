@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class OrderDeliveryService {
   // BehaviorSubjects pour stocker les compteurs
   private deliveryOrdersSubject = new BehaviorSubject<OrderDeliveryKey>({ uniqueClientId: [], periodeKey: [] });
+  private removedDeliveryOrdersSubject = new BehaviorSubject<OrderDeliveryKey>({ uniqueClientId: [], periodeKey: [] });
 
   // Pour les Sets, nous utilisons des arrays en interne pour éviter les problèmes de référence
   private activePeriodKeysSubject = new BehaviorSubject<string[]>([]);
@@ -14,6 +15,7 @@ export class OrderDeliveryService {
 
   // Observables publics pour que les composants puissent s'y abonner
   public deliveryOrders$: Observable<OrderDeliveryKey> = this.deliveryOrdersSubject.asObservable();
+  public removedDeliveryOrders$: Observable<OrderDeliveryKey> = this.removedDeliveryOrdersSubject.asObservable();
   public activePeriodKeys$: Observable<string[]> = this.activePeriodKeysSubject.asObservable();
   public activeClientIds$: Observable<string[]> = this.activeClientIdsSubject.asObservable();
 
@@ -59,6 +61,10 @@ export class OrderDeliveryService {
     return this.deliveryOrdersSubject.value;
   }
 
+  getRemovedDeliveryOrders(): OrderDeliveryKey {
+    return this.removedDeliveryOrdersSubject.value;
+  }
+
   // Méthodes pour gérer les périodes actives
   addActivePeriodKey(periodKey: string): void {
     // Vérifier si la clé est déjà présente avant d'ajouter
@@ -96,6 +102,16 @@ export class OrderDeliveryService {
       currentDeliveryOrders.periodeKey.splice(index, 1);
       this.deliveryOrdersSubject.next(currentDeliveryOrders);
     }
+
+    // Ajouter la période supprimée à removedDeliveryOrdersSubject
+    const currentRemovedOrders = this.removedDeliveryOrdersSubject.value;
+    if (!currentRemovedOrders.periodeKey.includes(periodKey)) {
+      currentRemovedOrders.periodeKey.push(periodKey);
+      this.removedDeliveryOrdersSubject.next(currentRemovedOrders);
+      console.log('Période ajoutée aux supprimées:', periodKey);
+    } else {
+      console.log('Période déjà présente dans les supprimées. Liste actuelle:', currentRemovedOrders.periodeKey);
+    }
   }
 
   getActivePeriodKeys(): string[] {
@@ -116,14 +132,29 @@ export class OrderDeliveryService {
       // Convertir le Set en array et émettre
       const clientIdsArray = Array.from(this.activeClientIdsSet);
       this.activeClientIdsSubject.next(clientIdsArray);
-      // console.log('Clients actifs après ajout:', clientIdsArray);
+      console.log('Client ajouté:', clientId);
+    } else {
+      console.log('Client déjà actif:', clientId);
+    }
+  }
 
-      // Mettre à jour également la liste des uniqueClientId dans deliveryOrdersSubject
-      const currentDeliveryOrders = this.deliveryOrdersSubject.value;
-      if (!currentDeliveryOrders.uniqueClientId.includes(clientId)) {
-        currentDeliveryOrders.uniqueClientId.push(clientId);
-        this.deliveryOrdersSubject.next(currentDeliveryOrders);
-      }
+  removeFromRemovedOrdersPeriod(periodKey: string): void {
+    const currentRemovedOrders = this.removedDeliveryOrdersSubject.value;
+    const index = currentRemovedOrders.periodeKey.indexOf(periodKey);
+    if (index !== -1) {
+      currentRemovedOrders.periodeKey.splice(index, 1);
+      this.removedDeliveryOrdersSubject.next(currentRemovedOrders);
+      console.log('Période retirée des supprimées:', periodKey);
+    }
+  }
+
+  removeFromRemovedOrdersClient(clientId: string): void {
+    const currentRemovedOrders = this.removedDeliveryOrdersSubject.value;
+    const index = currentRemovedOrders.uniqueClientId.indexOf(clientId);
+    if (index !== -1) {
+      currentRemovedOrders.uniqueClientId.splice(index, 1);
+      this.removedDeliveryOrdersSubject.next(currentRemovedOrders);
+      console.log('Client retiré des supprimés:', clientId);
     }
   }
 
@@ -142,6 +173,16 @@ export class OrderDeliveryService {
     if (index !== -1) {
       currentDeliveryOrders.uniqueClientId.splice(index, 1);
       this.deliveryOrdersSubject.next(currentDeliveryOrders);
+    }
+
+    // Ajouter le client supprimé à removedDeliveryOrdersSubject
+    const currentRemovedOrders = this.removedDeliveryOrdersSubject.value;
+    if (!currentRemovedOrders.uniqueClientId.includes(clientId)) {
+      currentRemovedOrders.uniqueClientId.push(clientId);
+      this.removedDeliveryOrdersSubject.next(currentRemovedOrders);
+      console.log('Client ajouté aux supprimés:', clientId);
+    } else {
+      console.log('Client déjà présent dans les supprimés. Liste actuelle:', currentRemovedOrders.uniqueClientId);
     }
   }
 
