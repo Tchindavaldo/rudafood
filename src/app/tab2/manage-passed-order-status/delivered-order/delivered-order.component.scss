@@ -12,7 +12,8 @@ p {
   width: 45%;
 }
 // Variables
-$card-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+// $card-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+$card-shadow: none;
 $card-border-radius: 12px;
 $section-spacing: 16px;
 
@@ -36,12 +37,17 @@ $section-spacing: 16px;
       display: flex;
       align-items: center;
       font-size: 1.1rem;
-      font-weight: 600;
+      font-weight: 300;
       color: var(--ion-color-dark);
 
       ion-icon {
         margin-right: 8px;
         font-size: 1.4rem;
+      }
+
+      ion-chip {
+        background-color: rgba(139, 0, 0, 0);
+        color: darkred;
       }
     }
   }
@@ -115,13 +121,14 @@ ion-item {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom left, #0000007a, rgb(255 255 255 / 0%));
+  // background: linear-gradient(to bottom left, #0000007a, rgb(255 255 255 / 0%));
   z-index: 0;
 }
 
-// Carte de section (Express, Programmée, En attente) - Même couleur que finished
+// Carte de section (Express, Programmée, En attente)
 .section-card {
-  background: linear-gradient(to bottom left, darkred, #000000);
+  // background: linear-gradient(to bottom left, darkred, #000000);
+  background-color: white;
   background-size: cover;
 
   // Style pour le chip de livraison actif
@@ -134,8 +141,8 @@ ion-item {
   box-shadow: $card-shadow;
 
   &.warning-card {
-    --background: #f8fff8;
-    border-left: 4px solid var(--ion-color-success);
+    --background: #fff8f8;
+    border-left: 4px solid var(--ion-color-danger);
   }
 
   .section-header {
@@ -147,7 +154,7 @@ ion-item {
       align-items: center;
       font-size: 0.6rem;
       font-weight: 700;
-      color: rgba(255, 255, 255, 0.952);
+      color: rgba(0, 0, 0, 0.952);
       text-transform: uppercase;
       letter-spacing: 0.1px;
 
@@ -169,7 +176,9 @@ ion-item {
   // background: hsla(0, 0%, 100%, 0.52);
   padding: 2px 2px;
   border-radius: 15px;
-  box-shadow: 0px 0px 5px hsl(0, 0%, 77%);
+  // box-shadow: 0px 0px 5px hsl(0, 0%, 77%);
+
+  // box-shadow: 0px 0px 5px hsl(0, 100%, 83%);
   // border: 1px solid hsl(0, 100%, 50%);
   margin-bottom: 16px;
 
@@ -198,6 +207,7 @@ ion-item {
       font-weight: 500;
 
       color: hsl(0, 0%, 80%);
+      color: hsl(0, 0%, 20%);
     }
 
     ion-badge {
@@ -224,6 +234,10 @@ ion-item {
   ion-label {
     font-weight: 600;
     font-size: 0.95rem;
+  }
+
+  ion-chip {
+    color: black;
   }
 }
 

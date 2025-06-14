@@ -5,6 +5,7 @@ import { getScreenHeight } from 'src/utils/getScreenHeight';
 import { filterByArg } from 'src/utils/filterByArg';
 import { OrderDataService } from 'src/services/orders/data/order-data.service';
 import { AppState } from 'src/store/indx';
+import { sortByField } from 'src/utils/order-utils';
 
 @Component({
   selector: 'app-pending-user-order',
@@ -18,10 +19,14 @@ export class PendingUserOrderComponent implements OnInit {
 
   constructor(public ordersService: OrderDataService, private store: Store<AppState>) {
     this.userOrder = this.store.select(state => state.userOrder.orders);
-    this.userOrder.subscribe(order => (this.pendingCmd = filterByArg(order, 'status', 'pending')));
+    this.userOrder.subscribe(order => (this.pendingCmd = sortByField(filterByArg(order, 'status', 'pending'), 'rank', 'asc')));
 
     // console.log('order pending data', filterByArg(ordersService.getOrderTabs(), 'status', 'pending'));
     // console.log('order pending data');
   }
   ngOnInit() {}
+  // Utilisé pour trackBy
+  trackByOrderId(index: number, order: any) {
+    return order.id;
+  }
 }

@@ -2,21 +2,24 @@
   <ion-toolbar>
     <ion-grid>
       <ion-row class="row-segment">
-        <ion-col class="col-segment" size="4">
+        <ion-col class="col-segment" size="auto">
           <ion-chip [routerLink]="['pending-order-toBuy']" routerLinkActive="router-link-active" class="firstCchip" color="danger" mode="ios">
-            <ion-label>ACHAT</ion-label>
+            <ion-icon name="cart-outline" style="margin-right: 5px"></ion-icon>
+            <ion-label>Mon pannier</ion-label>
             <ion-label>4</ion-label>
           </ion-chip>
         </ion-col>
-        <ion-col class="col-segment" size="4">
+        <ion-col class="col-segment" size="auto">
           <ion-chip [routerLink]="['status-order']" color="danger" mode="ios">
-            <ion-label>STATUT</ion-label>
+            <ion-icon name="checkmark-circle-outline" style="margin-right: 5px"></ion-icon>
+            <ion-label>Etat des commandes</ion-label>
             <ion-label>2</ion-label>
           </ion-chip>
         </ion-col>
-        <ion-col class="col-segment" size="4">
+        <ion-col class="col-segment" size="auto">
           <ion-chip [routerLink]="['bonus']" color="danger" mode="ios">
-            <ion-label>BONUS</ion-label>
+            <ion-icon name="gift-outline" style="margin-right: 5px"></ion-icon>
+            <ion-label>Mes Bonus</ion-label>
             <ion-label>5</ion-label>
           </ion-chip>
         </ion-col>
@@ -28,3 +31,5 @@
 <ion-content [@userOrderRouteAnimation]="false">
   <router-outlet />
 </ion-content>
+
+<app-payment-pending-order *ngIf="pendingToBuyOrder && pendingToBuyOrder.length>0 && isOnPendingOrderToBuy()" [data]="{total:calculateTotal()}"></app-payment-pending-order>

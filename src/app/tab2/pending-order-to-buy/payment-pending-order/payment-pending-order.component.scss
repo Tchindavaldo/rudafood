@@ -1,0 +1,293 @@
+ion-grid {
+  padding-left: 0;
+}
+
+.bottom-card-home {
+  position: absolute;
+  // height: 225px;
+  // height: 125px;
+  // La hauteur est maintenant définie dynamiquement via ngStyle
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  color: #ffffff;
+  transition-duration: 500ms;
+  box-shadow: none;
+  margin: 0px;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  // background-color: rgba(0, 0, 0, 0);
+  background-image: url('../../../../assets/images/background/backgroundGradient.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position-y: 28%;
+  // border-radius: 133px;
+  // border-radius: 40px;
+
+  width: 98%;
+  height: 70px !important;
+  margin: 0;
+
+  left: 1%;
+  border-radius: 80px;
+}
+
+ion-card > ion-grid:nth-child(1) {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.55);
+  // -webkit-backdrop-filter: blur(36px);
+  // backdrop-filter: blur(36px);
+}
+
+ion-grid {
+  --background: none;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(2) ion-grid {
+  padding: 0 10px 0 0;
+  height: max-content;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(2) ion-grid ion-row ion-col {
+  padding: 0;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) {
+  height: 70%;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(1) {
+  height: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding-left: 0;
+  padding-right: 20px;
+  // /* scrollbar-width: none;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(2) ion-grid ion-row ion-col ion-label {
+  width: max-content;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(1) > ion-grid:nth-child(1) > ion-row:nth-child(1) {
+  flex-wrap: nowrap;
+}
+
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(3) ion-grid ion-row ion-col ion-chip {
+  background-color: #ffffff29;
+  color: white;
+  justify-content: center;
+  width: 85px;
+  font-size: 11px;
+}
+
+#ctnLoaderBottomCard {
+  display: flex;
+  visibility: hidden;
+}
+
+ion-card {
+  height: 75px;
+  width: 75px;
+  background-color: darkred;
+  border-radius: 199px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 5px 0px 10px;
+}
+
+ion-grid,
+ion-col {
+  padding: 0;
+}
+.ion_grid1 {
+  padding-left: 0px;
+}
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  padding-top: 40px;
+  --inner-border-width: 0;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --min-height: max-content;
+}
+
+ion-label {
+  width: max-content;
+}
+
+ion-chip {
+  // position: absolute;
+  bottom: 0;
+  right: 0px;
+  max-width: 100%;
+  overflow: hidden;
+  height: auto !important;
+  --min-height: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* Styles pour l'élément personnalisé avec icônes */
+.custom-checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+/* Style pour l'icône de croix (rouge) */
+.cross-checkbox {
+  background-color: darkred;
+  border: 1px solid darkred;
+}
+
+/* Style pour l'icône de coche (vert) */
+.check-checkbox {
+  background-color: #00cc00;
+  border: 1px solid darkgreen;
+}
+
+/* Style commun pour les icônes */
+.icon-symbol {
+  color: white;
+  font-size: 10px;
+}
+
+.row-titre {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.row-action {
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+.col-annuler {
+  padding-left: 8px;
+}
+.col-modifier {
+  color: rgb(28, 139, 0);
+}
+
+.row-prix {
+  position: absolute;
+  bottom: 0;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.col_action {
+  transform: scale(0.79);
+  left: 18px;
+}
+
+/* Conteneur qui gère l'animation de hauteur */
+.text-container {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  height: 1.5em; /* Hauteur initiale d'une ligne */
+  transition: height 0.7s ease-in-out; /* Animation pour les deux sens */
+  margin-bottom: 4px;
+  max-width: 100%;
+  width: 100%;
+}
+
+/* État étendu */
+.text-container.expanded {
+  height: 6em; /* Hauteur fixe pour l'état étendu - ajustez selon vos besoins */
+}
+
+.NomCmdUser {
+  font-size: 12px;
+  font-weight: 400;
+  white-space: normal;
+  line-height: 1.5em;
+  display: block;
+  margin-bottom: 0;
+  word-wrap: break-word;
+  word-break: break-word;
+
+  &:hover {
+    color: hsl(0, 0%, 90%);
+  }
+}
+
+col-segment {
+  text-align: center;
+}
+.col-segment ion-label {
+  font-size: 10px;
+  font-weight: bold;
+}
+.col-segment ion-chip {
+  position: relative;
+  overflow: visible;
+}
+
+.firstCchip {
+  background-color: darkred;
+  color: white;
+}
+
+.col-segment ion-chip > ion-label:nth-child(2) {
+  position: absolute;
+  color: white;
+  background: darkred;
+  padding: 0;
+  width: 20px;
+  border-radius: 58px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -7px;
+  right: -7px;
+}
+
+.col-pannier {
+  margin-top: -10px;
+}
+.row-segment {
+  margin-top: -5px;
+}
+ion-header {
+  box-shadow: none;
+}
+.row-article {
+  margin-top: 5px;
+}
+.row-buy {
+  margin-top: -10px;
+}
+.col-prix {
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
+  text-align: right;
+  padding-right: 15px;
+  font-size: 12px;
+}
+.col-article {
+  color: rgba(255, 255, 255, 0.81);
+  padding-left: 0px;
+  font-size: 10px;
+}
+.col-article ion-chip {
+  --background: darkred;
+  font-size: 10px;
+  color: rgb(255, 255, 255);
+}

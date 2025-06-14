@@ -15,6 +15,7 @@ import {
   getTotalOrdersByTypeTime,
   getTotalOrdersByTypeExpress,
   getTotalOrdersByStatus,
+  sortByField,
 } from 'src/utils/order-utils';
 import { UserOrderCountersService } from 'src/services/orders/counters/User-order-counters.service';
 import { OrderDeliveryService } from 'src/services/orders/delivery/order-delivery.service';
@@ -69,7 +70,7 @@ export class DeliveredOrderComponent implements OnInit, OnDestroy {
             console.log(' delivered order clientId', order.clientId);
           }
         });
-        this.deliveredOrder = result.filteredOrders;
+        this.deliveredOrder = sortByField(result.filteredOrders, 'rank', 'asc');
       })
     );
 

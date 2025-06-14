@@ -3,12 +3,43 @@
   <ion-infinite-scroll class="infinitScroll2">
     <ion-list>
       <!-- pending -->
-      <app-user-order-item
-        procededAction="processing"
-        showedAction="En attente"
-        *ngFor="let pendingOrderItem of pendingCmd; let idx = index"
-        [order]="pendingCmd?.[idx]"
-      ></app-user-order-item>
+      <ion-card class="section-card">
+        <ion-card-content>
+          <ng-container *ngFor="let order of pendingCmd; trackBy: trackByOrderId">
+            <ion-item-group class="user-group" style="margin-bottom: 30px">
+              <ion-item lines="none" class="user-header">
+                <ion-avatar slot="start">
+                  <ion-icon name="person-circle" class="user-avatar"></ion-icon>
+                </ion-avatar>
+                <ion-label class="label-header-userData">
+                  <h2>
+                    {{
+                      order?.userData?.firstName && order?.userData?.firstName !== '' && order?.userData?.lastName && order?.userData?.lastName !== ''
+                        ? order?.userData?.firstName
+                        : order?.userData?.email
+                    }}
+                  </h2>
+                  <p>
+                    {{ order?.userData?.firstName && order?.userData?.firstName !== '' && order?.userData?.lastName && order?.userData?.lastName !== '' ? order?.userData?.lastName : '' }}
+                  </p>
+                </ion-label>
+                <!-- <ion-label slot="end" color="danger">{{ order.rank }}e cmd</ion-label> -->
+              </ion-item>
+
+              <ion-list lines="none" class="order-list">
+                <app-fast-food-order
+                  [background]="'hsl(0, 100%, 15%)'"
+                  [extras]="order.extra || []"
+                  [extrasDrink]="order.drink || []"
+                  [order]="order"
+                  procededAction="processing"
+                  showedAction="valider"
+                ></app-fast-food-order>
+              </ion-list>
+            </ion-item-group>
+          </ng-container>
+        </ion-card-content>
+      </ion-card>
     </ion-list>
   </ion-infinite-scroll>
 </ion-content>

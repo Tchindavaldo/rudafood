@@ -9,10 +9,10 @@
 </ion-content> -->
 
 <ion-list>
-  <ng-container *ngFor="let date of getUniqueDates()">
-    <ion-card class="date-card">
-      <!-- Section Livraison Express -->
-      <ng-container *ngIf="getTotalOrdersByTypeExpress(date) > 0">
+  <!-- <ng-container *ngFor="let date of getUniqueDates()">
+    <ion-card class="date-card"> -->
+  <!-- Section Livraison Express -->
+  <!-- <ng-container *ngIf="getTotalOrdersByTypeExpress(date) > 0">
         <ion-card style="border: 0px solid hsl(0, 100%, 50%)" class="section-card">
           <ion-card-header class="section-header">
             <div style="display: flex; justify-content: space-between; align-items: center">
@@ -57,7 +57,7 @@
                     (openModal)="showDispoCard($event.order)"
                     checkboxBackgroundChecked="#ff0000"
                     checkboxBorderColorChecked="darkred"
-                    [background]="getTotalOrdersForUser('express', date, userId) > 1 ? '#00000061' : 'none'"
+                    [background]="getTotalOrdersForUser('express', date, userId) > 0 ? 'hsl(0, 100%, 15%)' : 'none'"
                     [extras]="order.extra || []"
                     [extrasDrink]="order.drink || []"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'express'); trackBy: trackByOrderId"
@@ -70,10 +70,10 @@
             </ng-container>
           </ion-card-content>
         </ion-card>
-      </ng-container>
+      </ng-container> -->
 
-      <!-- Section Livraison Programmée -->
-      <ng-container *ngIf="getTotalOrdersByTypeTime(date, times) > 0">
+  <!-- Section Livraison Programmée -->
+  <!-- <ng-container *ngIf="getTotalOrdersByTypeTime(date, times) > 0">
         <ion-card class="section-card">
           <ion-card-header style="padding-bottom: 0" class="section-header">
             <div style="display: flex; justify-content: space-between; align-items: center">
@@ -126,7 +126,7 @@
                       <ion-list lines="none" class="order-list">
                         <app-fast-food-order
                           (openModal)="showDispoCard($event.order)"
-                          [background]="getTotalOrdersForUser('', date, userId) > 1 ? '#00000061' : 'none'"
+                          [background]="getTotalOrdersForUser('', date, userId) > 0 ? 'hsl(0, 100%, 15%)' : 'none'"
                           [extras]="order.extra || []"
                           [extrasDrink]="order.drink || []"
                           *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'time', time); trackBy: trackByOrderId"
@@ -142,10 +142,10 @@
             </ng-container>
           </ion-card-content>
         </ion-card>
-      </ng-container>
+      </ng-container> -->
 
-      <!-- Section Commandes non livrées -->
-      <ng-container *ngIf="getTotalOrdersByStatus(date, false) > 0">
+  <!-- Section Commandes non livrées -->
+  <!-- <ng-container *ngIf="getTotalOrdersByStatus(date, false) > 0">
         <ion-card class="section-card">
           <ion-card-header class="section-header">
             <div style="display: flex; justify-content: space-between; align-items: center">
@@ -189,7 +189,7 @@
                 <ion-list lines="none" class="order-list">
                   <app-fast-food-order
                     (openModal)="showDispoCard($event.order)"
-                    [background]="getTotalOrdersForUser('', date, userId) > 1 ? '#00000061' : 'none'"
+                    [background]="getTotalOrdersForUser('', date, userId) > 0 ? 'hsl(0, 100%, 15%)' : 'none'"
                     [extras]="order.extra || []"
                     [extrasDrink]="order.drink || []"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, false); trackBy: trackByOrderId"
@@ -202,7 +202,46 @@
             </ng-container>
           </ion-card-content>
         </ion-card>
+      </ng-container> -->
+  <!-- </ion-card>
+  </ng-container> -->
+
+  <ion-card class="section-card">
+    <ion-card-content>
+      <ng-container *ngFor="let order of pendingOrders; trackBy: trackByOrderId">
+        <ion-item-group class="user-group" style="margin-bottom: 30px">
+          <ion-item lines="none" class="user-header">
+            <ion-avatar slot="start">
+              <ion-icon name="person-circle" class="user-avatar"></ion-icon>
+            </ion-avatar>
+            <ion-label class="label-header-userData">
+              <h2>
+                {{
+                  order?.userData?.firstName && order?.userData?.firstName !== '' && order?.userData?.lastName && order?.userData?.lastName !== ''
+                    ? order?.userData?.firstName
+                    : order?.userData?.email
+                }}
+              </h2>
+              <p>
+                {{ order?.userData?.firstName && order?.userData?.firstName !== '' && order?.userData?.lastName && order?.userData?.lastName !== '' ? order?.userData?.lastName : '' }}
+              </p>
+            </ion-label>
+            <ion-label slot="end" color="danger">{{ order.rank }}e cmd</ion-label>
+          </ion-item>
+
+          <ion-list lines="none" class="order-list">
+            <app-fast-food-order
+              (openModal)="showDispoCard($event.order)"
+              [background]="'hsl(0, 100%, 15%)'"
+              [extras]="order.extra || []"
+              [extrasDrink]="order.drink || []"
+              [order]="order"
+              procededAction="processing"
+              showedAction="valider"
+            ></app-fast-food-order>
+          </ion-list>
+        </ion-item-group>
       </ng-container>
-    </ion-card>
-  </ng-container>
+    </ion-card-content>
+  </ion-card>
 </ion-list>

@@ -6,6 +6,7 @@ import { getUserOrdersService } from 'src/services/orders/get/get-user-orders.se
 import { updateOrdersService } from 'src/services/orders/update/update-orders.service';
 import { AppState } from 'src/store/indx';
 import { filterByArg } from 'src/utils/filterByArg';
+import { updateUserOrderReducer } from 'src/store/order/order-user-reducer'; // Import the reducer action
 
 @Component({
   selector: 'app-pending-order-to-buy',
@@ -15,6 +16,7 @@ import { filterByArg } from 'src/utils/filterByArg';
 export class PendingOrderToBuyComponent implements OnInit {
   pendingToBuyOrder!: any;
   userOrder!: Observable<any[]>;
+  userId: string = ''; // This should be updated based on actual data or logic
 
   constructor(
     private store: Store<AppState>,
@@ -45,5 +47,19 @@ export class PendingOrderToBuyComponent implements OnInit {
   updatePendingOrder() {
     console.log('click updaye appeler');
     this.updatePendingOrderService.updateOrders(this.pendingToBuyOrder);
+  }
+
+  updateOrder(updatedOrder: any): void {
+    console.log(updatedOrder);
+
+    this.store.dispatch(updateUserOrderReducer({ updatedOrder: updatedOrder }));
+  }
+
+  calculateTotal(): number {
+    return this.pendingToBuyOrder.reduce((total: number, order: any) => total + (order.total || 0), 0);
+  }
+
+  trackByOrderId(index: number, order: any): string {
+    return order.id || index;
   }
 }

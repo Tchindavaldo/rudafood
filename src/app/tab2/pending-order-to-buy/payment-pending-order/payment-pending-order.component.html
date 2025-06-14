@@ -1,0 +1,82 @@
+<ion-card [attr.id]="modalId" class="bottom-card-home">
+  <ion-grid style="align-items: center; display: flex; padding: 0 3px" fixed>
+    <ion-row style="width: 100%">
+      <ion-col size="12" style="padding: 0">
+        <ion-item [ngStyle]="{ '--background': 'none', 'padding-top': '0px' }">
+          <ion-grid style="width: 100%" class="ion_grid1" [ngStyle]="{ 'background-color': 'none' }">
+            <ion-row style="margin-top: 0px; justify-content: space-between; flex-wrap: nowrap; padding: 0 20px">
+              <!-- Première colonne: titre ou champ de saisie selon l'étape -->
+              <ion-col size="6" style="align-items: center; display: flex">
+                <!-- Étape 0: Affichage du titre normal -->
+                <!-- <ion-chip *ngIf="currentStep === 0" color="{{ titleColor }}" style="position: relative; font-size: 10px; width: 100%"> -->
+
+                <div *ngIf="currentStep === 0" style="display: flex; justify-content: center; align-items: flex-start">
+                  <ion-chip color="success" style="position: relative; font-size: 10px">
+                    <ion-icon name="logo-usd" style="font-size: 14px; margin-right: 15px"></ion-icon>
+                    <ion-label style="font-size: 14px; font-weight: 900; white-space: pre-line">Total <br />{{ data.total }} fcfa </ion-label>
+                  </ion-chip>
+                </div>
+                <!-- </ion-chip> -->
+
+                <!-- Étape 1: Affichage du montant et des frais sur deux lignes -->
+                <div *ngIf="currentStep === 1" style="display: flex; justify-content: center; align-items: flex-start">
+                  <ion-chip color="success" style="position: relative; font-size: 10px">
+                    <ion-label style="font-size: 10px; font-weight: 900; white-space: pre-line">
+                      Frais retrait: {{ cashoutPercentage }}% <br />
+                      Frais Transaction: {{ feePercentage }}% <br />
+                      Total à payer: {{ calculateAmounts().totalAmount }} FCFA
+                    </ion-label>
+                  </ion-chip>
+                </div>
+
+                <!-- Étape 2: Champ de saisie pour le numéro de téléphone Orange Money -->
+                <ion-chip *ngIf="currentStep === 2" color="{{ titleColor }}" style="position: relative; font-size: 10px; color: white">
+                  <!-- <ion-icon name="logo-euro" style="color: #ff6600"></ion-icon> -->
+                  <ion-input type="tel" placeholder="Entrer Le Numéro OM" [(ngModel)]="phoneNumber" (ionChange)="updatePhoneNumber($event)" style="font-size: 10px; width: 120px"></ion-input>
+                </ion-chip>
+
+                <!-- Étape 3: Instructions de validation Orange Money -->
+                <ion-chip *ngIf="currentStep === 3" color="{{ titleColor }}" style="position: relative; font-size: 10px">
+                  <ion-icon name="alert-circle-outline" color="light"></ion-icon>
+                  <ion-label style="font-size: 10px; font-weight: 900; white-space: normal; max-width: 200px"> {{ titleAction }} </ion-label>
+                </ion-chip>
+
+                <!-- Étape 4: Message de confirmation -->
+                <ion-chip *ngIf="currentStep === 4" color="{{ titleColor }}" style="position: relative; font-size: 10px">
+                  <ion-icon name="checkmark-circle" color="light"></ion-icon>
+                  <ion-label style="font-size: 10px; font-weight: 900"> {{ titleAction }} </ion-label>
+                </ion-chip>
+              </ion-col>
+
+              <ion-col
+                *ngIf="currentStep !== 3 && currentStep !== 4"
+                size="auto"
+                style="display: flex; align-items: center; justify-content: space-between; align-items: center; transform: scale(0.9)"
+              >
+                <ion-chip *ngIf="currentStep !== 0" class="chip" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }" (click)="goToPreviousStep()">
+                  <ion-icon color="light" name="arrow-back-outline"></ion-icon>
+                  <ion-label style="font-size: 10px"> precedent </ion-label>
+                </ion-chip>
+                <!-- Bouton de confirmation qui change selon l'étape -->
+                <ion-chip class="chip3" (click)="emitConfirmBtnClick()" [ngStyle]="{ color: 'white', 'background-color': confirmationColor }">
+                  <ion-label style="font-size: 10px">{{ textConfirmation }}</ion-label>
+                  <ion-icon color="light" name="{{ iconBtn1 }}"></ion-icon>
+                </ion-chip>
+
+                <!-- Bouton Non/Annuler selon l'étape -->
+                <!-- <ion-chip (click)="emitBtn2Click()" class="chip" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }">
+                  <ion-label style="font-size: 10px">
+                    <ng-container *ngIf="currentStep === 0">Non</ng-container>
+                    <ng-container *ngIf="currentStep > 0">Annuler</ng-container>
+                  </ion-label>
+                  <ion-icon color="light" name="close-circle-outline"></ion-icon>
+                </ion-chip> -->
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <app-loader backGroundCtn="#0000009c" fillColor="white" [load]="showLoader" stokeColor="white"></app-loader>
+</ion-card>

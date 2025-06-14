@@ -37,6 +37,8 @@ export const userOrderReducer = createReducer(
     // Créer un nouveau tableau avec la commande mise à jour
     const updatedOrders = state.orders.map(order => (order.id === updatedOrder.id ? { ...order, ...updatedOrder } : order));
 
+    console.log(updatedOrders.find(order => order.id === updatedOrder.id).quantity);
+
     return { orders: updatedOrders };
   })
 );

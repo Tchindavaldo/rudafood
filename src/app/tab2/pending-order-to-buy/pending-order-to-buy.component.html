@@ -1,39 +1,62 @@
-<ion-content>
-  <app-loader [load]="pendingToBuyOrder === undefined"></app-loader>
-  <ion-infinite-scroll *ngIf="pendingToBuyOrder !== undefined" class="infinitScroll1">
-    <!-- pending order to buy -->
-    <ion-list>
-      <app-pannier-achat-or *ngFor="let item of pendingToBuyOrder; let idx = index"> </app-pannier-achat-or>
-      <!-- <app-pannier-achat-or (click)="showLoad()" *ngFor="let item of []; let idx = index"  [idxCmd]="idx"         ></app-pannier-achat-or> -->
-      <!-- [ngStyle]="{'display' : item.ispending ? 'flex' : 'none'}"   -->
-    </ion-list>
-  </ion-infinite-scroll>
-</ion-content>
+<app-loader [load]="pendingToBuyOrder === undefined"></app-loader>
 
-<ion-card *ngIf="pendingToBuyOrder !== undefined && pendingToBuyOrder.length > 0" class="card-parent">
+<!-- <div style="position: relative; width: 100%; height: 100%" > -->
+<!-- pending order to buy -->
+<ion-list style="background: none; padding-bottom: 85px" class="date-card" *ngIf="pendingToBuyOrder !== undefined">
+  <ion-card *ngFor="let order of pendingToBuyOrder; trackBy: trackByOrderId" class="section-card">
+    <ion-card-content>
+      <ion-item-group class="user-group">
+        <app-fast-food-order
+          extraColor=""
+          [background]="'none'"
+          chipColor="default"
+          textColor="black"
+          [extras]="order.extra || []"
+          [extrasDrink]="order.drink || []"
+          [order]="order"
+          procededAction="processing"
+          showedAction="valider"
+          [truncateDeliveryAddress]="true"
+          [maxLengthDeliveryLocation]="25"
+          [showOrderCount]="true"
+          [updateOrderFunc]="updateOrder.bind(this)"
+        ></app-fast-food-order>
+      </ion-item-group>
+    </ion-card-content>
+  </ion-card>
+</ion-list>
+
+<!-- <ion-card *ngIf="pendingToBuyOrder !== undefined && pendingToBuyOrder.length > 0" class="card-parent">
   <ion-card>
     <ion-grid>
-      <ion-row class="row-article">
-        <ion-col class="col-article" size="7"><ion-label>Frais de Transaction</ion-label></ion-col>
-        <ion-col class="col-prix" size="5"><ion-label>0f</ion-label></ion-col>
-      </ion-row>
+      <ion-row class="row-article" style="justify-content: space-between">
+        <ion-col size="9">
+          <ion-row>
+            <ion-col size="auto">
+              <ion-col class="col-article" size="auto"><ion-label>Frais Transaction</ion-label></ion-col>
+              <ion-col class="col-prix" size="auto"><ion-label>0f</ion-label></ion-col>
+            </ion-col>
 
-      <ion-row class="row-article">
-        <ion-col class="col-article" size="7"><ion-label>Frais de retrait</ion-label></ion-col>
-        <ion-col class="col-prix" size="5"><ion-label>50f</ion-label></ion-col>
-      </ion-row>
+            <ion-col size="auto">
+              <ion-col class="col-article" size="auto"><ion-label>Frais retrait</ion-label></ion-col>
+              <ion-col class="col-prix" size="auto"><ion-label>50f</ion-label></ion-col>
+            </ion-col>
 
-      <ion-row class="row-article">
-        <ion-col class="col-article" size="7"><ion-label>Total</ion-label></ion-col>
-        <ion-col class="col-prix" size="5"><ion-label>2360f</ion-label></ion-col>
-      </ion-row>
-      <ion-row class="row-article row-buy ion-justify-content-center">
-        <ion-col class="col-article" size="auto">
-          <ion-chip (click)="updatePendingOrder()">
-            <ion-label>PAYER</ion-label>
-          </ion-chip>
+            <ion-col size="auto">
+              <ion-col class="col-article" size="auto"><ion-label>Total</ion-label></ion-col>
+              <ion-col class="col-prix" size="auto"><ion-label>{{ calculateTotal() }}f</ion-label></ion-col>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-col class="col-article" size="auto">
+            <ion-chip (click)="updatePendingOrder()">
+              <ion-label>PAYER</ion-label>
+            </ion-chip>
+          </ion-col>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
-</ion-card>
+</ion-card> -->
+<!-- </div> -->

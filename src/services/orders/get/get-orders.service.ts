@@ -30,7 +30,16 @@ export class getOrdersService {
       });
 
       const orders = response?.data?.data || [];
-      // console.log('Données des commandes récupérées:', orders);
+      //  orders.forEach((order: any, index: number) => {
+      //   if (order.rank) {
+      //     console.log(`Commande ${index + 1}:`, {
+      //       id: order.id,
+      //       rank: order.rank,
+      //       status: order.status,
+      //       delivery: order.delivery,
+      //     });
+      //   }
+      // });
 
       // Dispatcher les commandes dans le store
       this.store.dispatch(setFastFoodOrder({ orderTab: orders }));

@@ -7,8 +7,10 @@ import { showCard } from 'src/utils/showCard';
   styleUrls: ['./extras-panel.component.scss'],
 })
 export class ExtrasPanelComponent {
-  @Input() orderId: string = '';
+  @Input() isCheckable: boolean = true;
   @Input() extras: any[] = [];
+  @Input() orderId: string = '';
+  @Input() color: string = 'light';
 
   closePanel() {
     showCard(this.orderId, 'y', '200%');

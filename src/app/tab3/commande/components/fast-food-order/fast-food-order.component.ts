@@ -19,13 +19,19 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
   @Input() background = 'none';
   @Input() padding = '1px 12px 17px';
   @Input() borderRadius = '18px';
+  @Input() extraColor = 'light';
   @Input() backdropFilter = 'blur(0px)';
-  @Input() marginBottom = '26px';
+  @Input() marginBottom = '0px';
+  @Input() chipColor: string = 'light';
+  @Input() textColor: string = '';
   @Input() checkboxBackgroundChecked = '';
   @Input() checkboxBorderColorChecked = '';
   @Input() showCrossIcon = false;
   @Input() extras: any[] = [];
   @Input() extrasDrink: any[] = [];
+  @Input() maxLengthDeliveryLocation = 30; // Longueur maximale du texte avant troncature
+  @Input() showOrderCount = false;
+  @Input() updateOrderFunc: ((updatedOrder: any) => void) | undefined;
   shouldShowExtrasPanel = false;
   isExtrasPanelVisible = false;
   isDrinkPanelVisible = false;
@@ -136,6 +142,7 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public isUpdating = false;
+  public isBackOrder = false;
   fastfoodOrder!: any[];
   fastFoodOrderReducer!: Observable<any[]>;
 
@@ -397,6 +404,23 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
 
+  async backOrder() {
+    try {
+      let orderStatus = this.order.status;
+      if (this.order.status === 'pending') {
+        orderStatus = 'pendingToBuy';
+      }
+      if (this.order.status === 'processing') {
+        orderStatus = 'pendingToBuy';
+      }
+      this.isBackOrder = true;
+      await this.updateOrdersRequet.updateOrders({ status: orderStatus, id: this.order.id, fastFoodId: this.order.fastFoodId });
+      this.isBackOrder = false;
+    } catch (error) {
+      this.isBackOrder = false;
+    }
+  }
+
   /**
    * Affiche tous les extras en désactivant la limitation
    */
@@ -528,7 +552,7 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   showConfirmCancelOrder(id: string) {
-    if (this.order.status === 'processing' || this.order.status === 'pending') {
+    if (this.order.status === 'processing' || this.order.status === 'pending' || this.order.status === 'pendingToBuy') {
       showCard(id);
     }
   }
@@ -566,5 +590,33 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
     if (this.order.status !== 'delivered') {
       this.statutChange();
     }
+  }
+
+  updateOrderData(updatedData: Partial<any>): void {
+    if (this.updateOrderFunc) {
+      const updatedOrder = { ...this.order, ...updatedData };
+      console.log('oder get', updatedData, 'merged order', updatedOrder);
+
+      this.updateOrderFunc(updatedOrder);
+    }
+  }
+
+  increaseQuantity(): void {
+    const currentQuantity = this.order.quantity || 1;
+    const updatedQuantity = currentQuantity + 1;
+    const menuPrice = this.order.menu?.prices[0].price || 0;
+    const updatedTotal = this.order.total + menuPrice;
+    this.updateOrderData({ quantity: updatedQuantity, total: updatedTotal });
+  }
+
+  decreaseQuantity(): void {
+    const currentQuantity = this.order.quantity || 1;
+    if (currentQuantity > 1) {
+      const updatedQuantity = currentQuantity - 1;
+      const menuPrice = this.order.menu?.prices[0].price || 0;
+      const updatedTotal = this.order.total - menuPrice;
+      this.updateOrderData({ quantity: updatedQuantity, total: updatedTotal });
+    }
+    // If quantity is 1 or less, do nothing to maintain minimum quantity of 1
   }
 }

@@ -13,7 +13,7 @@
               <ion-grid>
                 <ion-row class="row-titre">
                   <ion-col size="auto"
-                    ><ion-label [ngStyle]="{ color: colorText1Ligne1 }"> {{ cmdGet?.menu?.titre }} </ion-label></ion-col
+                    ><ion-label [ngStyle]="{ color: colorText1Ligne1 }"> {{ cmdGet?.menu?.name }} </ion-label></ion-col
                   >
                 </ion-row>
                 <ion-row>
@@ -31,7 +31,16 @@
                 </ion-row>
                 <ion-row class="row-prix">
                   <ion-col size="auto">
-                    <ion-label [ngStyle]="{ color: colorText1Ligne3 }"> {{ cmdGet?.prixTotal }} </ion-label>
+                    <ion-label [ngStyle]="{ color: colorText1Ligne3 }"> {{ cmdGet?.total }} </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="row-action">
+                  <!-- <ion-col (click)="showBottomCard()" class="col-modifier" size="6"> -->
+                  <ion-col class="col-modifier" size="6">
+                    <ion-label *ngIf="showText1Ligne2"> {{ text1Ligne2 }} </ion-label>
+                  </ion-col>
+                  <ion-col (click)="deleteCmd()" class="col-annuler" size="6">
+                    <ion-label color="danger" *ngIf="showText2Ligne2">Annuler</ion-label>
                   </ion-col>
                 </ion-row>
               </ion-grid>

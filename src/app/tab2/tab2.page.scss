@@ -44,12 +44,13 @@ ion-grid {
   text-align: center;
 }
 .col-segment ion-label {
-  font-size: 10px;
-  font-weight: bold;
+  // font-size: 10px;
+  // font-weight: bold;
 }
 .col-segment ion-chip {
   position: relative;
   overflow: visible;
+  font-size: 8px;
 }
 
 .firstCchip {
@@ -57,7 +58,7 @@ ion-grid {
   color: white;
 }
 
-.col-segment ion-chip > ion-label:nth-child(2) {
+.col-segment ion-chip > ion-label:nth-child(3) {
   position: absolute;
   color: white;
   background: darkred;

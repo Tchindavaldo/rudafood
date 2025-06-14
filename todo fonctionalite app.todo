@@ -1,6 +1,12 @@
 - [ ] pouvoir passer son bonus a une personne
-- [ ] recharger son compte pour passer des transaction plus rapidement (marketing pour parent genre argent de poche pour enfant )
 - [ ] transferer son argent au yaammoo d'une autre
+- [ ] recharger son compte pour passer des transaction plus rapidement (marketing pour parent genre argent de poche pour enfant )
 
-- [ ] pouvoir voir le nombre de commadne dispo et l'etat cmdpasser sur cmd toltal (10/20)
+
 - [ ] pouvoir commander pour une date precise
+- [ ] pouvoir voir le nombre de commadne dispo et l'etat cmdpasser sur cmd toltal (10/20)
+
+
+- [ ] envoyer des sms a chque transaction car apres une requete de transaction le reste sera gerer par le backend  en ligne
+      comme CA si la connexion part chez le client lors de la requete et que la transaction ce passer bien lors de la requete cote backend qu'il soit rassurer
+

@@ -30,7 +30,6 @@ import { NoFastFoodComponent } from '../components/no-fast-food/no-fast-food.com
 import { CardNewFastFoodComponent } from '../components/no-fast-food/card-new-fast-food/card-new-fast-food.component2';
 import { FormsModule } from '@angular/forms';
 import { PendingOrderToBuyComponent } from '../tab2/pending-order-to-buy/pending-order-to-buy.component';
-import { PannierAchatOrComponent } from '../homeComponents/pannier-achat-or/pannier-achat-or.component';
 import { RouterModule } from '@angular/router';
 import { TextActionComponent } from '../components/text-action/text-action.component';
 import { FastFoodOrderComponent } from '../tab3/commande/components/fast-food-order/fast-food-order.component';
@@ -38,6 +37,8 @@ import { ExpandableTextComponent } from './components/expandable-text/expandable
 import { ConfirmProcesingOrderItem1Component } from '../tab3/commande/pending-cmd/confirm-procesing-order/confirm-procesing-order-item1/confirm-procesing-order-item1.component';
 import { ConfirmProcesingOrderComponent } from '../tab3/commande/pending-cmd/confirm-procesing-order/confirm-procesing-order.component';
 import { ExtrasPanelComponent } from './components/extras-panel/extras-panel.component';
+import { ItemPendingToBuyOrderComponent } from '../tab2/pending-order-to-buy/item-pending-to-buy-order/item-pending-to-buy-order.component';
+import { PaymentPendingOrderComponent } from '../tab2/pending-order-to-buy/payment-pending-order/payment-pending-order.component';
 
 @NgModule({
   declarations: [
@@ -51,11 +52,12 @@ import { ExtrasPanelComponent } from './components/extras-panel/extras-panel.com
     FinishedUserOrderComponent,
     DeliveredOrderComponent,
     UserOrderItemComponent,
-    PannierAchatOrComponent,
+    ItemPendingToBuyOrderComponent,
 
     HeaderComponent,
     MarchandHeaderComponent,
     PendingOrderToBuyComponent,
+    PaymentPendingOrderComponent,
 
     Component0Component,
     Component1Component,
@@ -93,7 +95,7 @@ import { ExtrasPanelComponent } from './components/extras-panel/extras-panel.com
     HeaderComponent,
 
     PendingOrderToBuyComponent,
-    PannierAchatOrComponent,
+    ItemPendingToBuyOrderComponent,
     MenuDesign2Component,
 
     MarchandHeaderComponent,
@@ -103,6 +105,8 @@ import { ExtrasPanelComponent } from './components/extras-panel/extras-panel.com
     FastFoodDesign4Component,
 
     ConfirmProcesingOrderComponent,
+
+    PaymentPendingOrderComponent,
     ConfirmProcesingOrderItem1Component,
 
     Component0Component,

@@ -15,6 +15,8 @@ export class LoaderComponent implements OnInit {
   @Input() stokeColor = 'none';
   @Input() position: string = 'absolute';
   @Input() showMessage = false;
+  @Input() message: string = '⏳ Requête en cours...<br>Veuillez patienter ⌛';
+  @Input() scale: number = 0.2;
 
   constructor() {}
 

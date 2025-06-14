@@ -57,22 +57,36 @@ export class ConfirmProcesingOrderItem1Component implements OnChanges {
   }
 
   async emitConfirmBtnClick() {
-    // Logique différente selon l'étape actuelle
-    switch (this.currentStep) {
-      case RefundStep.CONFIRM_REFUND:
-        // Passer à l'étape d'affichage du montant
-        this.moveToAmountStep();
-        break;
-      case RefundStep.SHOW_AMOUNT:
-        // Passer à l'étape de saisie du numéro de téléphone
-        this.moveToPhoneStep();
-        break;
-      case RefundStep.ENTER_PHONE:
-        // Effectuer le paiement
-        await this.processRefund();
-        break;
-      default:
-        break;
+    if (this.data.status === 'pendingToBuy') {
+      this.isUpdating = true;
+
+      try {
+        await this.updateOrdersRequet.updateOrders({ status: 'cancelByUser', id: this.data.id, fastFoodId: this.data.fastFoodId });
+        this.outputConfirmBtnClick.emit();
+        this.isUpdating = false;
+      } catch (error) {
+        this.isUpdating = false;
+      }
+    }
+
+    if (this.data.status === 'processing' || this.data.status === 'pending') {
+      // Logique différente selon l'étape actuelle
+      switch (this.currentStep) {
+        case RefundStep.CONFIRM_REFUND:
+          // Passer à l'étape d'affichage du montant
+          this.moveToAmountStep();
+          break;
+        case RefundStep.SHOW_AMOUNT:
+          // Passer à l'étape de saisie du numéro de téléphone
+          this.moveToPhoneStep();
+          break;
+        case RefundStep.ENTER_PHONE:
+          // Effectuer le paiement
+          await this.processRefund();
+          break;
+        default:
+          break;
+      }
     }
   }
 

@@ -13,9 +13,10 @@ export class ExpandableTextComponent implements OnInit, AfterViewInit, OnDestroy
   @Input() icon: string = '';
   @Input() iconColor: string = '';
   @Input() label: string = '';
-  @Input() chipColor: string = '';
+  @Input() chipColor: string | undefined = '';
   @Input() truncate: boolean = true;
   @Input() expandedHeight: string = '6em';
+  @Input() textColor: string = '';
   @ViewChild('textElement', { static: false }) textElement!: ElementRef;
 
   // Variables pour la gestion de l'expansion

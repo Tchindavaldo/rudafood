@@ -1,5 +1,27 @@
 import { formatDate } from '@angular/common';
 
+// Fonction de tri des commandes par champ
+export function sortByField(orders: any, field: string = 'rank', order: 'asc' | 'desc' = 'desc'): any[] {
+  if (!orders || !Array.isArray(orders)) return [];
+
+  const multiplier = order === 'asc' ? 1 : -1;
+
+  const sorted = [...orders].sort((a: any, b: any) => {
+    const valueA = a[field];
+    const valueB = b[field];
+
+    if (valueA < valueB) return -1 * multiplier;
+    if (valueA > valueB) return 1 * multiplier;
+    return 0;
+  });
+
+  // Créer un tableau avec uniquement les rangs triés
+  const ranks = sorted.map(order => order[field]);
+  console.log(`Tri par ${field} (${order}):`, ranks);
+
+  return sorted;
+}
+
 export interface OrderGroupByDate {
   noDelivery: Record<string, any[]>;
   deliveryExpress: Record<string, any[]>;

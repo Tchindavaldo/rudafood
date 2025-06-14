@@ -240,9 +240,9 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
 
     const defaultUserData = {
       firstName: 'Client ',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
+      lastName: 'tchinda',
+      email: 'tchinda@gmail.com',
+      phoneNumber: '690000000',
       photoUrl: '',
     };
 
@@ -330,11 +330,11 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
    * @param type Le type de livraison (optionnel)
    * @param time L'heure de la période (optionnel)
    */
-  async cancelDelivery(clientId: string, date?: string, type?: string, time?: string) {
+  async cancelDelivery(clientId: string, date?: string, type?: string, time?: string, action: string = 'cancel') {
     let userSorders: any[] = [];
     let orders: any[] = [];
 
-    if (date && type) {
+    if (date && type && action === 'cancel') {
       // Pour les livraisons express
       if (type === 'express') {
         userSorders.push(...this.getOrdersByDateAndUserDelivery(date, clientId, true, 'express'));
@@ -353,12 +353,11 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
       if (orders.length > 0) {
         await this.statutChange(orders);
       }
-
-      // Supprimer l'ID unique
-      const uniqueId = this.getUniqueClientId(date, type, clientId, time);
-      this.activeDeliveryClients.delete(uniqueId);
-      this.orderDeliveryService.removeActiveClientId(uniqueId);
     }
+    // Supprimer l'ID unique
+    const uniqueId = this.getUniqueClientId(date!, type!, clientId, time);
+    this.activeDeliveryClients.delete(uniqueId);
+    this.orderDeliveryService.removeActiveClientId(uniqueId);
   }
 
   /**
@@ -379,7 +378,7 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
     });
 
     await this.statutChange(orders);
-    this.cancelDelivery(clientId, date, type, time);
+    this.cancelDelivery(clientId, date, type, time, 'complete');
 
     // Ici, on pourrait ajouter une logique supplémentaire pour marquer les commandes comme livrées
   }
@@ -394,7 +393,8 @@ export class FinishCmdComponent implements OnInit, OnDestroy {
     });
 
     await this.statutChange(orders);
-    this.cancelDelivery(clientId, date, type, time);
+
+    this.cancelDelivery(clientId, date, type, time, 'complete');
 
     // Ici, on pourrait ajouter une logique supplémentaire pour marquer les commandes comme livrées
   }

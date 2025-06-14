@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { getOrdersService } from 'src/services/orders/get/get-orders.service';
@@ -30,6 +31,17 @@ export class CommandePage implements OnInit, OnDestroy {
   minDate = new Date().toISOString();
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString();
   private orderDates = new Set<string>();
+  private orderDatesPending = new Set<string>();
+  private orderDatesProcessing = new Set<string>();
+  private orderDatesFinished = new Set<string>();
+
+  // Propriétés pour stocker les dates passées formatées
+  PassPendingDays: Array<{ day: string; date: number; fullDate: Date }> = [];
+  PassProcessingDays: Array<{ day: string; date: number; fullDate: Date }> = [];
+  PassFinishedDays: Array<{ day: string; date: number; fullDate: Date }> = [];
+
+  // Route active
+  activeRoute: string = 'pending';
 
   // Vérifie si deux dates sont le même jour
   isSameDay(date1: string | Date, date2: Date): boolean {
@@ -120,11 +132,19 @@ export class CommandePage implements OnInit, OnDestroy {
   constructor(
     private user: UserStorageService,
     private router: Router,
+    private route: ActivatedRoute,
     private getOrdersService: getOrdersService,
     public orderData: OrderDataService,
     private store: Store<AppState>,
     private orderCountersService: OrderCountersService
-  ) {}
+  ) {
+    // Subscribe to route changes
+    this.route.url.subscribe(segments => {
+      if (segments.length > 0) {
+        this.activeRoute = segments[0].path;
+      }
+    });
+  }
 
   async ngOnInit() {
     this.userData = await this.user.get('user');
@@ -140,8 +160,25 @@ export class CommandePage implements OnInit, OnDestroy {
     }
   }
 
+  // Texte pour les jours précédents
+  previousDaysLabel: string = 'non traitées';
+
   selectChip(chipId: string) {
     this.selectedChip = chipId;
+    // Mettre à jour le label des jours précédents
+    switch (chipId) {
+      case 'pending':
+        this.previousDaysLabel = 'non traitées';
+        break;
+      case 'proccess':
+        this.previousDaysLabel = 'en cours';
+        break;
+      case 'finish':
+        this.previousDaysLabel = 'non livrés';
+        break;
+      default:
+        this.previousDaysLabel = 'non traitées';
+    }
     // Désabonner l'ancien compteur
     if (this.currentCounterSubscription) {
       this.currentCounterSubscription.unsubscribe();
@@ -261,14 +298,15 @@ export class CommandePage implements OnInit, OnDestroy {
     // console.log('=== Début de processOrderDates ===');
     // console.log(`Nombre total de commandes à traiter: ${orders.length}`);
 
-    this.orderDates.clear();
+    this.orderDatesPending.clear();
+    this.orderDatesProcessing.clear();
+    this.orderDatesFinished.clear();
     const today = new Date();
     // Utiliser UTC pour éviter les problèmes de fuseau horaire
     const todayUTC = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
 
     // Toujours ajouter la date du jour
     const todayStr = todayUTC.toISOString().split('T')[0];
-    this.orderDates.add(todayStr);
     // console.log('Date du jour ajoutée par défaut:', todayStr);
     // console.log(`Date du jour (local): ${today.toISOString()}`);
     // console.log(`Date du jour (UTC): ${todayUTC.toISOString()}`);
@@ -324,11 +362,24 @@ export class CommandePage implements OnInit, OnDestroy {
         // Vérifier si la date est aujourd'hui ou dans le futur
         if (deliveryDate >= todayUTC) {
           const dateStr = deliveryDate.toISOString().split('T')[0];
-          // console.log(`✅ Date à ajouter: ${dateStr}`);
           this.orderDates.add(dateStr);
-          // console.log(`Dates uniques après ajout:`, Array.from(this.orderDates));
         } else {
-          // console.log('❌ Date trop ancienne, ignorée');
+          // Date passée, traiter selon le statut
+          const dateStr = deliveryDate.toISOString().split('T')[0];
+          // Vérifier que ce n'est pas la date d'aujourd'hui
+          if (dateStr !== todayStr) {
+            if (order.status === 'pending') {
+              this.orderDatesPending.add(dateStr);
+            } else if (order.status === 'processing') {
+              this.orderDatesProcessing.add(dateStr);
+            } else if (order.status === 'finished') {
+              this.orderDatesFinished.add(dateStr);
+            }
+          }
+          // console.log(`Dates uniques après ajout - Pending:`, Array.from(this.orderDatesPending));
+          // console.log(`Dates uniques après ajout - Processing:`, Array.from(this.orderDatesProcessing));
+          // console.log(`Dates uniques après ajout - Finished:`, Array.from(this.orderDatesFinished));
+          // console.log(`Date d'aujourd'hui parmi les dates:`, todayStr);
         }
       } else {
         console.log('❌ Aucune date de livraison valide pour cette commande');
@@ -338,17 +389,16 @@ export class CommandePage implements OnInit, OnDestroy {
     // S'assurer que la date du jour est toujours présente
     if (!this.orderDates.has(todayStr)) {
       this.orderDates.add(todayStr);
-      console.log('Date du jour ajoutée à la fin:', todayStr);
     }
-
-    // console.log('Dates finales dans orderDates:', Array.from(this.orderDates));
   }
 
   private initializeDates() {
+    // console.log('Date sélectionnée:', this.selectedDate);
     this.selectedDate = this.selectedDate;
     this.updateCurrentDate(this.selectedDate);
 
     // Créer un tableau de toutes les dates uniques avec des commandes
+    // console.log('Dates brutes dans orderDates:', Array.from(this.orderDates));
     const allDates = Array.from(this.orderDates)
       .map(dateStr => {
         const [year, month, day] = dateStr.split('-').map(Number);
@@ -356,13 +406,58 @@ export class CommandePage implements OnInit, OnDestroy {
       })
       .sort((a, b) => a.getTime() - b.getTime());
 
+    // Créer les tableaux des dates passées
+    const allPassPendingDates = Array.from(this.orderDatesPending)
+      .map(dateStr => {
+        const [year, month, day] = dateStr.split('-').map(Number);
+        return new Date(Date.UTC(year, month - 1, day));
+      })
+      .sort((a, b) => a.getTime() - b.getTime());
+
+    const allPassProcessingDates = Array.from(this.orderDatesProcessing)
+      .map(dateStr => {
+        const [year, month, day] = dateStr.split('-').map(Number);
+        return new Date(Date.UTC(year, month - 1, day));
+      })
+      .sort((a, b) => a.getTime() - b.getTime());
+
+    const allPassFinishedDates = Array.from(this.orderDatesFinished)
+      .map(dateStr => {
+        const [year, month, day] = dateStr.split('-').map(Number);
+        return new Date(Date.UTC(year, month - 1, day));
+      })
+      .sort((a, b) => a.getTime() - b.getTime());
+
+    // console.log(
+    //   'Dates triées (UTC):',
+    //   allDates.map(date => date.toISOString())
+    // );
+
     // Si pas de dates de commandes, on ajoute aujourd'hui par défaut
     if (allDates.length === 0) {
       allDates.push(new Date());
     }
 
-    // Mapper au format attendu
+    // Mapper les dates au format attendu
     this.nextDays = allDates.map(date => ({
+      day: this.formatDayName(date),
+      date: date.getUTCDate(),
+      fullDate: date,
+    }));
+
+    this.PassPendingDays = allPassPendingDates.map(date => ({
+      day: this.formatDayName(date),
+      date: date.getUTCDate(),
+      fullDate: date,
+    }));
+
+    this.PassProcessingDays = allPassProcessingDates.map(date => ({
+      day: this.formatDayName(date),
+      date: date.getUTCDate(),
+      fullDate: date,
+    }));
+
+    this.PassFinishedDays = allPassFinishedDates.map(date => ({
       day: this.formatDayName(date),
       date: date.getUTCDate(),
       fullDate: date,

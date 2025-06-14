@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { getScreenHeight } from 'src/utils/getScreenHeight';
 import { filterByArg } from 'src/utils/filterByArg';
+import { sortByField } from 'src/utils/order-utils';
 import { countOrders, OrderCountResult } from 'src/utils/countOrders';
 import { getOrdersService } from 'src/services/orders/get/get-orders.service';
 import { OrderDataService } from 'src/services/orders/data/order-data.service';
@@ -44,7 +45,7 @@ export class ProccessCmdComponent implements OnInit, OnDestroy {
     // S'assurer que this.result est défini avant de l'utiliser dans le deuxième abonnement
     this.subscription.add(
       this.orderCountersService.processingOrders$.subscribe(result => {
-        this.proccessOrder = result.filteredOrders;
+        this.proccessOrder = sortByField(result.filteredOrders || [], 'rank', 'asc');
       })
     );
   }

@@ -1,7 +1,14 @@
 <div style="width: 100%">
   <ng-container *ngIf="chipColor">
     <!-- Affichage avec chip -->
-    <ion-chip (click)="toggleExpand($event)" [color]="chipColor" style="font-size: 12px; font-weight: bold; margin-left: 0px" class="custom-chip" [ngClass]="{ 'expanded-chip': expanded }">
+    <ion-chip
+      (click)="toggleExpand($event)"
+      [color]="textColor ? '' : chipColor"
+      [style.color]="textColor || 'inherit'"
+      style="font-size: 12px; font-weight: bold; margin-left: 0px; color: white"
+      class="custom-chip"
+      [ngClass]="{ 'expanded-chip': expanded, 'transparent-background': textColor !== '' }"
+    >
       <div class="chip-content">
         <ion-icon
           *ngIf="icon"
@@ -38,16 +45,16 @@
           class="chip-icon"
         ></ion-icon>
         <ng-container *ngIf="!expanded && !isCollapsing">
-          <ion-label #textElement class="truncated-text">
-            <span *ngIf="label" class="text-label" [style.color]="iconColor">{{ label }}</span
-            >{{ truncatedText }}</ion-label
-          >
+          <ion-label #textElement class="truncated-text" [style.color]="textColor">
+            <span *ngIf="label" class="text-label" [style.color]="iconColor">{{ label }}</span>
+            {{ truncatedText }}
+          </ion-label>
         </ng-container>
         <ng-container *ngIf="expanded || isCollapsing">
-          <ion-label #textElement class="full-text" [ngClass]="{ collapsing: isCollapsing }">
-            <span *ngIf="label" class="text-label" [style.color]="iconColor">{{ label }}</span
-            >{{ text }}</ion-label
-          >
+          <ion-label #textElement class="full-text" [style.color]="textColor" [ngClass]="{ collapsing: isCollapsing }">
+            <span *ngIf="label" class="text-label" [style.color]="iconColor">{{ label }}</span>
+            {{ text }}
+          </ion-label>
         </ng-container>
       </div>
     </div>

@@ -5,6 +5,10 @@
   padding: 4px 8px;
   transition: all 0.7s ease-in-out;
 
+  &.transparent-background {
+    background-color: transparent !important;
+  }
+
   &.expanded-chip {
     height: auto;
     flex-direction: column;

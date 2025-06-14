@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { PannierAchatOrComponent } from './pannier-achat-or.component';
+import { PaymentPendingOrderComponent } from './payment-pending-order.component';
 
-describe('PannierAchatOrComponent', () => {
-  let component: PannierAchatOrComponent;
-  let fixture: ComponentFixture<PannierAchatOrComponent>;
+describe('PaymentPendingOrderComponent', () => {
+  let component: PaymentPendingOrderComponent;
+  let fixture: ComponentFixture<PaymentPendingOrderComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PannierAchatOrComponent ],
+      declarations: [ PaymentPendingOrderComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PannierAchatOrComponent);
+    fixture = TestBed.createComponent(PaymentPendingOrderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

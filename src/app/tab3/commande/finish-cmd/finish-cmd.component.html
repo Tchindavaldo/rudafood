@@ -13,7 +13,7 @@
     <ion-card class="date-card">
       <!-- Section Livraison Express -->
       <ng-container *ngIf="getTotalOrdersByTypeExpress(date) > 0">
-        <ion-card style="box-shadow: 0px 0px 5px hsl(0, 100%, 83%); border: 0px solid hsl(0, 100%, 50%)" class="section-card">
+        <ion-card style="" class="section-card">
           <ion-card-header class="section-header">
             <div style="display: flex; justify-content: space-between; align-items: center">
               <ion-card-title class="date-title" style="width: 100%; justify-content: space-between">
@@ -34,7 +34,7 @@
               </div>
             </div>
             <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'express')">
-              <ion-item-group class="user-group">
+              <ion-item-group class="user-group" style="margin-bottom: 25px">
                 <ion-item lines="none" class="user-header">
                   <ion-avatar slot="start">
                     <ion-icon name="person-circle" class="user-avatar"></ion-icon>
@@ -89,7 +89,7 @@
                   </div>
 
                   <app-fast-food-order
-                    [background]="getTotalOrdersForUser('express', date, userId) > 1 ? '#00000061' : 'none'"
+                    [background]="getTotalOrdersForUser('express', date, userId) > 0 ? 'hsl(0, 100%, 15%)' : 'none'"
                     [extras]="order.extra || []"
                     [extrasDrink]="order.drink || []"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'express'); trackBy: trackByOrderId"
@@ -139,10 +139,10 @@
                       <ion-chip
                         (click)="startDeliveryForPeriod(date, 'time', time)"
                         [ngClass]="{ 'delivery-active': isDeliveryPeriodActive(date, 'time', time) }"
-                        style="margin-bottom: 0px; font-size: 0.75rem; flex-direction: row; justify-content: center; align-items: center; cursor: pointer"
+                        style="margin-bottom: 0px; font-size: 0.75rem; flex-direction: row; justify-content: center; align-items: center; cursor: pointer; background-color: darkred"
                         color="danger"
                       >
-                        <ion-icon color="danger" name="bicycle-outline" style="margin-right: 5px"></ion-icon>
+                        <ion-icon name="bicycle-outline" style="margin-right: 5px; color: white"></ion-icon>
                         <div style="display: block">
                           <ion-card-subtitle style="margin-bottom: 0px; font-size: 0.65rem; color: white">Livrer {{ time }}</ion-card-subtitle>
                         </div>
@@ -158,7 +158,7 @@
                   </div>
 
                   <ng-container *ngFor="let userId of getUserIdsByDateType(true, date, 'time', time)">
-                    <ion-item-group class="user-group">
+                    <ion-item-group class="user-group" style="margin-bottom: 25px">
                       <ion-item lines="none" class="user-header">
                         <ion-avatar slot="start">
                           <ion-icon name="person-circle" class="user-avatar"></ion-icon>
@@ -202,7 +202,7 @@
                         </div>
 
                         <app-fast-food-order
-                          [background]="getTotalOrdersForUser('', date, userId, time) > 1 ? '#00000061' : 'none'"
+                          [background]="getTotalOrdersForUser('', date, userId, time) > 0 ? 'hsl(0, 100%, 15%)' : 'none'"
                           [extras]="order.extra || []"
                           [extrasDrink]="order.drink || []"
                           *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, true, 'time', time); trackBy: trackByOrderId"
@@ -238,7 +238,7 @@
 
           <ion-card-content>
             <ng-container *ngFor="let userId of getUserIdsByDateType(false, date)">
-              <ion-item-group class="user-group">
+              <ion-item-group class="user-group" style="margin-bottom: 25px">
                 <ion-item lines="none" class="user-header">
                   <ion-avatar slot="start">
                     <ion-icon name="person-circle" class="user-avatar"></ion-icon>
@@ -258,7 +258,7 @@
 
                 <ion-list lines="none" class="order-list">
                   <app-fast-food-order
-                    [background]="getTotalOrdersForUser('', date, userId) > 1 ? '#00000061' : 'none'"
+                    [background]="getTotalOrdersForUser('', date, userId) > 0 ? 'hsl(0, 100%, 15%)' : 'none'"
                     [extras]="order.extra || []"
                     [extrasDrink]="order.drink || []"
                     *ngFor="let order of getOrdersByDateAndUserDelivery(date, userId, false); trackBy: trackByOrderId"

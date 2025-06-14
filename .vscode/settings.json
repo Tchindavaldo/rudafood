@@ -31,5 +31,6 @@
   "typescript.format.placeOpenBraceOnNewLineForFunctions": true,
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "codium.codeCompletion.enable": true
 }

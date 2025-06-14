@@ -48,10 +48,12 @@ export function countOrders(orders: any[], dateParam?: Date, status = 'pending')
       // }
     }
 
-    if (today.getTime() > date.getTime() || today.getTime() < date.getTime()) {
-      return deliveryDate.getTime() === date.getTime();
-    }
-    return deliveryDate.getTime() <= date.getTime();
+    // if (today.getTime() > date.getTime() || today.getTime() < date.getTime()) {
+    //   return deliveryDate.getTime() === date.getTime();
+    // }
+    // return deliveryDate.getTime() <= date.getTime();
+
+    return deliveryDate.getTime() === date.getTime();
   });
 
   // Calculer le montant total

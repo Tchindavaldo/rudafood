@@ -18,6 +18,7 @@ import {
 } from 'src/utils/order-utils';
 import { UserOrderCountersService } from 'src/services/orders/counters/User-order-counters.service';
 import { OrderDeliveryService } from 'src/services/orders/delivery/order-delivery.service';
+import { sortByField } from 'src/utils/order-utils';
 
 @Component({
   selector: 'app-finished-user-order',
@@ -69,7 +70,7 @@ export class FinishedUserOrderComponent implements OnInit, OnDestroy {
             console.log(' finiiissshhhee   ddde  dotot', order.clientId);
           }
         });
-        this.finishOrder = result.filteredOrders;
+        this.finishOrder = sortByField(result.filteredOrders, 'rank', 'asc');
       })
     );
 

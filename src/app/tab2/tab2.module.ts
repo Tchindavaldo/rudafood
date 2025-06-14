@@ -26,6 +26,7 @@ import { SharedModule2 } from '../shared/shared2.module';
     CmdBottomCardPageModule,
     CmdStatutPageModule,
     SharedModule2,
+    SharedModule,
   ],
   declarations: [Tab2Page, StatusOrderBuyedComponent, BonusOrderBuyedComponent],
 

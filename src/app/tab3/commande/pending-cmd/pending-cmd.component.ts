@@ -19,6 +19,7 @@ import { AppState } from 'src/store/indx';
 import { OrderCountersService } from 'src/services/orders/counters/order-counters.service';
 import { sortAsc, sortDesc } from 'src/utils/sort-helpers';
 import { showCard } from 'src/utils/showCard';
+import { sortByField } from 'src/utils/order-utils';
 
 @Component({
   selector: 'app-pending-cmd',
@@ -51,7 +52,15 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
     // Le composant parent (commande.page.ts) gère la mise à jour des données
     this.subscription.add(
       this.orderCountersService.pendingOrders$.subscribe(result => {
-        this.pendingOrders = result.filteredOrders;
+        if (result.filteredOrders && result.filteredOrders.length > 0) {
+          for (const order of result.filteredOrders) {
+            if (order.delivery && order.delivery.date) {
+              console.log('Delivery date:', order.delivery.date);
+            }
+          }
+        }
+
+        this.pendingOrders = sortByField(result.filteredOrders || [], 'rank', 'asc');
       })
     );
   }

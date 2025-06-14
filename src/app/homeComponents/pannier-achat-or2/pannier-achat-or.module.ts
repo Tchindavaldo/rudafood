@@ -9,13 +9,8 @@ import { PannierAchatOrPageRoutingModule } from './pannier-achat-or-routing.modu
 import { PannierAchatOrPage } from './pannier-achat-or.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    PannierAchatOrPageRoutingModule
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, PannierAchatOrPageRoutingModule],
   declarations: [PannierAchatOrPage],
-  exports:[PannierAchatOrPage]
+  exports: [PannierAchatOrPage],
 })
 export class PannierAchatOrPageModule {}
