@@ -52,13 +52,15 @@ export class PendingCmdComponent implements OnInit, OnDestroy {
     // Le composant parent (commande.page.ts) gère la mise à jour des données
     this.subscription.add(
       this.orderCountersService.pendingOrders$.subscribe(result => {
-        if (result.filteredOrders && result.filteredOrders.length > 0) {
-          for (const order of result.filteredOrders) {
-            if (order.delivery && order.delivery.date) {
-              console.log('Delivery date:', order.delivery.date);
-            }
-          }
-        }
+        // if (result.filteredOrders && result.filteredOrders.length > 0) {
+        //   for (const order of result.filteredOrders) {
+        //     if (order.delivery && order.delivery.date) {
+        //       console.log('Delivery date:', order.delivery.date);
+        //     }
+        //   }
+        // }
+
+        console.log('result', result);
 
         this.pendingOrders = sortByField(result.filteredOrders || [], 'rank', 'asc');
       })

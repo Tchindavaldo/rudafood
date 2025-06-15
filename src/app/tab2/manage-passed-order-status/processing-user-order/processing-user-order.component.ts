@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { getScreenHeight } from 'src/utils/getScreenHeight';
-import { filterByArg } from 'src/utils/filterByArg';
-import { OrderDataService } from 'src/services/orders/data/order-data.service';
-import { AppState } from 'src/store/indx';
 import { sortByField } from 'src/utils/order-utils';
+import { UserOrderCountersService } from 'src/services/orders/counters/User-order-counters.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-processing-user-order',
@@ -14,17 +12,28 @@ import { sortByField } from 'src/utils/order-utils';
 })
 export class ProcessingUserOrderComponent implements OnInit {
   proccessOrder: any[] | undefined;
-  userOrder!: Observable<any[]>;
   screenHeight: number = getScreenHeight(); // Dynamically set screen height
 
-  constructor(public ordersService: OrderDataService, private store: Store<AppState>) {
-    this.userOrder = this.store.select(state => state.userOrder.orders);
-    this.userOrder.subscribe(order => (this.proccessOrder = sortByField(filterByArg(order, 'status', 'processing'), 'rank', 'asc')));
+  private subscription: Subscription = new Subscription();
+  constructor(private orderCountersService: UserOrderCountersService) {}
 
-    // console.log('order pending data', filterByArg(ordersService.getOrderTabs(), 'status', 'processing'));
-    // console.log('order pproces data');
+  ngOnInit() {
+    // S'abonner uniquement aux changements du compteur pour mettre à jour l'UI
+    // Le composant parent (commande.page.ts) gère la mise à jour des données
+    this.subscription.add(
+      this.orderCountersService.processingOrders$.subscribe(result => {
+        console.log('pendingCmd', result);
+        this.proccessOrder = sortByField(result.filteredOrders || [], 'rank', 'asc');
+      })
+    );
   }
-  ngOnInit() {}
+
+  ngOnDestroy() {
+    // Se désabonner pour éviter les fuites de mémoire
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   trackByOrderId(index: number, order: any) {
     return order.id;
   }

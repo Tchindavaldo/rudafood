@@ -3,11 +3,11 @@ export const environment = {
 
   // apiUrl: 'http://localhost:5000',
   // apiUrl: 'http://10.42.0.1:5000',
-  apiUrl: 'http://192.168.8.5:5000',
+  // apiUrl: 'http://192.168.8.5:5000',
   // apiUrl: 'http://192.168.1.199:5000',
 
   // apiUrl: 'http://192.168.100.101:5000',
-  // apiUrl: 'http://192.168.1.198:5000',
+  apiUrl: 'http://192.168.1.198:5000',
   // apiUrl: 'http://192.168.1.122:5000',
   // apiUrl: 'http://192.168.1.124:5000',
 

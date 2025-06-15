@@ -3,23 +3,21 @@
     <ion-row>
       <ion-col size="auto">
         <ion-card class="imageFood">
-          <img [src]="menu.coverImage" alt="" srcset="" />
+          <ion-label [ngStyle]="{ 'background-color': menu.status === 'available' ? 'darkgreen' : 'darkred', color: 'white' }" class="status-chip">{{
+            menu.status === 'available' ? 'Disponible' : 'Indisponible'
+          }}</ion-label>
+          <div class="skeleton" *ngIf="!menu.coverImage || isLoading"></div>
+          <img style="width: 100%; height: 100%; object-fit: cover" [src]="menu.coverImage" (error)="onImageError($event)" alt="Menu image" (load)="onImageLoad($event)" />
         </ion-card>
+        <div style="padding-left: 6px">
+          <div class="ligne-titre">
+            <ion-label class="titre"> {{ menu.name }} </ion-label>
+          </div>
+          <div size="12">
+            <ion-label class="prix"> {{ menu?.prices && menu.prices.length > 0 ? menu.prices[0].price : '' }} fcfa </ion-label>
+          </div>
+        </div>
       </ion-col>
-      <ion-col size="12" class="ligne-titre">
-        <ion-label class="titre"> {{ menu.name }} </ion-label>
-      </ion-col>
-      <ion-col size="12" class="ligne-statut">
-        <ion-label class="statut"> {{ menu.status }} </ion-label>
-      </ion-col>
-      <ion-row class="ion-justify-content-between">
-        <ion-col size="auto">
-          <ion-label class="prix"> {{ menu?.prices && menu.prices.length > 0 ? menu.prices[0].price : '' }} </ion-label>
-        </ion-col>
-        <ion-col size="auto">
-          <ion-icon name="options" style="background-color: darkred; color: white; padding: 6px; font-size: 12px; border-radius: 20px"></ion-icon>
-        </ion-col>
-      </ion-row>
     </ion-row>
   </ion-grid>
 </ion-col>

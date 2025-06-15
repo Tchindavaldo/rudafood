@@ -6,7 +6,7 @@
           <ion-label style="font-size: 18px; white-space: nowrap">{{ getRelativeDate(selectedDate) | titlecase }}</ion-label>
           <ion-label style="margin-left: 0px; font-size: 14px">{{ currentDate }}</ion-label>
         </ion-col>
-        <ion-col *ngIf="nextDays.length>1" size="7" style="display: flex; align-items: center; overflow-x: auto; white-space: nowrap">
+        <ion-col *ngIf="nextDays.length>0" size="7" style="display: flex; align-items: center; overflow-x: auto; white-space: nowrap">
           <!-- Afficher les dates avec des commandes -->
           <ng-container *ngFor="let day of nextDays.slice(0,7)">
             <ion-col size="auto" (click)="selectDay(day)" class="day-col">
@@ -71,6 +71,68 @@
             </ion-chip>
           </ion-col>
         </ion-row>
+      </ion-row>
+      <ion-row *ngIf="(selectedChip === 'pending' && PassPendingDays.length > 0) ||
+                  (selectedChip === 'proccess' && PassProcessingDays.length > 0) ||
+                  (selectedChip === 'finish' && PassFinishedDays.length > 0)">
+        <ion-col size="12" style="display: flex; align-items: center; overflow-x: auto; white-space: nowrap">
+          <!-- Afficher les dates avec des commandes -->
+          <ion-label style="color: #666; margin-right: 10px; font-size: 14px">
+            Jours Précédents <br />
+            Commandes {{previousDaysLabel}}
+          </ion-label>
+          
+          <ng-container *ngIf="selectedChip === 'pending'">
+            <ng-container *ngFor="let day of PassPendingDays">
+              <ion-col size="auto" (click)="selectDay(day)" class="day-col">
+                <app-component2
+                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'darkred' : '#fff5f5'"
+                  [mLeft]="'5px'"
+                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px darkred' : 'none'"
+                  [text1]="day.day"
+                  [text2]="day.date.toString()"
+                  [style.opacity]="isSameDay(selectedDate, day.fullDate) ? '1' : '0.6'"
+                  [color1]="isSameDay(selectedDate, day.fullDate) ? 'white' : 'black'"
+                  [color2]="isSameDay(selectedDate, day.fullDate) ? 'white' : 'black'"
+                ></app-component2>
+              </ion-col>
+            </ng-container>
+          </ng-container>
+          
+          <ng-container *ngIf="selectedChip === 'proccess'">
+            <ng-container *ngFor="let day of PassProcessingDays">
+              <ion-col size="auto" (click)="selectDay(day)" class="day-col">
+                <app-component2
+                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'darkred' : '#fff5f5'"
+                  [mLeft]="'5px'"
+                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px darkred' : 'none'"
+                  [text1]="day.day"
+                  [text2]="day.date.toString()"
+                  [style.opacity]="isSameDay(selectedDate, day.fullDate) ? '1' : '0.6'"
+                  [color1]="isSameDay(selectedDate, day.fullDate) ? 'white' : 'black'"
+                  [color2]="isSameDay(selectedDate, day.fullDate) ? 'white' : 'black'"
+                ></app-component2>
+              </ion-col>
+            </ng-container>
+          </ng-container>
+          
+          <ng-container *ngIf="selectedChip === 'finish'">
+            <ng-container *ngFor="let day of PassFinishedDays">
+              <ion-col size="auto" (click)="selectDay(day)" class="day-col">
+                <app-component2
+                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'darkred' : '#fff5f5'"
+                  [mLeft]="'5px'"
+                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px darkred' : 'none'"
+                  [text1]="day.day"
+                  [text2]="day.date.toString()"
+                  [style.opacity]="isSameDay(selectedDate, day.fullDate) ? '1' : '0.6'"
+                  [color1]="isSameDay(selectedDate, day.fullDate) ? 'white' : 'black'"
+                  [color2]="isSameDay(selectedDate, day.fullDate) ? 'white' : 'black'"
+                ></app-component2>
+              </ion-col>
+            </ng-container>
+          </ng-container>
+        </ion-col>
       </ion-row>
     </ion-grid>
   </ion-toolbar>

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { getScreenHeight } from 'src/utils/getScreenHeight';
 import { filterByArg } from 'src/utils/filterByArg';
 import { OrderDataService } from 'src/services/orders/data/order-data.service';
 import { AppState } from 'src/store/indx';
 import { sortByField } from 'src/utils/order-utils';
+import { UserOrderCountersService } from 'src/services/orders/counters/User-order-counters.service';
 
 @Component({
   selector: 'app-pending-user-order',
@@ -14,17 +15,28 @@ import { sortByField } from 'src/utils/order-utils';
 })
 export class PendingUserOrderComponent implements OnInit {
   pendingCmd!: any[] | undefined;
-  userOrder!: Observable<any[]>; // Utilisation d'un Observable
   screenHeight: number = getScreenHeight(); // Dynamically set screen height
 
-  constructor(public ordersService: OrderDataService, private store: Store<AppState>) {
-    this.userOrder = this.store.select(state => state.userOrder.orders);
-    this.userOrder.subscribe(order => (this.pendingCmd = sortByField(filterByArg(order, 'status', 'pending'), 'rank', 'asc')));
+  private subscription: Subscription = new Subscription();
+  constructor(private store: Store<AppState>, private orderCountersService: UserOrderCountersService) {}
 
-    // console.log('order pending data', filterByArg(ordersService.getOrderTabs(), 'status', 'pending'));
-    // console.log('order pending data');
+  ngOnInit() {
+    // S'abonner uniquement aux changements du compteur pour mettre à jour l'UI
+    // Le composant parent (commande.page.ts) gère la mise à jour des données
+    this.subscription.add(
+      this.orderCountersService.pendingOrders$.subscribe(result => {
+        console.log('pendingCmd', result);
+        this.pendingCmd = sortByField(result.filteredOrders || [], 'rank', 'asc');
+      })
+    );
   }
-  ngOnInit() {}
+
+  ngOnDestroy() {
+    // Se désabonner pour éviter les fuites de mémoire
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   // Utilisé pour trackBy
   trackByOrderId(index: number, order: any) {
     return order.id;

@@ -17,7 +17,7 @@ export function sortByField(orders: any, field: string = 'rank', order: 'asc' | 
 
   // Créer un tableau avec uniquement les rangs triés
   const ranks = sorted.map(order => order[field]);
-  console.log(`Tri par ${field} (${order}):`, ranks);
+  // console.log(`Tri par ${field} (${order}):`, ranks);
 
   return sorted;
 }
