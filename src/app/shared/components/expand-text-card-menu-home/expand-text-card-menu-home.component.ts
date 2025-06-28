@@ -3,11 +3,11 @@ import { Subscription } from 'rxjs';
 import { TextExpansionService } from './text-expansion.service';
 
 @Component({
-  selector: 'app-expandable-text',
-  templateUrl: './expandable-text.component.html',
-  styleUrls: ['./expandable-text.component.scss'],
+  selector: 'app-expand-text-card-menu-home',
+  templateUrl: './expand-text-card-menu-home.component.html',
+  styleUrls: ['./expand-text-card-menu-home.component.scss'],
 })
-export class ExpandableTextComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ExpandTextCardMenuHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() text: string = '';
   @Input() maxLength: number = 30;
   @Input() icon: string = '';
