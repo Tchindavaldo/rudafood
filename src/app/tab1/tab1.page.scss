@@ -1,37 +1,35 @@
-ion-item{
-    --padding-start: 0;
-    --inner-padding-end: 0;
-    --inner-border-width: 0;
-    --inner-padding-bottom: 25px;
-
-
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --inner-border-width: 0;
+  --inner-padding-bottom: 25px;
 }
-ion-infinite-scroll ion-grid{
-    padding: 0;
+ion-infinite-scroll ion-grid {
+  padding: 0;
 }
-ion-col{
-    display: flex;
-    align-items: center;
+ion-col {
+  display: flex;
+  align-items: center;
 }
 
-ion-searchbar{
-    --box-shadow: none;
-    --background: #efefef;
-    --border-radius: 40px;
-    padding-inline-start: 0;
-    padding-bottom: 0;
+ion-searchbar {
+  --box-shadow: none;
+  --background: #efefef;
+  --border-radius: 40px;
+  padding-inline-start: 0;
+  padding-bottom: 0;
 }
 
-ion-icon{
-    font-size: 12px;
+ion-icon {
+  font-size: 12px;
 }
-ion-header{
-    background-color: white;
+ion-header {
+  background-color: white;
 }
 .imageFood {
   height: 115px;
   width: 135px;
-  
+
   border-radius: 25px;
   overflow: hidden;
   display: flex;
@@ -39,110 +37,104 @@ ion-header{
   align-items: center;
 }
 
-ion-card  {
-    
-        --background: darkred;
-        margin: 0;
+ion-card {
+  --background: darkred;
+  margin: 0;
 }
 ion-card img {
-    
-    transform: scale(1.1);
-    max-width: 125%;
-        --background: darkred;
+  transform: scale(1.1);
+  max-width: 125%;
+  --background: darkred;
 }
-.rowMarchandTab{
-    flex-wrap: nowrap;
-    overflow: scroll;
+.rowMarchandTab {
+  flex-wrap: nowrap;
+  overflow: scroll;
 }
-.titre{
-    font-size: 12px;
-    font-weight: bolder;
+.titre {
+  font-size: 12px;
+  font-weight: bolder;
 }
 .statut {
-    font-size: 11px;
-    color: green;
+  font-size: 11px;
+  color: green;
 }
 
-.col_marchand_tab_bar{
-    padding: 0;
+.col_marchand_tab_bar {
+  padding: 0;
 }
 .prix {
-    font-size: 14px;
-    font-weight: 900;
+  font-size: 14px;
+  font-weight: 900;
 }
 .ligne-titre {
-    padding-top: 5px;
-    padding-bottom: 0px;
+  padding-top: 5px;
+  padding-bottom: 0px;
 }
-.row-item{
-        flex-wrap: nowrap;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    scrollbar-width: none;
-}
-
-.chip_localisation{
-    padding-inline-start: 14px;
-    padding-inline-end: 14px;
-    padding-top: 11px;
-    padding-bottom: 11px;
-        --background: darkred;
-        --color:white
+.row-item {
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scrollbar-width: none;
 }
 
-
-.chip_localisation ion-label{
-    font-size: 14px;
-    font-weight: 900
+.chip_localisation {
+  padding-inline-start: 14px;
+  padding-inline-end: 14px;
+  padding-top: 11px;
+  padding-bottom: 11px;
+  --background: darkred;
+  --color: white;
 }
 
-.row_great{
-    margin-top: 16px;
-    margin-bottom: 12px;
-}
-.row_search_bar{ 
-    margin-bottom: 12px;
-}
-.row_great ion-label{
-    font-size: 16px;
-    font-weight: 900
+.chip_localisation ion-label {
+  font-size: 14px;
+  font-weight: 900;
 }
 
-.chip_marchand_tab_bar ion-label{
-    font-size: 6px
+.row_great {
+  margin-top: 16px;
+  margin-bottom: 12px;
 }
-.chip_marchand_tab_bar ion-icon{
-    font-size: 8px
+.row_search_bar {
+  margin-bottom: 12px;
 }
-.chip_marchand_fastfood ion-label{
-    font-size: 8px
+.row_great ion-label {
+  font-size: 16px;
+  font-weight: 900;
 }
 
-.chip_marchand_focused{
-    background-color: #8b0000;
-    color: white; 
+.chip_marchand_tab_bar ion-label {
+  font-size: 10px;
 }
-@media (max-height:700px) {
-    .chip_localisation{
-        padding-inline-start: 12px;
-        padding-inline-end: 12px;
-        padding-top: 9px;
-        padding-bottom: 9px;
-    }
+.chip_marchand_tab_bar ion-icon {
+  font-size: 8px;
+}
+.chip_marchand_fastfood ion-label {
+  font-size: 8px;
+}
 
-    .chip_localisation ion-label{
-        font-size: 8px;
-        font-weight: 900
-    }
+.chip_marchand_focused {
+  background-color: #8b0000;
+  color: white;
+}
+@media (max-height: 700px) {
+  .chip_localisation {
+    padding-inline-start: 12px;
+    padding-inline-end: 12px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
 
-    
-    .row_great{
-        margin-top: 5px;
-        margin-bottom: 0px;
-    }    
-    .row_great ion-label{
-        font-size: 12px;
-     }
+  .chip_localisation ion-label {
+    font-size: 8px;
+    font-weight: 900;
+  }
 
-
+  .row_great {
+    margin-top: 5px;
+    margin-bottom: 0px;
+  }
+  .row_great ion-label {
+    font-size: 12px;
+  }
 }

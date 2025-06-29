@@ -65,7 +65,7 @@ ion-card {
   overflow: scroll;
 }
 .titre {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bolder;
   white-space: nowrap;
   overflow: hidden;
@@ -80,16 +80,16 @@ ion-card {
   padding: 0;
 }
 .prix {
-  font-size: 18px;
-  font-weight: 900;
-  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 2px;
 }
 .ligne-titre {
-  padding-top: 5px;
+  padding-top: 2px;
   padding-bottom: 0px;
-  width: 85%;
+  width: 132px;
   overflow: hidden;
-  font-weight: 300;
+  // font-weight: 300;
 }
 .row-item {
   flex-wrap: nowrap;

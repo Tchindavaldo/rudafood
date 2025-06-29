@@ -21,7 +21,11 @@ export class Tab1Page implements OnInit {
   fastfoods = this.fastFoodData.getFastfoods();
   constructor(private fastFoodService: getFastFoodsService, public fastFoodData: fastFoodsDataService, private userStorage: UserStorageService) {}
 
-  setClickedMenu = (menu: any) => (this.menuTabToPass = menu);
+  setClickedMenu = (menu: any) => {
+    console.log('menu clicked ', menu);
+
+    this.menuTabToPass = menu;
+  };
 
   ngOnInit(): void {
     // this.setKey();

@@ -1,0 +1,36 @@
+<ion-item>
+  <div class="carousel-slider swiper" style="flex-direction: column">
+    <div style="width: 100%">
+      <app-marchand-header [fastFoodData]="fastFood" [rating]="fastFood.rating || 0" [name]="fastFood.fastfoodName"></app-marchand-header>
+    </div>
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" *ngFor="let item of slides">
+        <div class="item-content">
+          <app-item-slide-design4 [menu]="item"></app-item-slide-design4>
+
+          <!-- <ion-grid fixed>
+          <ion-row class="row-bonus ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-chip color="success">
+                <ion-label>BONUS 1</ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col class="ion-text-center" size="4">
+              <ion-chip color="success">
+                <ion-label>BONUS 2</ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="auto">
+              <ion-chip color="success">
+                <ion-label>BONUS 3</ion-label>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+        </ion-grid> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="width: 10%; height: 85%; position: absolute; bottom: 4%; left: 0; z-index: 125" (click)="scrollLeft()"></div>
+  <div style="width: 10%; height: 85%; position: absolute; bottom: 4%; right: 0; z-index: 125" (click)="scrollRight()"></div>
+</ion-item>

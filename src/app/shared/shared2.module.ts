@@ -17,6 +17,7 @@ import { OrderModalItem1Component } from '../tab3/commande/components/order-moda
 import { OrderModalItem2Component } from '../tab3/commande/components/order-modal/order-modal-item2/order-modal-item2.component';
 import { OrderModalItem3Component } from '../tab3/commande/components/order-modal/order-modal-item3/order-modal-item3.component';
 import { PendingCmdComponent } from '../tab3/commande/pending-cmd/pending-cmd.component';
+import { CustumCkeckboxComponent } from '../components/custum-ckeckbox/custum-ckeckbox.component';
 
 @NgModule({
   declarations: [
@@ -32,10 +33,12 @@ import { PendingCmdComponent } from '../tab3/commande/pending-cmd/pending-cmd.co
     OrderModalItem2Component,
     OrderModalItem3Component,
 
+    CustumCkeckboxComponent,
     PendingCmdComponent,
   ],
   imports: [CommonModule, IonicModule, FormsModule, SharedModule, RouterModule],
   exports: [
+    CustumCkeckboxComponent,
     BonusComponent,
     MenuItemListComponent,
     PageModifyComponent,
@@ -45,6 +48,7 @@ import { PendingCmdComponent } from '../tab3/commande/pending-cmd/pending-cmd.co
     OrderModalItem1Component,
     OrderModalItem2Component,
     OrderModalItem3Component,
+    SharedModule,
 
     PendingCmdComponent,
   ],

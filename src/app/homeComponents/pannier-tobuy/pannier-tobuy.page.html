@@ -6,10 +6,32 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-between ion-align-items-center">
-      <ion-col size="7">
-        <ion-grid fixed>
-          <ion-row>
-            <app-pannier-cmd-detail
+      <ion-col
+        [attr.id]="menu?.id+'-detail'"
+        size="12"
+        style="display: block; overflow-x: scroll; height: max-content; margin-top: 6; margin-bottom: 0; flex-wrap: nowrap; position: absolute"
+      >
+        <div style="display: flex; flex-wrap: nowrap">
+          <app-pannier-cmd-detail [iconName]="'add-outline'" [textLigne1]="'detail'" [textLigne2]="'500f'"> </app-pannier-cmd-detail>
+        </div>
+      </ion-col>
+
+      <ion-col
+        [attr.id]="menu?.id+'-extra'"
+        size="12"
+        style="display: block; overflow-x: scroll; height: max-content; margin-top: 6; margin-bottom: 0; flex-wrap: nowrap; position: absolute"
+      >
+        <div style="display: flex; flex-wrap: nowrap">
+          <app-pannier-cmd-detail [iconName]="'add-outline'" [textLigne1]="'extra'" [textLigne2]="'500f'"> </app-pannier-cmd-detail>
+        </div>
+      </ion-col>
+
+      <ion-col
+        [attr.id]="menu?.id+'-drink'"
+        size="12"
+        style="display: block; overflow-x: scroll; height: max-content; margin-top: 6; margin-bottom: 0; flex-wrap: nowrap; position: absolute"
+      >
+        <!-- <app-pannier-cmd-detail
               [postOrder]="postOrder.bind(this)"
               shadow="0px 0px 9px rgb(255, 157, 157)"
               backgroundChip="darkred"
@@ -17,21 +39,59 @@
               [labelIshow]="true"
               textLigne1="Total"
               [textLigne2]="1000"
-            ></app-pannier-cmd-detail>
-            <app-pannier-cmd-detail textLigne1="plastic" [textLigne2]="44+'f'"></app-pannier-cmd-detail>
-            <app-pannier-cmd-detail textLigne1="Quantite" [textLigne2]="2"></app-pannier-cmd-detail>
-            <app-pannier-cmd-detail textLigne1="boisson" [textLigne2]="1000+'f'"></app-pannier-cmd-detail>
-            <app-pannier-cmd-detail textLigne1="gamelle" [textLigne2]="222+'f'"></app-pannier-cmd-detail>
-            <app-pannier-cmd-detail textLigne1="Livraison" [textLigne2]="333+'f'"></app-pannier-cmd-detail>
-          </ion-row>
-        </ion-grid>
+            ></app-pannier-cmd-detail> -->
+        <div style="display: flex; flex-wrap: nowrap">
+          <app-pannier-cmd-detail [iconName]="'add-outline'" *ngFor="let item of firstRowItems" [textLigne1]="item.textLigne1" [textLigne2]="item.textLigne2"> </app-pannier-cmd-detail>
+        </div>
+        <div style="display: flex; flex-wrap: nowrap">
+          <app-pannier-cmd-detail [iconName]="'add-outline'" *ngFor="let item of secondRowItems" [textLigne1]="item.textLigne1" [textLigne2]="item.textLigne2"> </app-pannier-cmd-detail>
+        </div>
       </ion-col>
-      <ion-col class="ion-align-self-start" size="4">
+
+      <ion-col
+        [attr.id]="menu?.id+'-delivery'"
+        size="12"
+        style="display: block; overflow-x: scroll; height: max-content; margin-top: 6; margin-bottom: 0; flex-wrap: nowrap; position: absolute"
+      >
+        <div style="display: flex; flex-wrap: nowrap">
+          deli
+          <app-pannier-cmd-detail [iconName]="'add-outline'" [textLigne1]="'500f'" [textLigne2]="'livraison'"> </app-pannier-cmd-detail>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="ion-align-self-start" size="12">
         <ion-grid fixed>
-          <ion-row>
-            <app-pannier-cmd-detail2></app-pannier-cmd-detail2>
-            <app-pannier-cmd-detail2 titre="Piment"></app-pannier-cmd-detail2>
-            <app-pannier-cmd-detail2 titre="cube"></app-pannier-cmd-detail2>
+          <ion-row style="margin-right: 0px; flex-wrap: nowrap">
+            <ion-chip (click)="resetPanels()" color="light" style="width: auto; font-size: 12px; color: white; justify-content: space-between; text-align: right">
+              <ion-label>Détail</ion-label>
+              <ion-icon name="list-outline" style="margin-left: 8px"></ion-icon>
+            </ion-chip>
+            <ion-chip
+              (click)="toggleExtrasPanel($event, menu?.id + '-extra')"
+              color="light"
+              style="width: auto; font-size: 12px; background: none; justify-content: space-between; text-align: right"
+            >
+              <ion-label>Extra</ion-label>
+              <ion-icon name="add-circle-outline" style="margin-left: 8px"></ion-icon>
+            </ion-chip>
+            <ion-chip
+              (click)="toggleExtrasPanel($event, menu?.id + '-drink')"
+              color="light"
+              style="width: auto; font-size: 12px; background: none; justify-content: space-between; text-align: right"
+            >
+              <ion-label>Boisson</ion-label>
+              <ion-icon name="wine-outline" style="margin-left: 8px"></ion-icon>
+            </ion-chip>
+            <ion-chip
+              (click)="toggleExtrasPanel($event, menu?.id + '-delivery')"
+              color="light"
+              style="width: auto; font-size: 12px; background: none; justify-content: space-between; text-align: right"
+            >
+              <ion-label>Livraison</ion-label>
+              <ion-icon name="bicycle-outline" style="margin-left: 8px"></ion-icon>
+            </ion-chip>
           </ion-row>
         </ion-grid>
       </ion-col>

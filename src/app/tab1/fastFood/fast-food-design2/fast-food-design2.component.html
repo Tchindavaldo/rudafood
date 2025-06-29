@@ -1,7 +1,7 @@
 <ion-item>
   <ion-infinite-scroll>
     <ion-grid>
-      <app-marchand-header [name]="fastFood.fastfoodName"></app-marchand-header>
+      <app-marchand-header [fastFoodData]="fastFood" [rating]="fastFood.rating || 0" [name]="fastFood.fastfoodName"></app-marchand-header>
 
       <ion-row *ngIf="fastFood.menus?.length > 0" style="margin-top: -10px">
         <app-menu-design2 [menu]="menu" (click)="handleMenuClick(menu); showBottomCard('bottom-card-home')" *ngFor="let menu of fastFood.menus"></app-menu-design2>

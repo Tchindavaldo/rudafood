@@ -13,6 +13,7 @@ export class PannierCmdDetailPage implements OnInit {
   @Input() textLigne2: string | number = '100f';
   @Input() iconIshow = true;
   @Input() labelIshow = false;
+  @Input() iconName: string = 'remove-outline';
   @Input() sizeLabel = '12px';
   @Input() paddingright = '';
   @Input() backgroundChip = '';

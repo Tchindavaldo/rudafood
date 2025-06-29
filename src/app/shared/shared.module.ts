@@ -13,8 +13,8 @@ import { FastFoodDesign2Component } from '../tab1/fastFood/fast-food-design2/fas
 import { FastFoodDesign3Component } from '../tab1/fastFood/fast-food-design3/fast-food-design3.component';
 import { FastFoodDesign4Component } from '../tab1/fastFood/fast-food-design4/fast-food-design4.component';
 
-import { Item2Component } from '../homeComponents/item2/item2.component';
-import { Item3Component } from '../homeComponents/item3/item3.component';
+import { Item2Component } from '../tab1/fastFood/fast-food-design3/item2/item2.component';
+import { Item3Component } from '../tab1/fastFood/fast-food-design1/item3/item3.component';
 import { HeaderComponent } from '../homeComponents/pannier-tobuy/header/header.component';
 import { PendingCmdComponent } from '../tab3/commande/pending-cmd/pending-cmd.component';
 import { ProccessCmdComponent } from '../tab3/commande/proccess-cmd/proccess-cmd.component';
@@ -39,6 +39,10 @@ import { ConfirmProcesingOrderComponent } from '../tab3/commande/pending-cmd/con
 import { ExtrasPanelComponent } from './components/extras-panel/extras-panel.component';
 import { ItemPendingToBuyOrderComponent } from '../tab2/pending-order-to-buy/item-pending-to-buy-order/item-pending-to-buy-order.component';
 import { PaymentPendingOrderComponent } from '../tab2/pending-order-to-buy/payment-pending-order/payment-pending-order.component';
+import { SharedModule2 } from 'src/app/shared/shared2.module';
+import { MenuDesign4Component } from '../tab1/fastFood/fast-food-design4/menu-design4/menu-design4.component';
+import { ItemSlideDesign4Component } from '../tab1/fastFood/fast-food-design4/menu-design4/item-slide-design4/item-slide-design4.component';
+import { ExpandTextCardMenuHomeComponent } from './components/expand-text-card-menu-home/expand-text-card-menu-home.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +50,8 @@ import { PaymentPendingOrderComponent } from '../tab2/pending-order-to-buy/payme
     NoDataComponent,
     NoFastFoodComponent,
     CardNewFastFoodComponent,
+
+    MenuDesign4Component,
 
     PendingUserOrderComponent,
     ProcessingUserOrderComponent,
@@ -80,8 +86,10 @@ import { PaymentPendingOrderComponent } from '../tab2/pending-order-to-buy/payme
     FastFoodDesign4Component,
 
     FastFoodOrderComponent,
+    ExpandTextCardMenuHomeComponent,
     ExpandableTextComponent,
 
+    ItemSlideDesign4Component,
     LoaderComponent,
     TextActionComponent,
   ],
@@ -98,6 +106,7 @@ import { PaymentPendingOrderComponent } from '../tab2/pending-order-to-buy/payme
     ItemPendingToBuyOrderComponent,
     MenuDesign2Component,
 
+    MenuDesign4Component,
     MarchandHeaderComponent,
     FastFoodDesign1Component,
     FastFoodDesign2Component,
@@ -115,10 +124,12 @@ import { PaymentPendingOrderComponent } from '../tab2/pending-order-to-buy/payme
     Component3Component,
 
     FastFoodOrderComponent,
+    ExpandTextCardMenuHomeComponent,
     ExpandableTextComponent,
     LoaderComponent,
     TextActionComponent,
 
+    ItemSlideDesign4Component,
     ProccessCmdComponent,
     FinishCmdComponent,
   ],

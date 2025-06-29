@@ -1,88 +1,106 @@
 ion-grid {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 .bottom-card-home {
-    position: fixed;
-    height: 225px;
-    bottom: 0px;
-    width: 100%;
-    display: flex;
-    align-items: flex-end;
-    color: #ffffff;
-    transition-duration: 500ms;
-    box-shadow: none;
-    margin: 0px;
-    border-top-left-radius: 45px;
-    border-top-right-radius: 45px;
-    background-color: rgba(0, 0, 0, 0);
-    transform: translateY(230px);
+  position: fixed;
+  height: 225px;
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  color: #ffffff;
+  transition-duration: 500ms;
+  box-shadow: none;
+  margin: 0px;
+  border-top-left-radius: 45px;
+  border-top-right-radius: 45px;
+  background-color: rgba(0, 0, 0, 0);
+  transform: translateY(230px);
 }
 
-ion-card>ion-grid:nth-child(1) {
-
-    width: 100%;
-    height: 225px;
-    background-color: rgba(0, 0, 0, 0.55);
-    border-top-left-radius: 45px;
-    border-top-right-radius: 45px;
-    -webkit-backdrop-filter: blur(36px);
-    backdrop-filter: blur(36px);
-
+ion-card > ion-grid:nth-child(1) {
+  width: 100%;
+  height: 225px;
+  background-color: rgba(0, 0, 0, 0.55);
+  border-top-left-radius: 45px;
+  border-top-right-radius: 45px;
+  -webkit-backdrop-filter: blur(36px);
+  backdrop-filter: blur(36px);
 }
 
 ion-grid {
-    --background: none;
+  --background: none;
+  padding: 0;
+  margin: 0;
 }
 
-ion-card>ion-grid:nth-child(1)>ion-row:nth-child(2)>ion-col:nth-child(2) ion-grid {
-    padding: 0 10px 0 0;
-    height: max-content;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+.detail-row {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 0 5px;
+  margin: 0;
+  scrollbar-width: none; /* Pour Firefox */
+  -ms-overflow-style: none; /* Pour Internet Explorer et Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* Pour Chrome, Safari et Opera */
+  }
+
+  app-pannier-cmd-detail {
+    flex: 0 0 auto;
+    margin: 0 4px;
+  }
+
+  .spacer {
+    width: 60px; /* Largeur du premier élément de la première rangée (Total) */
+    flex-shrink: 0;
+  }
 }
 
-ion-card>ion-grid:nth-child(1)>ion-row:nth-child(2)>ion-col:nth-child(2) ion-grid ion-row ion-col {
-    padding: 0;
-
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(2) ion-grid {
+  padding: 0 10px 0 0;
+  height: max-content;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
-ion-card>ion-grid:nth-child(1)>ion-row:nth-child(2) {
-    height: 70%;
-
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(2) ion-grid ion-row ion-col {
+  padding: 0;
 }
 
-ion-card>ion-grid:nth-child(1)>ion-row:nth-child(2)>ion-col:nth-child(1) {
-    height: 100%;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    padding-left: 0;
-    padding-right: 20px;
-    // /* scrollbar-width: none;
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) {
+  height: 55%;
 }
 
-ion-card>ion-grid:nth-child(1)>ion-row:nth-child(2)>ion-col:nth-child(2) ion-grid ion-row ion-col ion-label {
-    width: max-content;
-
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(1) {
+  height: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding-left: 0;
+  padding-right: 20px;
+  // /* scrollbar-width: none;
 }
 
-ion-card>ion-grid:nth-child(1)>ion-row:nth-child(2)>ion-col:nth-child(1)>ion-grid:nth-child(1)>ion-row:nth-child(1) {
-    flex-wrap: nowrap;
-
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(2) ion-grid ion-row ion-col ion-label {
+  width: max-content;
 }
 
-ion-card>ion-grid:nth-child(1)>ion-row:nth-child(2)>ion-col:nth-child(3) ion-grid ion-row ion-col ion-chip {
-    background-color: #ffffff29;
-    color: white;
-    justify-content: center;
-    width: 85px;
-    font-size: 11px;
-
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(1) > ion-grid:nth-child(1) > ion-row:nth-child(1) {
+  // flex-wrap: nowrap;
 }
 
-#ctnLoaderBottomCard{
-    display: flex;
-    visibility: hidden;
+ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(3) ion-grid ion-row ion-col ion-chip {
+  background-color: #ffffff29;
+  color: white;
+  justify-content: center;
+  width: 85px;
+  font-size: 11px;
+}
 
+#ctnLoaderBottomCard {
+  display: flex;
+  visibility: hidden;
 }

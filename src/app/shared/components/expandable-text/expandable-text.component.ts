@@ -16,11 +16,6 @@ export class ExpandableTextComponent implements OnInit, AfterViewInit, OnDestroy
   @Input() chipColor: string | undefined = '';
   @Input() truncate: boolean = true;
   @Input() expandedHeight: string = '6em';
-  @Input() expandWidth: boolean = false;
-  @Input() expandedWidth: string = 'auto';
-  @Input() collapsedWidth: string = 'max-content'; // Nouvel input pour la largeur réduite
-  @Input() expandedWhiteSpace: string = 'normal'; // Contrôle le white-space du texte étendu
-  @Input() disableCloseAnimation: boolean = false;
   @Input() textColor: string = '';
   @ViewChild('textElement', { static: false }) textElement!: ElementRef;
 
@@ -139,7 +134,6 @@ export class ExpandableTextComponent implements OnInit, AfterViewInit, OnDestroy
       this.expanded = false;
 
       // Attendre la fin de l'animation avant de réinitialiser les états
-
       setTimeout(() => {
         this.isCollapsing = false;
         this.isAnimating = false;
@@ -152,7 +146,6 @@ export class ExpandableTextComponent implements OnInit, AfterViewInit, OnDestroy
       TextExpansionService.expandItem(this.uniqueId);
 
       // Réinitialiser l'état d'animation après la fin de l'animation
-
       setTimeout(() => {
         this.isAnimating = false;
       }, 700);

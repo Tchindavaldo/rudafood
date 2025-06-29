@@ -51,6 +51,7 @@
 
   /* État étendu */
   &.expanded {
+    height: 6em; /* Hauteur fixe pour l'état étendu - ajustez selon vos besoins */
     white-space: normal; /* Permettre le retour à la ligne quand étendu */
     text-overflow: clip; /* Ne pas ajouter de points de suspension quand étendu */
   }

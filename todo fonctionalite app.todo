@@ -10,3 +10,6 @@
 - [ ] envoyer des sms a chque transaction car apres une requete de transaction le reste sera gerer par le backend  en ligne
       comme CA si la connexion part chez le client lors de la requete et que la transaction ce passer bien lors de la requete cote backend qu'il soit rassurer
 
+- [ ] livraison par heure expresse gratuit non livraison
+- [ ] pour livraison par heure cmd passer  une certains heure avnant l'heure de livraison
+- [ ] different prix  descritpion pour chacun

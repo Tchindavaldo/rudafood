@@ -11,3 +11,14 @@ et fait une demande pour recevoir son bonus)  interface marchand pour creer modi
 
 - [ ] interface pour envoyer des notifiaction a tous les fastfood
 - [ ]  limiter le nombre d'extea a 5
+
+
+-------------------
+- [ ] interdir les vante de moins de 1000 ou comission en % ou de [50 200] et gestion entiere par fastfood
+- [ ] aucun avantage pour une commande inferieure a 1000f
+- [ ] afficher la postion du fastfood pour les menus qui sont livrable (donc ajouterun attirubut pour dire si menu livrablea
+      delivery:{isdelivery:true ,time ,date,}) ajouter le coord ou lieu du fast food sur le menu
+      date permet de defini quand il peut passer ses cmd (cmd en avances doit etre un tableau de date )
+      le cahmp des livraison doit donc permetee affichage par heure mais par jour aussi
+
+- [ ]      ajouter un champ pour localiser un fastfood sur les fastfood (il prend coord description de emplacement  pour arriver)

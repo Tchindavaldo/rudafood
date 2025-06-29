@@ -10,7 +10,7 @@ import { PannierBonnusPage } from './pannier-bonnus.page';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, PannierBonnusPageRoutingModule, SharedModule],
+  imports: [CommonModule, FormsModule, IonicModule, PannierBonnusPageRoutingModule],
   declarations: [PannierBonnusPage],
   exports: [PannierBonnusPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

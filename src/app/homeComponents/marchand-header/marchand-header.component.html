@@ -1,16 +1,27 @@
-<ion-row class="ion-align-items-center">
-  <ion-col>
-    <ion-chip class="chip_marchand_fastfood chip_marchand_focused" color="danger">
-      <ion-avatar class="avatar-marchand">
-        <img src="../../assets/vlor.jpg" alt="" srcset="" />
-      </ion-avatar>
-      <ion-label class="label-marchand"> {{ name }} </ion-label>
-    </ion-chip>
-  </ion-col>
-  <ion-col style="display: flex; justify-content: flex-end">
-    <ion-chip class="ion-chip-marchand" color="light">
-      <!-- <ion-icon *ngFor="let item of collection"  name="star" color="danger"></ion-icon> -->
-      <ion-icon *ngFor="let item of collection" name="star" color="danger"></ion-icon>
-    </ion-chip>
-  </ion-col>
-</ion-row>
+<div style="width: 100%">
+  <ion-row class="ion-align-items-center">
+    <ion-col>
+      <ion-chip class="chip_marchand_fastfood chip_marchand_focused" color="danger">
+        <ion-avatar class="avatar-marchand">
+          <img [src]="fastFoodData?.image" (error)="onImageError($event)" alt="fastFoodData image" (load)="onImageLoad($event)" />
+          <div class="skeleton" *ngIf="isLoading"></div>
+        </ion-avatar>
+        <ion-label class="label-marchand"> {{ name }} </ion-label>
+      </ion-chip>
+    </ion-col>
+    <ion-col style="display: flex; justify-content: flex-end">
+      <ion-chip class="ion-chip-marchand" color="light">
+        <ng-container *ngFor="let fill of starFills">
+          <div class="star-container">
+            <!-- Grey base star -->
+            <ion-icon name="star" class="star-icon star-base"></ion-icon>
+            <!-- Yellow overlay star clipped according to percentage -->
+            <div class="star-overlay" [style.width.%]="fill">
+              <ion-icon name="star" class="star-icon" [attr.style]="'color:red !important;'"></ion-icon>
+            </div>
+          </div>
+        </ng-container>
+      </ion-chip>
+    </ion-col>
+  </ion-row>
+</div>
