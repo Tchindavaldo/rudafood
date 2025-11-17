@@ -1,35 +1,89 @@
 <ion-card id="bottom-card-home" class="bottom-card-home">
   <ion-grid fixed>
-    <ion-row>
+    <ion-row [attr.id]="menu?.id+'-header'" style="transform: translateY(0); transition: transform 0.3s ease-in-out">
       <ion-col size="12">
         <app-header [postOrder]="postOrder.bind(this)" (outputCloseOrder)="closeBottomCard()" />
       </ion-col>
     </ion-row>
-    <ion-row class="ion-justify-content-between ion-align-items-center">
+    <ion-row style="position: absolute; top: 0; width: 100%; align-items: flex-start" class="ion-justify-content-between">
+      <!-- Detail Column - Visible by default -->
       <ion-col
         [attr.id]="menu?.id+'-detail'"
         size="12"
-        style="display: block; overflow-x: scroll; height: max-content; margin-top: 6; margin-bottom: 0; flex-wrap: nowrap; position: absolute"
+        style="
+          display: block;
+          overflow-x: scroll;
+          height: 50%;
+          margin-top: 15%;
+          margin-bottom: 0;
+          flex-wrap: nowrap;
+          position: absolute;
+
+          transform: translateY(0);
+          transition: transform 0.3s ease-in-out;
+        "
       >
-        <div style="display: flex; flex-wrap: nowrap">
-          <app-pannier-cmd-detail [iconName]="'add-outline'" [textLigne1]="'detail'" [textLigne2]="'500f'"> </app-pannier-cmd-detail>
+        <div style="display: flex; flex-wrap: nowrap; justify-content: space-between">
+          <div style="display: flex; flex-wrap: wrap; width: 70%">
+            <app-pannier-cmd-detail [iconName]="'add-outline'" [textLigne1]="'detail'" [textLigne2]="'500f'"> </app-pannier-cmd-detail>
+            <app-pannier-cmd-detail [iconName]="'add-outline'" [textLigne1]="'detail'" [textLigne2]="'500f'"> </app-pannier-cmd-detail>
+            <app-pannier-cmd-detail [iconName]="'add-outline'" [textLigne1]="'detail'" [textLigne2]="'500f'"> </app-pannier-cmd-detail>
+            <app-pannier-cmd-detail [iconIshow]="true" [textLigne2]="'5'"> </app-pannier-cmd-detail>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; flex-direction: column; justify-content: space-around; width: 30%; background-color: #0000001a; border-radius: 20px">
+            <ion-chip style="background: none">
+              <div style="display: flex; flex-direction: column">
+                <ion-label style="font-size: 17px"> 2 </ion-label>
+                <ion-label style="width: 100%"> quantite </ion-label>
+              </div>
+            </ion-chip>
+
+            <ion-chip style="background: none">
+              <div>
+                <ion-label style="font-size: 17px"> 5000f </ion-label>
+                <ion-label> Montant Total </ion-label>
+              </div>
+            </ion-chip>
+          </div>
         </div>
       </ion-col>
 
+      <!-- Extra Column - Hidden by default -->
       <ion-col
         [attr.id]="menu?.id+'-extra'"
         size="12"
-        style="display: block; overflow-x: scroll; height: max-content; margin-top: 6; margin-bottom: 0; flex-wrap: nowrap; position: absolute"
+        style="
+          display: block;
+          overflow-x: scroll;
+          height: 80%;
+          margin-top: 6;
+          margin-bottom: 0;
+          flex-wrap: nowrap;
+          position: absolute;
+          transform: translateY(200%);
+          transition: transform 0.3s ease-in-out;
+        "
       >
         <div style="display: flex; flex-wrap: nowrap">
           <app-pannier-cmd-detail [iconName]="'add-outline'" [textLigne1]="'extra'" [textLigne2]="'500f'"> </app-pannier-cmd-detail>
         </div>
       </ion-col>
 
+      <!-- Drink Column - Hidden by default -->
       <ion-col
         [attr.id]="menu?.id+'-drink'"
         size="12"
-        style="display: block; overflow-x: scroll; height: max-content; margin-top: 6; margin-bottom: 0; flex-wrap: nowrap; position: absolute"
+        style="
+          display: block;
+          overflow-x: scroll;
+          height: 80%;
+          margin-top: 6;
+          margin-bottom: 0;
+          flex-wrap: nowrap;
+          position: absolute;
+          transform: translateY(200%);
+          transition: transform 0.3s ease-in-out;
+        "
       >
         <!-- <app-pannier-cmd-detail
               [postOrder]="postOrder.bind(this)"
@@ -46,21 +100,174 @@
         <div style="display: flex; flex-wrap: nowrap">
           <app-pannier-cmd-detail [iconName]="'add-outline'" *ngFor="let item of secondRowItems" [textLigne1]="item.textLigne1" [textLigne2]="item.textLigne2"> </app-pannier-cmd-detail>
         </div>
+        <div style="display: flex; flex-wrap: nowrap">
+          <app-pannier-cmd-detail [iconName]="'add-outline'" *ngFor="let item of thirdRowItems" [textLigne1]="item.textLigne1" [textLigne2]="item.textLigne2"> </app-pannier-cmd-detail>
+        </div>
       </ion-col>
 
+      <!-- Delivery Column - Hidden by default -->
       <ion-col
         [attr.id]="menu?.id+'-delivery'"
         size="12"
-        style="display: block; overflow-x: scroll; height: max-content; margin-top: 6; margin-bottom: 0; flex-wrap: nowrap; position: absolute"
+        style="
+          display: flex;
+          overflow-x: scroll;
+          height: 80%;
+          margin-top: 6;
+          margin-bottom: 0;
+          flex-wrap: nowrap;
+          position: absolute;
+          transform: translateY(200%);
+          transition: transform 0.3s ease-in-out;
+        "
       >
-        <div style="display: flex; flex-wrap: nowrap">
-          deli
-          <app-pannier-cmd-detail [iconName]="'add-outline'" [textLigne1]="'500f'" [textLigne2]="'livraison'"> </app-pannier-cmd-detail>
+        <div style="display: flex; flex-wrap: nowrap; flex-direction: column; width: 20%; background-color: #0000001a; border-radius: 20px">
+          <ion-chip class="type-chip">
+            <ion-label> Type </ion-label>
+            <ion-icon style="color: white; padding: 0px; background: darkred; border-radius: 25px; font-size: 14px" name="add-outline"></ion-icon>
+          </ion-chip>
+          <ion-chip class="type-chip" color="light">
+            <div style="display: flex; align-items: flex-start; flex-direction: column">
+              <app-custum-ckeckbox size="14px" style="margin-left: 0px" titre=""></app-custum-ckeckbox>
+              <ion-label> heure </ion-label>
+            </div>
+          </ion-chip>
+          <ion-chip class="type-chip" color="light">
+            <div style="display: flex; align-items: flex-start; flex-direction: column">
+              <app-custum-ckeckbox size="14px" style="margin-left: 0px" titre=""></app-custum-ckeckbox>
+              <ion-label> express </ion-label>
+            </div>
+          </ion-chip>
+          <ion-chip class="type-chip" color="light">
+            <div style="display: flex; align-items: flex-start; flex-direction: column">
+              <app-custum-ckeckbox size="14px" style="margin-left: 0px" titre=""></app-custum-ckeckbox>
+              <ion-label> Aucune </ion-label>
+            </div>
+          </ion-chip>
+        </div>
+
+        <div style="display: flex; flex-wrap: nowrap; flex-direction: row; width: 80%; justify-content: space-around">
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              background-color: #0000001a;
+              border-radius: 20px;
+              height: 100%;
+              padding-right: 5px;
+              max-width: 50%;
+              width: max-content;
+              overflow-x: scroll;
+            "
+          >
+            <div style="width: max-content; position: sticky; left: 0">
+              <ion-chip style="font-size: 11px">
+                <ion-label> Aujourd'hui </ion-label>
+
+                <ion-icon style="color: white; padding: 2px; background: darkred; border-radius: 25px; font-size: 14px" name="add-outline"></ion-icon>
+              </ion-chip>
+            </div>
+
+            <div style="display: flex; flex-wrap: nowrap">
+              <div>
+                <ion-chip class="hour-chip">
+                  <div style="display: flex; align-items: flex-start; flex-direction: column-reverse">
+                    <ion-label> 18h00 </ion-label>
+                    <app-custum-ckeckbox size="14px" style="margin-left: 0px" titre=""></app-custum-ckeckbox>
+                  </div>
+                </ion-chip>
+              </div>
+              <div>
+                <ion-chip class="hour-chip">
+                  <div style="display: flex; align-items: flex-start; flex-direction: column-reverse">
+                    <ion-label> 18h00 </ion-label>
+                    <app-custum-ckeckbox size="14px" style="margin-left: 0px" titre=""></app-custum-ckeckbox>
+                  </div>
+                </ion-chip>
+              </div>
+              <!-- <div>
+                <ion-chip class="hour-chip">
+                  <div style="display: flex; align-items: flex-start; flex-direction: column-reverse">
+                    <ion-label> 20h00 </ion-label>
+                    <app-custum-ckeckbox size="14px" style="margin-left: 0px" titre=""></app-custum-ckeckbox>
+                  </div>
+                </ion-chip>
+              </div> -->
+            </div>
+            <div style="display: flex; flex-wrap: nowrap">
+              <div>
+                <ion-chip class="hour-chip">
+                  <div style="display: flex; align-items: flex-start; flex-direction: column-reverse">
+                    <ion-label> 18h00 </ion-label>
+                    <app-custum-ckeckbox size="14px" style="margin-left: 0px" titre=""></app-custum-ckeckbox>
+                  </div>
+                </ion-chip>
+              </div>
+              <div>
+                <ion-chip class="hour-chip">
+                  <div style="display: flex; align-items: flex-start; flex-direction: column-reverse">
+                    <ion-label> 18h00 </ion-label>
+                    <app-custum-ckeckbox size="14px" style="margin-left: 0px" titre=""></app-custum-ckeckbox>
+                  </div>
+                </ion-chip>
+              </div>
+              <!-- <div>
+                <ion-chip class="hour-chip">
+                  <div style="display: flex; align-items: flex-start; flex-direction: column-reverse">
+                    <ion-label> 20h00 </ion-label>
+                    <app-custum-ckeckbox size="14px" style="margin-left: 0px" titre=""></app-custum-ckeckbox>
+                  </div>
+                </ion-chip>
+              </div> -->
+            </div>
+
+            <div style="display: flex; flex-wrap: nowrap">
+              <div>
+                <ion-chip class="hour-chip">
+                  <div style="display: flex; align-items: flex-start; flex-direction: column-reverse">
+                    <ion-label> 18h00 </ion-label>
+                    <app-custum-ckeckbox size="14px" style="margin-left: 0px" titre=""></app-custum-ckeckbox>
+                  </div>
+                </ion-chip>
+              </div>
+              <div>
+                <ion-chip class="hour-chip">
+                  <div style="display: flex; align-items: flex-start; flex-direction: column-reverse">
+                    <ion-label> 20h00 </ion-label>
+                    <app-custum-ckeckbox size="14px" style="margin-left: 0px" titre=""></app-custum-ckeckbox>
+                  </div>
+                </ion-chip>
+              </div>
+              <!-- <div>
+                <ion-chip class="hour-chip">
+                  <div style="display: flex; align-items: flex-start; flex-direction: column-reverse">
+                    <ion-label> 20h00 </ion-label>
+                    <app-custum-ckeckbox size="14px" style="margin-left: 0px" titre=""></app-custum-ckeckbox>
+                  </div>
+                </ion-chip>
+              </div> -->
+            </div>
+          </div>
+
+          <div style="display: flex; flex-wrap: nowrap; flex-direction: column; width: 47%; background-color: #0000001a; border-radius: 20px">
+            <ion-chip style="font-size: 11px; width: max-content">
+              <ion-label> Localisation </ion-label>
+
+              <ion-icon style="color: white; padding: 2px; background: darkred; border-radius: 25px; font-size: 14px" name="location-outline"></ion-icon>
+            </ion-chip>
+
+            <ion-textarea
+              placeholder="Entrer une description de votre lieu exemple:  Quartier Nkomo, après le marché central, à côté de la pharmacie du soleil, immeuble bleu à 3 étages, 2ème étage, porte 204"
+              style="font-size: 12px; width: 90%; margin-left: 5%; height: 70%"
+              rows="8"
+              autoGrow="true"
+            ></ion-textarea>
+          </div>
         </div>
       </ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row style="position: absolute; bottom: -5px; width: 100%">
       <ion-col class="ion-align-self-start" size="12">
         <ion-grid fixed>
           <ion-row style="margin-right: 0px; flex-wrap: nowrap">

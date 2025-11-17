@@ -6,7 +6,9 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./custum-ckeckbox.component.scss'],
 })
 export class CustumCkeckboxComponent implements OnInit {
-  @Input() titre = 'Mayonaise';
+  @Input() titre = '';
+  @Input() size = '18px';
+  @Input() borderRadius = '6px';
 
   constructor() {}
 

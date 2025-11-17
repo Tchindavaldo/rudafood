@@ -11,14 +11,18 @@ export class PannierCmdDetailPage implements OnInit {
   @Input() postOrder!: (status: any) => void;
   @Input() textLigne1 = 'haricot';
   @Input() textLigne2: string | number = '100f';
-  @Input() iconIshow = true;
+  @Input() iconIshow = false;
   @Input() labelIshow = false;
-  @Input() iconName: string = 'remove-outline';
+  @Input() iconName: string = 'add-outline';
+  @Input() iconName2: string = 'remove-outline';
   @Input() sizeLabel = '12px';
   @Input() paddingright = '';
   @Input() backgroundChip = '';
   @Input() shadow = '';
   @Input() black = '';
+  @Input() collapsedWidth = '60px';
+  @Input() expandedWidth = '110px';
+  @Input() truncate = true;
 
   constructor(private cardControle: CardService, private dataService: DataService) {}
   ngOnInit() {}

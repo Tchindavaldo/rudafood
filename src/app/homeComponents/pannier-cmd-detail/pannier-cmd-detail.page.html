@@ -13,26 +13,27 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="auto">
         <ion-chip (click)="actionToCmd('buy')" [ngStyle]="{'background-color': backgroundChip,'box-shadow': shadow,'color':black}" color="light">
-          <!-- <ion-icon *ngIf="iconIshow" [name]="iconName"></ion-icon> -->
+          <ion-icon *ngIf="iconIshow" [name]="iconName"></ion-icon>
           <ion-label *ngIf="labelIshow" style="color: white; font-size: 14px">buy</ion-label>
           <div style="display: flex; flex-direction: column; align-items: flex-start">
             <ion-label>{{textLigne2}}</ion-label>
             <!-- <ion-label>{{textLigne1}}</ion-label> -->
             <app-expand-text-card-menu-home
+              *ngIf="!iconIshow"
               [text]="textLigne1"
-              [truncate]="true"
+              [truncate]="truncate"
               [maxLength]="7"
               expandedHeight="1.5em"
               [expandedWhiteSpace]="'nowrap'"
               [disableCloseAnimation]="true"
-              [collapsedWidth]="'60px'"
+              [collapsedWidth]="collapsedWidth"
               [expandWidth]="true"
-              [expandedWidth]="'110px'"
+              [expandedWidth]="expandedWidth"
             ></app-expand-text-card-menu-home>
           </div>
 
-          <app-custum-ckeckbox style="margin-left: 7px" *ngIf="iconIshow" titre=""></app-custum-ckeckbox>
-          <!-- <ion-icon *ngIf="iconIshow" name="add-outline"></ion-icon> -->
+          <app-custum-ckeckbox style="margin-left: 7px" *ngIf="!iconIshow" titre=""></app-custum-ckeckbox>
+          <ion-icon *ngIf="iconIshow" [name]="iconName2"></ion-icon>
         </ion-chip>
       </ion-col>
     </ion-row>

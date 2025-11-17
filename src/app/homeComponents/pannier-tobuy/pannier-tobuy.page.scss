@@ -2,6 +2,10 @@ ion-grid {
   padding-left: 0;
 }
 
+ion-label {
+  font-size: 12px;
+  color: white;
+}
 .bottom-card-home {
   position: fixed;
   height: 225px;
@@ -72,7 +76,7 @@ ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(2) i
 }
 
 ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) {
-  height: 55%;
+  height: 105%;
 }
 
 ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(1) {
@@ -103,4 +107,28 @@ ion-card > ion-grid:nth-child(1) > ion-row:nth-child(2) > ion-col:nth-child(3) i
 #ctnLoaderBottomCard {
   display: flex;
   visibility: hidden;
+}
+
+.hour-chip {
+  // width: 80px;
+  padding-top: 4px;
+  padding-bottom: 2px;
+  background: none;
+
+  ion-label {
+    font-size: 11px;
+    margin-top: 4px;
+    font-weight: 400;
+    color: hsl(0, 0%, 80%);
+  }
+}
+.type-chip {
+  // width: 80px;
+
+  ion-label {
+    font-size: 11px;
+    margin-top: 4px;
+    font-weight: 400;
+    color: hsl(0, 0%, 80%);
+  }
 }

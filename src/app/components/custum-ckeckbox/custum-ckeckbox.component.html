@@ -1,1 +1,7 @@
-<ion-checkbox>{{ titre }}</ion-checkbox>
+<div style="display: flex; align-items: center">
+  <ion-checkbox [checked]="false" [style.--size]="size" [style.--border-radius]="borderRadius">
+    <ng-container *ngIf="titre !== ''">
+      {{ titre }}
+    </ng-container>
+  </ion-checkbox>
+</div>

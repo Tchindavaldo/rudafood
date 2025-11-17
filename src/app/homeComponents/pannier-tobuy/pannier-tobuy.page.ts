@@ -31,10 +31,11 @@ export class PannierTobuyPage implements OnInit {
   isDrinkPanelAnimating = false;
   isDeliveryPanelAnimating = false;
 
-  isDetailPanelVisible = false;
-  isExtrasPanelVisible = false;
-  isDrinkPanelVisible = false;
-  isDeliveryPanelVisible = false;
+  isDetailPanelVisible: boolean = true;
+  isExtrasPanelVisible: boolean = false;
+  isDrinkPanelVisible: boolean = false;
+  isDeliveryPanelVisible: boolean = false;
+  isHeaderVisible = true; // Track header visibility
 
   // Tableau de données pour les détails de la commande
   commandDetails = [
@@ -49,11 +50,18 @@ export class PannierTobuyPage implements OnInit {
 
   // Fonction pour diviser le tableau en deux parties pour l'affichage sur deux lignes
   get firstRowItems() {
-    return this.commandDetails.slice(0, Math.ceil(this.commandDetails.length / 2));
+    const third = Math.ceil(this.commandDetails.length / 3);
+    return this.commandDetails.slice(0, third);
   }
 
   get secondRowItems() {
-    return this.commandDetails.slice(Math.ceil(this.commandDetails.length / 2));
+    const third = Math.ceil(this.commandDetails.length / 3);
+    return this.commandDetails.slice(third, third * 2);
+  }
+
+  get thirdRowItems() {
+    const third = Math.ceil(this.commandDetails.length / 3);
+    return this.commandDetails.slice(third * 2);
   }
 
   constructor(private postOrderSerice: PostOrdersService) {}
@@ -84,6 +92,10 @@ export class PannierTobuyPage implements OnInit {
   resetPanels() {
     // If any animation is in progress, do nothing
     if (this.isDetailPanelAnimating || this.isExtrasPanelAnimating || this.isDrinkPanelAnimating || this.isDeliveryPanelAnimating) return;
+
+    // Show header when resetting to detail view
+    const headerId = this.menu?.id + '-header';
+    showCard(headerId, 'y', '0px');
 
     // Update states - show detail panel by default, hide others
     this.isDetailPanelVisible = true;
@@ -148,6 +160,10 @@ export class PannierTobuyPage implements OnInit {
 
   toggleExtrasPanel(event: Event, id: string) {
     event.stopPropagation();
+
+    // Hide header when showing extra panels
+    const headerId = this.menu?.id + '-header';
+    showCard(headerId, 'y', '-100%');
 
     // Define panel configuration
     const panelConfig = {
