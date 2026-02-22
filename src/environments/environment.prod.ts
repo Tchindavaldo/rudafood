@@ -1,7 +1,7 @@
 export const environment = {
   // ngrok http http://localhost:5000
 
-  // apiUrl: 'http://localhost:5000',
+  apiUrl: 'http://localhost:5000',
   // apiUrl: 'http://10.42.0.1:5000',
   // apiUrl: 'http://192.168.8.5:5000',
   // apiUrl: 'http://192.168.1.198:5000',
@@ -14,17 +14,18 @@ export const environment = {
   // apiUrl: 'http://172.20.10.4:5000',
   // apiUrl: 'http://10.0.2.2:5000',
 
-  apiUrl: 'http://54.146.156.89:3001',
+  // apiUrl: 'http://54.146.156.89:3001',
   // apiUrl: 'https://c1b7-154-72-153-171.ngrok-free.app',
   // apiUrl: 'https://yaammoo-backend-production.up.railway.app',
 
   production: true,
   firebase: {
-    apiKey: 'AIzaSyAxFemQ3WoHgrgpvvjeQLhk2ZJOaQZ0QQQ',
-    authDomain: 'infinity-fastfood.firebaseapp.com',
-    projectId: 'infinity-fastfood',
-    storageBucket: 'infinity-fastfood.appspot.com',
-    messagingSenderId: '496693477037',
-    appId: '1:496693477037:web:d1819debb382b12c611024',
+    apiKey: "AIzaSyArtLZYKy-0J7W-60s6QK3SsM7UM1GY2S8",
+    authDomain: "fir-d75bc.firebaseapp.com",
+    projectId: "fir-d75bc",
+    storageBucket: "fir-d75bc.firebasestorage.app",
+    messagingSenderId: "66450079753",
+    appId: "1:66450079753:web:d206f2d5189fdaa87278d8",
+    measurementId: "G-KY914452XL"
   },
 };

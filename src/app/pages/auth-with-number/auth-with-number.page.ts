@@ -9,7 +9,6 @@ import 'firebase/compat/auth';
 import { requeToAuth } from 'src/services/requeToAuth';
 import { ToastButton, ToastController } from '@ionic/angular';
 import { requeToUser } from 'src/services/requeToUser';
-import { requeToGeneralDataUsers } from 'src/services/requeToGeneralDataUsers';
 import { UsersInfos } from 'src/app/data/UsersInfos';
 import { Users } from 'src/app/data/Users';
 import { DataService } from 'src/services/data.service';
@@ -36,19 +35,9 @@ export class AuthWithNumberPage implements OnInit {
     private router: Router,
     private toastController: ToastController,
     private requeteToUser: requeToUser,
-    private requeteToGeneralDataUser: requeToGeneralDataUsers,
     private data: DataService
   ) {
-    // Initialize Firebase in the constructor
-    firebase.initializeApp({
-      // Your Firebase config here
-      apiKey: 'AIzaSyAxFemQ3WoHgrgpvvjeQLhk2ZJOaQZ0QQQ',
-      authDomain: 'infinity-fastfood.firebaseapp.com',
-      projectId: 'infinity-fastfood',
-      storageBucket: 'infinity-fastfood.appspot.com',
-      messagingSenderId: '496693477037',
-      appId: '1:496693477037:web:d1819debb382b12c611024',
-    });
+    // Firebase is initialized in AppModule
   }
 
   ngOnInit() {
@@ -94,41 +83,30 @@ export class AuthWithNumberPage implements OnInit {
 
   verifyCode() {
     this.verifyCode1(this.verificationId, this.verificationCode)
-      .then((result: any) => {
-        // Utilisateur connecté
-        console.log('uid number', result.user.uid);
-        console.log('user', result);
+      .then(async (result: any) => {
+        const uid = result.user.uid;
+        console.log('uid number', uid);
         this.presentToast(1200, 'bottom', 'connexion reussi');
 
-        this.requeteToGeneralDataUser.getUserGeneralDataFromFirestore().then(data => {
-          if (data?.nbrTotalUser != undefined) {
-            this.requeteToUser.connectUserWithNumAndUid(data.nbrTotalUser, +this.numero, result.user.uid).then(resul => {
-              if (typeof resul !== 'string') {
-                this.data.user = resul;
-              }
+        try {
+          // 1. Recherche directe par UID (PRO)
+          let userFound = await this.requeteToUser.getUsersFromFirestore(uid);
 
-              if (resul == 'num pas trouver') {
-                const newUser = new Users(new UsersInfos('', '', 0, +this.numero, result.user.uid, '', ''), false, 100, []);
-                this.requeteToGeneralDataUser.getUserGeneralDataFromFirestore().then(data => {
-                  if (data?.nbrTotalUser != undefined) {
-                    const idxConvert = data.nbrTotalUser.toString();
-                    this.requeteToUser.addUserToFirestore(newUser, idxConvert);
-                    this.data.user = newUser;
-                    const dataUpdate = data;
-                    data.nbrTotalUser = data.nbrTotalUser + 1;
-                    this.requeteToGeneralDataUser.addUserGeneralDataToFirestore(dataUpdate);
-                  }
-                });
-              }
-            });
+          if (!userFound) {
+            // 2. Si pas trouvé, on crée un profil vide
+            userFound = new Users(new UsersInfos('', '', 0, +this.numero, uid, '', ''), false, 100, []);
+            await this.requeteToUser.addUserToFirestore(userFound, uid);
           }
-        });
+
+          this.data.user = userFound;
+        } catch (error) {
+          console.error("Erreur lors de la récupération/création de l'utilisateur:", error);
+        }
 
         this.router.navigate(['/tabs']);
       })
       .catch(error => {
         this.connect = false;
-
         console.error('Error during verification', error);
         this.showErrorToast(error.code);
       });

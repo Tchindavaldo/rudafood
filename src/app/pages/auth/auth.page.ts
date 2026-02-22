@@ -43,16 +43,7 @@ export class AuthPage implements OnInit {
     public data: DataService,
     private userStorage: UserStorageService
   ) {
-    // Initialize Firebase in the constructor
-    firebase.initializeApp({
-      // Your Firebase config here
-      apiKey: 'AIzaSyAxFemQ3WoHgrgpvvjeQLhk2ZJOaQZ0QQQ',
-      authDomain: 'infinity-fastfood.firebaseapp.com',
-      projectId: 'infinity-fastfood',
-      storageBucket: 'infinity-fastfood.appspot.com',
-      messagingSenderId: '496693477037',
-      appId: '1:496693477037:web:d1819debb382b12c611024',
-    });
+    // Firebase is initialized in AppModule
   }
 
   ngOnInit() {
@@ -384,7 +375,7 @@ export class AuthPage implements OnInit {
   }
 
   showCarat() {
-    const passwordInput = document.getElementById('password-input') as HTMLIonInputElement;
+    const passwordInput = document.getElementById('password-input') as any as HTMLIonInputElement;
 
     if (this.passwordIsShow) {
       passwordInput.type = 'password';

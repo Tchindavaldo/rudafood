@@ -11,7 +11,7 @@ import { generalDataUser } from '../app/data/generalDataUser';
   providedIn: 'root',
 })
 export class requeToGeneralDataUsers {
-  constructor() {}
+  constructor() { }
 
   async addUserGeneralDataToFirestore(generalDataUser: generalDataUser): Promise<void> {
     const firestore = getFirestore();
@@ -51,8 +51,8 @@ export class requeToGeneralDataUsers {
           return null; // Retourne null si le champ attendu n'est pas trouvé
         }
       } else {
-        console.log("general user introuvable n'existe pas.");
-        return null; // Retourne null si le document n'existe pas
+        console.log("general user introuvable, initialisation par défaut.");
+        return new generalDataUser(0, 0, 0, 0);
       }
     } catch (error) {
       console.log(error);

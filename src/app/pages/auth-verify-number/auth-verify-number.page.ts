@@ -29,16 +29,7 @@ export class AuthVerifyNumberPage implements OnInit {
     private router: Router,
     private toastController: ToastController
   ) {
-    // Initialize Firebase in the constructor
-    firebase.initializeApp({
-      // Your Firebase config here
-      apiKey: 'AIzaSyAxFemQ3WoHgrgpvvjeQLhk2ZJOaQZ0QQQ',
-      authDomain: 'infinity-fastfood.firebaseapp.com',
-      projectId: 'infinity-fastfood',
-      storageBucket: 'infinity-fastfood.appspot.com',
-      messagingSenderId: '496693477037',
-      appId: '1:496693477037:web:d1819debb382b12c611024',
-    });
+    // Firebase is initialized in AppModule
   }
 
   ngOnInit() {

@@ -11,7 +11,7 @@ import { ToastButton, ToastController } from '@ionic/angular';
 import { Users } from 'src/app/data/Users';
 import { UsersInfos } from 'src/app/data/UsersInfos';
 import { requeToUser } from 'src/services/requeToUser';
-import { requeToGeneralDataUsers } from 'src/services/requeToGeneralDataUsers';
+import { generalDataUser } from 'src/app/data/generalDataUser';
 
 @Component({
   selector: 'app-auth-with-google',
@@ -41,19 +41,9 @@ export class AuthWithGooglePage implements OnInit {
     // private googlePlus: GooglePlus,
     private router: Router,
     private toastController: ToastController,
-    private requeteToUser: requeToUser,
-    private requeteToGeneralDataUser: requeToGeneralDataUsers
+    private requeteToUser: requeToUser
   ) {
-    // Initialize Firebase in the constructor
-    firebase.initializeApp({
-      // Your Firebase config here
-      apiKey: 'AIzaSyAxFemQ3WoHgrgpvvjeQLhk2ZJOaQZ0QQQ',
-      authDomain: 'infinity-fastfood.firebaseapp.com',
-      projectId: 'infinity-fastfood',
-      storageBucket: 'infinity-fastfood.appspot.com',
-      messagingSenderId: '496693477037',
-      appId: '1:496693477037:web:d1819debb382b12c611024',
-    });
+    // Firebase is initialized in AppModule
   }
 
   ngOnInit() {
@@ -135,22 +125,13 @@ export class AuthWithGooglePage implements OnInit {
       if (this.email != '' && this.password != '') {
         const userCreate = this.requeteToAuth
           .createUser(this.email, this.password)
-          .then(user => {
+          .then(async user => {
             console.log('User created:', user);
             this.presentToast('bottom', 'compte creer avec succes un lien de verification a ete envoyer a votre email');
 
             if (user?.email != null) {
               const newUser = new Users(new UsersInfos(this.nom, this.prenom, +this.birth, +this.tel, user.uid, user.email, this.password), true, 100, []);
-              this.requeteToGeneralDataUser.getUserGeneralDataFromFirestore().then(data => {
-                if (data?.nbrTotalUser != undefined) {
-                  const idxConvert = data.nbrTotalUser;
-
-                  this.requeteToUser.addUserToFirestore(newUser, idxConvert.toString());
-                  const dataUpdate = data;
-                  data.nbrTotalUser = data.nbrTotalUser + 1;
-                  this.requeteToGeneralDataUser.addUserGeneralDataToFirestore(dataUpdate);
-                }
-              });
+              await this.requeteToUser.addUserToFirestore(newUser, user.uid);
             }
 
             this.router.navigate(['/auth']);
@@ -342,7 +323,7 @@ export class AuthWithGooglePage implements OnInit {
   }
 
   showCarat() {
-    const passwordInput = document.getElementById('password-input') as HTMLIonInputElement;
+    const passwordInput = document.getElementById('password-input') as any as HTMLIonInputElement;
 
     if (this.passwordIsShow) {
       passwordInput.type = 'password';

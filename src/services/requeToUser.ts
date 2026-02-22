@@ -1,443 +1,201 @@
-import { dataMerchend } from '../app/data/dataMerchend';
+import axios from 'axios';
 import { Injectable } from '@angular/core';
 import { Menu } from '../app/data/menu';
-import { getFirestore, setDoc, doc, getDoc, DocumentData, CollectionReference } from 'firebase/firestore';
-
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, User, UserCredential } from 'firebase/auth';
 import { Users } from '../app/data/Users';
 import { UsersInfos } from '../app/data/UsersInfos';
 import { Commande, boisson, embalage, livraison } from '../app/data/cmd';
 import { DataService } from './data.service';
+import { environment } from '../environments/environment';
+
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class requeToUser {
-  user!: User;
-  userExist = '';
-  mailFind = '';
-  mailDiff: string = '';
-  mailcoress: string = '';
-  passInco: string = '';
-  userFind: Users | string = '';
-  resu: string | Users = '';
-  resu2: string | Users = '';
-  resu3: string | Users = '';
-  userIsUpdate = false;
+    private apiUrl = environment.apiUrl;
 
-  constructor(public data: DataService) {}
+    constructor(public data: DataService) { }
 
-  async addUserToFirestore(userToAdd: Users, idx: string): Promise<void> {
-    const firestore = getFirestore();
-
-    const usersCollection = doc(firestore, 'users', idx);
-
-    try {
-      const user: any = await this.convertUserToJson(userToAdd);
-
-      // Ajouter le tableau JSON à la base de données
-      await setDoc(usersCollection, { user });
-
-      // console.log('Users added to Firestore successfully');
-    } catch (error) {
-      // console.log(error);
-      throw error;
-    }
-  }
-
-  async addSpecifiUser(idx: number, userToAdd: Users): Promise<boolean> {
-    try {
-      for (let index = 0; index < idx; index++) {
-        const idxConvert = index.toString();
-        await this.getUsersFromFirestore(idxConvert).then(userget2 => {
-          if (userget2 != null) {
-            if (userget2.infos.email == userToAdd.infos.email && userget2.infos.password == '' && userget2.infos.numero == 0 && userget2.infos.uid == '') {
-              const userUpdate = userget2;
-              userUpdate.infos.password = userToAdd.infos.password;
-              userUpdate.infos.numero = userToAdd.infos.numero;
-              userUpdate.infos.uid = userToAdd.infos.uid;
-
-              this.addUserToFirestore(userUpdate, index.toString());
-              this.userIsUpdate = true;
-              // console.log('update effectuer sur mail existant');
-            }
-
-            if (userget2.infos.email == '' && userget2.infos.password == '' && userget2.infos.numero == userToAdd.infos.numero && userget2.infos.uid == '') {
-              const userUpdate = userget2;
-              userUpdate.infos.email = userToAdd.infos.email;
-              userUpdate.infos.password = userToAdd.infos.password;
-              userUpdate.infos.uid = userToAdd.infos.uid;
-
-              this.addUserToFirestore(userUpdate, index.toString());
-              this.userIsUpdate = true;
-              // console.log('update effectuer sur num existant');
-            }
-          }
-        });
-      }
-
-      return this.userIsUpdate;
-    } catch (error) {
-      // console.log(error);
-      throw error;
-    }
-  }
-
-  async updateUser(userToGet: Users, nbrTotalUser: number): Promise<Users | null> {
-    var Userget: Users | null = null;
-    try {
-      for (let index = 0; index < nbrTotalUser; index++) {
+    /**
+     * Ajoute ou met à jour un utilisateur via le Backend.
+     */
+    async addUserToFirestore(userToAdd: Users, uid: string): Promise<void> {
         try {
-          const idxConvert = index.toString();
-          const TempUserget = await this.getUsersFromFirestore(idxConvert);
-
-          if (TempUserget != null && TempUserget.infos.email == userToGet.infos.email && TempUserget.infos.uid == userToGet.infos.uid) {
-            Userget = userToGet;
-            this.addUserToFirestore(userToGet, index.toString());
-
-            // console.log('update effectuer sur le user correspondant existant');
-
-            break; // Exit the loop since user is found
-          }
+            const userJson: any = await this.convertUserToJson(userToAdd);
+            // On utilise PUT /user/:id pour sauvegarder (Set avec merge côté backend)
+            await axios.put(`${this.apiUrl}/user/${uid}`, { user: userJson }, {
+                headers: { 'ngrok-skip-browser-warning': 'true' }
+            });
         } catch (error) {
-          // console.log('erreur lord de la boucle sur les utilisateur pour update');
-          throw error;
+            console.error("Erreur lors de l'ajout de l'utilisateur via API:", error);
+            throw error;
         }
-      }
-
-      return Userget;
-    } catch (error) {
-      // console.log('erreur lors de la recup du specify user');
-      throw error;
     }
-  }
 
-  async getUsersFromFirestore(idx: string): Promise<Users | null> {
-    const firestore = getFirestore();
-    const usersCollection = doc(firestore, 'users', idx);
-
-    try {
-      const docSnapshot = await getDoc(usersCollection);
-
-      if (docSnapshot.exists()) {
-        const data = docSnapshot.data();
-        if (data && data['user']) {
-          const user = this.convertJsonToUser(data['user']);
-          return user;
-        } else {
-          // console.log('Le document ne contient pas le champ attendu.');
-          return null;
+    /**
+     * Récupère un utilisateur via le Backend.
+     */
+    async getUsersFromFirestore(uid: string): Promise<Users | null> {
+        try {
+            const response = await axios.get(`${this.apiUrl}/user/${uid}`, {
+                headers: { 'ngrok-skip-browser-warning': 'true' }
+            });
+            const data = response.data.data;
+            if (data && data['user']) {
+                return this.convertJsonToUser(data['user']);
+            }
+            return null;
+        } catch (error) {
+            console.error('Erreur lors de la récupération par API:', error);
+            return null; // On retourne null si pas trouvé (404)
         }
-      } else {
-        // console.log("Le document n'existe pas.");
-
-        return null;
-      }
-    } catch (error) {
-      // console.log(error);
-      throw error;
     }
-  }
 
-  async testConnections(): Promise<any> {
-    const firestore = getFirestore();
-    const usersCollection = doc(firestore, 'users', '0');
+    /**
+     * Alias pour getUsersFromFirestore
+     */
+    async getUserById(uid: string): Promise<Users | null> {
+        return this.getUsersFromFirestore(uid);
+    }
 
-    try {
-      const docSnapshot = await getDoc(usersCollection);
-
-      if (docSnapshot.exists()) {
-        const data = docSnapshot.data();
-        if (data && data['user']) {
-          // console.log('connexion pas');
-          return 'kkk';
-        } else {
-          // console.log('Le document ne contient pas le champ attendu.');
-          return null;
+    /**
+     * Recherche un utilisateur par email via le Backend.
+     */
+    async getUserByEmail(email: string): Promise<Users | null> {
+        try {
+            const response = await axios.get(`${this.apiUrl}/user/email/${email}`, {
+                headers: { 'ngrok-skip-browser-warning': 'true' }
+            });
+            const data = response.data.data;
+            if (data && data['user']) {
+                return this.convertJsonToUser(data['user']);
+            }
+            return null;
+        } catch (error) {
+            console.error('Erreur lors de la recherche par email via API:', error);
+            return null;
         }
-      } else {
-        // console.log("Le document n'existe pas.");
-
-        return null;
-      }
-    } catch (error) {
-      // console.log(error);
-      throw error;
     }
-  }
 
-  async connectUser(idx: number, mail: string, pass: string): Promise<string | Users> {
-    try {
-      // this.userFind=''
-      this.mailDiff = '';
-      this.mailcoress = '';
-      for (let index = 0; index < idx; index++) {
-        const idxConvert = index.toString();
-        await this.getUsersFromFirestore(idxConvert).then(userget2 => {
-          if (userget2 != null) {
-            // console.log(index);
-            // console.log(mail);
-            // console.log(userget2.infos.email);
-
-            if (userget2.infos.email !== mail) {
-              this.mailDiff = 'mail pas trouver'; // Email matches but password is incorrect
-              // console.log('mail pas trouver');
+    /**
+     * Recherche un utilisateur par numéro de téléphone via le Backend.
+     */
+    async getUserByPhone(phone: number): Promise<Users | null> {
+        try {
+            const response = await axios.get(`${this.apiUrl}/user/phone/${phone}`, {
+                headers: { 'ngrok-skip-browser-warning': 'true' }
+            });
+            const data = response.data.data;
+            if (data && data['user']) {
+                return this.convertJsonToUser(data['user']);
             }
-
-            if (userget2.infos.email === mail) {
-              // console.log('correspond');
-              this.mailcoress = index.toString();
-              // console.log(mail);
-              // console.log(userget2.infos.email);
-              // this.userFind =  userget2;
-            }
-          }
-        });
-      }
-
-      if (this.mailDiff != '') {
-        this.resu = this.mailDiff;
-      }
-
-      // console.log('mailcoress', this.mailcoress);
-      // console.log('userfind', this.userFind);
-      // console.log('');
-
-      if (this.mailcoress != '') {
-        // console.log('mailcoress', this.mailcoress);
-        // console.log('userfind', this.userFind);
-        // console.log('');
-        await this.getUsersFromFirestore(this.mailcoress).then(userget2 => {
-          if (userget2 != null) {
-            if (userget2.infos.password === pass) {
-              this.resu = userget2;
-            }
-
-            if (userget2.infos.password !== pass) {
-              this.passInco = 'pass incorrect';
-              this.resu = this.passInco;
-            }
-
-            if (userget2.infos.password === '') {
-              this.passInco = 'auth google';
-              this.resu = this.passInco;
-            }
-          }
-        });
-      }
-
-      // console.log('val final');
-      // console.log('pass', this.passInco);
-      // console.log('mail', this.mailDiff);
-      // console.log('mailcoress', this.mailcoress);
-
-      // console.log('val resu');
-      // console.log(this.resu);
-      return this.resu;
-    } catch (error) {
-      // console.log(error);
-      throw error;
+            return null;
+        } catch (error) {
+            console.error('Erreur lors de la recherche par téléphone via API:', error);
+            return null;
+        }
     }
-  }
 
-  async connectUserWithNumAndUid(idx: number, num: number, uid: string): Promise<string | Users> {
-    try {
-      for (let index = 0; index < idx; index++) {
-        const idxConvert = index.toString();
-        await this.getUsersFromFirestore(idxConvert).then(userget2 => {
-          if (userget2 != null) {
-            if (userget2.infos.numero == num && userget2.infos.uid == uid) {
-              this.resu2 = userget2; // num and password match
-            } else {
-              if (!this.resu2) {
-                this.resu2 = 'num pas trouver'; // Email matches but password is incorrect
-              }
-            }
-          }
-        });
-      }
-
-      return this.resu2;
-    } catch (error) {
-      // console.log(error);
-      throw error;
+    async convertUserToJson(user: Users): Promise<any> {
+        const userConvert = {
+            infos: {
+                nom: user.infos.nom,
+                prenom: user.infos.prenom,
+                age: user.infos.age,
+                numero: user.infos.numero,
+                uid: user.infos.uid,
+                email: user.infos.email,
+                password: user.infos.password,
+            },
+            isMarchand: user.isMarchand,
+            statistique: user.statistique,
+            commande: (user.cmd || []).map(item => ({
+                uidUser: item.uidUser,
+                idCmd: item.idCmd,
+                idFastFood: item.idFastFood,
+                menu: {
+                    titre: item.menu.titre,
+                    prix1: item.menu.prix1,
+                    prix2: item.menu.prix2,
+                    prix3: item.menu.prix3,
+                    optionPrix1: item.menu.optionPrix1,
+                    optionPrix2: item.menu.optionPrix2,
+                    optionPrix3: item.menu.optionPrix3,
+                    image: item.menu.image,
+                    disponibilite: item.menu.disponibilite,
+                },
+                quantite: item.quantite,
+                embalage: (item.embalage || []).map(e => ({ type: e.type, prix: e.prix })),
+                boisson: { type: item.boisson.type, prix: item.boisson.prix },
+                livraison: { statut: item.livraison.statut, prix: item.livraison.prix },
+                prixTotal: item.prixTotal,
+                staut: item.staut,
+                isBuy: item.isBuy,
+                ispending: item.ispending,
+            })),
+        };
+        return userConvert;
     }
-  }
 
-  async connectUserWithEmailAndUid(idx: number, mail: string, uid: string): Promise<string | Users> {
-    try {
-      this.userExist = '';
-      this.mailFind = '';
-      this.resu3 = '';
-      for (let index = 0; index < idx; index++) {
-        const idxConvert = index.toString();
-        await this.getUsersFromFirestore(idxConvert).then(userget2 => {
-          if (userget2 != null) {
-            if (userget2.infos.email == mail && userget2.infos.uid == uid) {
-              this.userExist = idxConvert;
-              this.data.user = userget2;
-              if (userget2.isMarchand) {
-              }
-              this.data.idxUser = index;
-              // console.log('mail triuver', userget2);
-            }
-          }
-        });
-      }
+    async convertJsonToUser(userJson: any): Promise<Users> {
+        const infos = new UsersInfos(
+            userJson.infos.nom,
+            userJson.infos.prenom,
+            userJson.infos.age,
+            userJson.infos.numero,
+            userJson.infos.uid,
+            userJson.infos.email,
+            userJson.infos.password
+        );
 
-      if (this.userExist === '') {
-        this.resu3 = 'mail pas trouver';
+        const commande: Commande[] = (userJson.commande || []).map(
+            (item: any) =>
+                new Commande(
+                    item.uidUser,
+                    item.idCmd,
+                    item.idFastFood,
+                    new Menu(
+                        item.menu.titre,
+                        item.menu.prix1,
+                        item.menu.prix2,
+                        item.menu.prix3,
+                        item.menu.optionPrix1,
+                        item.menu.optionPrix2,
+                        item.menu.optionPrix3,
+                        item.menu.image,
+                        item.menu.disponibilite
+                    ),
+                    item.quantite,
+                    (item.embalage || []).map((e: any) => new embalage(e.type, e.prix)),
+                    new boisson(item.boisson.type, item.boisson.prix),
+                    new livraison(item.livraison.statut, item.livraison.prix),
+                    item.prixTotal,
+                    item.staut,
+                    item.isBuy,
+                    item.ispending
+                )
+        );
 
-        // console.log('mail pas trouver');
-      }
-
-      if (this.userExist !== '') {
-        this.getUsersFromFirestore(this.userExist).then(userget2 => {
-          if (userget2 != null) {
-            this.resu3 = userget2;
-            // console.log('mail trouver');
-          }
-        });
-      }
-
-      // console.log('val de resu3', this.resu3);
-
-      return this.resu3;
-    } catch (error) {
-      // console.log(error);
-      throw error;
+        return new Users(infos, userJson.isMarchand, userJson.statistique, commande);
     }
-  }
 
-  async convertUserToJson(user: Users): Promise<any> {
-    // Convertir le tableau d'utilisateurs en un tableau JSON
-    const userConvert = {
-      infos: {
-        nom: user.infos.nom,
-        prenom: user.infos.prenom,
-        age: user.infos.age,
-        numero: user.infos.numero,
-        uid: user.infos.uid,
-        email: user.infos.email,
-        password: user.infos.password,
-      },
-      isMarchand: user.isMarchand,
-      statistique: user.statistique,
-      commande: user.cmd.map(item => ({
-        uidUser: item.uidUser,
-        idCmd: item.idCmd,
-        idFastFood: item.idFastFood,
-        menu: {
-          titre: item.menu.titre,
-          prix1: item.menu.prix1,
-          prix2: item.menu.prix2,
-          prix3: item.menu.prix3,
+    /**
+     * Met à jour un utilisateur (Compatibilité ascendante)
+     * On ignore 'idx' car on utilise désormais l'UID présent dans l'objet user.
+     */
+    async updateUser(userToUpdate: Users, idx: any = null): Promise<Users> {
+        const uid = userToUpdate.infos.uid;
+        if (!uid) throw new Error("UID manquant pour la mise à jour de l'utilisateur");
 
-          optionPrix1: item.menu.optionPrix1,
-          optionPrix2: item.menu.optionPrix2,
-          optionPrix3: item.menu.optionPrix3,
+        await this.addUserToFirestore(userToUpdate, uid);
+        return userToUpdate;
+    }
 
-          image: item.menu.image,
+    // Fonctions de compatibilité temporaire si nécessaire pour éviter les plantages immédiats
+    async connectUserWithEmailAndUid(idx: any, mail: string, uid: string): Promise<any> {
+        return this.getUsersFromFirestore(uid);
+    }
 
-          disponibilite: item.menu.disponibilite,
-        },
-        quantite: item.quantite,
-
-        embalage: item.embalage.map(item => ({
-          type: item.type,
-          prix: item.prix,
-        })),
-
-        boisson: {
-          type: item.boisson.type,
-          prix: item.boisson.prix,
-        },
-
-        livraison: {
-          statut: item.livraison.statut,
-          prix: item.livraison.prix,
-        },
-
-        prixTotal: item.prixTotal,
-        staut: item.staut,
-        isBuy: item.isBuy,
-        ispending: item.ispending,
-      })),
-    };
-    return userConvert;
-  }
-
-  async convertJsonToUser(user: any): Promise<Users> {
-    // Convertir le tableau JSON en tableau d'objets dataMerchend
-    const infos = new UsersInfos(user.infos.nom, user.infos.prenom, user.infos.age, user.infos.numero, user.infos.uid, user.infos.email, user.infos.password);
-
-    const commande: Commande[] = user.commande.map(
-      (item: any) =>
-        new Commande(
-          item.uidUser,
-          item.idCmd,
-          item.idFastFood,
-          new Menu(
-            item.menu.titre,
-            item.menu.prix1,
-            item.menu.prix2,
-            item.menu.prix3,
-
-            item.menu.optionPrix1,
-            item.menu.optionPrix2,
-            item.menu.optionPrix3,
-
-            item.menu.image,
-            item.menu.disponibilite
-          ),
-          item.quantite,
-          item.embalage.map((item: any) => new embalage(item.type, item.prix)),
-          new boisson(item.boisson.type, item.boisson.prix),
-          new livraison(item.livraison.statut, item.livraison.prix),
-          item.prixTotal,
-          item.staut,
-          item.isBuy,
-          item.ispending
-        )
-    );
-
-    const userConvert = new Users(infos, user.isMarchand, user.statistique, commande);
-
-    return userConvert;
-  }
-
-  //   async createUser(email: string, password: string): Promise<void> {
-  //     return new Promise<void>(async (resolve, reject) => {
-  //       const app = initializeApp(environment.firebase);
-  //       const auth = getAuth(app);
-
-  //       try {
-  //         const userCredential: UserCredential = await createUserWithEmailAndPassword(auth, email, password);
-  //         this.user = userCredential.user;
-
-  //         // Envoyer un email de vérification
-  //         await sendEmailVerification(this.user);
-
-  //         const newUser = new dataMerchend(this.user.uid, this.email, this.password);
-
-  //         const userGet: dataMerchend[] = await this.getUsersFromFirestore();
-  //         this.service.userTab.splice(0, this.service.userTab.length, ...userGet);
-
-  //         this.service.userTab.push(newUser);
-
-  //         await this.addUserToFirestore(this.service.userTab);
-
-  // console.log('User created successfully, verification email sent.');
-  // console.log('User UID:', this.user.uid);
-
-  // console.log(this.service.userTab);
-
-  //         resolve();
-  //       } catch (error) {
-  // console.log(error);
-  //         reject(error);
-  //       }
-  //     });
-  //   }
-  // }
+    async connectUserWithNumAndUid(idx: any, num: number, uid: string): Promise<any> {
+        return this.getUsersFromFirestore(uid);
+    }
 }
