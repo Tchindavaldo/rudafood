@@ -1,11 +1,13 @@
 export const environment = {
   // ngrok http http://localhost:5000
 
-  apiUrl: 'http://localhost:5000',
+  // apiUrl: 'http://localhost:5000',
   // apiUrl: 'http://10.42.0.1:5000',
+  // apiUrl: 'http://192.168.137.206:5000',
   // apiUrl: 'http://192.168.8.5:5000',
   // apiUrl: 'http://192.168.1.198:5000',
 
+  apiUrl: 'http://192.168.8.100:5000',
   // apiUrl: 'http://192.168.8.101:5000',
   // apiUrl: 'http://192.168.1.199:5000',
   // apiUrl: 'http://192.168.1.123:5000',

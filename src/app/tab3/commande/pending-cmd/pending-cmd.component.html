@@ -56,7 +56,7 @@
                   <app-fast-food-order
                     (openModal)="showDispoCard($event.order)"
                     checkboxBackgroundChecked="#ff0000"
-                    checkboxBorderColorChecked="darkred"
+                    checkboxBorderColorChecked="rgba(236,73,19,1.00)"
                     [background]="getTotalOrdersForUser('express', date, userId) > 0 ? 'hsl(0, 100%, 15%)' : 'none'"
                     [extras]="order.extra || []"
                     [extrasDrink]="order.drink || []"

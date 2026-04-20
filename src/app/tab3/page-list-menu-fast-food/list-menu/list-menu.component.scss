@@ -20,7 +20,7 @@ ion-grid > :nth-child(3) ion-col > :nth-child(2) {
   padding-left: 8px;
   font-size: 13px;
   font-weight: 300;
-  color: darkred;
+  color: rgba(236,73,19,1.00);
 }
 
 ion-grid > :nth-child(3) {
@@ -33,7 +33,7 @@ ion-card {
   position: fixed;
   bottom: 0;
   // padding-top: 20px;
-  // box-shadow: 0 -1px 3px darkred;
+  // box-shadow: 0 -1px 3px rgba(236,73,19,1.00);
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
 }
@@ -50,7 +50,7 @@ ion-header {
 ion-button {
   --border-radius: 15px;
   width: 55px;
-  --background: darkred;
+  --background: rgba(236,73,19,1.00);
   height: 55px;
   position: fixed;
   bottom: 0;
@@ -75,7 +75,7 @@ ion-col ion-icon {
   font-size: 12px;
 }
 .focusedChip {
-  background-color: darkred;
+  background-color: rgba(236,73,19,1.00);
   transition-duration: 1s;
   color: rgb(255, 255, 255);
 }

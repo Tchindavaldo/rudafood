@@ -1,6 +1,8 @@
 .description {
-  font-family: 'InterLight', sans-serif; /* Police légère */
-  font-weight: 100; /* Poids léger */
+  font-family: 'InterLight', sans-serif;
+  /* Police légère */
+  font-weight: 100;
+  /* Poids léger */
   color: #000000a6;
 }
 
@@ -10,6 +12,7 @@
   flex-direction: column;
   justify-content: flex-end;
 }
+
 .ctn-img {
   margin-bottom: 20%;
 }
@@ -17,6 +20,7 @@
 .ctn-btn {
   margin-bottom: 13%;
 }
+
 ion-button {
   --background: hsl(0 70% 27% / 1);
   --background-activated: #8b0000;

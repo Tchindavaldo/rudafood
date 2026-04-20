@@ -122,8 +122,8 @@ ion-icon {
 
 .input-label-placement-floating.has-focus.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md,
 .input-label-placement-stacked.has-focus.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
-    --highlight-color: darkred;
-    color: darkred;
+    --highlight-color: rgba(236,73,19,1.00);
+    color: rgba(236,73,19,1.00);
     display: inline;
 }
 
@@ -149,7 +149,7 @@ ion-grid>ion-row:nth-child(9) ion-col ion-icon {
 }
 
 .sc-ion-input-md-h {
-    --highlight-color-focused: darkred;
+    --highlight-color-focused: rgba(236,73,19,1.00);
 }
 
 

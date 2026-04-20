@@ -12,7 +12,7 @@ export class OrderModalComponent implements OnInit, OnChanges {
   @Input() showLoader = false;
   @Output() closeModal = new EventEmitter<any>();
   @Output() confirmBtnClick = new EventEmitter<any>();
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     // console.log('data de puis le modal ctn', this.data);

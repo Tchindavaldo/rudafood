@@ -26,7 +26,7 @@ ion-row > ion-col:nth-child(1) {
 .col-FF {
   padding-top: 2px;
   font-weight: bold;
-  color: darkred;
+  color: rgba(236,73,19,1.00);
   font-size: 17px;
 }
 .col-Name {
@@ -77,7 +77,7 @@ ion-row > ion-col:nth-child(1) {
 }
 
 .input-fill-outline.has-focus.sc-ion-input-md-h {
-  --border-color: darkred;
+  --border-color: rgba(236,73,19,1.00);
   --background: none;
   --highlight-height: 3px;
 }
@@ -94,8 +94,8 @@ ion-chip :focus .ion-activated {
   .label-text-wrapper.sc-ion-input-md,
 .input-label-placement-stacked.has-focus.sc-ion-input-md-h
   .label-text-wrapper.sc-ion-input-md {
-  --highlight-color: darkred;
-  color: darkred;
+  --highlight-color: rgba(236,73,19,1.00);
+  color: rgba(236,73,19,1.00);
   display: inline;
 }
 
@@ -104,7 +104,7 @@ ion-chip :focus .ion-activated {
   display: none;
 }
 .sc-ion-input-md-h {
-  --highlight-color-focused: darkred;
+  --highlight-color-focused: rgba(236,73,19,1.00);
 }
 
 ion-icon {

@@ -24,7 +24,7 @@
           <ion-chip
             [color]="color"
             style="font-size: 10px; font-weight: bold"
-            [ngStyle]="{ background: extra.status && color === '' ? 'darkgreen' : !extra.status && color === '' ? 'darkred' : '', color: color === '' ? 'white' : '' }"
+            [ngStyle]="{ background: extra.status && color === '' ? 'darkgreen' : !extra.status && color === '' ? 'rgba(236,73,19,1.00)' : '', color: color === '' ? 'white' : '' }"
           >
             <ion-label>{{ extra.name }}</ion-label>
             <div class="custom-checkbox" [ngClass]="{ 'cross-checkbox': !extra.status, 'check-checkbox': extra.status }">

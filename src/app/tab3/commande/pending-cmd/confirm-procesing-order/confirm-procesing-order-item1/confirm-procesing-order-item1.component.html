@@ -44,7 +44,7 @@
         </ion-chip>
 
         <!-- Bouton Non/Annuler selon l'étape -->
-        <ion-chip (click)="emitBtn2Click()" class="chip3" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }">
+        <ion-chip (click)="emitBtn2Click()" class="chip3" [ngStyle]="{ color: 'white', 'background-color': 'rgba(236,73,19,1.00)' }">
           <ion-label style="font-size: 10px">
             <ng-container *ngIf="currentStep === 0">Non</ng-container>
             <ng-container *ngIf="currentStep > 0">Annuler</ng-container>

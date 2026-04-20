@@ -18,7 +18,7 @@ enum RefundStep {
 export class ConfirmProcesingOrderItem1Component implements OnChanges {
   iconBtn1 = 'checkmark-outline';
   titleColor = 'danger';
-  confirmationColor = 'darkRed';
+  confirmationColor = 'rgba(236,73,19,1.00)';
   titleAction = 'Voulez vous vraiment Annuler ?';
   textConfirmation = '  OUI  ';
 
@@ -39,7 +39,7 @@ export class ConfirmProcesingOrderItem1Component implements OnChanges {
 
   isUpdating = false;
 
-  constructor(private updateOrdersRequet: updateOrdersRequetService) {}
+  constructor(private updateOrdersRequet: updateOrdersRequetService) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data'] && this.data) {

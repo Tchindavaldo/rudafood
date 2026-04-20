@@ -368,11 +368,11 @@ export class CommandePage implements OnInit, OnDestroy {
           const dateStr = deliveryDate.toISOString().split('T')[0];
           // Vérifier que ce n'est pas la date d'aujourd'hui
           if (dateStr !== todayStr) {
-            if (order.status === 'pending') {
+            if (order.status === 'pending' || order.status === 'pendingToBuy') {
               this.orderDatesPending.add(dateStr);
-            } else if (order.status === 'processing') {
+            } else if (order.status === 'processing' || order.status === 'active' || order.status === 'in_progress') {
               this.orderDatesProcessing.add(dateStr);
-            } else if (order.status === 'finished') {
+            } else if (order.status === 'finished' || order.status === 'completed' || order.status === 'done') {
               this.orderDatesFinished.add(dateStr);
             }
           }

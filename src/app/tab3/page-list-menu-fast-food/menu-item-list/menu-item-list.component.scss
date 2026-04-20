@@ -20,7 +20,7 @@ ion-col {
 .col-FF {
   padding-top: 2px;
   font-weight: bold;
-  color: darkred;
+  color: rgba(236,73,19,1.00);
   font-size: 17px;
 }
 .col-Name {
@@ -61,12 +61,12 @@ ion-col {
   padding-left: 8px;
   font-size: 13px;
   font-weight: bold;
-  color: darkred;
+  color: rgba(236,73,19,1.00);
 }
 
 ion-checkbox {
   --size: 15px;
-  --checkbox-background-checked: darkred;
+  --checkbox-background-checked: rgba(236,73,19,1.00);
   font-size: 18px;
   color: white;
   font-weight: bold;
@@ -75,7 +75,7 @@ ion-checkbox {
 
 ion-checkbox::part(container) {
   border-radius: 4px;
-  border: 2px solid darkred;
+  border: 2px solid rgba(236,73,19,1.00);
 }
 
 .firstCheck {

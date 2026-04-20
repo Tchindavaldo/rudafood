@@ -3,7 +3,7 @@
     <ion-row>
       <ion-col size="auto">
         <ion-card class="imageFood">
-          <ion-label [ngStyle]="{ 'background-color': menu.status === 'available' ? 'darkgreen' : 'darkred', color: 'white' }" class="status-chip">{{
+          <ion-label [ngStyle]="{ 'background-color': menu.status === 'available' ? 'darkgreen' : 'rgba(236,73,19,1.00)', color: 'white' }" class="status-chip">{{
             menu.status === 'available' ? 'Disponible' : 'Indisponible'
           }}</ion-label>
           <div class="skeleton" *ngIf="!menu.coverImage || isLoading"></div>

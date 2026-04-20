@@ -25,7 +25,7 @@ interface PaymentData {
 export class PaymentPendingOrderComponent implements OnChanges {
   iconBtn1 = 'wallet-outline';
   titleColor = 'danger';
-  confirmationColor = 'darkRed';
+  confirmationColor = 'rgba(236,73,19,1.00)';
   titleAction = 'Voulez vous vraiment Annuler ?';
   textConfirmation = 'payer';
 
@@ -86,7 +86,7 @@ export class PaymentPendingOrderComponent implements OnChanges {
 
   isUpdating = false;
 
-  constructor(private updateOrdersRequet: updateOrdersRequetService) {}
+  constructor(private updateOrdersRequet: updateOrdersRequetService) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data'] && this.data) {

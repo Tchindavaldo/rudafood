@@ -54,7 +54,7 @@ ion-grid {
 ion-card {
   height: 75px;
   width: 75px;
-  background-color: darkred;
+  background-color: rgba(236, 73, 19, 1.00);
   border-radius: 199px;
   overflow: hidden;
   display: flex;
@@ -81,15 +81,18 @@ ion-card {
   font-weight: 500;
   text-align: center;
 }
+
 .row-condition ion-label {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
   display: flex;
 }
+
 .row-nbrRestant ion-label {
   font-size: 17px;
 }
+
 .row-poGratuit ion-chip {
   font-size: 10px;
   font-weight: 500;
@@ -98,17 +101,20 @@ ion-card {
   color: white;
   letter-spacing: 1.1px;
 }
+
 .row-val-nbrRestant {
   font-weight: bold;
   font-size: 25px;
 }
-.row-bonus > ion-col:nth-child(2) ion-chip {
+
+.row-bonus>ion-col:nth-child(2) ion-chip {
   color: white;
   background-color: green;
   font-size: 10px;
   font-weight: 500;
 }
-.row-bonus > ion-col ion-chip {
+
+.row-bonus>ion-col ion-chip {
   font-size: 10px;
   font-weight: 500;
 }
@@ -121,6 +127,7 @@ ion-card {
   background: red;
   top: 0px;
 }
+
 .card-black {
   background-color: #000000ab;
   height: 100%;
@@ -130,6 +137,7 @@ ion-card {
   z-index: 10;
   backdrop-filter: blur(216px);
 }
+
 .card-back2 {
   bottom: 0%;
   width: 100%;
@@ -140,6 +148,7 @@ ion-card {
 }
 
 @media (max-height: 700px) {
+
   .row-condition,
   .row-nbrRestant,
   .row-val-nbrRestant,
@@ -166,10 +175,12 @@ ion-card {
 .col-segment {
   text-align: center;
 }
+
 .col-segment ion-label {
   font-size: 10px;
   font-weight: bold;
 }
+
 .col-segment ion-chip {
   position: relative;
   overflow: visible;
@@ -177,14 +188,14 @@ ion-card {
 }
 
 .firstCchip {
-  background-color: darkred;
+  background-color: rgba(236, 73, 19, 1.00);
   color: white;
 }
 
-.col-segment ion-chip > ion-label:nth-child(2) {
+.col-segment ion-chip>ion-label:nth-child(2) {
   position: absolute;
   color: white;
-  background: darkred;
+  background: rgba(236, 73, 19, 1.00);
   padding: 0;
   width: 20px;
   border-radius: 58px;

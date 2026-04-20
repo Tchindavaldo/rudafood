@@ -53,7 +53,7 @@
                 size="auto"
                 style="display: flex; align-items: center; justify-content: space-between; align-items: center; transform: scale(0.9)"
               >
-                <ion-chip *ngIf="currentStep !== 0" class="chip" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }" (click)="goToPreviousStep()">
+                <ion-chip *ngIf="currentStep !== 0" class="chip" [ngStyle]="{ color: 'white', 'background-color': 'rgba(236,73,19,1.00)' }" (click)="goToPreviousStep()">
                   <ion-icon color="light" name="arrow-back-outline"></ion-icon>
                   <ion-label style="font-size: 10px"> precedent </ion-label>
                 </ion-chip>
@@ -64,7 +64,7 @@
                 </ion-chip>
 
                 <!-- Bouton Non/Annuler selon l'étape -->
-                <!-- <ion-chip (click)="emitBtn2Click()" class="chip" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }">
+                <!-- <ion-chip (click)="emitBtn2Click()" class="chip" [ngStyle]="{ color: 'white', 'background-color': 'rgba(236,73,19,1.00)' }">
                   <ion-label style="font-size: 10px">
                     <ng-container *ngIf="currentStep === 0">Non</ng-container>
                     <ng-container *ngIf="currentStep > 0">Annuler</ng-container>

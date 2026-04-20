@@ -39,7 +39,7 @@ ion-grid {
 
   padding-top: 10px;
   margin: 0px;
-  background-color: darkred;
+  background-color: rgba(236,73,19,1.00);
   // border-top-left-radius: 45px;
   // border-top-right-radius: 45px;
 }
@@ -56,14 +56,14 @@ ion-grid {
 }
 
 .firstCchip {
-  background-color: darkred;
+  background-color: rgba(236,73,19,1.00);
   color: white;
 }
 
 .col-segment ion-chip > ion-label:nth-child(2) {
   position: absolute;
   color: white;
-  background: darkred;
+  background: rgba(236,73,19,1.00);
   padding: 0;
   width: 20px;
   border-radius: 58px;
@@ -103,7 +103,7 @@ ion-header {
   font-size: 10px;
 }
 .col-article ion-chip {
-  --background: darkred;
+  --background: rgba(236,73,19,1.00);
   font-size: 10px;
   color: rgb(255, 255, 255);
 }
@@ -230,7 +230,7 @@ ion-item {
 
 // Carte de section (Express, Programmée, En attente)
 .section-card {
-  // background: linear-gradient(to bottom left, darkred, #000000);
+  // background: linear-gradient(to bottom left, rgba(236,73,19,1.00), #000000);
   background-size: cover;
 
   // Style pour le chip de livraison actif

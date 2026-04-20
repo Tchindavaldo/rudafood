@@ -85,7 +85,7 @@ export class FastFoodOrderComponent implements OnInit, AfterViewInit, OnDestroy 
   // Classe CSS pour la case à cocher
   get checkboxClass(): string {
     // Si les deux propriétés sont définies avec les valeurs spécifiques pour le rouge
-    if (this.checkboxBackgroundChecked === '#ff0000' && this.checkboxBorderColorChecked === 'darkred') {
+    if (this.checkboxBackgroundChecked === '#ff0000' && this.checkboxBorderColorChecked === 'rgba(236,73,19,1.00)') {
       return 'custom-checkbox-red';
     }
     // Si les deux propriétés sont définies avec les valeurs spécifiques pour le vert

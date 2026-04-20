@@ -9,7 +9,7 @@ import { showCard } from 'src/utils/showCard';
 export class ModalItem1Component implements OnInit, OnChanges {
   iconBtn1 = 'trash-outline';
   titleColor = 'danger';
-  confirmationColor = 'darkRed';
+  confirmationColor = 'rgba(236,73,19,1.00)';
   titleAction = 'Voulez vous vraiment supprimer ?';
 
   @Input() id!: string;
@@ -18,7 +18,7 @@ export class ModalItem1Component implements OnInit, OnChanges {
   @Output() outputBtn2Click = new EventEmitter<any>();
   textConfirmation: string = '';
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.updateTextConfirmation();
@@ -28,7 +28,7 @@ export class ModalItem1Component implements OnInit, OnChanges {
     if (this.id === 'bottom-card-dispoMenu' && this.data && this.data.status !== undefined) {
       this.textConfirmation = 'confirmer';
       console.log('status recu ', this.data.status);
-      this.confirmationColor = this.data.status === 'available' ? 'forestgreen' : 'darkRed';
+      this.confirmationColor = this.data.status === 'available' ? 'forestgreen' : 'rgba(236,73,19,1.00)';
       const statusText = this.data.status === 'available' ? 'Disponible' : 'Indisponible';
       const statusColor = this.data.status === 'available' ? 'success' : 'danger';
       this.titleAction = `Voulez vous rendre ${statusText} ?`;

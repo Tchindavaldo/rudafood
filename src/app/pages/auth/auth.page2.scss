@@ -1,5 +1,5 @@
 ion-grid>ion-row:nth-child(9) ion-label {
-    border-bottom: 0px solid darkred;
+    border-bottom: 0px solid rgba(236,73,19,1.00);
     border-bottom: 0px solid white;
     font-size: 13px;
     // position: fixed;
@@ -32,7 +32,7 @@ ion-grid>ion-row:nth-child(9) ion-label {
 
         --border-radius: 10px;
         width: 35px;
-        --background: darkred;
+        --background: rgba(236,73,19,1.00);
         height: 35px;
         min-height: 35px;
     }
@@ -47,7 +47,7 @@ ion-grid>ion-row:nth-child(9) ion-label {
         // display: flex;
         justify-content: center;
         color:white; 
-        /* background-color: darkred; */
+        /* background-color: rgba(236,73,19,1.00); */
         border-radius: 25px;
     }
     ion-grid>ion-row:nth-child(1) ion-label {
@@ -70,7 +70,7 @@ ion-grid>ion-row:nth-child(3) {
 .ion-input {
     --border-radius: 20px;
     --padding-start: 40px;
-    // --border-color: darkred;
+    // --border-color: rgba(236,73,19,1.00);
     --border-color: rgba(139, 0, 0, 0);
     --border-width: 1px;
     // --background: #ffffffad;
@@ -87,7 +87,7 @@ ion-grid>ion-row:nth-child(3) {
 display: none;
 }
 ion-chip{    box-shadow: 0px 0px 9px rgb(255, 157, 157);
-    background: darkred;
+    background: rgba(236,73,19,1.00);
     padding: 0px 7px;
 }
 ion-chip ion-label{   

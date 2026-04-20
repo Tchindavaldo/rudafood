@@ -16,9 +16,9 @@
   height: max-content;
 }
 .selected {
-  background-color: darkred !important;
+  background-color: rgba(236,73,19,1.00) !important;
   border-radius: 20px;
-  // box-shadow: 0 2px 4px darkred;
+  // box-shadow: 0 2px 4px rgba(236,73,19,1.00);
   color: white;
   ion-icon {
     color: white !important;

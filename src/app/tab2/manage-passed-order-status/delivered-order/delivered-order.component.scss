@@ -47,7 +47,7 @@ $section-spacing: 16px;
 
       ion-chip {
         background-color: rgba(139, 0, 0, 0);
-        color: darkred;
+        color: rgba(236,73,19,1.00);
       }
     }
   }
@@ -127,7 +127,7 @@ ion-item {
 
 // Carte de section (Express, Programmée, En attente)
 .section-card {
-  // background: linear-gradient(to bottom left, darkred, #000000);
+  // background: linear-gradient(to bottom left, rgba(236,73,19,1.00), #000000);
   background-color: white;
   background-size: cover;
 

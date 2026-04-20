@@ -29,7 +29,7 @@
                 <ion-label>statut</ion-label>
               </ion-col>
               <ion-col size="auto" class="val-statut">
-                <ion-label [ngStyle]="{ color: menu.status === 'available' ? 'forestgreen' : 'darkred' }">{{ menu.status === 'available' ? 'Disponible' : 'Indisponible' }}</ion-label>
+                <ion-label [ngStyle]="{ color: menu.status === 'available' ? 'forestgreen' : 'rgba(236,73,19,1.00)' }">{{ menu.status === 'available' ? 'Disponible' : 'Indisponible' }}</ion-label>
               </ion-col>
             </ion-col>
 
@@ -42,7 +42,7 @@
               </ion-col>
               <ion-col style="display: flex; align-items: center; padding-left: 30px" *ngIf="showCheck" size="auto" class="val-statut">
                 <div (click)="triggerModalWithStatus('unavailable')" style="display: flex; align-items: center; cursor: pointer">
-                  <ion-label style="color: darkred">{{ text9 }}</ion-label>
+                  <ion-label style="color: rgba(236,73,19,1.00)">{{ text9 }}</ion-label>
                   <ion-checkbox disabled="true" checked="{{ menu.status === 'unavailable' }}" style="opacity: 1"></ion-checkbox>
                 </div>
               </ion-col>

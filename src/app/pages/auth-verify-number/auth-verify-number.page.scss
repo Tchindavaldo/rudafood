@@ -10,7 +10,7 @@ ion-card {
 .ion-input {
     --border-radius: 16px;
     --padding-start: 40px;
-    --border-color: darkred;
+    --border-color: rgba(236,73,19,1.00);
     --border-width: 1px;
     --background: #ffffffad;
     height: 70px;
@@ -18,7 +18,7 @@ ion-card {
 
 .input-fill-outline.has-focus.sc-ion-input-md-h {
  
-        --border-color: darkred;
+        --border-color: rgba(236,73,19,1.00);
         --background: #00000063;
         --highlight-height: 3px;
         --color: whitesmoke;
@@ -49,7 +49,7 @@ ion-grid>ion-row:nth-child(1) ion-label {
     justify-content: center;
     color: white;
     font-size: 50px;
-    /* background-color: darkred; */
+    /* background-color: rgba(236,73,19,1.00); */
     border-radius: 25px;
     padding: 10px 17px;
 }
@@ -88,7 +88,7 @@ ion-grid>ion-row:nth-child(6),
 }
 
 ion-grid>ion-row:nth-child(8) ion-label {
-    border-bottom: 1px solid darkred;
+    border-bottom: 1px solid rgba(236,73,19,1.00);
     border-bottom: 1px solid white;
 }
 
@@ -144,8 +144,8 @@ ion-icon {
 
 .input-label-placement-floating.has-focus.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md,
 .input-label-placement-stacked.has-focus.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
-    --highlight-color: darkred;
-    color: darkred;
+    --highlight-color: rgba(236,73,19,1.00);
+    color: rgba(236,73,19,1.00);
     display: inline;
 }
 
@@ -171,14 +171,14 @@ ion-grid>ion-row:nth-child(9) ion-col ion-icon {
 }
 
 .sc-ion-input-md-h {
-    --highlight-color-focused: darkred;
+    --highlight-color-focused: rgba(236,73,19,1.00);
 }
 
 ion-button {
 
     --border-radius: 15px;
     width: 55px;
-    --background: darkred;
+    --background: rgba(236,73,19,1.00);
     height: 55px;
 }
 

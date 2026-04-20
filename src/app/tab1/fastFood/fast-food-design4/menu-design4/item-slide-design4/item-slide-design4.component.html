@@ -26,11 +26,14 @@
               <ion-col>
                 <ion-card class="middle-card">
                   <div class="skeleton" *ngIf="!menu.coverImage || isLoading"></div>
-                  <img style="width: 100%; height: 100%; object-fit: cover" [src]="menu.coverImage" (error)="onImageError($event)" alt="Menu image" (load)="onImageLoad($event)" />
+                  <img style="width: 100%; height: 100%; object-fit: cover" [src]="menu.coverImage"
+                    (error)="onImageError($event)" alt="Menu image" (load)="onImageLoad($event)" />
 
-                  <ion-label class="status-chip" [ngStyle]="{ 'background-color': menu.status === 'available' ? 'darkgreen' : 'darkred', color: 'white' }" class="status-chip">{{
+                  <ion-label class="status-chip"
+                    [ngStyle]="{ 'background-color': menu.status === 'available' ? 'darkgreen' : 'rgba(236,73,19,1.00)', color: 'white' }"
+                    class="status-chip">{{
                     menu.status === 'available' ? 'Disponible' : 'Indisponible'
-                  }}</ion-label>
+                    }}</ion-label>
                   <ion-label class="price-chip" style="background-color: 'darkgreen'; color: 'white'">
                     {{ menu?.prices && menu.prices.length > 0 ? menu.prices[0].price : '' }} fcfa
                   </ion-label>

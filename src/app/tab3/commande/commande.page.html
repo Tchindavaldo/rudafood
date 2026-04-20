@@ -1,4 +1,4 @@
-<ion-header *ngIf="userData.fastFoodId!==undefined" style="position: sticky; top: -130px; z-index: 5000">
+<ion-header *ngIf="userData?.fastFoodId !== undefined" style="position: sticky; top: -130px; z-index: 5000">
   <ion-toolbar>
     <ion-grid fixed>
       <ion-row style="display: flex; justify-content: space-between; margin-bottom: 7px">
@@ -11,9 +11,9 @@
           <ng-container *ngFor="let day of nextDays.slice(0,7)">
             <ion-col size="auto" (click)="selectDay(day)" class="day-col">
               <app-component2
-                [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'darkred' : '#fff5f5'"
+                [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'rgba(236,73,19,1.00)' : '#fff5f5'"
                 [mLeft]="'5px'"
-                [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px darkred' : 'none'"
+                [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px rgba(236,73,19,1.00)' : 'none'"
                 [text1]="day.day"
                 [text2]="day.date.toString()"
                 [style.opacity]="isSameDay(selectedDate, day.fullDate) ? '1' : '0.6'"
@@ -78,9 +78,9 @@
             <ng-container *ngFor="let day of PassPendingDays">
               <ion-col size="auto" (click)="selectDay(day)" class="day-col">
                 <app-component2
-                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'darkred' : '#fff5f5'"
+                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'rgba(236,73,19,1.00)' : '#fff5f5'"
                   [mLeft]="'5px'"
-                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px darkred' : 'none'"
+                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px rgba(236,73,19,1.00)' : 'none'"
                   [text1]="day.day"
                   [text2]="day.date.toString()"
                   [style.opacity]="isSameDay(selectedDate, day.fullDate) ? '1' : '0.6'"
@@ -95,9 +95,9 @@
             <ng-container *ngFor="let day of PassProcessingDays">
               <ion-col size="auto" (click)="selectDay(day)" class="day-col">
                 <app-component2
-                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'darkred' : '#fff5f5'"
+                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'rgba(236,73,19,1.00)' : '#fff5f5'"
                   [mLeft]="'5px'"
-                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px darkred' : 'none'"
+                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px rgba(236,73,19,1.00)' : 'none'"
                   [text1]="day.day"
                   [text2]="day.date.toString()"
                   [style.opacity]="isSameDay(selectedDate, day.fullDate) ? '1' : '0.6'"
@@ -112,9 +112,9 @@
             <ng-container *ngFor="let day of PassFinishedDays">
               <ion-col size="auto" (click)="selectDay(day)" class="day-col">
                 <app-component2
-                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'darkred' : '#fff5f5'"
+                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'rgba(236,73,19,1.00)' : '#fff5f5'"
                   [mLeft]="'5px'"
-                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px darkred' : 'none'"
+                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px rgba(236,73,19,1.00)' : 'none'"
                   [text1]="day.day"
                   [text2]="day.date.toString()"
                   [style.opacity]="isSameDay(selectedDate, day.fullDate) ? '1' : '0.6'"
@@ -134,7 +134,7 @@
   <ion-datetime [(ngModel)]="selectedDateString" [min]="minDate" [max]="maxDate" presentation="date" locale="fr-FR"></ion-datetime>
   <ion-button (click)="isDatePickerOpen = false">Valider</ion-button>
 </div> -->
-<app-loader [load]="this.orderData.getFastfoodOrders() === null && userData.fastFoodId!==undefined" height="125%"></app-loader>
+<app-loader [load]="this.orderData.getFastfoodOrders() === null && userData?.fastFoodId !== undefined" height="125%"></app-loader>
 
 <!-- Affichage du contenu lorsque fastFoodOrder est différent de null -->
 <!-- <main
@@ -149,5 +149,5 @@
 <app-no-fast-food
   titre="Creer votre boutique et recever vos cammande"
   description="Gerer facillement vos comades vos livraisons vos transactions avec votre Boutique"
-  *ngIf="userData.fastFoodId===undefined"
+  *ngIf="userData?.fastFoodId === undefined"
 ></app-no-fast-food>

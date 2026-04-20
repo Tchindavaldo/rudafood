@@ -44,7 +44,7 @@ ion-col {
   font-weight: 700;
 }
 .col-icon {
-  color: darkred;
+  color: rgba(236,73,19,1.00);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,7 +74,7 @@ ion-chip {
 }
 
 .nbrNotif {
-  // background-color: darkred;
+  // background-color: rgba(236,73,19,1.00);
   color: white;
   border-radius: 32px;
   width: 17px;

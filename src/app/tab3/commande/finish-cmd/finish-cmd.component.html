@@ -56,7 +56,7 @@
                       *ngIf="!isDeliveryActive(userId, date, 'express')"
                       (click)="startDelivery(userId, date, 'express')"
                       color="danger"
-                      style="margin-left: 10px; font-size: 0.75rem; background: darkred; color: white"
+                      style="margin-left: 10px; font-size: 0.75rem; background: rgba(236,73,19,1.00); color: white"
                     >
                       <ion-icon name="bicycle-outline"></ion-icon>
                       <ion-label style="font-size: 0.85rem; color: white">Livrer</ion-label>
@@ -139,7 +139,7 @@
                       <ion-chip
                         (click)="startDeliveryForPeriod(date, 'time', time)"
                         [ngClass]="{ 'delivery-active': isDeliveryPeriodActive(date, 'time', time) }"
-                        style="margin-bottom: 0px; font-size: 0.75rem; flex-direction: row; justify-content: center; align-items: center; cursor: pointer; background-color: darkred"
+                        style="margin-bottom: 0px; font-size: 0.75rem; flex-direction: row; justify-content: center; align-items: center; cursor: pointer; background-color: rgba(236,73,19,1.00)"
                         color="danger"
                       >
                         <ion-icon name="bicycle-outline" style="margin-right: 5px; color: white"></ion-icon>

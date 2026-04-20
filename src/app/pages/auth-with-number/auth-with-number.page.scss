@@ -115,8 +115,8 @@ ion-icon {
 
 .input-label-placement-floating.has-focus.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md,
 .input-label-placement-stacked.has-focus.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md {
-    --highlight-color: darkred;
-    color: darkred;
+    --highlight-color: rgba(236,73,19,1.00);
+    color: rgba(236,73,19,1.00);
     display: inline;
 }
 
@@ -142,7 +142,7 @@ ion-grid>ion-row:nth-child(9) ion-col ion-icon {
 }
 
 .sc-ion-input-md-h {
-    --highlight-color-focused: darkred;
+    --highlight-color-focused: rgba(236,73,19,1.00);
 }
 
 
@@ -209,7 +209,7 @@ ion-toast.custom-toast {
     position: relative;
 }
 ion-grid>ion-row:nth-child(9) ion-label {
-    border-bottom: 0px solid darkred;
+    border-bottom: 0px solid rgba(236,73,19,1.00);
     border-bottom: 0px solid white;
     font-size: 13px;
     // position: fixed;
@@ -240,7 +240,7 @@ ion-grid>ion-row:nth-child(9) ion-label {
 
         --border-radius: 10px;
         width: 35px;
-        --background: darkred;
+        --background: rgba(236,73,19,1.00);
         height: 35px;
         min-height: 35px;
     }
@@ -256,7 +256,7 @@ ion-grid>ion-row:nth-child(9) ion-label {
         // display: flex;
         justify-content: center;
         // color:white; 
-        /* background-color: darkred; */
+        /* background-color: rgba(236,73,19,1.00); */
         border-radius: 25px;
     }
  
@@ -277,7 +277,7 @@ ion-grid>ion-row:nth-child(3) {
 .ion-input {
     --border-radius: 20px;
     --padding-start: 40px;
-    // --border-color: darkred;
+    // --border-color: rgba(236,73,19,1.00);
     --border-color: rgba(139, 0, 0, 0);
     --border-width: 1px;
     // --background: #ffffffad;

@@ -18,11 +18,23 @@ export function countOrders(orders: any[], dateParam?: Date, status = 'pending')
     // console.log('apppeler avec la date', date);
   }
 
-  date.setHours(0, 0, 0, 0); // on compare uniquement les dates, pas les heures
+  // On va utiliser UTC/local safety en extraisant YYYY-MM-DD ou en setHours
+  // Mais vue la possible erreur JS avec les Fuseaux horaire on préfère year/month/date de la date courante.
+  const dateYear = date.getFullYear();
+  const dateMonth = date.getMonth();
+  const dateDay = date.getDate();
 
   let undefinedCount = 0;
   const filteredOrders = orders.filter(order => {
-    if (order.status !== status) return false;
+    if (status === 'pending' && (order.status === 'pending' || order.status === 'pendingToBuy')) {
+      // autoriser pending et pendingToBuy pour le statut pending
+    } else if (status === 'processing' && (order.status === 'processing' || order.status === 'active' || order.status === 'in_progress')) {
+      // autoriser les stats active/processing
+    } else if (status === 'finished' && (order.status === 'finished' || order.status === 'completed' || order.status === 'done')) {
+      // autoriser les stats termine
+    } else if (order.status !== status) {
+      return false;
+    }
 
     const deliveryDate = new Date(order?.delivery?.date);
     if (order?.delivery?.date === undefined) {
@@ -37,29 +49,30 @@ export function countOrders(orders: any[], dateParam?: Date, status = 'pending')
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    if (order?.delivery?.date) {
-      const deliveryDate = new Date(order.delivery.date);
-      deliveryDate.setHours(0, 0, 0, 0);
+    // Comparaison fiable des composants de la date
+    let delYear, delMonth, delDay;
 
-      // if (deliveryDate <= today) {
-      //   console.log('Delivery date (past or today):', order.delivery.date, 'for order:', order.id || order._id);
-      // } else {
-      //   // console.log('Delivery date (future):', order.delivery.date, 'for order:', order.id || order._id);
-      // }
+    // Si la date vient sous forme de string (ex: "2026-02-23")
+    if (typeof order.delivery.date === 'string') {
+      const parts = order.delivery.date.split('T')[0].split('-');
+      if (parts.length === 3) {
+        delYear = parseInt(parts[0], 10);
+        delMonth = parseInt(parts[1], 10) - 1; // les mois en js sont 0-indexés
+        delDay = parseInt(parts[2], 10);
+
+        return delYear === dateYear && delMonth === dateMonth && delDay === dateDay;
+      }
     }
 
-    // if (today.getTime() > date.getTime() || today.getTime() < date.getTime()) {
-    //   return deliveryDate.getTime() === date.getTime();
-    // }
-    // return deliveryDate.getTime() <= date.getTime();
-
-    return deliveryDate.getTime() === date.getTime();
+    // Fallback à new Date
+    const deliveryDateObj = new Date(order.delivery.date);
+    return deliveryDateObj.getFullYear() === dateYear && deliveryDateObj.getMonth() === dateMonth && deliveryDateObj.getDate() === dateDay;
   });
 
   // Calculer le montant total
   const totalAmount = filteredOrders.reduce((total, order) => {
     // Vérifier si order.amount existe et est un nombre
-    const amount = order.total ? parseFloat(order.total) : 0;
+    const amount = order.total ? parseFloat(order.total) : (order.prixTotal ? parseFloat(order.prixTotal) : 0);
     return total + amount;
   }, 0);
 

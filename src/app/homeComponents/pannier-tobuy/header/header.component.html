@@ -32,19 +32,19 @@
         <ion-chip
           (click)="postOrder('pending')"
           class="chip1"
-          [ngStyle]="{ 'box-shadow': '0px 0px 9px #ff9d9d', right: '150px', color: 'white', 'background-color': 'darkred' }"
+          [ngStyle]="{ 'box-shadow': '0px 0px 9px #ff9d9d', right: '150px', color: 'white', 'background-color': 'rgba(236,73,19,1.00)' }"
           color="success"
         >
           <ion-label style="font-size: 14px; color: white">buy</ion-label>
         </ion-chip>
 
-        <ion-chip class="chip2" [ngStyle]="{ right: '40px', color: 'white', 'background-color': 'darkred' }" color="success">
+        <ion-chip class="chip2" [ngStyle]="{ right: '40px', color: 'white', 'background-color': 'rgba(236,73,19,1.00)' }" color="success">
           <!-- showIcon = false -->
           <ion-label (click)="postOrder('')">Add To</ion-label>
           <ion-icon name="cart-outline"></ion-icon>
         </ion-chip>
 
-        <ion-chip (click)="emitCloseOrder()" class="chip3" style="padding: 5px" [ngStyle]="{ color: 'white', 'background-color': 'darkred' }" color="success">
+        <ion-chip (click)="emitCloseOrder()" class="chip3" style="padding: 5px" [ngStyle]="{ color: 'white', 'background-color': 'rgba(236,73,19,1.00)' }" color="success">
           <ion-icon style="margin: 0" name="close-outline"></ion-icon>
         </ion-chip>
       </ion-col>

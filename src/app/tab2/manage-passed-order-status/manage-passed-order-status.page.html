@@ -11,9 +11,9 @@
           <ng-container *ngFor="let day of nextDays.slice(0,7)">
             <ion-col size="auto" (click)="selectDay(day)" class="day-col">
               <app-component2
-                [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'darkred' : '#fff5f5'"
+                [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'rgba(236,73,19,1.00)' : '#fff5f5'"
                 [mLeft]="'5px'"
-                [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px darkred' : 'none'"
+                [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px rgba(236,73,19,1.00)' : 'none'"
                 [text1]="day.day"
                 [text2]="day.date.toString()"
                 [style.opacity]="isSameDay(selectedDate, day.fullDate) ? '1' : '0.6'"
@@ -86,9 +86,9 @@
             <ng-container *ngFor="let day of PassPendingDays">
               <ion-col size="auto" (click)="selectDay(day)" class="day-col">
                 <app-component2
-                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'darkred' : '#fff5f5'"
+                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'rgba(236,73,19,1.00)' : '#fff5f5'"
                   [mLeft]="'5px'"
-                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px darkred' : 'none'"
+                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px rgba(236,73,19,1.00)' : 'none'"
                   [text1]="day.day"
                   [text2]="day.date.toString()"
                   [style.opacity]="isSameDay(selectedDate, day.fullDate) ? '1' : '0.6'"
@@ -103,9 +103,9 @@
             <ng-container *ngFor="let day of PassProcessingDays">
               <ion-col size="auto" (click)="selectDay(day)" class="day-col">
                 <app-component2
-                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'darkred' : '#fff5f5'"
+                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'rgba(236,73,19,1.00)' : '#fff5f5'"
                   [mLeft]="'5px'"
-                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px darkred' : 'none'"
+                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px rgba(236,73,19,1.00)' : 'none'"
                   [text1]="day.day"
                   [text2]="day.date.toString()"
                   [style.opacity]="isSameDay(selectedDate, day.fullDate) ? '1' : '0.6'"
@@ -120,9 +120,9 @@
             <ng-container *ngFor="let day of PassFinishedDays">
               <ion-col size="auto" (click)="selectDay(day)" class="day-col">
                 <app-component2
-                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'darkred' : '#fff5f5'"
+                  [backgrd]="isSameDay(selectedDate, day.fullDate) ? 'rgba(236,73,19,1.00)' : '#fff5f5'"
                   [mLeft]="'5px'"
-                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px darkred' : 'none'"
+                  [shadow]="isSameDay(selectedDate, day.fullDate) ? '0px 0px 8px 0px rgba(236,73,19,1.00)' : 'none'"
                   [text1]="day.day"
                   [text2]="day.date.toString()"
                   [style.opacity]="isSameDay(selectedDate, day.fullDate) ? '1' : '0.6'"

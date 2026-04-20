@@ -6,7 +6,7 @@
         <app-item1-cmd-bottom-card [text1Ligne3]="this.cardControl.cmd.menu.prix1" [text1Ligne1]="this.cardControl.cmd.menu.titre" paddingTopItem="0px" backgroundItem="none" widthCard="45px" heightCard="45px"
           marginLeftCard="0px" text1Ligne2="10-15min" colorText1Ligne1="white" [showText1Ligne2]="false"
           [showText2Ligne2]="false"  colorText1Ligne3="white" textIonChip="Add To"
-          colorIonChip2="white" backgoundColorIonChip2="darkred" [showIcon]="false"
+          colorIonChip2="white" backgoundColorIonChip2="rgba(236,73,19,1.00)" [showIcon]="false"
           [showIconCancel]="true"
           [showIconCart]="true"
           leftChip="50px"
@@ -23,7 +23,7 @@
 
         <ion-grid fixed>
           <ion-row>
-            <app-item2-cmd-bottom-card   shadow="0px 0px 9px rgb(255, 157, 157)"  backgroundChip="darkred" [iconIshow]="false" [labelIshow]="true" textLigne1="Total" [textLigne2]="this.cardControl.cmd.prixTotal+''"></app-item2-cmd-bottom-card>
+            <app-item2-cmd-bottom-card   shadow="0px 0px 9px rgb(255, 157, 157)"  backgroundChip="rgba(236,73,19,1.00)" [iconIshow]="false" [labelIshow]="true" textLigne1="Total" [textLigne2]="this.cardControl.cmd.prixTotal+''"></app-item2-cmd-bottom-card>
             <app-item2-cmd-bottom-card [textLigne1]="this.cardControl.cmd.embalage[0].type" [textLigne2]="this.cardControl.cmd.embalage[0].prix+'f'"></app-item2-cmd-bottom-card>
             <app-item2-cmd-bottom-card textLigne1="Quantite" [textLigne2]="this.cardControl.cmd.quantite"></app-item2-cmd-bottom-card>
             <app-item2-cmd-bottom-card textLigne1="boisson" [textLigne2]="this.cardControl.cmd.boisson.prix+'f'"></app-item2-cmd-bottom-card>
